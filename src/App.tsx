@@ -5,7 +5,7 @@ import Categories from "./pages/Categories";
 
 function App() {
   return (
-    <div className="App ">
+    <div className="App h-screen">
        <Categories/>
     </div>
   );
