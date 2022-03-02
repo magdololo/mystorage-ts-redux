@@ -1,54 +1,60 @@
+interface Category{
+    id: string;
+    title: string;
+    path: string;
+    url: string;
+}
+let categories: Category[];
+const CategoriesList = ({ Category }: any) => {
 
-const CategoriesList = () => {
-
-    const categories=[
+     categories=[
         {
             title: 'słodycze',
             path: 'słodycze',
             url: './../images/candies-g5fd12865c_1280.jpg',
-            id: 1
+            id: '1'
         },
         {
             title: 'mąka kasza ryż',
             path: 'mąka_kasza_ryż',
             url: './../images/candies-g5fd12865c_1280.jpg',
-            id: 2
+            id: '2'
         },
         {
             title: 'oleje i oliwy',
             path: 'oleje_i_oliwy',
             url: './../images/candies-g5fd12865c_1280.jpg',
-            id: 3
+            id: '3'
         },
         {
             title: 'makarony',
             path: 'makarony',
             url: './../images/candies-g5fd12865c_1280.jpg',
-            id: 4
+            id: '4'
         },
         {
             title: 'kawa herbata',
             path: 'skawa_herbata',
             url: './../images/candies-g5fd12865c_1280.jpg',
-            id: 5
+            id: '5'
         },
         {
             title: 'kawa herbata',
             path: 'skawa_herbata',
             url: './../images/candies-g5fd12865c_1280.jpg',
-            id: 5
+            id: '6'
         },
         {
             title: 'kawa herbata',
             path: 'skawa_herbata',
             url: './../images/candies-g5fd12865c_1280.jpg',
-            id: 5
+            id: '7'
         },
         {
             title: 'kawa herbata',
             path: 'skawa_herbata',
             url: './../images/candies-g5fd12865c_1280.jpg',
-            id: 5
+            id: '8'
         }
     ]
     return(

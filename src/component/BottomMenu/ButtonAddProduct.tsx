@@ -1,7 +1,7 @@
-import React, { Component, FunctionComponent, useState } from 'react';
-import { render } from 'react-dom';
+import React from 'react';
 import { Modal } from '../Modal';
 import { useModal } from '../UseModal';
+
 const ButtonAddProduct = () => {
     const { isShown, toggle } = useModal();
     const content = <React.Fragment>Hey, I'm a model.</React.Fragment>;

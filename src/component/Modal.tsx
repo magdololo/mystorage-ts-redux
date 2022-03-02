@@ -1,4 +1,4 @@
- import React, { FunctionComponent, useState } from 'react';
+ import React, {FunctionComponent} from 'react';
 import ReactDOM from 'react-dom';
 
 import {
@@ -25,6 +25,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
                                                          modalContent,
                                                          modalHeaderText,
                                                      }) => {
+
     const modal = (
         <React.Fragment>
             <Backdrop onClick={() => {
