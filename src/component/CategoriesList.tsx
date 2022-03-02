@@ -59,7 +59,7 @@ const CategoriesList = ({ Category }: any) => {
     ]
     return(
         <>
-            <div className='h-5/6 flex flex-wrap max-w-5xl mx-auto py-16 px-4 sm:py-14 sm:px-6 lg:max-w-7xl lg:px-8 overflow-hidden overflow-y-scroll scroll-smooth'>
+            <div className='h-5/6 flex flex-wrap max-w-5xl mx-auto py-16 px-4 sm:py-14 sm:px-6 lg:max-w-7xl lg:px-8 overflow-y-scroll scrollbar-hide'>
                 <ul className='grid grid-cols-2 md:grid-cols-3 gap-1.5 overflow-y-auto' >
                     {categories.map((category) => (
                         <li key={category.id} className=" flex relative ">
