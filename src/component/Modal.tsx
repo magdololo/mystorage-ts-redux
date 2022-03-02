@@ -9,6 +9,7 @@ import {
     CloseButton,
     Content,
     Backdrop,
+
 } from './modalStyle';
 
 export interface ModalProps {
@@ -26,8 +27,10 @@ export const Modal: FunctionComponent<ModalProps> = ({
                                                      }) => {
     const modal = (
         <React.Fragment>
-            <Backdrop />
-            <Wrapper tabIndex={-1} role="dialog">
+            <Backdrop onClick={() => {
+                hide();
+            }}/>
+            <Wrapper tabIndex={-1} onClick={hide}>
                 <StyledModal>
                     <Header>
                         <HeaderText>{modalHeaderText}</HeaderText>
