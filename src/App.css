@@ -3,4 +3,31 @@
   text-align: center;
 
 }
+.MuiAutocomplete-root {
+  width: 100% !important;
+  outline: none;
 
+}
+
+.MuiOutlinedInput-root {
+  font-size: 1.2rem !important;
+  font-weight: bold !important;
+  color: #9ca3af !important;
+
+
+}
+
+.MuiFormControl-root:focus-visible{
+  outline: none !important;
+}
+
+.MuiAutocompleteInput-root:focus{
+  outline: none !important;
+  border-color: #7e5bef !important;
+}
+.Mui-focused{
+  border-color: #7e5bef !important;
+  border-width: 2px;
+  border-radius: 0.25rem;
+  outline: none;
+}

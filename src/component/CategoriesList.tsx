@@ -1,4 +1,4 @@
-interface Category{
+export interface Category{
     id: string;
     title: string;
     path: string;
@@ -65,7 +65,7 @@ const CategoriesList = ({ Category }: any) => {
                         <li key={category.id} className=" flex relative ">
 
                             <img className="h-auto w-full object-cover object-center" src={category.url} alt="" />
-                            <span className='m-0 font-bold text-sm sm:text-xl leading-6 text-white  absolute left-0 right-0 bottom-0 h-1/3 inline-flex capitalize items-center justify-center bg-black bg-opacity-60 z-40'>
+                            <span className='m-0 font-normal text-md sm:text-xl leading-10 text-white  absolute left-0 right-0 bottom-0 h-1/3 inline-flex capitalize items-center justify-center bg-black bg-opacity-60 z-40'>
                                 {category.title}
                             </span>
                             <span className="h-full bg-black bg-opacity-40 z-20 absolute left-0 right-0 bottom-0 ">

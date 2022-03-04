@@ -31,11 +31,11 @@ export const Modal: FunctionComponent<ModalProps> = ({
             <Backdrop onClick={() => {
                 hide();
             }}/>
-            <Wrapper tabIndex={-1} onClick={hide}>
+            <Wrapper tabIndex={-1} className="">
                 <StyledModal>
                     <Header>
                         <HeaderText>{modalHeaderText}</HeaderText>
-                        <CloseButton onClick={hide}>X</CloseButton>
+                        {/*<CloseButton onClick={hide}>X</CloseButton>*/}
                     </Header>
                     <Content>{modalContent}</Content>
                 </StyledModal>
