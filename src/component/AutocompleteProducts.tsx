@@ -5,9 +5,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import {Product} from "./FormAddProduct";
 
-
-
-
 const products:Array<Product> = [
     {
         id: "1",
@@ -69,6 +66,7 @@ const AutocompleteProducts = () => {
     const [inputValue, setInputValue] = useState('');
 
 
+
     return(
         <>
 
@@ -86,10 +84,10 @@ const AutocompleteProducts = () => {
                 options={products.map((option) => option.name)}
                 freeSolo
                 sx={{ width: 300 }}
-                renderInput={(params) =><FormControl className="block w-full p-3 text-xl font-bold bg-white bg-clip-padding border border-solid border-gray-700 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple"><TextField {...params} label="Nazwa produktu"/></FormControl>}
+                renderInput={(params) =><FormControl className="block w-full " ><TextField {...params} label="Nazwa produktu" /></FormControl>}
             />
-
         </>
+
     )
 }
 export default AutocompleteProducts;

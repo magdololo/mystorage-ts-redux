@@ -40,7 +40,7 @@ const FormAddProduct = () => {
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="field py-4">
-                        <input className="form-control block w-full p-3 text-xl font-bold bg-white bg-clip-padding border border-solid border-gray-700 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
+                        <input className="form-control block w-full p-3 text-xl font-bold bg-white text-gray-700 bg-clip-padding border border-solid border-gray-700 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
                             type="text"
                             placeholder="Nazwa kategorii"
                             id="categoryTitle"
@@ -58,7 +58,7 @@ const FormAddProduct = () => {
                             render={({ field: {onChange, value},fieldState: {error} }) => (
                                 <AutocompleteProducts
 
-                                     //placeholderText="Nazwa produktu"
+
                                     //value={value}
                                     //onChange={onChange}
                                     //error={!!error}
