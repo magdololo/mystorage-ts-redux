@@ -4,7 +4,7 @@ export interface Category{
     path: string;
     url: string;
 }
-let categories: Category[];
+export let categories: Category[];
 const CategoriesList = ({ Category }: any) => {
 
      categories=[
@@ -33,25 +33,25 @@ const CategoriesList = ({ Category }: any) => {
             id: '4'
         },
         {
-            title: 'kawa herbata',
+            title: 'mrożonki',
             path: 'skawa_herbata',
             url: './../images/candies-g5fd12865c_1280.jpg',
             id: '5'
         },
         {
-            title: 'kawa herbata',
+            title: 'dżemy',
             path: 'skawa_herbata',
             url: './../images/candies-g5fd12865c_1280.jpg',
             id: '6'
         },
         {
-            title: 'kawa herbata',
+            title: 'cukier i słodziki',
             path: 'skawa_herbata',
             url: './../images/candies-g5fd12865c_1280.jpg',
             id: '7'
         },
         {
-            title: 'kawa herbata',
+            title: 'produkty w puszkach',
             path: 'skawa_herbata',
             url: './../images/candies-g5fd12865c_1280.jpg',
             id: '8'

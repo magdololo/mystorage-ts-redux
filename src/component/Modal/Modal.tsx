@@ -6,7 +6,6 @@ import {
     Header,
     StyledModal,
     HeaderText,
-    CloseButton,
     Content,
     Backdrop,
 
@@ -36,7 +35,6 @@ export const Modal: FunctionComponent<ModalProps> = ({
                 <StyledModal>
                     <Header>
                         <HeaderText>{modalHeaderText}</HeaderText>
-                        {/*<CloseButton onClick={hide}>X</CloseButton>*/}
                     </Header>
                     <Content>{modalContent}</Content>
                 </StyledModal>

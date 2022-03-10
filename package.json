@@ -27,6 +27,8 @@
     "react-hamburger-icon": "^1.0.2",
     "react-hook-form": "^7.27.1",
     "react-icons": "^4.3.1",
+    "react-modern-drawer": "^1.0.1",
+    "react-offcanvas-menu-component": "^1.0.1",
     "react-scripts": "5.0.0",
     "react-switch": "^6.0.0",
     "styled-components": "^5.3.3",

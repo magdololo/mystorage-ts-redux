@@ -1,11 +1,21 @@
-import {useEffect, useState} from "react";
-import { useForm, NestedValue } from 'react-hook-form';
+import {useState} from "react";
 import FormControl from '@mui/material/FormControl';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import {Product} from "./FormAddProduct";
 
-const products:Array<Product> = [
+export interface Product{
+    id: Required<string>;
+    name: Required<string>;
+    categoryTitle: Required<string>;
+    capacity: Required<number>;
+    unit: Required<string>;
+    quantity: Required<number>;
+    expireDate: Date|null;
+
+}
+export let products: Product[];
+
+ products = [
     {
         id: "1",
         name: "kawa pedros",
@@ -55,35 +65,33 @@ const products:Array<Product> = [
 ]
 type options = Array<string>;
 
-const AutocompleteProducts = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<{
-        autocomplete: NestedValue<Product[]>;
-        select: NestedValue<number[]>;
-    }>({
-        defaultValues: { autocomplete: [], select: [] },
-    });
-    const [value] = useState(products[0].name);
+const AutocompleteProducts = (onChange: any, value: any ) => {
     const [inputValue, setInputValue] = useState('');
-
 
 
     return(
         <>
 
             <Autocomplete
-
                 value={value}
-                onChange={(event, newValue) => {
-                    console.log(newValue);
+                onChange={(event, data) => {
+                    console.log(data)
+                    onChange(data);
                 }}
                 inputValue={inputValue}
                 onInputChange={(event, newInputValue) => {
                     setInputValue(newInputValue);
                 }}
                 id="controllable-states-demo"
-                options={products.map((option) => option.name)}
+                options={products}
+                getOptionLabel={option => option.name ? option.name : ""}
+                isOptionEqualToValue={(option, value) => {
+                    console.log(option)
+                    console.log(value)
+                    return option.name === value.name
+                }}
                 freeSolo
-                sx={{ width: 300 }}
+                autoSelect
                 renderInput={(params) =><FormControl className="block w-full " ><TextField {...params} label="Nazwa produktu" /></FormControl>}
             />
         </>

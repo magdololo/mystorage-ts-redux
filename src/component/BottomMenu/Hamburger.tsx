@@ -1,15 +1,15 @@
-import { FiMenu } from 'react-icons/fi';
-import { useState } from 'react';
+
+import BottomHamburgerMenu from "../BottomHamburgerMenu";
 const Hamburger = () => {
-    const [open, setOpen] = useState(false);
+
 
     return(
         <>
-
-            <div className="block border border-solid border-gray-light rounded px-4 py-4">
-                <FiMenu className='text-gray-light self-center' onClick={()=> setOpen(!open)}/>
+        <div className="inline-block flex justify-center">
+            <div className="block border border-solid border-gray-light rounded items-center justify-center w-14 py-3" >
+                <BottomHamburgerMenu />
             </div>
-
+        </div>
         </>
     )
 

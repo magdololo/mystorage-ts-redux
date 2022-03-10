@@ -8,14 +8,16 @@ const ButtonAddProduct = () => {
     const content = FormAddProduct();
     return(
         <>
+
             <button
                 type="button"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModalCenteredScrollable"
                 onClick={handleShown}
-                className="inline-block px-6 py-2.5 bg-purple text-white font-bold text-md font-extra-bold leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-            >Dodaj product
+                className=" text-center font-bold bg-purple text-white uppercase shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out xs:rounded-full xs:py-2 sm:rounded"
+            >dodaj product
             </button>
+
                 <Modal isShown={isShown} hide={handleClose} modalContent={content} modalHeaderText={"Dodaj product"} />
 
 

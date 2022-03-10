@@ -23,3 +23,7 @@
 .MuiInputLabel-root.Mui-focused{
   color: #7e5bef !important;
 }
+#EZDrawer #EZDrawer__checkbox:checked ~ #EZDrawer__container {
+  visibility: visible;
+  transform: translate3d(0, 0, 0) !important;
+}

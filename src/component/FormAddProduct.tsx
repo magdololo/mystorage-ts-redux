@@ -1,18 +1,10 @@
 import AutocompleteProducts from "./AutocompleteProducts";
+import AutocompleteCategories from "./AutocompleteCategories";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-export interface Product{
-    id: Required<string>;
-    name: Required<string>;
-    categoryTitle: Required<string>;
-    capacity: Required<number>;
-    unit: Required<string>;
-    quantity: Required<number>;
-    expireDate: Date|null;
+import {Product} from "./AutocompleteProducts";
 
-}
-let products: Product[];
 type OptionUnits = {
     label: string;
     value: string;
@@ -33,20 +25,26 @@ const optionsCapacity: Array<OptionCapacity> = [
 ]
 
 const FormAddProduct = () => {
-    const { register, handleSubmit, formState: {errors}, control, reset} = useForm<Product>();
-    const onSubmit: SubmitHandler<Product> = data => console.log(data);
+    const { handleSubmit,setValue, formState: {errors}, control, reset} = useForm<Product>();
+    console.log(errors)
+    const onSubmit= (data: Product)=> console.log(data);
+    console.log()
     return(
             <>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="field py-4">
-                        <input className="form-control block w-full p-3 text-xl font-bold bg-white text-gray-700 bg-clip-padding border border-solid border-gray-700 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
-                            type="text"
-                            placeholder="Nazwa kategorii"
-                            id="categoryTitle"
-                            aria-invalid={errors.categoryTitle ? "true" : "false"}
-                            {...register("name",{ required: true, maxLength: 30 })}
-                        />
+                        <Controller
+                            name="categoryTitle"
+                            control={control}
+                            render={({ field: {onChange, value},fieldState: {error} }) => (
+                                <AutocompleteCategories
+                                    onChange={onChange}
+                                    value={value}
+                                    aria-invalid={errors.categoryTitle ? "true" : "false"}
+
+                                />
+                            )} />
                         {errors.categoryTitle && errors.categoryTitle.type === "required" && (
                             <div className="error">You must choose category title.</div>
                         )}
@@ -57,15 +55,10 @@ const FormAddProduct = () => {
                             control={control}
                             render={({ field: {onChange, value},fieldState: {error} }) => (
                                 <AutocompleteProducts
-
-
-                                    //value={value}
-                                    //onChange={onChange}
-                                    //error={!!error}
-                                    //helperText={error ? error.message : null}
-                                    //type= "text"
+                                    onChange={onChange}
+                                    value={value}
                                     aria-invalid={errors.name ? "true" : "false"}
-                                    {...register("name",{ required: true, maxLength: 30 })}
+
                                 />
                             )} />
                             {errors.name && errors.name.type === "required" && (
@@ -75,11 +68,11 @@ const FormAddProduct = () => {
                     <div className="flex flex-row justify-between">
                     <div className="field py-4 w-5/12">
                     <Controller
-                        name={"capacity"}
+                        name="capacity"
                         control={control}
-                        render={({ field }) =>
+                        render={({ field}) =>
                             <select className="form-select block w-full p-3 text-xl font-bold bg-white text-gray-700 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
-                                {...field}  {...register("capacity")}>
+                                {...field}  onChange={(e) => field.onChange(parseInt(e.target.value))}>
                                 {optionsCapacity.map((option)=>(
                                     <option value={option.value} label={option.label}>option.value</option>
                                 ))}
@@ -89,11 +82,11 @@ const FormAddProduct = () => {
                     </div>
                     <div className="field py-4 w-5/12">
                     <Controller
-                        name={"unit"}
+                        name="unit"
                         control={control}
                         render={({ field }) =>
                             <select className="form-select block w-full p-3 text-xl font-bold bg-white text-gray-700 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
-                                {...field}  {...register("unit")}>
+                                {...field} >
                                 {optionsUnits.map((option)=>(
                                     <option value={option.value} label={option.label}>option.value</option>
                                 ))}
@@ -108,6 +101,7 @@ const FormAddProduct = () => {
                             name="expireDate"
                             render={({ field: {onChange, value} }) => (
                                     <ReactDatePicker
+
                                         dateFormat="d MMM yyyy"
                                         minDate={new Date()}
                                         className="form-select block w-full p-3 text-xl font-bold bg-white text-gray-700 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
@@ -125,13 +119,19 @@ const FormAddProduct = () => {
                         />
                     </div>
                     <div className="field py-4">
-                        <input className="form-control block w-full p-3 text-xl font-bold bg-white bg-clip-padding border border-solid border-gray-700 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
+                        <Controller
+                            control={control}
+                            name="quantity"
+                            render={({ field }) => (
+                                <input  {...field}
+                                className="form-control block w-full p-3 text-xl font-bold bg-white bg-clip-padding border border-solid border-gray-700 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
                                type="number"
                                placeholder="Ilość"
                                id="quantity"
                                aria-invalid={errors.quantity ? "true" : "false"}
-                               {...register("name",{ required: true, maxLength: 30 })}
-                        />
+                                 />
+                            )}
+                            />
                         {errors.quantity && errors.quantity.type === "required" && (
                             <div className="error">You must choose category title.</div>
                         )}
