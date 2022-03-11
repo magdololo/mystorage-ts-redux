@@ -8,7 +8,7 @@ const ButtonAddProduct = () => {
     const content = FormAddProduct();
     return(
         <>
-            <div className="xs:absolute xs:flex xs:justify-center xs:bottom-16 xs:right-7
+            <div className="xs:absolute xs:flex xs:bottom-16 xs:right-10
                             sm:relative sm:inline-block sm:inset-0 sm:flex ">
                         <button
                             type="button"
