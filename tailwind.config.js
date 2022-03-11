@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     screens: {
       xs: '0px',
-      sm: '480px',
+      sm: '520px',
       md: '768px',
       lg: '900px',
       xl: '1440px',
@@ -35,7 +35,7 @@ module.exports = {
       },
       borderRadius: {
         '4xl': '2rem',
-      }
+      },
     }
   },
   plugins: [

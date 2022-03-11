@@ -5,7 +5,7 @@ const SearchInput = () => {
     return(
         <>
 
-            <div className="flex justify-center">
+            <div className="flex ">
                 <div className="
                             flex
                             flex-row
@@ -20,7 +20,8 @@ const SearchInput = () => {
                             transition
                             ease-in-out
                             m-0
-                            focus:text-gray-700 focus:bg-white focus:outline-none">
+                            focus:text-gray-700 focus:bg-white focus:outline-none
+                            ">
                     <span className=' text-gray-light block m-0'>
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" className="w-4"
                              role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
