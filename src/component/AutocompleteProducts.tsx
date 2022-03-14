@@ -67,10 +67,11 @@ export let products: Product[];
 type options = Array<string>;
 type AutocompleteProps = {
     onChange: (data: Product| string | null) => void,
-    value: Product | string | null
+    value: Product | string | null,
+    setCapacity: (name: "unit" | "capacity", value: string | number) => void
 }
 
-const AutocompleteProducts = ({onChange, value}: AutocompleteProps) => {
+const AutocompleteProducts = ({onChange, value, setCapacity}: AutocompleteProps) => {
     const [inputValue, setInputValue] = useState('');
 
 
@@ -81,6 +82,11 @@ const AutocompleteProducts = ({onChange, value}: AutocompleteProps) => {
                 value={value}
                 onChange={(event, data) => {
                     console.log(data)
+                    if(typeof data === "object"){
+                        console.log(data?.capacity as number)
+                        setCapacity("capacity",data?.capacity as number)
+                    }
+
                     onChange(data);
                 }}
                 inputValue={inputValue}

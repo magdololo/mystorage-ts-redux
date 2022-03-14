@@ -1,30 +1,23 @@
 import {useState} from "react";
 import AutocompleteProducts from "./AutocompleteProducts";
 import AutocompleteCategories from "./AutocompleteCategories";
-import { useForm, Controller, NestedValue } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {Product} from "./AutocompleteProducts";
 import {Category} from "./CategoriesList";
-import {red} from "@mui/material/colors";
 
-type OptionUnits = {
-    label: string;
-    value: string;
-}
 type OptionCapacity ={
     label: string;
     value: number;
 }
-const optionsUnits: Array<OptionUnits> = [
-    {label: 'kg' , value: "kg"},
-    {label: 'gr' , value: "gr"},
-    {label: 'szt' , value: "szt"},
+const optionsUnits: string[] = [
+    "kg",
+    "gr",
+    "szt",
 ];
-const optionsCapacity: Array<OptionCapacity> = [
-    {label: "1" , value: 100},
-    {label: "100" , value: 1},
-    {label: "500" , value: 500},
+const optionsCapacity: number[] = [
+    1, 100, 500
 ]
 
 type FormResult = {
@@ -81,6 +74,7 @@ const FormAddProduct = (closeModal: ()=> void) => {
                                 <AutocompleteProducts
                                     onChange={onChange}
                                     value={value}
+                                    setCapacity={setValue}
                                     aria-invalid={errors.name ? "true" : "false"}
 
                                 />
@@ -99,7 +93,7 @@ const FormAddProduct = (closeModal: ()=> void) => {
                             <select className="form-select block w-full p-3 text-xl font-bold bg-white text-gray-700 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
                                 {...field}>
                                 {optionsCapacity.map((option)=>(
-                                    <option value={option.value} label={option.label}>option.value</option>
+                                    <option value={option} label={option.toString()}>option</option>
                                 ))}
                             </select>
                         }
@@ -111,13 +105,17 @@ const FormAddProduct = (closeModal: ()=> void) => {
                         name="unit"
                         control={control}
                         rules={{ required:  true }}
+                        defaultValue={""}
                         render={({ field }) =>
-                            <select className="form-select block w-full p-3 text-xl font-bold bg-white text-gray-700 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
+
+                            <select placeholder={"pojemnosc"} className="form-select block w-full p-3 text-xl font-bold bg-white text-gray-700 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
                                 {...field} >
+                                <option value="" label="Wybierz pojemnosc" selected disabled>Wybierz pojemnosc</option>
                                 {optionsUnits.map((option)=>(
-                                    <option value={option.value} label={option.label}>option.value</option>
+                                    <option value={option} label={option}></option>
                                 ))}
                             </select>
+
                         }
                     />
                         {errors?.unit && <p className="error text-purple">Jednostka wymagana. </p>}
