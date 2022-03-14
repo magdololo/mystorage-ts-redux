@@ -29,7 +29,6 @@ export const Modal: FunctionComponent<ModalProps> = ({
         <React.Fragment>
             <Backdrop onClick={() => {
                 hide();
-
             }}/>
             <Wrapper tabIndex={-1} className="">
                 <StyledModal>

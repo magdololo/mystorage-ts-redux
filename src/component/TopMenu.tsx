@@ -10,7 +10,7 @@ const TopMenu = () => {
               <div className="w-1/2 text-lg md:text-2xl">Lista kategorii</div>
               <div className="flex items-center justify-center w-1/2 text-lg md:text-2xl">
                   <div className='mr-4'>Edytuj kategorie</div>
-                  <Switch onColor="#08f" onHandleColor="#08f" height={25} width={50} onChange={() => setToggleSwitch(!toggleSwitch)} checked={toggleSwitch}/>
+                  <Switch onColor="#5B21B6" onHandleColor="#5B21B6" height={25} width={50} onChange={() => setToggleSwitch(!toggleSwitch)} checked={toggleSwitch}/>
               </div>
           </div>
         </>

@@ -2,6 +2,7 @@ import {useState} from "react";
 import FormControl from '@mui/material/FormControl';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import {Category} from "./CategoriesList";
 
 export interface Product{
     id: Required<string>;
@@ -64,8 +65,12 @@ export let products: Product[];
 
 ]
 type options = Array<string>;
+type AutocompleteProps = {
+    onChange: (data: Product| string | null) => void,
+    value: Product | string | null
+}
 
-const AutocompleteProducts = (onChange: any, value: any ) => {
+const AutocompleteProducts = ({onChange, value}: AutocompleteProps) => {
     const [inputValue, setInputValue] = useState('');
 
 
@@ -86,12 +91,11 @@ const AutocompleteProducts = (onChange: any, value: any ) => {
                 options={products}
                 getOptionLabel={option => option.name ? option.name : ""}
                 isOptionEqualToValue={(option, value) => {
-                    console.log(option)
-                    console.log(value)
                     return option.name === value.name
                 }}
+                renderOption={(props, option) => <li {...props}>{option.name} {option.capacity} {option.unit}</li>}
                 freeSolo
-                autoSelect
+                selectOnFocus={true}
                 renderInput={(params) =><FormControl className="block w-full " ><TextField {...params} label="Nazwa produktu" /></FormControl>}
             />
         </>

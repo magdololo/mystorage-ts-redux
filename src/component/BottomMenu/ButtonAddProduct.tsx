@@ -5,7 +5,8 @@ import FormAddProduct from "../FormAddProduct";
 
 const ButtonAddProduct = () => {
     const { isShown, handleShown, handleClose} = useModal();
-    const content = FormAddProduct();
+    const content = FormAddProduct(handleClose);
+
     return(
         <>
             <div className="xs:absolute xs:flex xs:bottom-16 xs:right-10
@@ -25,7 +26,7 @@ const ButtonAddProduct = () => {
                         </button>
 
             </div>
-                <Modal isShown={isShown} hide={handleClose} modalContent={content} modalHeaderText={"Dodaj product"} />
+                <Modal isShown={isShown} hide={handleClose} modalContent={content} modalHeaderText={"Dodaj product"}  />
 
 
         </>

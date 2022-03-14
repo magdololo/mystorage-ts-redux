@@ -1,9 +1,14 @@
-import {categories} from "./CategoriesList";
+import {categories, Category} from "./CategoriesList";
 import Autocomplete, {createFilterOptions} from "@mui/material/Autocomplete";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 
-const AutocompleteCategories = (onChange: any, value: any) => {
+type AutocompleteProps = {
+    onChange: (data: Category| string | null) => void,
+    value: Category
+}
+
+const AutocompleteCategories = ({onChange, value}: AutocompleteProps) => {
 
 
     return(
@@ -15,11 +20,7 @@ const AutocompleteCategories = (onChange: any, value: any) => {
                   console.log(data)
                   onChange(data);
               }}
-              // inputValue={inputValue}
-              // onInputChange={(event, newInputValue) => {
-              //     console.log(newInputValue);
-              //     setInputValue(newInputValue);
-              // }}
+
               id="controllable-states-demo"
               options={categories}
               getOptionLabel={option => option.title ? option.title : ""}
@@ -27,9 +28,8 @@ const AutocompleteCategories = (onChange: any, value: any) => {
                   return option.title === value.title
               }}
               freeSolo
-              autoSelect
-
-              renderInput={(params) =><FormControl className="block w-full " ><TextField {...params} label="Nazwa kategorii" /></FormControl>}
+              selectOnFocus={true}
+              renderInput={(params) =><FormControl className="block w-full" ><TextField {...params} label="Nazwa kategorii" /></FormControl>}
           />
       </>
     );
