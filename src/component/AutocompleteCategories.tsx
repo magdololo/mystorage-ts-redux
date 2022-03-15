@@ -1,5 +1,4 @@
 import {categories, Category, myDefaultOption} from "./CategoriesList";
-import React, {useMemo } from 'react'
 import Autocomplete, {createFilterOptions} from "@mui/material/Autocomplete";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
@@ -38,7 +37,8 @@ const AutocompleteCategories = ({onChange, value}: AutocompleteProps) => {
                   return option.title === value.title
               }}
               selectOnFocus={true}
-
+              disableListWrap
+              openOnFocus
               renderInput={(params) =>
                   <FormControl className="block w-full" >
                       <TextField {...params} label="Nazwa kategorii"/>

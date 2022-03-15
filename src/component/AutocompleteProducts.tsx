@@ -102,6 +102,8 @@ const AutocompleteProducts = ({onChange, value, setCapacity}: AutocompleteProps)
                 }}
                 renderOption={(props, option) => <li {...props}>{option.name} {option.capacity} {option.unit}</li>}
                 freeSolo
+                disableListWrap
+                openOnFocus
                 selectOnFocus={true}
                 renderInput={(params) =><FormControl className="block w-full " ><TextField {...params} label="Nazwa produktu" /></FormControl>}
             />

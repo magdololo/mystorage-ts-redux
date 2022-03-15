@@ -6,7 +6,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {Product} from "./AutocompleteProducts";
 import {Category} from "./CategoriesList";
-
+import {TextField, MenuItem} from "@mui/material";
 const optionsUnits: string[] = [
     "kg",
     "gr",
@@ -19,7 +19,7 @@ const optionsCapacity: number[] = [
 type FormResult = {
     categoryTitle: Category;
     name: Required<Product | string >;
-    capacity: Required<number>;
+    capacity: Required<number | "">;
     unit: Required<string>;
     quantity: Required<number>;
     expireDate: Date|null;
@@ -42,6 +42,7 @@ const FormAddProduct = (closeModal: ()=> void) => {
 
     console.log(name)
     console.log(categoryTitle)
+
     return(
             <>
 
@@ -82,16 +83,17 @@ const FormAddProduct = (closeModal: ()=> void) => {
                     <Controller
                         name="capacity"
                         control={control}
+                        defaultValue=""
                         rules={{ required:  true }}
-                        render={({ field}) =>
-                            <select className="form-select block w-full p-3 text-labelSize  bg-white text-gray-500 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
-                                {...field}>
-                                <option value="" label="Pojemność" selected disabled>Pojemność</option>
-                                {optionsCapacity.map((option)=>(
-                                    <option value={option} label={option.toString()}>option</option>
-                                ))}
-                            </select>
-                        }
+                        render={({field: {onChange, value}, fieldState: {error}}) => (
+                            <TextField sx={{width: "100%"}}
+                                       label="Pojemność"
+                                       onChange={onChange}
+                                       value={value}
+                                       variant="outlined"
+                                       type="number"
+                            />
+                        )}
                     />
                         {errors?.capacity && <p className="error text-purple">Pojemność wymagana.</p>}
                     </div>
@@ -99,18 +101,25 @@ const FormAddProduct = (closeModal: ()=> void) => {
                     <Controller
                         name="unit"
                         control={control}
+                        defaultValue=""
                         rules={{ required:  true }}
-                        defaultValue={""}
-                        render={({ field }) =>
+                        render={({field: {onChange, value}, fieldState: {error}}) => (
+                            <TextField sx={{width: "100%"}}
+                            select
+                            label="Jednostka"
+                            onChange={onChange}
+                            value={value}
+                            variant="outlined"
+                            type="text"
+                            >
+                        {optionsUnits.map((option) => (
+                            <MenuItem key={option} value={option}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                            </TextField>
+                            )}
 
-                            <select className="form-select block w-full p-3 text-labelSize bg-white text-gray-500 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
-                                {...field} >
-                                <option value="" label="Jednostka" selected disabled>Jednostka</option>
-                                {optionsUnits.map((option)=>(
-                                    <option value={option} label={option}></option>
-                                ))}
-                            </select>
-                        }
                     />
                         {errors?.unit && <p className="error text-purple">Jednostka wymagana. </p>}
                     </div>
