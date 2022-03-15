@@ -85,6 +85,7 @@ const AutocompleteProducts = ({onChange, value, setCapacity}: AutocompleteProps)
                     if(typeof data === "object"){
                         console.log(data?.capacity as number)
                         setCapacity("capacity",data?.capacity as number)
+                        setCapacity("unit", data?.unit as string)
                     }
 
                     onChange(data);

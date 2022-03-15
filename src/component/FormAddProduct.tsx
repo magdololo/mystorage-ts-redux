@@ -7,10 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import {Product} from "./AutocompleteProducts";
 import {Category} from "./CategoriesList";
 
-type OptionCapacity ={
-    label: string;
-    value: number;
-}
 const optionsUnits: string[] = [
     "kg",
     "gr",
@@ -80,8 +76,6 @@ const FormAddProduct = (closeModal: ()=> void) => {
                                 />
                             )} />
                         {errors?.name && <p className="error text-purple">Nazwa produktu jest wymagana.</p>}
-                        {/*    <div className="error">You must enter your name.</div>*/}
-                        {/*)}*/}
                     </div>
                     <div className="flex flex-row justify-between">
                     <div className="field py-4 w-5/12">
@@ -90,8 +84,9 @@ const FormAddProduct = (closeModal: ()=> void) => {
                         control={control}
                         rules={{ required:  true }}
                         render={({ field}) =>
-                            <select className="form-select block w-full p-3 text-xl font-bold bg-white text-gray-700 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
+                            <select className="form-select block w-full p-3 text-labelSize  bg-white text-gray-500 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
                                 {...field}>
+                                <option value="" label="Pojemność" selected disabled>Pojemność</option>
                                 {optionsCapacity.map((option)=>(
                                     <option value={option} label={option.toString()}>option</option>
                                 ))}
@@ -108,14 +103,13 @@ const FormAddProduct = (closeModal: ()=> void) => {
                         defaultValue={""}
                         render={({ field }) =>
 
-                            <select placeholder={"pojemnosc"} className="form-select block w-full p-3 text-xl font-bold bg-white text-gray-700 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
+                            <select className="form-select block w-full p-3 text-labelSize bg-white text-gray-500 border border-solid border-gray-500 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
                                 {...field} >
-                                <option value="" label="Wybierz pojemnosc" selected disabled>Wybierz pojemnosc</option>
+                                <option value="" label="Jednostka" selected disabled>Jednostka</option>
                                 {optionsUnits.map((option)=>(
                                     <option value={option} label={option}></option>
                                 ))}
                             </select>
-
                         }
                     />
                         {errors?.unit && <p className="error text-purple">Jednostka wymagana. </p>}
@@ -148,7 +142,7 @@ const FormAddProduct = (closeModal: ()=> void) => {
                         <Controller
                             control={control}
                             name="quantity"
-                            rules={{ required:  true }}
+                            rules={{ required: true, min: 1 }}
                             render={({ field }) => (
                                 <input  {...field}
                                 className="form-control block w-full p-3 text-xl font-bold bg-white bg-clip-padding border border-solid border-gray-700 rounded transition easy-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none focus:border-2"
@@ -160,6 +154,9 @@ const FormAddProduct = (closeModal: ()=> void) => {
                             )}
                             />
                         {errors.quantity && errors.quantity.type === "required" && (
+                            <p className="error text-purple" >Minimalna ilość to 1.</p>
+                        )}
+                        {errors.quantity && errors.quantity.type === "min" &&(
                             <p className="error text-purple" >Minimalna ilość to 1.</p>
                         )}
                     </div>

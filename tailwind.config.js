@@ -22,7 +22,8 @@ module.exports = {
       'gray': '#8492a6',
       'gray-light': '#9CA3AF',
       'white': '#ffffff',
-      'black': '#000000'
+      'black': '#000000',
+      'labelColor': '#6B7280'
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
@@ -36,6 +37,9 @@ module.exports = {
       borderRadius: {
         '4xl': '2rem',
       },
+      fontSize: {
+        'labelSize': '17.6px'
+      }
     }
   },
   plugins: [

@@ -5,9 +5,15 @@ export interface Category{
     url: string;
 }
 export let categories: Category[];
+export const myDefaultOption = {
+    title: "Produkty bez kategorii",
+    path: 'sprodukty_bez_kategorii',
+    url: './../images/candies-g5fd12865c_1280.jpg',
+    id: '9'};
 const CategoriesList = ({ Category }: any) => {
 
      categories=[
+         myDefaultOption,
         {
             title: 'słodycze',
             path: 'słodycze',
