@@ -1,5 +1,5 @@
 
-import BottomHamburgerMenu from "../BottomHamburgerMenu";
+import BottomHamburgerMenu from "./BottomHamburgerMenu";
 const Hamburger = () => {
 
 

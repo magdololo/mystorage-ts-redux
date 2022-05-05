@@ -18,9 +18,9 @@ module.exports = {
       'orange': '#ff7849',
       'green': '#13ce66',
       'yellow': '#ffc82c',
-      'gray-dark': '#273444',
-      'gray': '#8492a6',
-      'gray-light': '#9CA3AF',
+      'gray-dark': '#3F3F46',
+      'gray': '#52525B',
+      'gray-light': '#71717A',
       'white': '#ffffff',
       'black': '#000000',
       'labelColor': '#6B7280'
@@ -38,7 +38,8 @@ module.exports = {
         '4xl': '2rem',
       },
       fontSize: {
-        'labelSize': '17.6px'
+        'labelSize': '17.6px',
+        'md' : '16px'
       }
     }
   },

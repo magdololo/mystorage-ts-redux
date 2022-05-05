@@ -2,79 +2,24 @@ import {useState} from "react";
 import FormControl from '@mui/material/FormControl';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import {Category} from "./CategoriesList";
+import {Product} from "./productSlice";
 
-export interface Product{
-    id: Required<string>;
-    name: Required<string>;
-    categoryTitle: Required<string>;
-    capacity: Required<number>;
-    unit: Required<string>;
-    quantity: Required<number>;
-    expireDate: Date|null;
 
-}
 export let products: Product[];
 
- products = [
-    {
-        id: "1",
-        name: "kawa pedros",
-        categoryTitle: "kawa i herbata",
-        capacity: 1,
-        unit: "szt",
-        quantity: 1,
-        expireDate: null
-    },
-    {
-        id: "2",
-        name: "ryż pełnozuarnisty",
-        categoryTitle: "ryże mąki majarony",
-        capacity: 1,
-        unit: "szt",
-        quantity: 1,
-        expireDate: null
-    },
-    {
-        id: "3",
-        name: "płatki owsiane",
-        categoryTitle: "płatki śniadaniowe",
-        capacity: 1,
-        unit: "szt",
-        quantity: 1,
-        expireDate: null
-    },
-    {
-        id: "4",
-        name: "cukier",
-        categoryTitle: "cukier i słodziki",
-        capacity: 500,
-        unit: "gr",
-        quantity: 1,
-        expireDate: null
-    }, {
-        id: "5",
-        name: "cukierki",
-        categoryTitle: "słodycze",
-        capacity: 1,
-        unit: "kg",
-        quantity: 1,
-        expireDate: null
-    },
-
-
-]
 type options = Array<string>;
 type AutocompleteProps = {
     onChange: (data: Product| string | null) => void,
     value: Product | string | null,
     setCapacity: (name: "unit" | "capacity", value: string | number) => void
+    setNewProductName: (data: (string | Product | null)) => void
+    newProductName: Product | string | null
 }
 
-const AutocompleteProducts = ({onChange, value, setCapacity}: AutocompleteProps) => {
+const AutocompleteProducts = ({onChange, value, setCapacity, setNewProductName, newProductName}: AutocompleteProps) => {
     const [inputValue, setInputValue] = useState('');
-
-
+   console.log(inputValue);
+  console.log(value);
     return(
         <>
 
@@ -92,7 +37,8 @@ const AutocompleteProducts = ({onChange, value, setCapacity}: AutocompleteProps)
                 }}
                 inputValue={inputValue}
                 onInputChange={(event, newInputValue) => {
-                    setInputValue(newInputValue);
+                    setInputValue(newInputValue)
+                    onChange(newInputValue)
                 }}
                 id="controllable-states-demo"
                 options={products}
