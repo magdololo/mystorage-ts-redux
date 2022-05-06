@@ -5,21 +5,21 @@ import {
     Route,
 
 } from "react-router-dom";
-import AppTitle from "./app/TopMenu/AppTitle";
-import TopMenu from "./app/TopMenu/TopMenu";
+
 import CategoryList from "./features/categories/CategoryList";
 import BottomMenu from "./app/BottomMenu/BottomMenu";
-
+import LoginPage from"./features/users/LoginPage";
 import './App.css';
 
 function App() {
     return (
         <Router>
-            <AppTitle />
-            <TopMenu />
+
             <div className="App">
                 <Routes>
+                    <Route path="/login" element={<LoginPage/>}/>
                     <Route path="/" element={<CategoryList/>}/>
+
                     {/*<Route exact path="/posts/:postId" component={SinglePostPage} />*/}
                     {/*<Route exact path="/editPost/:postId" component={EditPostForm} />*/}
                     {/*<Route exact path="/users" component={UsersList} />*/}

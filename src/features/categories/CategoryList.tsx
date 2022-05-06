@@ -2,6 +2,8 @@
 import React from 'react'
 import { RootState } from '../../app/store'
 import { useSelector } from 'react-redux'
+import AppTitle from "../../app/TopMenu/AppTitle";
+import TopMenu from "../../app/TopMenu/TopMenu";
 
 export const CategoryList = () => {
     const categories = useSelector((state: RootState) => state.categories)
@@ -28,13 +30,15 @@ export const CategoryList = () => {
     ))
 
     return (
-
-
-        <div className="grid grid-cols-3 gap-4 px-10">
-            {renderedCategories}
-
+        <>
+            <AppTitle />
+             <TopMenu />
+                <div className="w-screen mx-auto max-w-screen-lg">
+                    <div className="grid grid-cols-3 gap-4 px-10">
+                        {renderedCategories}
+                    </div>
                 </div>
-
+            </>
     )
 }
 export default CategoryList;

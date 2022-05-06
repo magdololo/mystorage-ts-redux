@@ -5,10 +5,12 @@ import { configureStore, Action, } from '@reduxjs/toolkit'
 
 import productsReducer from '../features/products/productSlice'
 import categoriesReducer from '../features/categories/categoriesSlice'
+import usersReducer from '../features/users/usersSlice'
 const store = configureStore({
     reducer: {
         products: productsReducer,
-        categories: categoriesReducer
+        categories: categoriesReducer,
+        users: usersReducer
     }
     })
 

@@ -10,9 +10,9 @@ export interface Product{
 
 }
 const initialState = [
-    { id: '1', name: 'First Post!', categoryTitle: 'Hello!' , capacity: 400, unit: "gr", quantity: 1, expireDate: null},
-    { id: '2', name: 'First Post!', categoryTitle: 'Hello!' , capacity: 400, unit: "gr", quantity: 1, expireDate: null},
-    { id: '3', name: 'First Post!', categoryTitle: 'Hello!' , capacity: 400, unit: "gr", quantity: 1, expireDate: null}
+    { id: '1', name: 'czekolada', categoryTitle: 'słodycze' , capacity: 400, unit: "gr", quantity: 1, expireDate: null},
+    { id: '2', name: 'makaron muszelki', categoryTitle: 'makarony' , capacity: 1, unit: "kg", quantity: 1, expireDate: null},
+    { id: '3', name: 'zupa jarzynowa', categoryTitle: 'mrożonki' , capacity: 450, unit: "gr", quantity: 1, expireDate: null}
 ]
 
 const productsSlice = createSlice({
