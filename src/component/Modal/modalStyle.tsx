@@ -33,7 +33,7 @@ export const StyledModal = styled.div`
   overflow-y: scroll;
   @media (min-width: 60em) {
     height: 75%;
-    margin: 5% auto;
+    margin: 0 auto;
     max-height: 57em;
   }
 `;
@@ -51,18 +51,19 @@ export const HeaderText = styled.div`
   padding-bottom: 0.8rem;
   align-self: center;
   color: rgb(55 65 81);
+  
 `;
 
-export const CloseButton = styled.button`
-  font-size: 0.8rem;
-  border: none;
-  border-radius: 3px;
-  margin-left: 0.5rem;
-  background: none;
-  :hover {
-    cursor: pointer;
-  }
-`;
+// export const CloseButton = styled.button`
+//   font-size: 0.8rem;
+//   border: none;
+//   border-radius: 3px;
+//   margin-left: 0.5rem;
+//   background: none;
+//   :hover {
+//     cursor: pointer;
+//   }
+// `;
 
 export const Content = styled.div`
   color: rgb(107 114 128);

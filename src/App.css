@@ -23,7 +23,18 @@
 .MuiInputLabel-root.Mui-focused{
   color: #7e5bef !important;
 }
-#EZDrawer #EZDrawer__checkbox:checked ~ #EZDrawer__container {
-  visibility: visible;
-  transform: translate3d(0, 0, 0) !important;
+/*.pass-wrapper {*/
+/*  position: relative;*/
+/*  display: flex;*/
+/*  margin-bottom: 14px;*/
+/*}*/
+
+i {
+  position: absolute;
+  top: 55%;
+  right: 10%;
+}
+i:hover {
+  color: rebeccapurple;
+  cursor: pointer;
 }

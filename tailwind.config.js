@@ -23,11 +23,16 @@ module.exports = {
       'gray-light': '#71717A',
       'white': '#ffffff',
       'black': '#000000',
-      'labelColor': '#6B7280'
+      'labelColor': '#6B7280',
+      'purple-700': '#6D28D9',
+      'purple-400': '#C084FC',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
+    },
+    minHeight: {
+      '4/10': '40%',
     },
     extend: {
       spacing: {
@@ -40,9 +45,10 @@ module.exports = {
       fontSize: {
         'labelSize': '17.6px',
         'md' : '16px'
-      }
-    }
+      },
+    },
   },
+
   plugins: [
     require('tailwind-scrollbar-hide')
   ],

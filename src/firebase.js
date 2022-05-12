@@ -5,11 +5,12 @@ import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
     signInWithEmailAndPassword,
-    signOut
+    signOut,
+    updateProfile
 } from 'firebase/auth';
 
 // your firebase config here
-const firebaseConfig = {
+export const firebaseConfig = {
 
     apiKey: "AIzaSyC9ccBXj_IIgdJEwTzumpKmLMjluD6KyYc",
 
@@ -36,6 +37,7 @@ const auth = getAuth();
 export {
     auth,
     createUserWithEmailAndPassword,
+    updateProfile,
     onAuthStateChanged,
     signInWithEmailAndPassword,
     signOut

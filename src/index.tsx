@@ -1,11 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import "firebase/auth";
+import "firebase/firestore";
 import store from './app/store'
 import {Provider} from "react-redux";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { createFirestoreInstance } from "redux-firestore";
+import App from './App';
 
+const rrfConfig = {
+    userProfile: "users",
+    useFirestoreForProfile: true,
+};
 ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
