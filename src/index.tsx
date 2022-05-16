@@ -10,6 +10,7 @@ import {Provider} from "react-redux";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { createFirestoreInstance } from "redux-firestore";
 import App from './App';
+import {BrowserRouter} from "react-router-dom";
 
 const rrfConfig = {
     userProfile: "users",
@@ -17,9 +18,11 @@ const rrfConfig = {
 };
 ReactDOM.render(
   <React.StrictMode>
+      <BrowserRouter>
       <Provider store={store}>
-    <App />
+        <App />
       </Provider>
+      </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

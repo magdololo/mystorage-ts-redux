@@ -1,34 +1,45 @@
 
-import React, {useState} from "react";
+import React from "react";
 import {useNavigate} from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useFirebase } from "react-redux-firebase";
-import {
-    auth,
-        createUserWithEmailAndPassword,
-        updateProfile,
-        signInWithEmailAndPassword,
-} from '../../firebase';
+import {auth, signInWithEmailAndPassword,} from '../../firebase';
 import { useDispatch } from 'react-redux';
-import { login } from './usersSlice';
+import {login} from "./usersSlice";
+
 
 const LoginPage = () => {
     const firebase = useFirebase();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [profilePic, setProfilePic] = useState('');
-    const dispatch = useDispatch();
+const dispatch = useDispatch()
+
     let navigate = useNavigate()
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors }
     } = useForm<{
         email: string,
         password: string
     }>();
     const onSubmit = handleSubmit((data) => {
-        alert(JSON.stringify(data));
+        console.log(data)
+        signInWithEmailAndPassword(auth, data.email, data.password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log("Singed in user: ", user);
+                reset();
+                dispatch(
+                    login({uid: user.uid})
+                )
+                navigate("/")
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log("An error occured: ", errorCode, errorMessage);
+            });
+
     });
     const signInWithGoogle = () => {
     firebase
@@ -41,28 +52,7 @@ const LoginPage = () => {
         });
 };
 
-    const loginToApp = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
 
-        // Sign in an existing user with Firebase
-        signInWithEmailAndPassword(auth, email, password)
-            // returns  an auth object after a successful authentication
-            // userAuth.user contains all our user details
-            .then((userAuth) => {
-                // store the user's information in the redux state
-                dispatch(
-                    login({
-                        //email: userAuth.user.email,
-                        uid: userAuth.user.uid,
-
-                    })
-                );
-            })
-            // display the error if any
-            .catch((err) => {
-                alert(err);
-            });
-    };
     return(
         <>
 
@@ -169,7 +159,7 @@ const LoginPage = () => {
 
             </div>
                     <p className="text-gray-800 mt-6 text-center">Nie masz konta?
-                        <a href="#!" className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out">Zarejestruj się</a>
+                        <a href="/register" className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out">Zarejestruj się</a>
                     </p>
                 </form>
             </div>

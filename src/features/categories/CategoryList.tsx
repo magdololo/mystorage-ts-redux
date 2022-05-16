@@ -6,14 +6,22 @@ import TopMenu from "../../app/TopMenu/TopMenu";
 import {Modal} from "../../component/Modal/Modal";
 import AddCategoryForm from "./AddCategoryForm";
 import {selectAllCategories} from "./categoriesSlice";
+import {selectUser} from "../users/usersSlice";
+import {useGetCategoriesForUIDQuery} from "../api/apiSlice";
+
 export const CategoryList = () => {
-    const categories = useSelector(selectAllCategories)
+    let user = useSelector(selectUser);
+    console.log(user)
+
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
    const modalHeader = "Dodaj nową kategorię"
-
+    console.log(user)
+    const {
+       data: categories = []
+    } = useGetCategoriesForUIDQuery(user? user.uid:"")
 
     const renderedCategories = categories?.map(category => (
         // <div className="mb-4" >
@@ -48,7 +56,7 @@ export const CategoryList = () => {
         <>
             <AppTitle />
              <TopMenu />
-            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddCategoryForm()}/>
+            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddCategoryForm(handleClose)}/>
                 <div className="w-screen mx-auto max-w-screen-lg mb-32" >
                     <div className="flex flex-nowrap w-full min-h-min items-center">
                         <div className="flex flex-wrap min-w-fit w-10/12 mx-auto pb-36">

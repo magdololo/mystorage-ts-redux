@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import {useSelector, useDispatch} from "react-redux";
-import {selectAllImages} from "./categoriesSlice";
+import {Category, selectAllImages} from "./categoriesSlice";
 import {Modal} from "../../component/Modal/Modal";
-import {nanoid} from "@reduxjs/toolkit";
-import {categoryAdded} from "./categoriesSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {selectUser} from "../users/usersSlice";
+import {useAddNewCategoryMutation} from "../api/apiSlice";
+import slugify from "slugify";
+
 //import slugify from "slugify";
-const AddCategoryForm = () => {
+const AddCategoryForm = (closeAddCategoryModal: () => void) => {
     const images = useSelector(selectAllImages)
+    const user = useSelector(selectUser)
+    const uid = user? user.uid: ""
     const dispatch = useDispatch()
     const [title, setTitle] = useState('')
     const [pickedImage, setPickedImage] = useState('')
@@ -15,7 +21,7 @@ const AddCategoryForm = () => {
     const handleClose = () => setOpen(false);
     const modalHeader = "Wybierz zdjęcie"
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-    //const onPickedImageChange = (e: React.ChangeEvent<HTMLSelectElement>) => setPickedImage(e.target.value)
+   const [addNewCategory,{isError, isLoading, isSuccess}] = useAddNewCategoryMutation();
 
     const imagesOptions = images?.map(image=>(
         <div className="w-1/2 mb-1" onClick={(event: React.MouseEvent<HTMLElement>) => {
@@ -25,28 +31,28 @@ const AddCategoryForm = () => {
                 <img alt="gallery" className="block object-cover object-center w-full h-full "
                      src={image.path}/>
         </div>
-
     ))
-
-    const onSaveCategoryClicked = () => {
-        console.log("onSavecategory")
-        if (title && pickedImage) {
-            dispatch(
-                categoryAdded({
-                    id: nanoid(),
-                    title: title,
-                    url: pickedImage,
-                    path: title,
-                })
-            )
-console.log("set")
-
-            setTitle('')
-            setPickedImage('')
-            console.log("handleclode")
-            handleClose()
+    const onSaveCategory = ()=>{
+        let newCategory: Category ={
+           id: null,
+            title: title,
+            url: pickedImage,
+            path: slugify(title, "_"),
+            user: uid
         }
 
+            console.log(newCategory)
+            addNewCategory(newCategory);
+            setTitle("")
+            setPickedImage("")
+            closeAddCategoryModal()
+
+
+
+    }
+    console.log(isSuccess)
+    if(isSuccess){
+        toast("category added")
     }
     return(
         <>
@@ -136,7 +142,7 @@ console.log("set")
                           duration-150
                           mx-auto
                           ease-in-out"
-                    onClick={onSaveCategoryClicked}>Dodaj
+                    onClick={onSaveCategory}>Dodaj
                     </button>
                     </div>
                 </form>

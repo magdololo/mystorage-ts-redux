@@ -1,18 +1,17 @@
 
 import React, {useState, useRef} from "react";
 // import {useNavigate} from "react-router-dom";
- import { useForm, SubmitHandler, Controller } from "react-hook-form";
- //import { useFirebase } from "react-redux-firebase";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useDispatch } from 'react-redux';
+import {login} from "./usersSlice";
 import {
     auth,
     createUserWithEmailAndPassword,
-    updateProfile,
-    signInWithEmailAndPassword,
 } from '../../firebase';
-//import { useDispatch } from 'react-redux';
-//import { login } from './usersSlice';
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 type Inputs = {
@@ -21,19 +20,30 @@ type Inputs = {
     
 }
 const RegisterPage = () => {
-    // const firebase = useFirebase();
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     // let navigate = useNavigate()
     let {
         register,
+        reset,
         handleSubmit,
         formState: { errors }
     } = useForm<Inputs>();
     const onSubmit :SubmitHandler<Inputs> = (data) => {
         console.log(data);
-       // handleRegister();
+        createUserWithEmailAndPassword(auth, data.email, data.password)
+    .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("Registered user: ", user);
+            dispatch(
+                login({uid: user.uid})
+            )
+            reset();
+         })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log("Error ocured: ", errorCode, errorMessage);
+            });
     }
 
     const [passwordShown, setPasswordShown] = useState(false);

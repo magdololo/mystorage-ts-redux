@@ -7,13 +7,15 @@ import {firestoreReducer} from "redux-firestore";
 import productsReducer from '../features/products/productSlice'
 import categoriesReducer from '../features/categories/categoriesSlice'
 import usersReducer from '../features/users/usersSlice'
+import {api} from '../features/api/apiSlice'
 const store = configureStore({
     reducer: {
+        [api.reducerPath]: api.reducer,
         products: productsReducer,
         categories: categoriesReducer,
         users: usersReducer,
         firebaseReducer,
-        firestoreReducer
+        firestoreReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: {
