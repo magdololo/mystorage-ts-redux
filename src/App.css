@@ -38,3 +38,6 @@ i:hover {
   color: rebeccapurple;
   cursor: pointer;
 }
+li {
+  list-style: none;
+}

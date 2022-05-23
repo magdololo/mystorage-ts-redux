@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {createSlice, PayloadAction, createSelector} from '@reduxjs/toolkit'
 import {RootState} from "../../app/store";
 import {connect} from "react-redux";
 
@@ -32,4 +32,5 @@ const usersSlice = createSlice({
 });
 export const { login, logout, saveUser} = usersSlice.actions;
 export const selectUser = (state: RootState) => state.users.user;
+
 export default usersSlice.reducer

@@ -14,14 +14,12 @@ const store = configureStore({
         products: productsReducer,
         categories: categoriesReducer,
         users: usersReducer,
-        firebaseReducer,
-        firestoreReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: {
             ignoredActions: [actionTypes.LOGIN, actionTypes.AUTH_LINK_ERROR]
         }
-    }),
+    }).concat(api.middleware),
     })
 
 

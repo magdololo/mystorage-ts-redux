@@ -1,13 +1,14 @@
 
-import React from 'react'
+import React, {useMemo} from 'react'
 import { useSelector } from 'react-redux'
 import AppTitle from "../../app/TopMenu/AppTitle";
 import TopMenu from "../../app/TopMenu/TopMenu";
 import {Modal} from "../../component/Modal/Modal";
 import AddCategoryForm from "./AddCategoryForm";
-import {selectAllCategories} from "./categoriesSlice";
+
 import {selectUser} from "../users/usersSlice";
 import {useGetCategoriesForUIDQuery} from "../api/apiSlice";
+import {skipToken} from "@reduxjs/toolkit/query";
 
 export const CategoryList = () => {
     let user = useSelector(selectUser);
@@ -19,20 +20,34 @@ export const CategoryList = () => {
     const handleClose = () => setOpen(false);
    const modalHeader = "Dodaj nową kategorię"
     console.log(user)
+
     const {
        data: categories = []
-    } = useGetCategoriesForUIDQuery(user? user.uid:"")
+    } = useGetCategoriesForUIDQuery(user? user.uid : skipToken,{skip: !user})
+     console.log(categories)
+    const sortedCategories = categories.slice()
+    if (sortedCategories != null && sortedCategories.length >= 2) {
+        sortedCategories.sort((a, b) => {
+            let aTitle = a.title.toLowerCase();
+            let bTitle = b.title.toLowerCase();
 
-    const renderedCategories = categories?.map(category => (
+            if (aTitle < bTitle) return -1;//keep a b
+            if (aTitle > bTitle) return 1;//switch places b a
+            return 0
+        })
+
+    }
+
+    const renderedCategories = sortedCategories?.map(category => (
         // <div className="mb-4" >
         // //     <div className="relative overflow-hidden bg-no-repeat bg-cover max-w-xs h-auto z-10">
        // <div>
-        <>
-                <a className="h-auto flex flex-col relative" href={category.path} key={'img'+category.id}>
+        <li className="h-auto flex flex-col relative" key={category.id}>
+                <a  href={category.path}>
                 <img src={category.url} className="w-full h-auto object-cover flex-1 flex-grow" alt="Louvre"/>
                     <span className="absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 capitalize text-center text-white font-bold">{category.title}</span>
                 </a>
-        </>
+        </li>
     ))
        {/*             <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed    ">*/}
 

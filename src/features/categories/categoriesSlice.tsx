@@ -15,12 +15,10 @@ export interface  Image {
     id: Required<string>;
 }
 interface CategoriesState {
-    categories: Array<Category>;
     images: Image[] | null
 }
 const initialState: CategoriesState ={
-    categories:  [
-    ],
+
     images: [
         {
             path: '../../../images/jams-g0a1a99a3b_1280.jpg',
@@ -51,15 +49,15 @@ const categoriesSlice = createSlice({
     name: 'categories',
     initialState ,
     reducers: {
-        categoryAdded(state, action: PayloadAction<Category>) {
-            state.categories.push(action.payload)
-        }
+        // categoryAdded(state, action: PayloadAction<Category>) {
+        //     state.categories.push(action.payload)
+        // }
 
 
     }
 })
-export const { categoryAdded } = categoriesSlice.actions;
-export const selectAllCategories = (state: RootState) => state.categories.categories
+// export const { categoryAdded } = categoriesSlice.actions;
+// export const selectAllCategories = (state: RootState) => state.categories.categories
 //export const selectCategoryByTitle = (state, categoryTitle) => state.categories.find((categoryTitle)=> category.title === categoryTitle)
 export const selectAllImages = (state: RootState) => state.categories.images
 export default categoriesSlice.reducer

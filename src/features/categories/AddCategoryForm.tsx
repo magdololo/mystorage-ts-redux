@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from "react-redux";
 import {Category, selectAllImages} from "./categoriesSlice";
 import {Modal} from "../../component/Modal/Modal";
@@ -21,10 +21,10 @@ const AddCategoryForm = (closeAddCategoryModal: () => void) => {
     const handleClose = () => setOpen(false);
     const modalHeader = "Wybierz zdjęcie"
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-   const [addNewCategory,{isError, isLoading, isSuccess}] = useAddNewCategoryMutation();
+   const [addNewCategory,{data, isError, isLoading, isSuccess}] = useAddNewCategoryMutation();
 
     const imagesOptions = images?.map(image=>(
-        <div className="w-1/2 mb-1" onClick={(event: React.MouseEvent<HTMLElement>) => {
+        <div key={image.id} className="w-1/2 mb-1" onClick={(event: React.MouseEvent<HTMLElement>) => {
             setPickedImage(image.path)
             handleClose()
              console.log(pickedImage)}}>
@@ -51,9 +51,14 @@ const AddCategoryForm = (closeAddCategoryModal: () => void) => {
 
     }
     console.log(isSuccess)
-    if(isSuccess){
-        toast("category added")
-    }
+    useEffect(()=>{
+        if(isSuccess){
+
+            toast("category added")
+            console.log("zygam toastem", {toastId: data?.id})
+        }
+    }, [isSuccess]);
+
     return(
         <>
             <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">

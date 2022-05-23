@@ -6,6 +6,7 @@ import slugify from "slugify";
 // Define our single API slice object
 export const api = createApi({
     baseQuery: fakeBaseQuery(),
+    tagTypes: ['Category', 'User'],
     endpoints: (build) => ({
         getCategoriesForUID: build.query<Category[],string>({
             async queryFn(uid, queryApi, extraOptions, baseQuery) {
@@ -37,6 +38,7 @@ export const api = createApi({
                     return {error: error}
                 }
             },
+            providesTags: ['Category'],
         }),
         addNewCategory: build.mutation<Category,Partial<Category>>({
             async queryFn(newCategory, queryApi, extraOptions, baseQuery) {
@@ -49,6 +51,7 @@ export const api = createApi({
                         return {error: error}
                     }
             },
+            invalidatesTags: ['Category'],
         }),
 
     }),
