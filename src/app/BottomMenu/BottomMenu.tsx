@@ -1,10 +1,16 @@
 import SearchInput from "./SearchInput";
 import Hamburger from "./Hamburger";
 import ButtonAddProduct from "./ButtonAddProduct";
+import AddCategoryForm from "../../features/categories/AddCategoryForm";
+import {Modal} from "../../component/Modal/Modal";
+import React from "react";
 
 
 const BottomMenu = () => {
-
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const modalHeader = "Wybierz zdjęcie"
 
     return(
         <>
@@ -15,6 +21,7 @@ const BottomMenu = () => {
                         <Hamburger/>
                         <SearchInput/>
                         <ButtonAddProduct/>
+                        <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddCategoryForm(handleClose)}/>
                     </div>
                 </div>
 

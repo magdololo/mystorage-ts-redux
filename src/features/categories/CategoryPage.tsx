@@ -1,15 +1,43 @@
 import React from "react";
+import {useParams} from 'react-router-dom';
+import AppTitle from "../../app/TopMenu/AppTitle";
+import ReturnToCategoryList from "../../component/ReturnToCategoryList";
+import {useGetCategoriesForUIDQuery} from "../api/apiSlice";
+import {skipToken} from "@reduxjs/toolkit/query";
+import {selectUser} from "../users/usersSlice";
+import {useSelector} from "react-redux";
+import AddProductForm from "../products/AddProductForm";
 
-const CategoryPage = () => {
+
+
+const CategoryPage= ()=> {
+    const {categoryPath} = useParams();
+    let user = useSelector(selectUser);
+    console.log(categoryPath)
+    const {
+        data: categories = []
+    } = useGetCategoriesForUIDQuery(user? user.uid : skipToken,{skip: !user})
+    console.log(categories)
+    const categoryFromPath = categories.find(category => category.path === categoryPath);
+    const categoryName = categoryFromPath?.title
+    console.log(categoryFromPath)
+    console.log(categoryName)
 
     return(
         <>
+            <div className="xs:w-full md:max-w-5xl lg:max-w-screen-md mx-auto">
+            <AppTitle/>
+            <div className="text-center bg-gray-50 text-gray-dark pt-20 pb-4 px-6">
+                <h1 className="text-3xl font-bold mt-0 mb-6 uppercase">{categoryName}</h1>
+            </div>
+            <ReturnToCategoryList/>
+            </div>
         </>
     )
 }
 export default CategoryPage;
 // export const CategoryPage = ({ match }) => {
-//     const { userId } = match.params;
+//     const { categoryName } = match.params;
 //
 //     const category = useSelector((state) => selectCategoryById(state, categoryId));
 //

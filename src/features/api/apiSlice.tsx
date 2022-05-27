@@ -4,6 +4,10 @@ import { getDocs, collection, query, addDoc} from "firebase/firestore";
 import {Category} from "../categories/categoriesSlice";
 import slugify from "slugify";
 // Define our single API slice object
+import {createEntityAdapter} from "@reduxjs/toolkit";
+import {BaseQueryMeta, BaseQueryResult} from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+const categoriesAdapter = createEntityAdapter();
+const initialState = categoriesAdapter.getInitialState();
 export const api = createApi({
     baseQuery: fakeBaseQuery(),
     tagTypes: ['Category', 'User'],
@@ -39,6 +43,7 @@ export const api = createApi({
                 }
             },
             providesTags: ['Category'],
+
         }),
         addNewCategory: build.mutation<Category,Partial<Category>>({
             async queryFn(newCategory, queryApi, extraOptions, baseQuery) {
@@ -53,6 +58,7 @@ export const api = createApi({
             },
             invalidatesTags: ['Category'],
         }),
+
 
     }),
 })

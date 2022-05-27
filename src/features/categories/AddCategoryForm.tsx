@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from "react-redux";
-import {Category, selectAllImages} from "./categoriesSlice";
+import {Category, } from "./categoriesSlice";
 import {Modal} from "../../component/Modal/Modal";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {selectUser} from "../users/usersSlice";
 import {useAddNewCategoryMutation} from "../api/apiSlice";
 import slugify from "slugify";
-
+import {addNewCategory} from "../categories/categoriesSlice"
+import {unwrapResult} from "@reduxjs/toolkit";
+import {useAppDispatch} from "../../app/store";
 //import slugify from "slugify";
 const AddCategoryForm = (closeAddCategoryModal: () => void) => {
-    const images = useSelector(selectAllImages)
+    // const images = useSelector(selectAllImages)
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const [title, setTitle] = useState('')
     const [pickedImage, setPickedImage] = useState('')
     const [open, setOpen] = React.useState(false);
@@ -21,7 +23,30 @@ const AddCategoryForm = (closeAddCategoryModal: () => void) => {
     const handleClose = () => setOpen(false);
     const modalHeader = "Wybierz zdjęcie"
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-   const [addNewCategory,{data, isError, isLoading, isSuccess}] = useAddNewCategoryMutation();
+   //const [addNewCategory,{data, isError, isLoading, isSuccess}] = useAddNewCategoryMutation();
+
+    const images = [
+        {
+            path: '../../../images/jams-g0a1a99a3b_1280.jpg',
+            id: '1'
+        },
+        {
+            path: '../../../images/olive-oil-ga7467deea_1280.jpg',
+            id: '2'
+        },
+        {
+            path: '../../../images/rice-g63090c71a_1280.jpg',
+            id: '3'
+        },
+        {
+            path: '../../../images/spices.jpg',
+            id: '4'
+        },
+        {
+            path: '../../../images/tagliatelle-gd39678393_1280.jpg',
+            id: '5'
+        }
+    ]
 
     const imagesOptions = images?.map(image=>(
         <div key={image.id} className="w-1/2 mb-1" onClick={(event: React.MouseEvent<HTMLElement>) => {
@@ -40,24 +65,28 @@ const AddCategoryForm = (closeAddCategoryModal: () => void) => {
             path: slugify(title, "_"),
             user: uid
         }
-
+            dispatch(addNewCategory(newCategory))
+                .unwrap()
+                .then((originalPromiseResult: Category)=>{
+                    setTitle("")
+                    setPickedImage("")
+                    closeAddCategoryModal()
+                })
             console.log(newCategory)
-            addNewCategory(newCategory);
-            setTitle("")
-            setPickedImage("")
-            closeAddCategoryModal()
+            //addNewCategory(newCategory);
+
 
 
 
     }
-    console.log(isSuccess)
-    useEffect(()=>{
-        if(isSuccess){
-
-            toast("category added")
-            console.log("zygam toastem", {toastId: data?.id})
-        }
-    }, [isSuccess]);
+    // console.log(isSuccess)
+    // useEffect(()=>{
+    //     if(isSuccess){
+    //
+    //         toast("category added")
+    //         console.log("zygam toastem", {toastId: data?.id})
+    //     }
+    // }, [isSuccess]);
 
     return(
         <>

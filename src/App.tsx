@@ -7,6 +7,7 @@ import {
     Routes,
     Route,
     useNavigate,
+
 } from "react-router-dom";
 
 import CategoryList from "./features/categories/CategoryList";
@@ -16,8 +17,8 @@ import RegisterPage from "./features/users/RegisterPage";
 import './App.css';
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
-import ProtectedRoute from "./component/ProtectedRoute";
 import {ToastContainer} from "react-toastify";
+import CategoryPage from "./features/categories/CategoryPage";
 
 function App() {
     initializeApp(firebaseConfig);
@@ -47,12 +48,13 @@ function App() {
     return (<>
             <div className="App">
                 <Routes>
+
                     !user ?
                         < Route path="/" element={<LoginPage/>}/>
                     :
-                        <Route path="/categories" element={<CategoryList/>}/>
-                        {/*<Route path='/register' element={<RegisterPage/>}/>*/}
+                        <Route path="/categories" element={<CategoryList/>} />
 
+                    <Route path="/categories/:categoryPath" element={<CategoryPage/>} />
 
                 </Routes>
             </div>

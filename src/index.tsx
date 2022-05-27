@@ -7,8 +7,6 @@ import "firebase/auth";
 import "firebase/firestore";
 import store from './app/store'
 import {Provider} from "react-redux";
-import { ReactReduxFirebaseProvider } from "react-redux-firebase";
-import { createFirestoreInstance } from "redux-firestore";
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
 

@@ -8,6 +8,7 @@ import productsReducer from '../features/products/productSlice'
 import categoriesReducer from '../features/categories/categoriesSlice'
 import usersReducer from '../features/users/usersSlice'
 import {api} from '../features/api/apiSlice'
+import {useDispatch} from "react-redux";
 const store = configureStore({
     reducer: {
         [api.reducerPath]: api.reducer,
@@ -24,6 +25,7 @@ const store = configureStore({
 
 
 export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()
 
 export type RootState = ReturnType<typeof store.getState>
 

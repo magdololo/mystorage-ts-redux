@@ -9,6 +9,7 @@ import AddCategoryForm from "./AddCategoryForm";
 import {selectUser} from "../users/usersSlice";
 import {useGetCategoriesForUIDQuery} from "../api/apiSlice";
 import {skipToken} from "@reduxjs/toolkit/query";
+import { Link} from 'react-router-dom';
 
 export const CategoryList = () => {
     let user = useSelector(selectUser);
@@ -21,7 +22,7 @@ export const CategoryList = () => {
    const modalHeader = "Dodaj nową kategorię"
     console.log(user)
 
-    const {
+     const {
        data: categories = []
     } = useGetCategoriesForUIDQuery(user? user.uid : skipToken,{skip: !user})
      console.log(categories)
@@ -38,33 +39,18 @@ export const CategoryList = () => {
 
     }
 
-    const renderedCategories = sortedCategories?.map(category => (
+
+     const renderedCategories = sortedCategories?.map(category => (
         // <div className="mb-4" >
         // //     <div className="relative overflow-hidden bg-no-repeat bg-cover max-w-xs h-auto z-10">
        // <div>
         <li className="h-auto flex flex-col relative" key={category.id}>
-                <a  href={category.path}>
+                <Link to={`/categories/${category.path}`}>
                 <img src={category.url} className="w-full h-auto object-cover flex-1 flex-grow" alt="Louvre"/>
                     <span className="absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 capitalize text-center text-white font-bold">{category.title}</span>
-                </a>
+                </Link>
         </li>
     ))
-       {/*             <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed    ">*/}
-
-       {/*                     <div className="absolute  py-2 text-center text-white font-bold text-2xl px-6 md:px-12  bg-black opacity-70 ">*/}
-       {/*                         <button type="button"*/}
-       {/*                                 className=" px-6 py-2 text-white font-bold text-md leading-tight uppercase rounded focus:outline-none focus:ring-0 transition duration-150 ease-in-out "*/}
-       {/*                                 data-mdb-ripple="true" data-mdb-ripple-color="light">*/}
-       {/*                             {category.title}*/}
-       {/*                         </button>*/}
-       {/*                     </div>*/}
-
-       {/*             </div>*/}
-       {/*</div>*/}
-        {/*//     </div>*/}
-        {/*// </div>*/}
-
-    // ))
 
 
     return (
