@@ -6,15 +6,14 @@ import {
     createEntityAdapter,
     EntityState
 } from '@reduxjs/toolkit'
-import {useSelector} from "react-redux";
-import {selectUser, User} from "../users/usersSlice";
-import store, {RootState} from "../../app/store";
+
+import {RootState} from "../../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../../firebase";
 
 export interface Category {
     id: string | null;
-    path: Required<string>;
+    path: Required<string> | undefined;
     url: Required<string>;
     title: Required<string>;
     user: string;
@@ -37,22 +36,20 @@ const categoriesAdapter = createEntityAdapter<Category>({
 
     }
 });
-const initialState: EntityState<Category> & { images: Image[]; error: null; status: string } = categoriesAdapter.getInitialState({
+const initialState: EntityState<Category> & { images: Image[]; error: null | string | undefined; status: string } = categoriesAdapter.getInitialState({
     images: [],
     status: 'idle',
-    error: null
+    error: null ,
 })
-export const fetchCategories = createAsyncThunk('categories/fetchCategories', async (queryFn: void) => {
-        const user = useSelector(selectUser);
-        const uid = user?.uid
+export const fetchCategories = createAsyncThunk('categories/fetchCategories', async (userId: string) => {
+
+
         try {
             const categories: Array<Category> = [];
-            if (uid === "")
-                return {
-                    data: categories
-                }
+            if (userId === "")
+                return categories
 
-            let q = await query(collection(db, "users/" + uid + "/categories"));
+            let q = await query(collection(db, "users/" + userId + "/categories"));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
 
@@ -61,7 +58,7 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
                 categories.push(categoryDoc);
 
             })
-            return {data: categories}
+            return categories
         } catch (error) {
             console.log(error)
             return {error: error}
@@ -80,14 +77,27 @@ const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
     reducers: {
-        categoryAdded: (state, action: PayloadAction<Category>) => {
-            categoriesAdapter.addOne(state, action)
-        }
+        // categoryAdded: (state, action: PayloadAction<Category>) => {
+        //     categoriesAdapter.addOne(state, action)
+        // }
 
 
     },
     extraReducers(builder){
         builder
+            .addCase(fetchCategories.pending, (state, action) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchCategories.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                // Add any fetched posts to the array
+                // Use the `upsertMany` reducer as a mutating update utility
+                categoriesAdapter.upsertMany(state, action.payload as Category[])
+            })
+            .addCase(fetchCategories.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.error.message
+            })
             .addCase(addNewCategory.fulfilled, categoriesAdapter.addOne )
     }
 })
@@ -98,7 +108,7 @@ export const {
     // Pass in a selector that returns the posts slice of state
 } = categoriesAdapter.getSelectors<RootState>((state) => state.categories);
 export const selectCategoryByPath = createSelector(
-    [selectAllCategories, (state, categoryPath) => categoryPath],
+    [selectAllCategories, (state:RootState, categoryPath) => categoryPath],
     (categories, categoryPath) => categories.filter((category) => category.path === categoryPath)
 );
 

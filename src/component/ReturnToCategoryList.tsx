@@ -8,9 +8,9 @@ const ReturnToCategoryList = () => {
         <Link to={"/categories"}>
             <div className ="flex flex-row flex-nowrap  w-1/2">
 
-               <div className="flex-none "><BsArrowLeft className="inline-flex"/></div>
+               <div className="flex-none "><BsArrowLeft className="inline-flex text-gray-light"/></div>
 
-                <div className="flex-1 text-left ml-2"><p>Wróć do listy kategorii</p></div>
+                <div className="flex-1 text-left ml-2 text-gray-light"><p>Wróć do listy kategorii</p></div>
 
             </div>
         </Link>

@@ -2,24 +2,26 @@ import {useState} from "react";
 import FormControl from '@mui/material/FormControl';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import {Product} from "./productSlice";
+import {ProductFromDictionary, selectAllProducts} from "./allProductsSlice";
+import {useSelector} from "react-redux";
 
 
-export let products: Product[];
+export let products: ProductFromDictionary[];
 
 type options = Array<string>;
 type AutocompleteProps = {
-    onChange: (data: Product| string | null) => void,
-    value: Product | string | null,
+    onChange: (data: ProductFromDictionary| string | null) => void,
+    value: ProductFromDictionary | string | null,
     setCapacity: (name: "unit" | "capacity", value: string | number) => void
-    setNewProductName: (data: (string | Product | null)) => void
-    newProductName: Product | string | null
+    setNewProductName: (data: (string | ProductFromDictionary | null)) => void
+    newProductName: ProductFromDictionary | string | null
 }
 
-const AutocompleteProducts = ({onChange, value, setCapacity, setNewProductName, newProductName}: AutocompleteProps) => {
+const AutocompleteAllProducts = ({onChange, value, setCapacity, setNewProductName, newProductName}: AutocompleteProps) => {
     const [inputValue, setInputValue] = useState('');
    console.log(inputValue);
   console.log(value);
+
     return(
         <>
 
@@ -57,7 +59,7 @@ const AutocompleteProducts = ({onChange, value, setCapacity, setNewProductName, 
 
     )
 }
-export default AutocompleteProducts;
+export default AutocompleteAllProducts;
 
 
 

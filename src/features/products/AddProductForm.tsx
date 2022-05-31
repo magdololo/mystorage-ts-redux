@@ -5,8 +5,8 @@ import React, {useState} from "react";
       const user = useSelector(selectUser)
       const uid = user? user.uid: ""
       const dispatch = useDispatch()
-      const [title, setTitle] = useState('')
-      const [pickedImage, setPickedImage] = useState('')
+      const [productName, setProductName] = useState('')
+      const [productCategory, setProductCategory] = useState('')
       const [open, setOpen] = React.useState(false);
       const handleOpen = () => setOpen(true);
       const handleClose = () => setOpen(false);

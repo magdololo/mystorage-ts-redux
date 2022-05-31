@@ -1,26 +1,24 @@
-import { configureStore, Action, } from '@reduxjs/toolkit'
-// import additionalMiddleware from 'additional-middleware'
-// import logger from 'redux-logger'
-// import untypedMiddleware from 'untyped-middleware'
-import {actionTypes, firebaseReducer} from "react-redux-firebase";
-import {firestoreReducer} from "redux-firestore";
-import productsReducer from '../features/products/productSlice'
+import { configureStore } from '@reduxjs/toolkit'
+import {actionTypes} from "react-redux-firebase";
+import allProductsReducer from '../features/products/allProductsSlice'
 import categoriesReducer from '../features/categories/categoriesSlice'
 import usersReducer from '../features/users/usersSlice'
-import {api} from '../features/api/apiSlice'
-import {useDispatch} from "react-redux";
+import userProductsReducer from '../features/products/userProductsSlice'
+import {useDispatch,TypedUseSelectorHook, useSelector} from "react-redux";
+import userProductsSlice from "../features/products/userProductsSlice";
 const store = configureStore({
     reducer: {
-        [api.reducerPath]: api.reducer,
-        products: productsReducer,
+
         categories: categoriesReducer,
         users: usersReducer,
+        allProducts: allProductsReducer,
+        userProducts: userProductsReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: {
             ignoredActions: [actionTypes.LOGIN, actionTypes.AUTH_LINK_ERROR]
         }
-    }).concat(api.middleware),
+    })
     })
 
 
@@ -28,7 +26,7 @@ export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 
 export type RootState = ReturnType<typeof store.getState>
-
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 
 

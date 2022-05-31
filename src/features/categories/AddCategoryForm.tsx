@@ -1,16 +1,12 @@
-import React, {useEffect, useState} from 'react'
-import {useSelector, useDispatch} from "react-redux";
-import {Category, } from "./categoriesSlice";
+import React, {useState} from 'react'
+import {useSelector} from "react-redux";
+import {Category} from "./categoriesSlice";
 import {Modal} from "../../component/Modal/Modal";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {selectUser} from "../users/usersSlice";
-import {useAddNewCategoryMutation} from "../api/apiSlice";
 import slugify from "slugify";
 import {addNewCategory} from "../categories/categoriesSlice"
-import {unwrapResult} from "@reduxjs/toolkit";
 import {useAppDispatch} from "../../app/store";
-//import slugify from "slugify";
+import 'react-toastify/dist/ReactToastify.css';
 const AddCategoryForm = (closeAddCategoryModal: () => void) => {
     // const images = useSelector(selectAllImages)
     const user = useSelector(selectUser)
@@ -18,6 +14,7 @@ const AddCategoryForm = (closeAddCategoryModal: () => void) => {
     const dispatch = useAppDispatch()
     const [title, setTitle] = useState('')
     const [pickedImage, setPickedImage] = useState('')
+    const [addRequestStatus, setAddRequestStatus] = useState('idle')
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -57,17 +54,20 @@ const AddCategoryForm = (closeAddCategoryModal: () => void) => {
                      src={image.path}/>
         </div>
     ))
+    const canSave =  [title, pickedImage, uid].every(Boolean) && addRequestStatus === 'idle'
     const onSaveCategory = ()=>{
-        let newCategory: Category ={
-           id: null,
-            title: title,
-            url: pickedImage,
-            path: slugify(title, "_"),
-            user: uid
-        }
+        if (canSave) {
+            let newCategory: Category = {
+                id: null,
+                title: title,
+                url: pickedImage,
+                path: slugify(title, "_"),
+                user: uid
+            }
+            setAddRequestStatus('pending')
             dispatch(addNewCategory(newCategory))
                 .unwrap()
-                .then((originalPromiseResult: Category)=>{
+                .then((originalPromiseResult: Category) => {
                     setTitle("")
                     setPickedImage("")
                     closeAddCategoryModal()
@@ -75,8 +75,8 @@ const AddCategoryForm = (closeAddCategoryModal: () => void) => {
             console.log(newCategory)
             //addNewCategory(newCategory);
 
-
-
+        }
+        setAddRequestStatus('idle')
 
     }
     // console.log(isSuccess)

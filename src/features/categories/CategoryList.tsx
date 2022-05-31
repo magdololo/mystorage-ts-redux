@@ -1,16 +1,18 @@
-
-import React, {useMemo} from 'react'
-import { useSelector } from 'react-redux'
+import React, {useEffect} from 'react'
+import {useSelector} from 'react-redux'
 import AppTitle from "../../app/TopMenu/AppTitle";
 import TopMenu from "../../app/TopMenu/TopMenu";
 import {Modal} from "../../component/Modal/Modal";
 import AddCategoryForm from "./AddCategoryForm";
 
-import {selectUser} from "../users/usersSlice";
-import {useGetCategoriesForUIDQuery} from "../api/apiSlice";
-import {skipToken} from "@reduxjs/toolkit/query";
-import { Link} from 'react-router-dom';
+import {login, logout, selectUser} from "../users/usersSlice";
 
+import {skipToken} from "@reduxjs/toolkit/query";
+import {Link} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import {fetchCategories, selectAllCategories, selectCategoryIds} from "./categoriesSlice";
+import {auth, onAuthStateChanged} from "../../firebase";
+import { Spinner } from '../../component/Spinner'
 export const CategoryList = () => {
     let user = useSelector(selectUser);
     console.log(user)
@@ -19,76 +21,77 @@ export const CategoryList = () => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-   const modalHeader = "Dodaj nową kategorię"
+    const modalHeader = "Dodaj nową kategorię"
     console.log(user)
+    const dispatch = useAppDispatch()
+    const categoriesStatus = useAppSelector(((state) => state.categories.status))
+    const categories = useAppSelector(selectAllCategories)
 
-     const {
-       data: categories = []
-    } = useGetCategoriesForUIDQuery(user? user.uid : skipToken,{skip: !user})
-     console.log(categories)
-    const sortedCategories = categories.slice()
-    if (sortedCategories != null && sortedCategories.length >= 2) {
-        sortedCategories.sort((a, b) => {
-            let aTitle = a.title.toLowerCase();
-            let bTitle = b.title.toLowerCase();
+    useEffect(() => {
 
-            if (aTitle < bTitle) return -1;//keep a b
-            if (aTitle > bTitle) return 1;//switch places b a
-            return 0
-        })
+            dispatch(fetchCategories(user?.uid ?? ""))
 
-    }
+    }, [user, dispatch])
+   console.log(categoriesStatus)
+    let content;
+    if (categoriesStatus === "loading") {
+      content = <Spinner text="Loading..." />;
+    } else if (categoriesStatus === "succeeded") {
+      const renderedCategories = categories?.map(category => (
 
-
-     const renderedCategories = sortedCategories?.map(category => (
-        // <div className="mb-4" >
-        // //     <div className="relative overflow-hidden bg-no-repeat bg-cover max-w-xs h-auto z-10">
-       // <div>
-        <li className="h-auto flex flex-col relative" key={category.id}>
+            <li className="h-auto flex flex-col relative" key={category.id}>
                 <Link to={`/categories/${category.path}`}>
-                <img src={category.url} className="w-full h-auto object-cover flex-1 flex-grow" alt="Louvre"/>
-                    <span className="absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 capitalize text-center text-white font-bold">{category.title}</span>
+                    <img src={category.url} className="w-full h-auto object-cover flex-1 flex-grow" alt="Louvre"/>
+                    <span
+                        className="absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 capitalize text-center text-white font-bold">{category.title}</span>
                 </Link>
-        </li>
-    ))
-
-
-    return (
-        <>
-            <AppTitle />
-             <TopMenu />
-            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddCategoryForm(handleClose)}/>
-                <div className="w-screen mx-auto max-w-screen-lg mb-32" >
+            </li>
+        ))
+        content =
+            <>
+                <div className="w-screen mx-auto max-w-screen-lg mb-32">
                     <div className="flex flex-nowrap w-full min-h-min items-center">
                         <div className="flex flex-wrap min-w-fit w-10/12 mx-auto pb-36">
                             <div className="grid grid-cols-3 gap-2 overflow-y-auto">
-                        {renderedCategories}
-
-                            <div className="mb-4 border-solid border-purple border-2 border-opacity-25" onClick={handleOpen}>
-                                <div className=" relative overflow-hidden bg-no-repeat bg-cover max-w-xs ">
-
-                                    <img src="http://placehold.jp/ffffff/ffffff/1280x900.png" className="max-w-xs bg-cover"/>
-                                    <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed">
-                                        <div className="relative mx-auto top-1/3 text-purple font-bold text-2xl h-5 w-5 ">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/>
-                                        </svg>
-                                        </div>
-                                        <div className="relative text-center top-1/3  text-gray font-bold text-2xl px-6 md:px-12 ">
-
-                                        <button className="font-bold text-md leading-tight uppercase text-center">
-                                            <span className="text-center block justify-center align-middle uppercase text-gray-500 z-100 ">Dodaj katregorię</span>
-                                        </button>
-                                        </div>
+                            {renderedCategories}
+                                <div className="mb-4 border-solid border-purple border-2 border-opacity-25"
+                                     onClick={handleOpen}>
+                                    <div className=" relative overflow-hidden bg-no-repeat bg-cover max-w-xs ">
+                                        <img src="http://placehold.jp/ffffff/ffffff/1280x900.png"
+                                             className="max-w-xs bg-cover"/>
+                                            <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed">
+                                                <div className="relative mx-auto top-1/3 text-purple font-bold text-2xl h-5 w-5 ">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
+                                                         viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/>
+                                                    </svg>
+                                                </div>
+                                            <div className="relative text-center top-1/3  text-gray font-bold text-2xl px-6 md:px-12 ">
+                                                <button className="font-bold text-md leading-tight uppercase text-center">
+                                                    <span className="text-center block justify-center align-middle uppercase text-gray-500 z-100 ">Dodaj katregorię</span>
+                                                </button>
+                                            </div>
+                                            </div>
                                     </div>
-                                </div>
-                            </div>
+                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </>
+
+    } else if (categoriesStatus === "failed") {
+        content = <div><span> ups.. coś poszło nie tak</span></div>;
+    }
+
+    return (
+        <>
+            <AppTitle/>
+            <TopMenu/>
+            {content}
+            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddCategoryForm(handleClose)}/>
+        </>
+
     )
 }
 export default CategoryList;
