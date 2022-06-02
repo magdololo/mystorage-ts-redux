@@ -20,6 +20,11 @@ import {firebaseConfig} from './firebase';
 import {ToastContainer} from "react-toastify";
 import CategoryPage from "./features/categories/CategoryPage";
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas)
+
 function App() {
     initializeApp(firebaseConfig);
     const navigate = useNavigate()

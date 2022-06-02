@@ -15,9 +15,10 @@ const store = configureStore({
         userProducts: userProductsReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: {
-            ignoredActions: [actionTypes.LOGIN, actionTypes.AUTH_LINK_ERROR]
-        }
+        serializableCheck: false
+        //     {
+        //     ignoredActions: [actionTypes.LOGIN, actionTypes.AUTH_LINK_ERROR]
+        // }
     })
     })
 

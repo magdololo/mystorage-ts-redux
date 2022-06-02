@@ -1,9 +1,8 @@
 import {createSlice, createSelector, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
 import {RootState} from "../../app/store";
-import { doc, startAt, endAt, orderBy, getDocs, query,collectionGroup, documentId} from "firebase/firestore";
+import { doc, startAt, endAt, orderBy, getDocs, query,collectionGroup, documentId, Timestamp} from "firebase/firestore";
 import {db} from "../../firebase";
-import {selectAllCategories} from "../categories/categoriesSlice";
-import {selectAllProducts} from "./allProductsSlice";
+
 
 
 
@@ -20,6 +19,20 @@ export interface UserProduct{
     id: string;
 
 }
+
+export interface FirebaseUserProduct{
+    productId: Required<string>;
+    name: Required<string>;
+    categoryId: Required<string>;
+    capacity: Required<number>;
+    unit: Required<string>;
+    quantity: Required<number>;
+    expireDate: { seconds:number, nanoseconds: number}|null;
+    userId: null | string;
+    id: string;
+
+}
+
 const userProductsAdapter = createEntityAdapter<UserProduct>({
     sortComparer: (a: UserProduct, b: UserProduct) => {
         let aTitle = a.name.toLowerCase();
@@ -36,14 +49,27 @@ export const fetchUserProducts = createAsyncThunk('userProducts/fetchUserProduct
 
         try {
             const userProducts: Array<UserProduct> = [];
+            if (userId === "")
+                return userProducts
+
             const docRef = doc(db, "users", userId);
-            let q = await query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
+            let q = query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
 
-                let productDoc = doc.data() as UserProduct;
+                let productDoc = doc.data() as FirebaseUserProduct;
                 productDoc.id = doc.id;
-                userProducts.push(productDoc);
+
+                let expireDate: Date | null = null;
+
+                if(productDoc.hasOwnProperty("expireDate") && productDoc.expireDate !== null){
+                    let expireTimestamp = Timestamp.fromMillis(productDoc.expireDate.seconds*1000);
+                    //
+                    expireDate = expireTimestamp.toDate();
+                }
+                let product = {...productDoc, expireDate: expireDate} as UserProduct
+
+                userProducts.push(product);
 
             })
             return userProducts
@@ -81,9 +107,9 @@ export const {
     // Pass in a selector that returns the posts slice of state
 } = userProductsAdapter.getSelectors<RootState>((state) => state.userProducts);
 
-export const selectUserProductByCategoryId = createSelector(
-    [selectUserProducts, (state:RootState, categoryId) => categoryId],
-    (userProducts, categoryId) => userProducts.filter((product) => product.categoryId !== categoryId)
-);
+// export const selectUserProductByCategoryId = createSelector(
+//     [selectUserProducts, (state:RootState, categoryId) => categoryId],
+//     (userProducts, categoryId) => userProducts.filter((product) => product.categoryId === categoryId)
+// );
 
 export default userProductsSlice.reducer

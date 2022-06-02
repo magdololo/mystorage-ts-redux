@@ -10,12 +10,12 @@ import {login, logout, selectUser} from "../users/usersSlice";
 import {skipToken} from "@reduxjs/toolkit/query";
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {fetchCategories, selectAllCategories, selectCategoryIds} from "./categoriesSlice";
-import {auth, onAuthStateChanged} from "../../firebase";
+import {fetchCategories, selectAllCategories} from "./categoriesSlice";
+
 import { Spinner } from '../../component/Spinner'
 export const CategoryList = () => {
     let user = useSelector(selectUser);
-    console.log(user)
+
 
 
     const [open, setOpen] = React.useState(false);
@@ -49,7 +49,7 @@ export const CategoryList = () => {
         ))
         content =
             <>
-                <div className="w-screen mx-auto max-w-screen-lg mb-32">
+                <div className="w-screen-xs mx-auto max-w-screen-xl mb-32">
                     <div className="flex flex-nowrap w-full min-h-min items-center">
                         <div className="flex flex-wrap min-w-fit w-10/12 mx-auto pb-36">
                             <div className="grid grid-cols-3 gap-2 overflow-y-auto">
