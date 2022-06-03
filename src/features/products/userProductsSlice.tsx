@@ -80,19 +80,32 @@ export const fetchUserProducts = createAsyncThunk('userProducts/fetchUserProduct
     }
 )
 
+export interface ChangeQuantity {
+    userProduct : UserProduct,
+    changeQuantity: "increment"|"decrement"
+}
 
-export const changeProductQuantity = createAsyncThunk<void, UserProduct>('userProducts/changeProductQuantity', async (userProduct: UserProduct)=> {
+export const changeProductQuantity = createAsyncThunk('userProducts/changeProductQuantity', async (changeQuantity: ChangeQuantity)=> {
         try {
-            const productRef = doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products/", userProduct.productId);
+            const userProduct = changeQuantity.userProduct;
+            const productRef = doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products/", userProduct.id);
             const productDoc = await getDoc(productRef);
+            console.log(productDoc)
             const userProductFromFirebase = productDoc.data() as UserProduct;
-            if (userProductFromFirebase) {
-                userProductFromFirebase.quantity = userProduct.quantity;
+            userProductFromFirebase.id = productDoc.id
+            console.log(userProductFromFirebase)
+            if (userProductFromFirebase ) {
+                let newQuantity = userProduct.quantity
+                changeQuantity.changeQuantity === "increment" ? newQuantity++ : newQuantity--
+                userProductFromFirebase.quantity = newQuantity;
+                console.log(userProductFromFirebase)
                 await setDoc(productRef, userProductFromFirebase);
-            }
 
+            }
+            return userProductFromFirebase
         } catch (error) {
-            console.log(error);
+            console.log(error)
+            return {error: error}
         }
     }
 )
@@ -105,13 +118,6 @@ const userProductsSlice = createSlice({
     name: 'userProducts',
     initialState,
     reducers: {
-        quantityAdded(state, action) {
-            const {userProductId} = action.payload;
-            const incrementProduct = state.entities[userProductId];
-            if(incrementProduct){
-                incrementProduct.quantity++;
-            }
-        }
     },
     extraReducers(builder) {
         builder
@@ -121,9 +127,18 @@ const userProductsSlice = createSlice({
                 // Use the `upsertMany` reducer as a mutating update utility
                 userProductsAdapter.upsertMany(state, action.payload as UserProduct[])
             })
+            .addCase(changeProductQuantity.fulfilled,(state,action )=>{
+                console.log(action.payload)
+                let userProduct = action.payload as UserProduct
+                userProductsAdapter.updateOne(state, {id:userProduct.id, changes: {quantity: userProduct.quantity}})
+
+
+                })
+
+
     }
 })
-export const { quantityAdded } = userProductsSlice.actions;
+
 export const {
     selectAll: selectUserProducts,
     selectById: selectUserProductById,

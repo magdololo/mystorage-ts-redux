@@ -8,9 +8,9 @@ import {selectUser} from "../users/usersSlice";
 import {useSelector} from "react-redux";
 import {selectAllCategories} from "./categoriesSlice";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {selectUserProducts} from "../products/userProductsSlice";
+import {ChangeQuantity, selectUserProducts, UserProduct} from "../products/userProductsSlice";
 import {fetchUserProducts} from "../products/userProductsSlice";
-import {quantityAdded} from "../products/userProductsSlice";
+import {changeProductQuantity} from "../products/userProductsSlice";
 import {
     faTrash, // the clock icon
     faPlus, // the user circle icon
@@ -30,13 +30,22 @@ const CategoryPage = () => {
     const categoryId = categoryFromPath?.id
     const productsOfCategory = useAppSelector((state) => userProducts.filter(product => product.categoryId === categoryId))
     console.log(productsOfCategory)
+
     let [todayDate] = useState(new Date());
     const [counter, setCounter] = useState(0)
-    const increment = () => {
-        setCounter(prevCounter => prevCounter + 1)
+    const increment = (userProduct: UserProduct) => {
+        const changeQuantityProduct: ChangeQuantity = {
+            userProduct: userProduct,
+            changeQuantity: "increment"
+        }
+        dispatch(changeProductQuantity(changeQuantityProduct))
     }
-    const decrement = () => {
-        setCounter(prevCounter => prevCounter - 1)
+    const decrement = (userProduct: UserProduct)  => {
+        const changeQuantityProduct: ChangeQuantity = {
+            userProduct: userProduct,
+            changeQuantity: "decrement"
+        }
+        dispatch(changeProductQuantity(changeQuantityProduct))
     }
     useEffect(() => {
         dispatch(fetchUserProducts(user?.uid ?? ""))
@@ -75,9 +84,9 @@ const CategoryPage = () => {
                                     <div className="flex flex-auto flex-nowrap w-4/12 relative ">
                                         <div className="absolute right-0 self-center">
 
-                                            <FontAwesomeIcon className="text-xl text-blue-500 px-4" icon={faPlus} onClick={increment}/>
-                                            <span className="text-xl text-blue-800 px-2">{counter}</span>
-                                            <FontAwesomeIcon className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4" icon={faMinus} onClick={decrement}/>
+                                            <FontAwesomeIcon className="text-xl text-blue-500 px-4" icon={faPlus} onClick={()=>increment(product)}/>
+                                            <span className="text-xl text-blue-800 px-2">{product.quantity}</span>
+                                            <FontAwesomeIcon className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4" icon={faMinus} onClick={() => decrement(product)}/>
                                             <FontAwesomeIcon className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4" icon={faTrash} />
                                             <FontAwesomeIcon className="text-xl text-blue-800 px-4" icon={faPen} />
                                         </div>
