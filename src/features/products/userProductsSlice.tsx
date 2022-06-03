@@ -1,6 +1,6 @@
 import {createSlice, createSelector, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
 import {RootState} from "../../app/store";
-import { doc, startAt, endAt, orderBy, getDocs, query,collectionGroup, documentId, Timestamp} from "firebase/firestore";
+import { doc, startAt, endAt, orderBy, getDocs, query,collectionGroup, documentId, Timestamp,setDoc, getDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 
 
@@ -80,6 +80,22 @@ export const fetchUserProducts = createAsyncThunk('userProducts/fetchUserProduct
     }
 )
 
+
+export const changeProductQuantity = createAsyncThunk<void, UserProduct>('userProducts/changeProductQuantity', async (userProduct: UserProduct)=> {
+        try {
+            const productRef = doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products/", userProduct.productId);
+            const productDoc = await getDoc(productRef);
+            const userProductFromFirebase = productDoc.data() as UserProduct;
+            if (userProductFromFirebase) {
+                userProductFromFirebase.quantity = userProduct.quantity;
+                await setDoc(productRef, userProductFromFirebase);
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)
 const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string } = userProductsAdapter.getInitialState({
     status: 'idle',
     error: null ,
@@ -88,7 +104,15 @@ const initialState: EntityState<UserProduct>& { error: null | string | undefined
 const userProductsSlice = createSlice({
     name: 'userProducts',
     initialState,
-    reducers: {},
+    reducers: {
+        quantityAdded(state, action) {
+            const {userProductId} = action.payload;
+            const incrementProduct = state.entities[userProductId];
+            if(incrementProduct){
+                incrementProduct.quantity++;
+            }
+        }
+    },
     extraReducers(builder) {
         builder
             .addCase(fetchUserProducts.fulfilled, (state, action) => {
@@ -99,7 +123,7 @@ const userProductsSlice = createSlice({
             })
     }
 })
-
+export const { quantityAdded } = userProductsSlice.actions;
 export const {
     selectAll: selectUserProducts,
     selectById: selectUserProductById,

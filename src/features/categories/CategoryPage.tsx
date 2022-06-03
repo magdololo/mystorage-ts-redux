@@ -10,11 +10,12 @@ import {selectAllCategories} from "./categoriesSlice";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {selectUserProducts} from "../products/userProductsSlice";
 import {fetchUserProducts} from "../products/userProductsSlice";
-
+import {quantityAdded} from "../products/userProductsSlice";
 import {
-    faClock, // the clock icon
-    faUserCircle, // the user circle icon
-    faCoffee, // a cup of coffee
+    faTrash, // the clock icon
+    faPlus, // the user circle icon
+    faMinus, // a cup of coffee
+    faPen
 } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -30,7 +31,13 @@ const CategoryPage = () => {
     const productsOfCategory = useAppSelector((state) => userProducts.filter(product => product.categoryId === categoryId))
     console.log(productsOfCategory)
     let [todayDate] = useState(new Date());
-
+    const [counter, setCounter] = useState(0)
+    const increment = () => {
+        setCounter(prevCounter => prevCounter + 1)
+    }
+    const decrement = () => {
+        setCounter(prevCounter => prevCounter - 1)
+    }
     useEffect(() => {
         dispatch(fetchUserProducts(user?.uid ?? ""))
     }, [dispatch, user])
@@ -49,7 +56,7 @@ const CategoryPage = () => {
                 <div className="flex mt-2">
                     <ul className="pb-16 w-full relative">
                         {productsOfCategory.map((product) =>
-                            <li key={product.id} className="flex flex-col relative px-6 py-6 border-b border-gray-extraLight w-full rounded-t-lg bg-blue-600  cursor-pointer">
+                            <li key={product.id} className="flex flex-col relative px-6 py-6 border-b border-gray-extraLight w-full rounded-t-lg cursor-pointer">
                                 <div className = "flex flex-row flex-nowrap w-full ">
 
                                     <div className="flex-auto flex-col w-8/12 relative">
@@ -66,10 +73,13 @@ const CategoryPage = () => {
                                     </div>
 
                                     <div className="flex flex-auto flex-nowrap w-4/12 relative ">
-                                        <div className=" absolute right-0 self-center">
+                                        <div className="absolute right-0 self-center">
 
-                                            <FontAwesomeIcon icon={faClock} />
-
+                                            <FontAwesomeIcon className="text-xl text-blue-500 px-4" icon={faPlus} onClick={increment}/>
+                                            <span className="text-xl text-blue-800 px-2">{counter}</span>
+                                            <FontAwesomeIcon className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4" icon={faMinus} onClick={decrement}/>
+                                            <FontAwesomeIcon className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4" icon={faTrash} />
+                                            <FontAwesomeIcon className="text-xl text-blue-800 px-4" icon={faPen} />
                                         </div>
 
                                     </div>
