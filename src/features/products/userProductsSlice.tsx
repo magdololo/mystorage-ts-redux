@@ -1,6 +1,6 @@
 import {createSlice, createSelector, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
 import {RootState} from "../../app/store";
-import { doc, startAt, endAt, orderBy, getDocs, query,collectionGroup, documentId, Timestamp,setDoc, getDoc} from "firebase/firestore";
+import { doc, startAt, endAt, orderBy, getDocs, query,collectionGroup, documentId, Timestamp,setDoc, getDoc, deleteDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 
 
@@ -109,6 +109,18 @@ export const changeProductQuantity = createAsyncThunk('userProducts/changeProduc
         }
     }
 )
+
+export const deleteUserProduct = createAsyncThunk('userProducts/deleteUserProduct', async (userProduct: UserProduct)=> {
+    try {
+        await deleteDoc(doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products/", userProduct.id))
+        return userProduct.id
+
+}    catch(error){
+    console.log(error)
+    return {error: error}
+
+}
+})
 const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string } = userProductsAdapter.getInitialState({
     status: 'idle',
     error: null ,
@@ -132,9 +144,10 @@ const userProductsSlice = createSlice({
                 let userProduct = action.payload as UserProduct
                 userProductsAdapter.updateOne(state, {id:userProduct.id, changes: {quantity: userProduct.quantity}})
 
-
-                })
-
+            })
+            .addCase(deleteUserProduct.fulfilled,(state,action)=>{
+              userProductsAdapter.removeOne(state, action.payload as string)
+            })
 
     }
 })

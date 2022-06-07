@@ -17,7 +17,9 @@ import {
     faMinus, // a cup of coffee
     faPen
 } from "@fortawesome/free-solid-svg-icons";
-
+import AddCategoryForm from "./AddCategoryForm";
+import {Modal} from "../../component/Modal/Modal";
+import AddUserProductForm from "../products/AddProductForm";
 
 
 const CategoryPage = () => {
@@ -30,9 +32,16 @@ const CategoryPage = () => {
     const categoryId = categoryFromPath?.id
     const productsOfCategory = useAppSelector((state) => userProducts.filter(product => product.categoryId === categoryId))
     console.log(productsOfCategory)
-
     let [todayDate] = useState(new Date());
-    const [counter, setCounter] = useState(0)
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const modalHeader = "Edytuj produkt"
+
+
+    useEffect(() => {
+        dispatch(fetchUserProducts(user?.uid ?? ""))
+    }, [dispatch, user])
     const increment = (userProduct: UserProduct) => {
         const changeQuantityProduct: ChangeQuantity = {
             userProduct: userProduct,
@@ -47,9 +56,7 @@ const CategoryPage = () => {
         }
         dispatch(changeProductQuantity(changeQuantityProduct))
     }
-    useEffect(() => {
-        dispatch(fetchUserProducts(user?.uid ?? ""))
-    }, [dispatch, user])
+
 
 
 
@@ -88,7 +95,9 @@ const CategoryPage = () => {
                                             <span className="text-xl text-blue-800 px-2">{product.quantity}</span>
                                             <FontAwesomeIcon className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4" icon={faMinus} onClick={() => decrement(product)}/>
                                             <FontAwesomeIcon className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4" icon={faTrash} />
-                                            <FontAwesomeIcon className="text-xl text-blue-800 px-4" icon={faPen} />
+                                            <FontAwesomeIcon className="text-xl text-blue-800 px-4" icon={faPen} onClick={handleOpen}/>
+
+                                            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddUserProductForm({handleClose})}/>
                                         </div>
 
                                     </div>

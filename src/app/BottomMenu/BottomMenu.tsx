@@ -4,7 +4,7 @@ import ButtonAddProduct from "./ButtonAddProduct";
 import AddCategoryForm from "../../features/categories/AddCategoryForm";
 import {Modal} from "../../component/Modal/Modal";
 import React from "react";
-
+import AddUserProductForm from "../../features/products/AddUserProductForm";
 
 const BottomMenu = () => {
     const [open, setOpen] = React.useState(false);
@@ -20,8 +20,8 @@ const BottomMenu = () => {
                                     sm:px-2 sm:max-w-xs sm:mx-auto sm:justify-center">
                         <Hamburger/>
                         <SearchInput/>
-                        <ButtonAddProduct/>
-                        <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddCategoryForm(handleClose)}/>
+                        <ButtonAddProduct handleOpen={handleOpen}/>
+                        <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddUserProductForm({handleClose})}/>
                     </div>
                 </div>
 
