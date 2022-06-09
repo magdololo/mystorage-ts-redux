@@ -23,11 +23,9 @@
 .MuiInputLabel-root.Mui-focused{
   color: #7e5bef !important;
 }
-/*.pass-wrapper {*/
-/*  position: relative;*/
-/*  display: flex;*/
-/*  margin-bottom: 14px;*/
-/*}*/
+.MuiInputBase-root.MuiInput-root::after{
+  border-color: #7e5bef !important;
+}
 
 i {
   position: absolute;
