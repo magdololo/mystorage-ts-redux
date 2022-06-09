@@ -100,7 +100,7 @@ const CategoryPage = () => {
                                             <FontAwesomeIcon className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4" icon={faTrash} />
                                             <FontAwesomeIcon className="text-xl text-blue-800 px-4" icon={faPen} onClick={handleOpen}/>
 
-                                            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddUserProductForm({handleClose})}/>
+                                            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddUserProductForm({handleClose, open})}/>
                                         </div>
 
                                     </div>

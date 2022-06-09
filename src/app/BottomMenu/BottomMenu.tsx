@@ -21,7 +21,7 @@ const BottomMenu = () => {
                         <Hamburger/>
                         <SearchInput/>
                         <ButtonAddProduct handleOpen={handleOpen}/>
-                        <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddUserProductForm({handleClose})}/>
+                        <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddUserProductForm({handleClose, open})}/>
                     </div>
                 </div>
 
