@@ -10,14 +10,13 @@ import {login, logout, selectUser} from "../users/usersSlice";
 import {skipToken} from "@reduxjs/toolkit/query";
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {fetchCategories, selectAllCategories} from "./categoriesSlice";
-
+import {Category, currentCategoryChange, fetchCategories, selectAllCategories} from "./categoriesSlice";
+import {fetchAllProducts} from "../products/allProductsSlice";
 import { Spinner } from '../../component/Spinner'
+import {fetchUserProducts} from "../products/userProductsSlice";
+
 export const CategoryList = () => {
     let user = useSelector(selectUser);
-
-
-
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -26,13 +25,16 @@ export const CategoryList = () => {
     const dispatch = useAppDispatch()
     const categoriesStatus = useAppSelector(((state) => state.categories.status))
     const categories = useAppSelector(selectAllCategories)
+    useEffect(()=> {
+        dispatch(currentCategoryChange(null))
+    }, [dispatch])
+    useEffect(() => {
+            dispatch(fetchCategories(user?.uid ?? ""))
+    }, [user, dispatch])
 
     useEffect(() => {
-
-            dispatch(fetchCategories(user?.uid ?? ""))
-
-    }, [user, dispatch])
-   console.log(categoriesStatus)
+        dispatch(fetchAllProducts())
+    }, [dispatch, user])
     let content;
     if (categoriesStatus === "loading") {
       content = <Spinner text="Loading..." />;

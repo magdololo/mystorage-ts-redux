@@ -23,8 +23,8 @@ import AddUserProductForm from "../products/AddProductForm";
 
 
 const CategoryPage = () => {
+    let user = useSelector(selectUser);
     const dispatch = useAppDispatch();
-    let user = useAppSelector(selectUser);
     const {categoryPath} = useParams();
     const userProducts = useAppSelector(selectUserProducts)
     const categories = useAppSelector(selectAllCategories)
@@ -38,10 +38,10 @@ const CategoryPage = () => {
     const handleClose = () => setOpen(false);
     const modalHeader = "Edytuj produkt"
 
-
     useEffect(() => {
         dispatch(fetchUserProducts(user?.uid ?? ""))
     }, [dispatch, user])
+
     useEffect(()=> {
         dispatch(currentCategoryChange(categoryFromPath as Category))
     }, [dispatch, categoryFromPath])

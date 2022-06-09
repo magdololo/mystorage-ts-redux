@@ -2,17 +2,17 @@ import React from 'react';
 import {useForm, NestedValue} from 'react-hook-form';
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import {FilterOptionsState, TextField} from "@mui/material";
-import {useSelector} from "react-redux";
-import {selectUserProducts, UserProduct} from "./userProductsSlice";
+import { UserProduct} from "./userProductsSlice";
+import {ProductFromDictionary, selectAllProducts} from "./allProductsSlice";
 import {useAppSelector} from "../../app/store";
 import {AutocompleteWithUserProductsProps} from "./AddProductForm";
 
-const filter = createFilterOptions<UserProduct>();
+const filter = createFilterOptions<ProductFromDictionary>();
 
 
-export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProductFromAutocomplete}: AutocompleteWithUserProductsProps) => {
+export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProductFromAutocomplete, setNewProductName}: AutocompleteWithUserProductsProps) => {
 
-    const userProducts = useAppSelector(selectUserProducts)
+    const allProducts = useAppSelector(selectAllProducts)
 
     return (
 
@@ -21,10 +21,12 @@ export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProduc
             onChange={(_, data) => {
                 console.log(data)
                 onChange(data);
-                if(data && typeof data === "object"){
-                    setSelectedProductFromAutocomplete(data);
+                if(data && typeof data === "object" ){
+                    setSelectedProductFromAutocomplete(data as UserProduct);
                 }
-
+                if(data && typeof data === "string"){
+                    setNewProductName(data);
+                }
             }
             }
             filterOptions={(options, params) => {
@@ -40,9 +42,9 @@ export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProduc
             autoSelect//dołacza wpisany tekst w jedna z opcji select z ktorej popbierze wartość
             handleHomeEndKeys
             id="free-solo-with-text-demo"
-            options={userProducts}
+            options={allProducts}
             getOptionLabel={option => typeof option === "object" ? option.name : option}
-            renderOption={(props, option) => <li {...props}>{option.name} {option.capacity} {option.unit}</li>}
+            renderOption={(props, option) => <li {...props} key={option.id}>{option.name} {option.capacity} {option.unit}</li>}
             freeSolo
             renderInput={(params) => (
                 <TextField  {...params} label="Nazwa produktu"/>
