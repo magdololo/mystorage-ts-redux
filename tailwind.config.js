@@ -54,12 +54,13 @@ module.exports = {
         'labelSize': '17.6px',
         'md' : '16px'
       },
+
     },
   },
 
   plugins: [
     require('tailwind-scrollbar-hide'),
-    require('@tailwindcss/forms'),
+    // require('@tailwindcss/forms'),
 
   ],
 }

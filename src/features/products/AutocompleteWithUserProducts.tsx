@@ -1,27 +1,17 @@
 import React from 'react';
 import { useForm, NestedValue } from 'react-hook-form';
-import Autocomplete from '@mui/material/Autocomplete';
-import {TextField} from "@mui/material";
+import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
+import {FilterOptionsState, TextField} from "@mui/material";
 import {useSelector} from "react-redux";
 import {selectUserProducts, UserProduct} from "./userProductsSlice";
 import {useAppSelector} from "../../app/store";
+import {AutocompleteWithUserProductsProps} from "./AddProductForm";
+const filter = createFilterOptions<UserProduct>();
 
 
-// const UserProducts: Array<UserProduct> = [
-//     { label: 'Chocolate', value: 'chocolate' },
-//     { label: 'Strawberry', value: 'strawberry' },
-//     { label: 'Vanilla', value: 'vanilla' },
-// ];
 
+export const AutocompleteWithUserProducts =({ onChange, value}: AutocompleteWithUserProductsProps)=> {
 
-export const AutocompleteWithUserProducts =()=> {
-    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<{
-        autocomplete: NestedValue<UserProduct[]>;
-        select: NestedValue<number[]>;
-    }>({
-        defaultValues: { autocomplete: [], select: [] },
-    });
-    const onSubmit = handleSubmit((data) => console.log(data));
     const userProducts = useAppSelector(selectUserProducts)
     // React.useEffect(() => {
     //     register('autocomplete', {
@@ -34,28 +24,37 @@ export const AutocompleteWithUserProducts =()=> {
 
     return (
         // <form onSubmit={onSubmit}>
-            <Autocomplete
-                options={userProducts}
-                getOptionLabel={(userProduct: UserProduct) => userProduct.name}
-                onChange={(_, data) => {
+        <Autocomplete
+            value={value}
+            onChange={(_, data) => {
 
-                    // setNewProductName(data);
-                    // setUserProduct(data);
-                    // onChange(data);
+                onChange(data);
 
-                }
-                }
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        error={Boolean(errors?.autocomplete)}
-                        helperText={errors?.autocomplete?.message}
-                    />
-                )}
-            />
+            }
+            }
+            filterOptions={(options, params) => {
 
 
-           // <input type="submit" />
-        // </form>
+                const filtered = filter(options, params);
+
+                return filtered as UserProduct[];
+            }}
+            isOptionEqualToValue={(option, value) => {
+                return option.name === value.name
+            }}
+            autoSelect//dołacza wpisany tekst w jedna z opcji select z ktorej popbierze wartość
+            handleHomeEndKeys
+             id="free-solo-with-text-demo"
+            options={userProducts}
+            getOptionLabel={option =>  typeof option === "object"? option.name : option }
+            renderOption={(props, option) => <li {...props}>{option.name} {option.capacity} {option.unit}</li>}
+            freeSolo
+            renderInput={(params) => (
+                <TextField  {...params} label="Nazwa produktu"/>
+            )}
+
+        />
+
+
     );
 }

@@ -4,13 +4,13 @@ import ButtonAddProduct from "./ButtonAddProduct";
 import AddCategoryForm from "../../features/categories/AddCategoryForm";
 import {Modal} from "../../component/Modal/Modal";
 import React from "react";
-import AddUserProductForm from "../../features/products/AddUserProductForm";
+import AddUserProductForm from "../../features/products/AddProductForm";
 
 const BottomMenu = () => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const modalHeader = "Wybierz zdjęcie"
+    const modalHeader = "Dodaj produkt"
 
     return(
         <>

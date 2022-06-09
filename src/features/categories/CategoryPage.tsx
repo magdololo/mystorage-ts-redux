@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {skipToken} from "@reduxjs/toolkit/query";
 import {selectUser} from "../users/usersSlice";
 import {useSelector} from "react-redux";
-import {selectAllCategories} from "./categoriesSlice";
+import {selectAllCategories, currentCategoryChange, Category} from "./categoriesSlice";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {ChangeQuantity, selectUserProducts, UserProduct} from "../products/userProductsSlice";
 import {fetchUserProducts} from "../products/userProductsSlice";
@@ -42,6 +42,9 @@ const CategoryPage = () => {
     useEffect(() => {
         dispatch(fetchUserProducts(user?.uid ?? ""))
     }, [dispatch, user])
+    useEffect(()=> {
+        dispatch(currentCategoryChange(categoryFromPath as Category))
+    }, [dispatch, categoryFromPath])
     const increment = (userProduct: UserProduct) => {
         const changeQuantityProduct: ChangeQuantity = {
             userProduct: userProduct,

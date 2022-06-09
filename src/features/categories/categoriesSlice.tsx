@@ -36,10 +36,11 @@ const categoriesAdapter = createEntityAdapter<Category>({
 
     }
 });
-const initialState: EntityState<Category> & { images: Image[]; error: null | string | undefined; status: string } = categoriesAdapter.getInitialState({
+const initialState: EntityState<Category> & { images: Image[]; error: null | string | undefined; status: string; currentCategory : Category | null } = categoriesAdapter.getInitialState({
     images: [],
     status: 'idle',
     error: null ,
+    currentCategory:  null
 })
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async (userId: string) => {
 
@@ -77,9 +78,9 @@ const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
     reducers: {
-        // categoryAdded: (state, action: PayloadAction<Category>) => {
-        //     categoriesAdapter.addOne(state, action)
-        // }
+        currentCategoryChange: (state, action: PayloadAction<Category | null>) => {
+            state.currentCategory = action.payload;
+        }
 
 
     },
@@ -112,5 +113,5 @@ export const selectCategoryByPath = createSelector(
     (categories, categoryPath) => categories.filter((category) => category.path === categoryPath)
 );
 
-
+export const {currentCategoryChange} = categoriesSlice.actions
 export default categoriesSlice.reducer
