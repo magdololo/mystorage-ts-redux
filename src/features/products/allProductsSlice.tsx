@@ -1,9 +1,10 @@
 import {createSlice, createSelector, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
-import {RootState} from "../../app/store";
+import {AppDispatch, RootState} from "../../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../../firebase";
 import {Category, fetchCategories, Image} from "../categories/categoriesSlice";
 import {executeReducerBuilderCallback} from "@reduxjs/toolkit/dist/mapBuilders";
+import {UserProduct} from "./userProductsSlice";
 
 export interface ProductFromDictionary{
     id: Required<string>;
@@ -33,6 +34,17 @@ const allProductsAdapter = createEntityAdapter<ProductFromDictionary>({
 
     }
 });
+export const fetchProductFromDictionaryId = createAsyncThunk<string, UserProduct,{ //pierwsze to typ tego co zwracamy, drugie to typ tego co przyjmujemy jako parametr
+    dispatch: AppDispatch
+    state: RootState
+}>('userProducts/fetchProductFromDictionaryId', async(userProduct, thunkApi)=> {
+    console.log("halo z fetch product id thunk")
+
+
+
+
+    return ""
+})
 const initialState: EntityState<ProductFromDictionary>& { error: null | string | undefined; status: string } = allProductsAdapter.getInitialState({
     status: 'idle',
     error: null ,

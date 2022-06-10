@@ -1,7 +1,9 @@
 import {createSlice, createSelector, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
-import {RootState} from "../../app/store";
+import {RootState, AppDispatch} from "../../app/store";
 import { doc, startAt, endAt, orderBy, getDocs, query,collectionGroup, documentId, Timestamp,setDoc, getDoc, deleteDoc} from "firebase/firestore";
 import {db} from "../../firebase";
+import {fetchProductFromDictionaryId, ProductFromDictionary} from "./allProductsSlice";
+
 
 
 
@@ -109,7 +111,17 @@ export const changeProductQuantity = createAsyncThunk('userProducts/changeProduc
         }
     }
 )
+export const addUserProduct = createAsyncThunk<UserProduct, UserProduct,{ //pierwsze to co zwracamy, drugie to co przyjmujemy jako parametr
+    dispatch: AppDispatch
+    state: RootState
+}>('userProducts/addUserProduct', async(userProduct, thunkApi)=> {
+    console.log(userProduct)
+    thunkApi.dispatch(fetchProductFromDictionaryId(userProduct))
 
+
+
+    return {} as UserProduct
+})
 export const deleteUserProduct = createAsyncThunk('userProducts/deleteUserProduct', async (userProduct: UserProduct)=> {
     try {
         await deleteDoc(doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products/", userProduct.id))

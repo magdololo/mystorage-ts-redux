@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectUser} from "../users/usersSlice";
 import React, {useEffect, useState} from "react";
 import {useForm, SubmitHandler} from 'react-hook-form';
-import {UserProduct} from "./userProductsSlice";
+import {addUserProduct, UserProduct} from "./userProductsSlice";
 import 'react-datepicker/dist/react-datepicker.css';
 import {Controller, useFormContext} from 'react-hook-form';
 import {AutocompleteWithUserProducts} from "./AutocompleteWithUserProducts";
@@ -13,7 +13,7 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import plLocale from 'date-fns/locale/pl';
 import {MenuItem} from "@mui/material";
-import {useAppSelector} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Category} from "../categories/categoriesSlice";
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 
@@ -44,6 +44,7 @@ export type AutocompleteWithCategoriesTitleProps = {
     disabled: boolean
 }
 const AddProductForm = ({handleClose, open}: AddProductFormProps) => {
+    const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
     const [newProductName, setNewProductName] = useState<string | null>(null);
     const [selectedNewCategory, setSelectedNewCategory] = useState<Category | null>(null);
@@ -59,6 +60,20 @@ const AddProductForm = ({handleClose, open}: AddProductFormProps) => {
     } = useForm<FormValues>();
     const [errorMessage, setErrorMessage] = useState('');
     const onSubmit: SubmitHandler<FormValues> = data => {
+        let userProduct: UserProduct = {
+            productId: "",
+            name: data.productName,
+            categoryId: data.categoryName,
+            capacity: data.capacity ?? 0,
+            unit: data.unit,
+            quantity: data.quantity ?? 0,
+            expireDate: data.expireDate,
+            userId: uid,
+            id: ""
+
+
+        }
+        dispatch(addUserProduct(userProduct))
         console.log(data);
         closeModal();
     }

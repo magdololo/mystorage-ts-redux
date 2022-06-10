@@ -91,8 +91,6 @@ const categoriesSlice = createSlice({
             })
             .addCase(fetchCategories.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                // Add any fetched posts to the array
-                // Use the `upsertMany` reducer as a mutating update utility
                 categoriesAdapter.upsertMany(state, action.payload as Category[])
             })
             .addCase(fetchCategories.rejected, (state, action) => {
@@ -106,7 +104,7 @@ export const {
     selectAll: selectAllCategories,
     selectById: selectCategoryById,
     selectIds: selectCategoryIds
-    // Pass in a selector that returns the posts slice of state
+
 } = categoriesAdapter.getSelectors<RootState>((state) => state.categories);
 export const selectCategoryByPath = createSelector(
     [selectAllCategories, (state:RootState, categoryPath) => categoryPath],
