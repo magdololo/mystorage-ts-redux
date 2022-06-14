@@ -17,6 +17,7 @@ import {
 } from "./categoriesSlice";
 import {fetchAllProducts} from "../products/allProductsSlice";
 import { Spinner } from '../../component/Spinner'
+import {fetchUserProducts} from "../products/userProductsSlice";
 
 
 export const CategoryList = () => {
@@ -31,7 +32,8 @@ export const CategoryList = () => {
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
 
     useEffect(() => {
-            dispatch(fetchCategories(user?.uid ?? ""))
+        dispatch(fetchCategories(user?.uid ?? ""))
+        dispatch(fetchUserProducts(user?.uid ?? ""))
         dispatch(fetchAllProducts())
     }, [user, dispatch])
 
@@ -95,7 +97,7 @@ export const CategoryList = () => {
             <AppTitle/>
             <TopMenu/>
             {content}
-            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddCategoryForm(handleClose)}/>
+            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={<AddCategoryForm closeAddCategoryModal={handleClose} />  }/>
         </>
 
     )

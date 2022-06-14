@@ -174,8 +174,8 @@ export const editUserProduct = createAsyncThunk<UserProduct, UserProduct,{ //pie
         const docRef = doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products/",userProduct.id);
         await setDoc(docRef, userProduct);
     } else {
-        await deleteDoc(doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId  + "/products", userProduct.id))
-        await setDoc(doc(db, "users/" + userProduct.userId + "/categories/" + userProduct?.categoryId +"/products" + userProduct.id ), userProduct);
+        await deleteDoc(doc(db, "users/" + userProduct.userId + "/categories/" + editingProduct?.categoryId  + "/products", userProduct.id))
+        await setDoc(doc(db, "users/" + userProduct.userId + "/categories/" + userProduct?.categoryId +"/products/" + userProduct.id ), userProduct);
 
     }
     // try{
@@ -238,7 +238,7 @@ const userProductsSlice = createSlice({
                 userProductsAdapter.addOne(state, action.payload)
             })
             .addCase(editUserProduct.fulfilled, (state, action)=>{
-                userProductsAdapter.upsertOne(state,action.payload)
+                userProductsAdapter.setOne(state, action.payload)
             })
     }
 })

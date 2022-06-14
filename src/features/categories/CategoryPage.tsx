@@ -48,9 +48,7 @@ const CategoryPage = () => {
     useEffect(()=> {
         dispatch(currentCategoryChange(categoryFromPath as Category))
     }, [dispatch, categoryFromPath])
-    useEffect(() => {
-        dispatch(fetchUserProducts(user?.uid ?? ""))
-    }, [dispatch, user])
+
 
     const chooseEditProduct = (userProduct: UserProduct) =>{
         handleShown()
@@ -115,7 +113,7 @@ const CategoryPage = () => {
                                             <FontAwesomeIcon className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4" icon={faMinus} onClick={() => decrement(product)}/>
                                             <FontAwesomeIcon className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4" icon={faTrash} onClick={()=>deleteUserOneProduct(product)}/>
                                             <FontAwesomeIcon className="text-xl text-blue-800 px-4" icon={faPen}  onClick={()=>chooseEditProduct(product) }/>
-                                            <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={EditProductForm({handleClose, isShown})}/>
+                                            <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
                                         </div>
 
                                     </div>

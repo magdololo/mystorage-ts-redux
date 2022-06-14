@@ -7,7 +7,12 @@ import slugify from "slugify";
 import {addNewCategory} from "../categories/categoriesSlice"
 import {useAppDispatch} from "../../app/store";
 import 'react-toastify/dist/ReactToastify.css';
-const AddCategoryForm = (closeAddCategoryModal: () => void) => {
+
+type AddCategoryFormProps = {
+    closeAddCategoryModal: ()=> void
+}
+
+const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     // const images = useSelector(selectAllImages)
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
