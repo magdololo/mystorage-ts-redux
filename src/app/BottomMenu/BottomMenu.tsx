@@ -1,17 +1,15 @@
 import SearchInput from "./SearchInput";
 import Hamburger from "./Hamburger";
-import ButtonAddProduct from "./ButtonAddProduct";
-import AddCategoryForm from "../../features/categories/AddCategoryForm";
 import {Modal} from "../../component/Modal/Modal";
 import React from "react";
-import AddUserProductForm from "../../features/products/AddProductForm";
+import AddProductForm from "../../features/products/AddProductForm";
+import {useModal} from "../../component/Modal/UseModal";
 
 const BottomMenu = () => {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const modalHeader = "Dodaj produkt"
 
+    const {isShown, handleShown, handleClose} = useModal()
+    const modalHeader = "Dodaj produkt"
+    console.log("czesc bottom menu")
     return(
         <>
                 <div className='w-screen mx-auto fixed top-auto bottom-0 bg-white z-40
@@ -20,8 +18,12 @@ const BottomMenu = () => {
                                     sm:px-2 sm:max-w-xs sm:mx-auto sm:justify-center">
                         <Hamburger/>
                         <SearchInput/>
-                        <ButtonAddProduct handleOpen={handleOpen}/>
-                        <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddUserProductForm({handleClose, open})}/>
+                        <button
+                            className="text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 px-4 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                            onClick={handleShown}>
+                            dodaj product
+                        </button>
+                        <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={AddProductForm({handleClose, isShown})}/>
                     </div>
                 </div>
 

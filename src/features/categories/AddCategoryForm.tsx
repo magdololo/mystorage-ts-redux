@@ -62,7 +62,8 @@ const AddCategoryForm = (closeAddCategoryModal: () => void) => {
                 title: title,
                 url: pickedImage,
                 path: slugify(title, "_"),
-                user: uid
+                user: uid,
+                required: "false"
             }
             setAddRequestStatus('pending')
             dispatch(addNewCategory(newCategory))

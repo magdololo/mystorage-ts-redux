@@ -1,9 +1,33 @@
-import {createSlice, createSelector, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
-import {RootState, AppDispatch} from "../../app/store";
-import { doc, startAt, endAt, orderBy, getDocs, query,collectionGroup, documentId, Timestamp,setDoc, getDoc, deleteDoc} from "firebase/firestore";
+import {
+    createSlice,
+    createSelector,
+    createAsyncThunk,
+    createEntityAdapter,
+    EntityState,
+    PayloadAction
+} from '@reduxjs/toolkit'
+import {RootState, AppDispatch, useAppSelector} from "../../app/store";
+import {
+    doc,
+    startAt,
+    endAt,
+    orderBy,
+    getDocs,
+    query,
+    collectionGroup,
+    documentId,
+    Timestamp,
+    setDoc,
+    getDoc,
+    deleteDoc,
+    updateDoc,
+    addDoc, collection
+} from "firebase/firestore";
 import {db} from "../../firebase";
-import {fetchProductFromDictionaryId, ProductFromDictionary} from "./allProductsSlice";
-
+import {fetchProductFromDictionaryId, ProductFromDictionary, selectAllProducts} from "./allProductsSlice";
+import {Category} from "../categories/categoriesSlice";
+import EditProductForm from "./EditProductForm";
+import {selectProductIds} from "./allProductsSlice";
 
 
 
@@ -13,11 +37,11 @@ export interface UserProduct{
     productId: Required<string>;
     name: Required<string>;
     categoryId: Required<string>;
-    capacity: Required<number>;
+    capacity: Required<number | null>;
     unit: Required<string>;
-    quantity: Required<number>;
+    quantity: Required<number | null> ;
     expireDate: Date|null;
-    userId: null | string;
+    userId: string;
     id: string;
 
 }
@@ -97,7 +121,7 @@ export const changeProductQuantity = createAsyncThunk('userProducts/changeProduc
             userProductFromFirebase.id = productDoc.id
             console.log(userProductFromFirebase)
             if (userProductFromFirebase ) {
-                let newQuantity = userProduct.quantity
+                let newQuantity = userProduct.quantity??1
                 changeQuantity.changeQuantity === "increment" ? newQuantity++ : newQuantity--
                 userProductFromFirebase.quantity = newQuantity;
                 console.log(userProductFromFirebase)
@@ -116,12 +140,60 @@ export const addUserProduct = createAsyncThunk<UserProduct, UserProduct,{ //pier
     state: RootState
 }>('userProducts/addUserProduct', async(userProduct, thunkApi)=> {
     console.log(userProduct)
-    thunkApi.dispatch(fetchProductFromDictionaryId(userProduct))
+    await thunkApi.dispatch(fetchProductFromDictionaryId(userProduct))
+    let productFromDictionaryId = await thunkApi.getState().allProducts.productFromDictionaryId
+    console.log(productFromDictionaryId)
+    userProduct.productId = productFromDictionaryId
+    try{
+        let result = await addDoc(collection(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products"), userProduct);
+
+        console.log(result)
+        console.log(result.id)
+        return {...userProduct,id: result.id} as UserProduct
+    }
+    catch(error){
+        console.log(error)
+    }
 
 
 
-    return {} as UserProduct
+    return {...userProduct,id: ""} as UserProduct
 })
+export const editUserProduct = createAsyncThunk<UserProduct, UserProduct,{ //pierwsze to co zwracamy, drugie to co przyjmujemy jako parametr
+    dispatch: AppDispatch
+    state: RootState
+}>('userProducts/editUserProduct', async(userProduct, thunkApi)=> {
+    console.log(userProduct)
+    await thunkApi.dispatch(fetchProductFromDictionaryId(userProduct))
+    let productFromDictionaryId = await thunkApi.getState().allProducts.productFromDictionaryId
+    console.log(productFromDictionaryId)
+    let editingProduct = await thunkApi.getState().userProducts.editProduct
+    console.log(editingProduct)
+
+    if(userProduct.categoryId === editingProduct?.categoryId){
+        const docRef = doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products/",userProduct.id);
+        await setDoc(docRef, userProduct);
+    } else {
+        await deleteDoc(doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId  + "/products", userProduct.id))
+        await setDoc(doc(db, "users/" + userProduct.userId + "/categories/" + userProduct?.categoryId +"/products" + userProduct.id ), userProduct);
+
+    }
+    // try{
+    //     if (userProduct.categoryId === editingProduct?.categoryId){
+    //
+    //         //return {...userProduct,id: result.id} as UserProduct
+    //     }else{
+    //         const productRef = doc(db, "users/" + userId + "/categories/" + categoryId + "/products/",editingProduct.id);
+    //         await updateDoc(productRef, editingProduct);
+    //     }
+    // return editingProduct
+    // }
+    // catch(error){
+    //     console.log(error)
+    // }
+    return userProduct as UserProduct
+
+});
 export const deleteUserProduct = createAsyncThunk('userProducts/deleteUserProduct', async (userProduct: UserProduct)=> {
     try {
         await deleteDoc(doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products/", userProduct.id))
@@ -133,23 +205,24 @@ export const deleteUserProduct = createAsyncThunk('userProducts/deleteUserProduc
 
 }
 })
-const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string } = userProductsAdapter.getInitialState({
+const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string ; editProduct: UserProduct | null} = userProductsAdapter.getInitialState({
     status: 'idle',
     error: null ,
+    editProduct: null,
 })
 
 const userProductsSlice = createSlice({
     name: 'userProducts',
     initialState,
     reducers: {
-
+        editProduct: (state, action: PayloadAction<UserProduct | null>) => {
+            state.editProduct = action.payload;
+        }
     },
     extraReducers(builder) {
         builder
             .addCase(fetchUserProducts.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                // Add any fetched posts to the array
-                // Use the `upsertMany` reducer as a mutating update utility
                 userProductsAdapter.upsertMany(state, action.payload as UserProduct[])
             })
             .addCase(changeProductQuantity.fulfilled,(state,action )=>{
@@ -161,7 +234,12 @@ const userProductsSlice = createSlice({
             .addCase(deleteUserProduct.fulfilled,(state,action)=>{
               userProductsAdapter.removeOne(state, action.payload as string)
             })
-
+            .addCase(addUserProduct.fulfilled,(state,action)=>{
+                userProductsAdapter.addOne(state, action.payload)
+            })
+            .addCase(editUserProduct.fulfilled, (state, action)=>{
+                userProductsAdapter.upsertOne(state,action.payload)
+            })
     }
 })
 
@@ -172,9 +250,5 @@ export const {
     // Pass in a selector that returns the posts slice of state
 } = userProductsAdapter.getSelectors<RootState>((state) => state.userProducts);
 
-// export const selectUserProductByCategoryId = createSelector(
-//     [selectUserProducts, (state:RootState, categoryId) => categoryId],
-//     (userProducts, categoryId) => userProducts.filter((product) => product.categoryId === categoryId)
-// );
-
+export const {editProduct} = userProductsSlice.actions
 export default userProductsSlice.reducer

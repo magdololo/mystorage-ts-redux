@@ -2,7 +2,7 @@ import {createSlice, createSelector, createAsyncThunk, createEntityAdapter, Enti
 import {AppDispatch, RootState} from "../../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../../firebase";
-import {Category, fetchCategories, Image} from "../categories/categoriesSlice";
+import {Category, fetchCategories, Image, selectAllCategories} from "../categories/categoriesSlice";
 import {executeReducerBuilderCallback} from "@reduxjs/toolkit/dist/mapBuilders";
 import {UserProduct} from "./userProductsSlice";
 
@@ -15,6 +15,7 @@ export interface ProductFromDictionary{
     // quantity: Required<number>;
     // expireDate: Date|null;
     userId: null | string;
+
 
 }
 // const initialState = [
@@ -34,20 +35,27 @@ const allProductsAdapter = createEntityAdapter<ProductFromDictionary>({
 
     }
 });
-export const fetchProductFromDictionaryId = createAsyncThunk<string, UserProduct,{ //pierwsze to typ tego co zwracamy, drugie to typ tego co przyjmujemy jako parametr
+export const fetchProductFromDictionaryId = createAsyncThunk<ProductFromDictionary, UserProduct,{ //pierwsze to typ tego co zwracamy, drugie to typ tego co przyjmujemy jako parametr
     dispatch: AppDispatch
     state: RootState
 }>('userProducts/fetchProductFromDictionaryId', async(userProduct, thunkApi)=> {
     console.log("halo z fetch product id thunk")
+    console.log(userProduct)
+    let allProducts = selectAllProducts(thunkApi.getState())
+    let productFromDictionary = allProducts.find((product) => product.name === userProduct.name && product.capacity === userProduct.capacity && product.unit === userProduct.unit)
+    if (productFromDictionary)
+        return productFromDictionary as ProductFromDictionary
+    let result = await addDoc(collection(db, "allProducts/" ), userProduct);
+    return {...userProduct,id: result.id} as ProductFromDictionary
 
-
-
-
-    return ""
 })
-const initialState: EntityState<ProductFromDictionary>& { error: null | string | undefined; status: string } = allProductsAdapter.getInitialState({
+
+
+const initialState: EntityState<ProductFromDictionary>& { error: null | string | undefined; status: string; productFromDictionaryId: string } = allProductsAdapter.getInitialState({
     status: 'idle',
     error: null ,
+    productFromDictionaryId: ""
+
 })
 
 export const fetchAllProducts = createAsyncThunk('allProducts/fetchAllProducts', async () => {
@@ -78,16 +86,21 @@ const allProductsSlice = createSlice({
         builder
             .addCase(fetchAllProducts.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                // Add any fetched posts to the array
-                // Use the `upsertMany` reducer as a mutating update utility
                 allProductsAdapter.upsertMany(state, action.payload as ProductFromDictionary[])
             })
+            .addCase(fetchProductFromDictionaryId.fulfilled, (state, action) => {
+               state.productFromDictionaryId = action.payload.id
+                allProductsAdapter.upsertOne(state, action.payload)
+            })
+
+
     }
 })
 export const {
     selectAll: selectAllProducts,
     selectById: selectProductById,
-    selectIds: selectProductIds
+    selectIds: selectProductIds,
+
     // Pass in a selector that returns the posts slice of state
 } = allProductsAdapter.getSelectors<RootState>((state) => state.allProducts);
 

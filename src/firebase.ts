@@ -1,3 +1,6 @@
+import firebase from 'firebase/app';
+
+
 import { initializeApp } from 'firebase/app';
 import {getAnalytics} from "firebase/analytics"
 import {
@@ -5,6 +8,8 @@ import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
     signInWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider,
     signOut,
     updateProfile
 } from 'firebase/auth';
@@ -32,7 +37,7 @@ export const firebaseConfig = {
 };
 
 //init firebase app
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 //init services
 const auth = getAuth();
@@ -45,5 +50,7 @@ export {
     updateProfile,
     onAuthStateChanged,
     signInWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider,
     signOut
 }

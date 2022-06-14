@@ -1,115 +1,190 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux";
-;
+import {useForm, Controller, SubmitHandler} from "react-hook-form";
 import {Modal} from "../../component/Modal/Modal";
 import {selectUser} from "../users/usersSlice";
 import slugify from "slugify";
-import {addNewCategory} from "../categories/categoriesSlice"
-import {useAppDispatch} from "../../app/store";
+import {addNewCategory, Category} from "../categories/categoriesSlice"
+import {useAppDispatch, useAppSelector} from "../../app/store";
 import 'react-toastify/dist/ReactToastify.css';
-const EditProductForm = (closeAddCategoryModal: () => void) => {
-    // const images = useSelector(selectAllImages)
+import plLocale from "date-fns/locale/pl";
+import {Alert, Button, TextField, useMediaQuery} from "@mui/material";
+import Box from "@mui/material/Box";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import {MenuItem} from "@mui/material";
+
+import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
+import {editUserProduct, UserProduct} from "./userProductsSlice";
+
+type EditProductFormProps = {
+    handleClose: () => void
+    isShown: boolean
+}
+type EditFormValues= {
+
+    newExpireDate: Date | null
+    newProductName: string
+    newCategory: Category | null
+    newCapacity: number | null
+    newUnit: string
+    newQuantity: number | null
+}
+const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
+    const {
+        handleSubmit,
+        control,
+        setValue,
+        reset
+    } = useForm<EditFormValues>();
+    const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
+    const [editCategory, setEditCategory] = React.useState(null);
+    // const [selectedNewCategory, setSelectedNewCategory] = useState(null);
+    const editProduct = useAppSelector(state=>state.userProducts.editProduct)
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
     const dispatch = useAppDispatch()
-    const [title, setTitle] = useState('')
-    const [pickedImage, setPickedImage] = useState('')
-    const [addRequestStatus, setAddRequestStatus] = useState('idle')
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const modalHeader = "Wybierz zdjęcie"
-    const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-    //const [addNewCategory,{data, isError, isLoading, isSuccess}] = useAddNewCategoryMutation();
+
+    const units = [
+        {value: 'gr'},
+        {value: 'ml'},
+        {value: 'kg'},
+        {value: 'szt'},
+        {value: 'l'}];
+    useEffect(() => {
+        if (currentCategory) {
+            setValue('newCategory', currentCategory);
+
+        }
+    }, [currentCategory, setValue]);
+
+    const onSubmit: SubmitHandler<EditFormValues> = data => {
+        console.log(data)
+        let updatedProduct: UserProduct = {
+            productId: editProduct?.productId??"",
+            name: data.newProductName,
+            categoryId: data.newCategory?.id ??"",
+            capacity: data.newCapacity ?? 0,
+            unit: data.newUnit,
+            quantity: data.newQuantity ?? 1,
+            expireDate: data.newExpireDate,
+            userId: uid,
+            id: editProduct?.id??""
 
 
-
+        }
+        console.log(updatedProduct)
+        dispatch(editUserProduct(updatedProduct))
+    }
     return(
         <>
-            <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
-                <form>
-                    <div className="form-group mb-6 ">
-                        <input type="text"
-                               className=" form-control
-                                            block
-                                            w-5/6
-                                            text-center
-                                            px-3
-                                            py-3.5
-                                            text-base
-                                            font-normal
-                                            text-gray-700
-                                            bg-white bg-clip-padding
-                                            border border-solid border-gray-300
-                                            rounded
-                                            transition
-                                            ease-in-out
-                                            mx-auto
-                                            focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none"
-                               id="exampleInput90"
-                               placeholder="Nazwa kategorii"
-                               value={title}
-                               onChange={onTitleChange}/>
-                    </div>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+<Box>
+                <Box id="modal-modal-description"  sx={{mt: 2, mb: 3, width: "80%", marginLeft: "10%"}}>
+        <Controller
+            name="newCategory"
+            control={control}
+            render={({field: {onChange, value}, fieldState: {error}}) => (
+                <AutocompleteWithCategoriesTitle
+                    onChange= {onChange}
+                    value={value}
+                    disabled={false}
 
+                    // setSelectedNewCategory={setSelectedNewCategory}
+                />
+            )}
+        />
+        </Box>
+    <Box id="modal-modal-description" sx={{mt: 2, mb: 3}}>
+        <Controller
+            name="newProductName"
+            control={control}
+            defaultValue={editProduct ? editProduct.name : ''}
+            render={({field: {onChange, value}, fieldState: {error}}) => (
+                <TextField sx={{width: "80%", marginLeft: "10%"}}
+                           id="standard-basic"
+                           label="Nazwa produktu"
+                           variant="outlined"
+                           value={value}
+                           onChange={onChange}
+                           type="text"
+                />
+            )}/>
+    </Box>
+    <Box id="modal-modal-description"  sx={{mt: 2, mb: 3, width: "100%"}}>
+        <Controller
+            name="newCapacity"
+            control={control}
+            defaultValue={editProduct ? editProduct.capacity : null}
+            render={({field: {onChange, value}, fieldState: {error}}) => (
+                <TextField sx={{width: "35%", marginLeft: "10%"}}
+                           id="standard-basic"
+                           label="Pojemność"
+                           variant="standard"
+                           value={value}
+                           onChange={onChange}
+                />
+            )}/>
+        <Controller
+            name="newUnit"
+            control={control}
+            defaultValue={editProduct ? editProduct.unit: ""}
+            render={({field: {onChange, value}, fieldState: {error}}) => (
+                <TextField sx={{width: "35%", marginRight: "10%", marginLeft: "5%"}}
+                           id="standard-select-currency"
+                           select
+                           label="Jednostka"
+                           value={value}
+                           onChange={onChange}
+                           variant="standard"
+                >
+                    {units.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.value}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            )}/>
+    </Box>
+    <Box>
+        <Controller
+            name="newExpireDate"
+            control={control}
+            defaultValue={editProduct ? editProduct.expireDate : null}
+            render={({field: {onChange, value}, fieldState: {error}}) => (
+                <LocalizationProvider dateAdapter={AdapterDateFns} locale={plLocale}>
+                    <DatePicker
+                        mask={'__.__.____'}
+                        label="Data ważności"
+                        value={value}
+                        onChange={onChange}
+                        renderInput={(params) => <TextField {...params}  sx={{width: "80%", marginLeft: "10%"}}/>}
+                    />
+                </LocalizationProvider>
+            )}
+        />
+    </Box>
+    <Box id="modal-modal-description" sx={{mt: 2, mb: 3}}>
+        <Controller
+            name="newQuantity"
+            control={control}
+            defaultValue={editProduct ? editProduct.quantity : null}
+            render={({field: {onChange, value}, fieldState: {error}}) => (
+                <TextField sx={{width: "80%", marginLeft: "10%"}}
+                           id="outlined-number"
+                           label="Ilość"
+                           value={value}
+                           type="number"
+                           onChange={onChange}
+                />
+            )}
+        />
 
-                    <div className="form-group mb-6">
-
-                        <input type="text"
-                               className="form-control block
-                                            w-5/6
-                                            text-center
-                                            px-3
-                                            py-3.5
-                                            text-base
-                                            font-normal
-                                            text-gray-700
-                                            bg-white bg-clip-padding
-                                            border border-solid border-gray-300
-                                            rounded
-                                            transition
-                                            ease-in-out
-                                            mx-auto
-                                            focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none"
-                               id="exampleInput91"
-                               placeholder={pickedImage === "" ? "Wybierz zdjęcie" : "Zmień zdjęcie"}
-                               onClick={handleOpen}
-
-
-                        />
-                    </div>
-                    {pickedImage !== "" ?
-                        <div className="form-group mb-6">
-                            <img src={pickedImage}/>
-                        </div>
-                        : null}
-                    <div className="form-group mb-6">
-                        <button type="button" className="
-                          w-5/6
-                          px-2
-                          py-3.5
-                          text-base
-                          block
-                          text-center
-                          font-bold
-                          text-purple
-                          bg-white bg-clip-padding
-                          border border-solid border-purple-400
-                          rounded
-                          uppercase
-                          shadow-xs
-                          hover:bg-blue-700 hover:shadow-md
-                          focus:bg-blue-700 focus:shadow-md focus:outline-none focus:ring-0
-                          active:bg-blue-800 active:shadow-md
-                          transition
-                          duration-150
-                          mx-auto
-                          ease-in-out"
-                                onClick={()=>console.log("edit Product")}>Dodaj
-                        </button>
-                    </div>
-                </form>
-            </div>
+    </Box>
+    <Button sx={{ marginLeft: "10%"}} type="submit" variant="contained" color="primary" >Edytuj produkt</Button>
+</Box>
+            </form>
         </>
     )
 }

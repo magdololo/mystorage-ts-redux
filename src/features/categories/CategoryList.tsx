@@ -10,10 +10,14 @@ import {login, logout, selectUser} from "../users/usersSlice";
 import {skipToken} from "@reduxjs/toolkit/query";
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {Category, currentCategoryChange, fetchCategories, selectAllCategories} from "./categoriesSlice";
+import {
+    currentCategoryChange,
+    fetchCategories,
+    selectAllCategoriesSortedByRequired
+} from "./categoriesSlice";
 import {fetchAllProducts} from "../products/allProductsSlice";
 import { Spinner } from '../../component/Spinner'
-import {fetchUserProducts} from "../products/userProductsSlice";
+
 
 export const CategoryList = () => {
     let user = useSelector(selectUser);
@@ -24,28 +28,28 @@ export const CategoryList = () => {
     console.log(user)
     const dispatch = useAppDispatch()
     const categoriesStatus = useAppSelector(((state) => state.categories.status))
-    const categories = useAppSelector(selectAllCategories)
+    const categories = useAppSelector(selectAllCategoriesSortedByRequired)
+
+    useEffect(() => {
+            dispatch(fetchCategories(user?.uid ?? ""))
+        dispatch(fetchAllProducts())
+    }, [user, dispatch])
+
+
     useEffect(()=> {
         dispatch(currentCategoryChange(null))
     }, [dispatch])
-    useEffect(() => {
-            dispatch(fetchCategories(user?.uid ?? ""))
-    }, [user, dispatch])
-
-    useEffect(() => {
-        dispatch(fetchAllProducts())
-    }, [dispatch, user])
     let content;
     if (categoriesStatus === "loading") {
       content = <Spinner text="Loading..." />;
     } else if (categoriesStatus === "succeeded") {
       const renderedCategories = categories?.map(category => (
 
-            <li className="h-auto flex flex-col relative" key={category.id}>
-                <Link to={`/categories/${category.path}`}>
-                    <img src={category.url} className="w-full h-auto object-cover flex-1 flex-grow" alt="Louvre"/>
+            <li className="h-auto flex flex-col relative" key={category?.id}>
+                <Link to={`/categories/${category?.path}`}>
+                    <img src={category?.url} className="w-full h-auto object-cover flex-1 flex-grow" alt="Louvre"/>
                     <span
-                        className="absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 capitalize text-center text-white font-bold">{category.title}</span>
+                        className="absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 capitalize text-center text-white font-bold">{category?.title}</span>
                 </Link>
             </li>
         ))

@@ -18,10 +18,10 @@ import {Category} from "../categories/categoriesSlice";
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 
 
-type FormValues = {
+export type FormValues = {
     expireDate: Date | null
     productName: string
-    categoryName: string
+    category: Category | null
     capacity: number | null
     unit: string
     quantity: number | null
@@ -29,7 +29,7 @@ type FormValues = {
 
 type AddProductFormProps = {
     handleClose: () => void
-    open: boolean
+    isShown: boolean
 }
 export type AutocompleteWithUserProductsProps = {
     onChange: (data: any) => void
@@ -39,19 +39,17 @@ export type AutocompleteWithUserProductsProps = {
 }
 export type AutocompleteWithCategoriesTitleProps = {
     onChange: (data: any) => void
-    value: string
-    setSelectedNewCategory: (data: Category) => void
+    value: Category | null
     disabled: boolean
+
 }
-const AddProductForm = ({handleClose, open}: AddProductFormProps) => {
+const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
     const [newProductName, setNewProductName] = useState<string | null>(null);
-    const [selectedNewCategory, setSelectedNewCategory] = useState<Category | null>(null);
     const user = useSelector(selectUser)
     const uid = user ? user.uid : ""
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
-    const categoryTitle = currentCategory?.title
     const {
         handleSubmit,
         control,
@@ -59,11 +57,30 @@ const AddProductForm = ({handleClose, open}: AddProductFormProps) => {
         reset
     } = useForm<FormValues>();
     const [errorMessage, setErrorMessage] = useState('');
+    useEffect(() => {
+        if (!isShown) {
+            reset()
+            setSelectedProductFromAutocomplete(null)
+        }
+    }, [isShown])
+    useEffect(() => {
+        if (selectedProductFromAutocomplete) {
+            setValue('capacity', selectedProductFromAutocomplete.capacity);
+            setValue('unit', selectedProductFromAutocomplete.unit);
+        }
+    }, [selectedProductFromAutocomplete, setValue]);
+    const closeModal = () => {
+        setErrorMessage('');
+        setSelectedProductFromAutocomplete(null)
+        reset();
+        handleClose();
+    }
     const onSubmit: SubmitHandler<FormValues> = data => {
+
         let userProduct: UserProduct = {
             productId: "",
             name: data.productName,
-            categoryId: data.categoryName,
+            categoryId: data.category ? data.category.id ?? "" : "",
             capacity: data.capacity ?? 0,
             unit: data.unit,
             quantity: data.quantity ?? 0,
@@ -98,25 +115,8 @@ const AddProductForm = ({handleClose, open}: AddProductFormProps) => {
         }
 
     ];
-    const closeModal = () => {
-        setErrorMessage('');
-        setSelectedProductFromAutocomplete(null)
-        reset();
-        handleClose();
-    }
-    console.log(currentCategory)
-    useEffect(() => {
-        if (selectedProductFromAutocomplete) {
-            setValue('capacity', selectedProductFromAutocomplete.capacity);
-            setValue('unit', selectedProductFromAutocomplete.unit);
-        }
-    }, [selectedProductFromAutocomplete, setValue]);
-    useEffect(() => {
-        if (!open) {
-            reset()
-            setSelectedProductFromAutocomplete(null)
-        }
-    }, [open])
+
+
 
     return (
         <>
@@ -128,15 +128,15 @@ const AddProductForm = ({handleClose, open}: AddProductFormProps) => {
                 <Box>
                     <Box id="modal-modal-description" sx={{mt: 2, mb: 3, width: "80%", marginLeft: "10%"}}>
                         <Controller
-                            name="categoryName"
+                            name="category"
                             control={control}
-                            defaultValue={currentCategory ? categoryTitle : ""}
-                            render={({field: {onChange,value}, fieldState: {error}}) => (
+                            defaultValue={currentCategory ? currentCategory : null}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <AutocompleteWithCategoriesTitle
                                     value={value}
                                     onChange={onChange}
                                     disabled={!!currentCategory}
-                                    setSelectedNewCategory={setSelectedNewCategory}
+
                                 />
                             )}
                         />

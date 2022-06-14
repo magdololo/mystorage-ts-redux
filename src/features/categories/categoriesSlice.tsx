@@ -17,6 +17,7 @@ export interface Category {
     url: Required<string>;
     title: Required<string>;
     user: string;
+    required: string;
 }
 
 export interface Image {
@@ -59,6 +60,7 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
                 categories.push(categoryDoc);
 
             })
+
             return categories
         } catch (error) {
             console.log(error)
@@ -110,6 +112,15 @@ export const selectCategoryByPath = createSelector(
     [selectAllCategories, (state:RootState, categoryPath) => categoryPath],
     (categories, categoryPath) => categories.filter((category) => category.path === categoryPath)
 );
+export const selectAllCategoriesSortedByRequired = createSelector(
+    selectAllCategories, categories => {
+        console.log(categories)
+        const requiredCategory = categories.find(category => category.required === "true")
+        const filteredCategories = categories.filter(category => category.required !== "true")
+        console.log(requiredCategory)
+        return [requiredCategory, ...filteredCategories]
+    }
 
+)
 export const {currentCategoryChange} = categoriesSlice.actions
 export default categoriesSlice.reducer

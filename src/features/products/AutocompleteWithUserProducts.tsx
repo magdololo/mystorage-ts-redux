@@ -34,7 +34,7 @@ export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProduc
 
                 const filtered = filter(options, params);
 
-                return filtered as UserProduct[];
+                return filtered as ProductFromDictionary[];
             }}
             isOptionEqualToValue={(option, value) => {
                 return option.name === value.name

@@ -16,6 +16,7 @@ export interface ModalProps {
     hide: () => void;
     modalContent: JSX.Element;
     modalHeaderText: string | null;
+
 }
 
 export const Modal: FunctionComponent<ModalProps> = ({
@@ -23,12 +24,15 @@ export const Modal: FunctionComponent<ModalProps> = ({
                                                          hide,
                                                          modalContent,
                                                          modalHeaderText,
+
                                                      }) => {
 
     const modal = (
         <React.Fragment>
             <Backdrop onClick={() => {
                 hide();
+
+
             }}/>
             <Wrapper tabIndex={-1} className="">
                 <StyledModal>

@@ -8,7 +8,13 @@ import {selectUser} from "../users/usersSlice";
 import {useSelector} from "react-redux";
 import {selectAllCategories, currentCategoryChange, Category} from "./categoriesSlice";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {ChangeQuantity, selectUserProducts, UserProduct} from "../products/userProductsSlice";
+import {
+    ChangeQuantity,
+    deleteUserProduct,
+    editProduct,
+    selectUserProducts,
+    UserProduct
+} from "../products/userProductsSlice";
 import {fetchUserProducts} from "../products/userProductsSlice";
 import {changeProductQuantity} from "../products/userProductsSlice";
 import {
@@ -19,7 +25,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AddCategoryForm from "./AddCategoryForm";
 import {Modal} from "../../component/Modal/Modal";
-import AddUserProductForm from "../products/AddProductForm";
+import AddProductForm from "../products/AddProductForm";
+import EditProductForm from "../products/EditProductForm";
+import {useModal} from "../../component/Modal/UseModal";
+
+
 
 
 const CategoryPage = () => {
@@ -33,18 +43,22 @@ const CategoryPage = () => {
     const productsOfCategory = useAppSelector((state) => userProducts.filter(product => product.categoryId === categoryId))
     console.log(productsOfCategory)
     let [todayDate] = useState(new Date());
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
-
+    useEffect(()=> {
+        dispatch(currentCategoryChange(categoryFromPath as Category))
+    }, [dispatch, categoryFromPath])
     useEffect(() => {
         dispatch(fetchUserProducts(user?.uid ?? ""))
     }, [dispatch, user])
 
-    useEffect(()=> {
-        dispatch(currentCategoryChange(categoryFromPath as Category))
-    }, [dispatch, categoryFromPath])
+    const chooseEditProduct = (userProduct: UserProduct) =>{
+        handleShown()
+        let editingProduct = dispatch(editProduct(userProduct))
+        console.log(editingProduct)
+    }
+
+
     const increment = (userProduct: UserProduct) => {
         const changeQuantityProduct: ChangeQuantity = {
             userProduct: userProduct,
@@ -59,7 +73,9 @@ const CategoryPage = () => {
         }
         dispatch(changeProductQuantity(changeQuantityProduct))
     }
-
+    const deleteUserOneProduct =  (userProduct: UserProduct)  => {
+         dispatch(deleteUserProduct(userProduct))
+    }
 
 
 
@@ -97,10 +113,9 @@ const CategoryPage = () => {
                                             <FontAwesomeIcon className="text-xl text-blue-500 px-4" icon={faPlus} onClick={()=>increment(product)}/>
                                             <span className="text-xl text-blue-800 px-2">{product.quantity}</span>
                                             <FontAwesomeIcon className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4" icon={faMinus} onClick={() => decrement(product)}/>
-                                            <FontAwesomeIcon className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4" icon={faTrash} />
-                                            <FontAwesomeIcon className="text-xl text-blue-800 px-4" icon={faPen} onClick={handleOpen}/>
-
-                                            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={AddUserProductForm({handleClose, open})}/>
+                                            <FontAwesomeIcon className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4" icon={faTrash} onClick={()=>deleteUserOneProduct(product)}/>
+                                            <FontAwesomeIcon className="text-xl text-blue-800 px-4" icon={faPen}  onClick={()=>chooseEditProduct(product) }/>
+                                            <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={EditProductForm({handleClose, isShown})}/>
                                         </div>
 
                                     </div>
