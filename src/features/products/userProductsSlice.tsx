@@ -178,19 +178,6 @@ export const editUserProduct = createAsyncThunk<UserProduct, UserProduct,{ //pie
         await setDoc(doc(db, "users/" + userProduct.userId + "/categories/" + userProduct?.categoryId +"/products/" + userProduct.id ), userProduct);
 
     }
-    // try{
-    //     if (userProduct.categoryId === editingProduct?.categoryId){
-    //
-    //         //return {...userProduct,id: result.id} as UserProduct
-    //     }else{
-    //         const productRef = doc(db, "users/" + userId + "/categories/" + categoryId + "/products/",editingProduct.id);
-    //         await updateDoc(productRef, editingProduct);
-    //     }
-    // return editingProduct
-    // }
-    // catch(error){
-    //     console.log(error)
-    // }
     return userProduct as UserProduct
 
 });

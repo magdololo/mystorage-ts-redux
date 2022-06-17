@@ -18,6 +18,8 @@ import {
 import {fetchAllProducts} from "../products/allProductsSlice";
 import { Spinner } from '../../component/Spinner'
 import {fetchUserProducts} from "../products/userProductsSlice";
+import BottomMenu from "../../app/BottomMenu/BottomMenu";
+import {ToastContainer} from "react-toastify";
 
 
 export const CategoryList = () => {
@@ -98,8 +100,10 @@ export const CategoryList = () => {
             <TopMenu/>
             {content}
             <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={<AddCategoryForm closeAddCategoryModal={handleClose} />  }/>
-        </>
 
+            <BottomMenu />
+            <ToastContainer />
+        </>
     )
 }
 export default CategoryList;

@@ -28,6 +28,8 @@ import {Modal} from "../../component/Modal/Modal";
 import AddProductForm from "../products/AddProductForm";
 import EditProductForm from "../products/EditProductForm";
 import {useModal} from "../../component/Modal/UseModal";
+import BottomMenu from "../../app/BottomMenu/BottomMenu";
+import {ToastContainer} from "react-toastify";
 
 
 
@@ -122,7 +124,8 @@ const CategoryPage = () => {
                         )}
                     </ul>
                 </div>
-
+                <BottomMenu />
+                <ToastContainer />
 
 
             </div>

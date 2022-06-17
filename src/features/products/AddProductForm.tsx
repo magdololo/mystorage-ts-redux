@@ -42,6 +42,7 @@ export type AutocompleteWithCategoriesTitleProps = {
     value: Category | null
     disabled: boolean
 
+
 }
 const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
     const dispatch = useAppDispatch();
@@ -136,7 +137,6 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                                     value={value}
                                     onChange={onChange}
                                     disabled={!!currentCategory}
-
                                 />
                             )}
                         />

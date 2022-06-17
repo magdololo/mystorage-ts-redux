@@ -39,7 +39,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         reset
     } = useForm<EditFormValues>();
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
-    const [editCategory, setEditCategory] = React.useState(null);
+
     // const [selectedNewCategory, setSelectedNewCategory] = useState(null);
     const editProduct = useAppSelector(state=>state.userProducts.editProduct)
     const user = useSelector(selectUser)
@@ -55,10 +55,13 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
     useEffect(() => {
         if (currentCategory) {
             setValue('newCategory', currentCategory);
-
         }
     }, [currentCategory, setValue]);
-
+    console.log(currentCategory)
+    const closeModal = () => {
+        reset();
+        handleClose();
+    }
     const onSubmit: SubmitHandler<EditFormValues> = data => {
         console.log(data)
         let updatedProduct: UserProduct = {
@@ -76,6 +79,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         }
         console.log(updatedProduct)
         dispatch(editUserProduct(updatedProduct))
+        closeModal()
     }
     return(
         <>
@@ -85,13 +89,13 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         <Controller
             name="newCategory"
             control={control}
+            defaultValue={currentCategory}
             render={({field: {onChange, value}, fieldState: {error}}) => (
                 <AutocompleteWithCategoriesTitle
                     onChange= {onChange}
                     value={value}
                     disabled={false}
 
-                    // setSelectedNewCategory={setSelectedNewCategory}
                 />
             )}
         />

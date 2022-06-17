@@ -6,7 +6,7 @@ import { useFirebase } from "react-redux-firebase";
 import {auth, signInWithEmailAndPassword,signInWithPopup, GoogleAuthProvider} from '../../firebase';
 import { useDispatch } from 'react-redux';
 import {login, User} from "./usersSlice";
-
+import {Link} from "react-router-dom";
 
 const LoginPage = () => {
     const firebase = useFirebase();
@@ -31,7 +31,9 @@ const LoginPage = () => {
                 console.log("Singed in user: ", user);
                 reset();
                 dispatch(
-                    login({uid: user.uid})
+                    login({uid: user.uid,
+                                email: user.email ?? "",
+                                provider: user.providerId})
                 )
                 navigate("/")
             })
@@ -49,13 +51,13 @@ const LoginPage = () => {
             .then((result) => {
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential?.accessToken;
+                //const token = credential?.accessToken;
                 // The signed-in user info.
-                const user = result.user;
-                dispatch(
-                    login({uid: user.uid})
-                )
-                navigate("/")
+                //const user = result.user;
+                // dispatch(
+                //     login({uid: user.uid})
+                // )
+                // navigate("/")
                 // ...
             }).catch((error) => {
             // Handle Errors here.
@@ -68,29 +70,6 @@ const LoginPage = () => {
             // ...
         });
     }
-
-
-
-
-    // const signInWithPopup = (auth , provider)
-    //     .then((result: User) =>{
-    //         const credential = GoogleAuthProvider.credentialFromResult(result);
-    //         const token = credential?.accessToken;
-    //         const user = result.user;
-    //     }).catch((error: ErrorProps) => {
-    //         // Handle Errors here.
-    //         const errorCode = error.code;
-    //         const errorMessage = error.message;
-    //         // The email of the user's account used.
-    //         const email = error?.customData?.email;
-    //         // The AuthCredential type that was used.
-    //         const credential = GoogleAuthProvider.credentialFromError(error);
-    //         // ...
-    //     });
-//         .then(() => {
-//             navigate("/");
-//         });
-// };
 
 
     return(
@@ -151,7 +130,7 @@ const LoginPage = () => {
                                  className=" w-1/2
                                           px-6
                                           py-2.5
-                                          bg-blue-600
+
                                           text-purple
                                           font-bold
                                           text-xs
@@ -159,9 +138,9 @@ const LoginPage = () => {
                                           uppercase
                                           rounded
                                           shadow-md
-                                          hover:bg-blue-700 hover:shadow-lg
-                                          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-                                          active:bg-blue-800 active:shadow-lg
+                                          hover:shadow-lg
+                                          focus:shadow-lg focus:outline-none focus:ring-0
+                                          active:shadow-lg
                                           transition
                                           duration-150
                                           ease-in-out">
@@ -171,7 +150,7 @@ const LoginPage = () => {
                                 className=" w-1/2
                                           px-6
                                           py-3
-                                          bg-blue-600
+
                                           text-purple
                                           font-bold
                                           text-xs
@@ -179,9 +158,9 @@ const LoginPage = () => {
                                           uppercase
                                           rounded
                                           shadow-md
-                                          hover:bg-blue-700 hover:shadow-lg
-                                          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-                                          active:bg-blue-800 active:shadow-lg
+                                          hover:shadow-lg
+                                          focus:shadow-lg focus:outline-none focus:ring-0
+                                          active:shadow-lg
                                           transition
                                           duration-150
                                           ease-in-out
@@ -199,7 +178,7 @@ const LoginPage = () => {
 
             </div>
                     <p className="text-gray-800 mt-6 text-center">Nie masz konta?
-                        <a href="/register" className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out">Zarejestruj się</a>
+                        <Link to="/register" className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out">Zarejestruj się</Link>
                     </p>
                 </form>
             </div>

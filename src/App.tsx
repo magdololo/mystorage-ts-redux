@@ -1,18 +1,19 @@
 import React, {useEffect} from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { auth, signOut, onAuthStateChanged} from './firebase';
+import {useDispatch, useSelector} from 'react-redux';
+import {auth, signOut, onAuthStateChanged} from './firebase';
 import {saveUser, selectUser, login, logout} from "./features/users/usersSlice";
 import {
     BrowserRouter as Router,
     Routes,
     Route,
-    useNavigate,
+    useNavigate, useLocation,
 
 } from "react-router-dom";
 
 import CategoryList from "./features/categories/CategoryList";
 import BottomMenu from "./app/BottomMenu/BottomMenu";
 import LoginPage from "./features/users/LoginPage";
+import ProductsList from "./features/products/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
 import './App.css';
 import {initializeApp} from "firebase/app";
@@ -20,8 +21,8 @@ import {firebaseConfig} from './firebase';
 import {ToastContainer} from "react-toastify";
 import CategoryPage from "./features/categories/CategoryPage";
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {fas} from '@fortawesome/free-solid-svg-icons'
 
 library.add(fas)
 
@@ -30,24 +31,28 @@ function App() {
     const navigate = useNavigate()
     const user = useSelector(selectUser);
     console.log(user)
-    console.log("user from state", user);
     const dispatch = useDispatch();
-
+    const location = useLocation()
+    console.log(location)
     useEffect(() => {
         onAuthStateChanged(auth, (userAuth) => {
             if (userAuth) {
                 dispatch(
                     login({
                         uid: userAuth.uid,
+                        email: userAuth.email ?? "",
+                        provider: userAuth.providerId
                     })
-
                 );
+                console.log("navigate to categories")
                 navigate("/categories")
             } else {
                 dispatch(logout());
+                navigate("/")
             }
         });
     }, []);
+
 
     console.log(user)
     return (<>
@@ -55,19 +60,21 @@ function App() {
                 <Routes>
 
                     !user ?
-                        < Route path="/" element={<LoginPage/>}/>
+                    < Route path="/" element={<LoginPage/>}/>
+                    <Route path="/register" element={<RegisterPage/>}/>
                     :
-                        <Route path="/categories" element={<CategoryList/>} />
+                    <Route path="/categories" element={<CategoryList/>}/>
 
-                    <Route path="/categories/:categoryPath" element={<CategoryPage/>} />
+                    <Route path="/categories/:categoryPath" element={<CategoryPage/>}/>
+                    <Route path="/products" element={<ProductsList/>}/>
 
                 </Routes>
             </div>
-            <BottomMenu />
-            <ToastContainer />
+
         </>
     );
 }
+
 export default App;
 //export const useAppDispatch = () => useDispatch<AppDispatch>()
 // export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

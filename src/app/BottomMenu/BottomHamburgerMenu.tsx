@@ -1,13 +1,39 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 import {AiOutlineMenu} from "react-icons/ai";
+import {
+    faHandPointRight, // the clock icon
+    faUser,
+    faArrowRightFromBracket
+} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Divider from "@mui/material/Divider";
+import {Link, useNavigate} from "react-router-dom";
+import {logout} from "../../features/users/usersSlice";
+import {useAppDispatch} from "../../app/store";
+import {auth, signOut} from "../../firebase";
+
 
 const BottomHamburgerMenu = () => {
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
     const [isOpen, setIsOpen] =useState(false);
     const toggleDrawer = () => {
         setIsOpen((prevState) => !prevState)
     }
+    const handleClick = (e: any) => {
+        e.stopPropagation();
+        setIsOpen(!isOpen);
+    };
+    const logoutOfApp = () => {
+        signOut(auth);
+        navigate('/')
+        // dispatch to the store with the logout action
+        // sign out function from firebase
+
+    };
     return (
         <>
 
@@ -18,7 +44,15 @@ const BottomHamburgerMenu = () => {
                 direction='left'
                 //className='bla bla bla '
             >
-                <div>Hello World</div>
+                <div className="flex justify-center">
+                    <ul className="bg-white rounded-lg w-96 text-gray text-lg mt-10">
+                        <li key='1' className="px-6 py-2  w-full rounded-t-lg" onClick={handleClick}><Link to={'/categories'}> <FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />Lista kategorii</Link></li>
+                        <li key='2' className="px-6 py-2  w-full" onClick={handleClick}><Link to={'/products'}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />Lista produktów</Link></li>
+                        <Divider />
+                        <li key='3' className="px-6 py-2  w-full "><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />Moje konto</li>
+                        <li key='4' className="px-6 py-2  w-full" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />Wyloguj się</li>
+                    </ul>
+                </div>
             </Drawer>
 
         </>

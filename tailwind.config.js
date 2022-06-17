@@ -52,7 +52,8 @@ module.exports = {
       },
       fontSize: {
         'labelSize': '17.6px',
-        'md' : '16px'
+        'md': '16px',
+        'lg': '20px',
       },
 
     },

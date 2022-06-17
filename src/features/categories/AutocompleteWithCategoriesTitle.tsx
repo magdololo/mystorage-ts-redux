@@ -21,8 +21,7 @@ console.log(categories)
             value={value}
             onChange={(_, data) => {
                 console.log(data)
-                onChange(data);
-            }
+                onChange(data);}
             }
             filterOptions={(options, params) => {
 
