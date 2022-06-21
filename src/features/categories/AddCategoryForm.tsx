@@ -13,7 +13,7 @@ type AddCategoryFormProps = {
 }
 
 const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
-    // const images = useSelector(selectAllImages)
+
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
     const dispatch = useAppDispatch()
@@ -25,7 +25,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const handleClose = () => setOpen(false);
     const modalHeader = "Wybierz zdjęcie"
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-   //const [addNewCategory,{data, isError, isLoading, isSuccess}] = useAddNewCategoryMutation();
+
 
     const images = [
         {
@@ -78,21 +78,10 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                     setPickedImage("")
                     closeAddCategoryModal()
                 })
-            console.log(newCategory)
-            //addNewCategory(newCategory);
-
         }
         setAddRequestStatus('idle')
 
     }
-    // console.log(isSuccess)
-    // useEffect(()=>{
-    //     if(isSuccess){
-    //
-    //         toast("category added")
-    //         console.log("zygam toastem", {toastId: data?.id})
-    //     }
-    // }, [isSuccess]);
 
     return(
         <>

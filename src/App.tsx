@@ -1,9 +1,8 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {auth, signOut, onAuthStateChanged} from './firebase';
-import {saveUser, selectUser, login, logout} from "./features/users/usersSlice";
+import {selectUser, login, logout} from "./features/users/usersSlice";
 import {
-    BrowserRouter as Router,
     Routes,
     Route,
     useNavigate, useLocation,
@@ -11,7 +10,6 @@ import {
 } from "react-router-dom";
 
 import CategoryList from "./features/categories/CategoryList";
-import BottomMenu from "./app/BottomMenu/BottomMenu";
 import LoginPage from "./features/users/LoginPage";
 import ProductsList from "./features/products/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
@@ -76,5 +74,3 @@ function App() {
 }
 
 export default App;
-//export const useAppDispatch = () => useDispatch<AppDispatch>()
-// export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {selectUser} from "../users/usersSlice";
 import React, {useEffect, useState} from "react";
 import {useForm, SubmitHandler} from 'react-hook-form';

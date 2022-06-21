@@ -1,14 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {useSelector} from "react-redux";
 import {useForm, Controller, SubmitHandler} from "react-hook-form";
-import {Modal} from "../../component/Modal/Modal";
 import {selectUser} from "../users/usersSlice";
-import slugify from "slugify";
-import {addNewCategory, Category} from "../categories/categoriesSlice"
+import {Category} from "../categories/categoriesSlice"
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import 'react-toastify/dist/ReactToastify.css';
 import plLocale from "date-fns/locale/pl";
-import {Alert, Button, TextField, useMediaQuery} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';

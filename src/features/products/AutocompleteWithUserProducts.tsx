@@ -1,7 +1,6 @@
 import React from 'react';
-import {useForm, NestedValue} from 'react-hook-form';
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
-import {FilterOptionsState, TextField} from "@mui/material";
+import {TextField} from "@mui/material";
 import { UserProduct} from "./userProductsSlice";
 import {ProductFromDictionary, selectAllProducts} from "./allProductsSlice";
 import {useAppSelector} from "../../app/store";
@@ -30,10 +29,7 @@ export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProduc
             }
             }
             filterOptions={(options, params) => {
-
-
                 const filtered = filter(options, params);
-
                 return filtered as ProductFromDictionary[];
             }}
             isOptionEqualToValue={(option, value) => {

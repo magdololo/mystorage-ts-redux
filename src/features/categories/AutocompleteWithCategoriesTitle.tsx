@@ -1,20 +1,15 @@
 import * as React from 'react';
-
 import TextField from '@mui/material/TextField';
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
-
-import {useEffect} from "react";
 import {useAppSelector} from "../../app/store";
-import {Category, selectAllCategories, selectAllCategoriesSortedByRequired} from "./categoriesSlice";
+import {Category, selectAllCategoriesSortedByRequired} from "./categoriesSlice";
 import {AutocompleteWithCategoriesTitleProps} from "../products/AddProductForm";
-import {UserProduct} from "../products/userProductsSlice";
+
 const filter = createFilterOptions<Category>();
 
 export default function AutocompleteWithCategoriesTitle({ value, onChange, disabled}:AutocompleteWithCategoriesTitleProps) {
 
     const categories = useAppSelector(selectAllCategoriesSortedByRequired) as Category[]
-console.log(categories)
-
 
     return (
         <Autocomplete
@@ -24,8 +19,6 @@ console.log(categories)
                 onChange(data);}
             }
             filterOptions={(options, params) => {
-
-
                 const filtered = filter(options, params);
                 return filtered as Category[];
             }}

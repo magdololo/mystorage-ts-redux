@@ -1,15 +1,13 @@
-
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useFirebase } from "react-redux-firebase";
 import {auth, signInWithEmailAndPassword,signInWithPopup, GoogleAuthProvider} from '../../firebase';
 import { useDispatch } from 'react-redux';
-import {login, User} from "./usersSlice";
+import {login} from "./usersSlice";
 import {Link} from "react-router-dom";
 
 const LoginPage = () => {
-    const firebase = useFirebase();
+
     const dispatch = useDispatch()
     const provider = new GoogleAuthProvider();
 
@@ -51,14 +49,6 @@ const LoginPage = () => {
             .then((result) => {
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 const credential = GoogleAuthProvider.credentialFromResult(result);
-                //const token = credential?.accessToken;
-                // The signed-in user info.
-                //const user = result.user;
-                // dispatch(
-                //     login({uid: user.uid})
-                // )
-                // navigate("/")
-                // ...
             }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;

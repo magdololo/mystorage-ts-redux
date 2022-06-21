@@ -1,29 +1,18 @@
-import {createSlice, createSelector, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
 import {AppDispatch, RootState} from "../../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../../firebase";
-import {Category, fetchCategories, Image, selectAllCategories} from "../categories/categoriesSlice";
-import {executeReducerBuilderCallback} from "@reduxjs/toolkit/dist/mapBuilders";
 import {UserProduct} from "./userProductsSlice";
 
 export interface ProductFromDictionary{
     id: Required<string>;
     name: Required<string>;
-    // categoryTitle: Required<string>;
     capacity: Required<number>;
     unit: Required<string>;
-    // quantity: Required<number>;
-    // expireDate: Date|null;
     userId: null | string;
 
 
 }
-// const initialState = [
-//     { id: '1', name: 'czekolada', categoryTitle: 'słodycze' , capacity: 400, unit: "gr", quantity: 1, expireDate: null},
-//     { id: '2', name: 'makaron muszelki', categoryTitle: 'makarony' , capacity: 1, unit: "kg", quantity: 1, expireDate: null},
-//     { id: '3', name: 'zupa jarzynowa', categoryTitle: 'mrożonki' , capacity: 450, unit: "gr", quantity: 1, expireDate: null}
-// ]
-
 const allProductsAdapter = createEntityAdapter<ProductFromDictionary>({
     sortComparer: (a: ProductFromDictionary, b: ProductFromDictionary) => {
         let aTitle = a.name.toLowerCase();

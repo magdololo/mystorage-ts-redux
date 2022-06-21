@@ -2,19 +2,11 @@ import {createSlice, PayloadAction, createSelector, createAsyncThunk} from '@red
 import {AppDispatch, RootState} from "../../app/store";
 import {
     doc,
-    startAt,
-    endAt,
-    orderBy,
     getDocs,
     query,
-    collectionGroup,
-    documentId,
-    Timestamp,
     setDoc,
     getDoc,
-    deleteDoc,
-    updateDoc,
-    addDoc, collection
+    collection
 } from "firebase/firestore";
 import {db} from "../../firebase";
 import {addNewCategory, Category} from "../categories/categoriesSlice";

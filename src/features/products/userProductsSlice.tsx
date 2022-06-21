@@ -1,12 +1,11 @@
 import {
     createSlice,
-    createSelector,
     createAsyncThunk,
     createEntityAdapter,
     EntityState,
     PayloadAction
 } from '@reduxjs/toolkit'
-import {RootState, AppDispatch, useAppSelector} from "../../app/store";
+import {RootState, AppDispatch} from "../../app/store";
 import {
     doc,
     startAt,
@@ -20,14 +19,11 @@ import {
     setDoc,
     getDoc,
     deleteDoc,
-    updateDoc,
     addDoc, collection
 } from "firebase/firestore";
 import {db} from "../../firebase";
-import {fetchProductFromDictionaryId, ProductFromDictionary, selectAllProducts} from "./allProductsSlice";
-import {Category} from "../categories/categoriesSlice";
-import EditProductForm from "./EditProductForm";
-import {selectProductIds} from "./allProductsSlice";
+import {fetchProductFromDictionaryId} from "./allProductsSlice";
+
 
 
 

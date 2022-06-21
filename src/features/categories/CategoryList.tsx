@@ -4,9 +4,7 @@ import AppTitle from "../../app/TopMenu/AppTitle";
 import TopMenu from "../../app/TopMenu/TopMenu";
 import {Modal} from "../../component/Modal/Modal";
 import AddCategoryForm from "./AddCategoryForm";
-
-import {login, logout, selectUser} from "../users/usersSlice";
-
+import {selectUser} from "../users/usersSlice";
 import {skipToken} from "@reduxjs/toolkit/query";
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../app/store";
