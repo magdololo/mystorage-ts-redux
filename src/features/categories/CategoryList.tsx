@@ -10,7 +10,7 @@ import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {
     currentCategoryChange,
-    fetchCategories,
+    fetchCategories, fetchImages,
     selectAllCategoriesSortedByRequired
 } from "./categoriesSlice";
 import {fetchAllProducts} from "../products/allProductsSlice";
@@ -30,9 +30,10 @@ export const CategoryList = () => {
     const dispatch = useAppDispatch()
     const categoriesStatus = useAppSelector(((state) => state.categories.status))
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
-
+    const images = useAppSelector((state)=> state.categories.images)
     useEffect(() => {
         dispatch(fetchCategories(user?.uid ?? ""))
+        dispatch(fetchImages())
         dispatch(fetchUserProducts(user?.uid ?? ""))
         dispatch(fetchAllProducts())
     }, [user, dispatch])
@@ -59,14 +60,13 @@ export const CategoryList = () => {
             <>
                 <div className="w-screen-xs mx-auto max-w-screen-xl mb-32">
                     <div className="flex flex-nowrap w-full min-h-min items-center">
-                        <div className="flex flex-wrap min-w-fit w-10/12 mx-auto pb-36">
-                            <div className="grid grid-cols-3 gap-2 overflow-y-auto">
+                        <div className="flex flex-wrap min-w-fit w-10/12 mx-4 pb-36">
+                            <div className="grid grid-cols-2 gap-1 overflow-y-auto lg:grid-cols-3 lg:gap-2 ">
                             {renderedCategories}
-                                <div className="mb-4 border-solid border-purple border-2 border-opacity-25"
+                                <div className=" relative overflow-hidden bg-no-repeat bg-cover border-solid border-purple border-2 border-opacity-25"
                                      onClick={handleOpen}>
-                                    <div className=" relative overflow-hidden bg-no-repeat bg-cover max-w-xs ">
                                         <img src="http://placehold.jp/ffffff/ffffff/1280x900.png"
-                                             className="max-w-xs bg-cover"/>
+                                             className="bg-cover"/>
                                             <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed">
                                                 <div className="relative mx-auto top-1/3 text-purple font-bold text-2xl h-5 w-5 ">
                                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
@@ -80,7 +80,7 @@ export const CategoryList = () => {
                                                 </button>
                                             </div>
                                             </div>
-                                    </div>
+
                                  </div>
                             </div>
                         </div>

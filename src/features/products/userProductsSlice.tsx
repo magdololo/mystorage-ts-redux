@@ -3,7 +3,7 @@ import {
     createAsyncThunk,
     createEntityAdapter,
     EntityState,
-    PayloadAction
+    PayloadAction, createSelector
 } from '@reduxjs/toolkit'
 import {RootState, AppDispatch} from "../../app/store";
 import {
@@ -23,6 +23,7 @@ import {
 } from "firebase/firestore";
 import {db} from "../../firebase";
 import {fetchProductFromDictionaryId} from "./allProductsSlice";
+import {selectAllCategories} from "../categories/categoriesSlice";
 
 
 
@@ -188,10 +189,11 @@ export const deleteUserProduct = createAsyncThunk('userProducts/deleteUserProduc
 
 }
 })
-const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string ; editProduct: UserProduct | null} = userProductsAdapter.getInitialState({
+const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string ; editProduct: UserProduct | null ; searchProductId: string | null} = userProductsAdapter.getInitialState({
     status: 'idle',
     error: null ,
     editProduct: null,
+    searchProductId: null
 })
 
 const userProductsSlice = createSlice({
@@ -200,7 +202,11 @@ const userProductsSlice = createSlice({
     reducers: {
         editProduct: (state, action: PayloadAction<UserProduct | null>) => {
             state.editProduct = action.payload;
-        }
+        },
+        searchProduct: (state, action: PayloadAction<string | null>) => {
+           state.searchProductId = action.payload;
+            }
+
     },
     extraReducers(builder) {
         builder
@@ -233,5 +239,9 @@ export const {
     // Pass in a selector that returns the posts slice of state
 } = userProductsAdapter.getSelectors<RootState>((state) => state.userProducts);
 
-export const {editProduct} = userProductsSlice.actions
+export const {editProduct, searchProduct} = userProductsSlice.actions
+// export const searchUserProduct = createSelector(
+//     [selectUserProducts, (state:RootState, searchProductId) => searchProductId],
+//     (userProducts, searchProductId) => userProducts.filter(userProduct => userProduct.id === searchProductId)
+// );
 export default userProductsSlice.reducer

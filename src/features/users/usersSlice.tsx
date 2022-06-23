@@ -60,8 +60,6 @@ export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, string,{ 
             defaultCategories.push(category);
             thunkApi.dispatch(addNewCategory(category))
         })
-        console.log(defaultCategories)
-
     } catch{
 
     }

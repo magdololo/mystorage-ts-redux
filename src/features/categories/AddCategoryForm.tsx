@@ -5,7 +5,7 @@ import {Modal} from "../../component/Modal/Modal";
 import {selectUser} from "../users/usersSlice";
 import slugify from "slugify";
 import {addNewCategory} from "../categories/categoriesSlice"
-import {useAppDispatch} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../../app/store";
 import 'react-toastify/dist/ReactToastify.css';
 
 type AddCategoryFormProps = {
@@ -25,38 +25,16 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const handleClose = () => setOpen(false);
     const modalHeader = "Wybierz zdjęcie"
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+    const images = useAppSelector(((state) => state.categories.images))
 
-
-    const images = [
-        {
-            path: '../../../images/jams-g0a1a99a3b_1280.jpg',
-            id: '1'
-        },
-        {
-            path: '../../../images/olive-oil-ga7467deea_1280.jpg',
-            id: '2'
-        },
-        {
-            path: '../../../images/rice-g63090c71a_1280.jpg',
-            id: '3'
-        },
-        {
-            path: '../../../images/spices.jpg',
-            id: '4'
-        },
-        {
-            path: '../../../images/tagliatelle-gd39678393_1280.jpg',
-            id: '5'
-        }
-    ]
+  console.log(images)
 
     const imagesOptions = images?.map(image=>(
-        <div key={image.id} className="w-1/2 mb-1" onClick={(event: React.MouseEvent<HTMLElement>) => {
-            setPickedImage(image.path)
+        <div key={image.id} onClick={(event: React.MouseEvent<HTMLElement>) => {
+            setPickedImage(image.url)
             handleClose()
              console.log(pickedImage)}}>
-                <img alt="gallery" className="block object-cover object-center w-full h-full "
-                     src={image.path}/>
+                <img alt="gallery" src={image.url}/>
         </div>
     ))
     const canSave =  [title, pickedImage, uid].every(Boolean) && addRequestStatus === 'idle'
@@ -113,7 +91,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
 
                     <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader}
                            modalContent={
-                               <div className="flex flex-row flex-wrap -m-1 justify-between ">
+                               <div className="grid grid-cols-2 gap-1">
                                    {imagesOptions}
                                </div>
 

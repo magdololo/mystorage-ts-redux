@@ -118,8 +118,9 @@ const CategoryPage = () => {
                             </li>
                         )}
                     </ul>
-                    <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
+
                 </div>
+                <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
                 <BottomMenu />
                 <ToastContainer />
 

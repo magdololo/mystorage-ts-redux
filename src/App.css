@@ -46,3 +46,39 @@ li {
   transition: max-height 0.2s ease-out;
   background-color: #f1f1f1;
 }
+
+.react-select-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.react-select__control {
+  width: 100%;
+  height: 100%;
+}
+.react-select__control:hover, .react-select__control:active   {
+ border: 2px solid purple !important;
+}
+.react-select__input-container{
+
+
+}
+.react-select__value-container{
+  /*//border: 1px solid #52525B;*/
+  padding-top: 100px;
+}
+.react-select__indicators{
+
+}
+.react-select__menu{
+
+}
+.react-select__menu-list{
+
+}
+.react-select__option{
+
+}

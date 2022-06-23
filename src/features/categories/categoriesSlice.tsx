@@ -10,6 +10,7 @@ import {
 import {RootState} from "../../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../../firebase";
+import {ProductFromDictionary} from "../products/allProductsSlice";
 
 export interface Category {
     id: string | null;
@@ -21,7 +22,7 @@ export interface Category {
 }
 
 export interface Image {
-    path: Required<string>;
+    url: Required<string>;
     id: Required<string>;
 }
 
@@ -68,7 +69,24 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
         }
     }
 )
+export const fetchImages = createAsyncThunk('categories/fetchImages', async()=>{
+    try{
+        const images: Array<Image> = []
+        let q = await query(collection(db, "images"));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
 
+            let productDoc = doc.data() as Image;
+            productDoc.id = doc.id;
+            images.push(productDoc);
+
+        })
+        return images
+    } catch (error) {
+        console.log(error)
+        return {error: error}
+    }
+})
 export const addNewCategory = createAsyncThunk<Category,Category>("categories/addNewCategory",
     async (newCategory: Category) => {
             let result = await addDoc(collection(db, "users/" + newCategory.user + "/categories"), newCategory);
@@ -99,6 +117,9 @@ const categoriesSlice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message
             })
+            .addCase(fetchImages.fulfilled,(state,action)=>{
+                state.images = action.payload as Image[]
+            })
             .addCase(addNewCategory.fulfilled, categoriesAdapter.addOne )
     }
 })
@@ -122,5 +143,6 @@ export const selectAllCategoriesSortedByRequired = createSelector(
     }
 
 )
+
 export const {currentCategoryChange} = categoriesSlice.actions
 export default categoriesSlice.reducer
