@@ -97,7 +97,7 @@ export const CategoryList = () => {
             <AppTitle/>
             <TopMenu/>
             {content}
-            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={<AddCategoryForm closeAddCategoryModal={handleClose} />  }/>
+            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={<AddCategoryForm closeAddCategoryModal={handleClose}/>}/>
 
             <BottomMenu />
             <ToastContainer />

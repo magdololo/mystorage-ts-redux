@@ -1,5 +1,6 @@
 import React, {useEffect,CSSProperties, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../store";
+import {useNavigate} from "react-router-dom";
 import {
     searchProduct,
     selectUserProductById,
@@ -16,8 +17,9 @@ import Select from "react-select";
 const SearchInput =()  => {
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const userProducts = useAppSelector(selectUserProducts)
-    const [searchUserProductId, setSearchUserProductId] = useState<string>("");
+    //const [searchUserProductId, setSearchUserProductId] = useState<string>("");
     const searchOptions = userProducts?.map(userProduct => {
         return {name: userProduct.name, value: userProduct.id}
     })
@@ -26,18 +28,18 @@ const SearchInput =()  => {
         return {label: userProduct.name + userProduct.capacity + userProduct.unit, value: userProduct.id}
     })
     const onSearchProductChange=(e: any)=>{
-        setSearchUserProductId(e.value)
+        console.log(e.value)
+        dispatch(searchProduct(e.value))
+        navigate("/search")
     }
-    const searchUserProduct = useAppSelector(state => selectUserProductById(state, searchUserProductId))
-    console.log(searchUserProductId)
-    console.log(searchUserProduct)
+
+
+
     return(
         <>
 
             <div className="flex flex-1 pr-1">
-                <Select options={options} menuPlacement={"top"}  isClearable  className="react-select-container" classNamePrefix="react-select" value={options.filter(function(option) {
-                    return option.value === searchUserProductId;
-                })} onChange={onSearchProductChange}/>
+                <Select options={options} menuPlacement={"top"}  isClearable isSearchable className="react-select-container" classNamePrefix="react-select"  onChange={onSearchProductChange}/>
                 {/*styles={singleSelectStyle(variant)}*/}
                     {/*<button type="button" data-mdb-ripple="true" data-mdb-ripple-color="light"*/}
                     {/*        className="flex flex-row items-center justify-between px-4 py-1.5 border border-solid text-gray-light text-lg rounded  shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"*/}

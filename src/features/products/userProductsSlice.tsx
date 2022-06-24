@@ -189,11 +189,11 @@ export const deleteUserProduct = createAsyncThunk('userProducts/deleteUserProduc
 
 }
 })
-const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string ; editProduct: UserProduct | null ; searchProductId: string | null} = userProductsAdapter.getInitialState({
+const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string ; editProduct: UserProduct | null ; searchProduct: UserProduct | null} = userProductsAdapter.getInitialState({
     status: 'idle',
     error: null ,
     editProduct: null,
-    searchProductId: null
+    searchProduct: null
 })
 
 const userProductsSlice = createSlice({
@@ -204,8 +204,10 @@ const userProductsSlice = createSlice({
             state.editProduct = action.payload;
         },
         searchProduct: (state, action: PayloadAction<string | null>) => {
-           state.searchProductId = action.payload;
-            }
+           const searchProductId = action.payload??""
+            const searchProduct = state.entities[searchProductId]
+            state.searchProduct = searchProduct??{} as UserProduct
+        }
 
     },
     extraReducers(builder) {
