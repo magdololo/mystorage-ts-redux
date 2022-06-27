@@ -189,11 +189,12 @@ export const deleteUserProduct = createAsyncThunk('userProducts/deleteUserProduc
 
 }
 })
-const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string ; editProduct: UserProduct | null ; searchProduct: UserProduct | null} = userProductsAdapter.getInitialState({
+const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string ; editProduct: UserProduct | null ; searchProduct: UserProduct | null; searchProductByString: string | null} = userProductsAdapter.getInitialState({
     status: 'idle',
     error: null ,
     editProduct: null,
-    searchProduct: null
+    searchProduct: null,
+    searchProductByString: null
 })
 
 const userProductsSlice = createSlice({
@@ -206,7 +207,13 @@ const userProductsSlice = createSlice({
         searchProduct: (state, action: PayloadAction<string | null>) => {
            const searchProductId = action.payload??""
             const searchProduct = state.entities[searchProductId]
+            state.searchProductByString = null
             state.searchProduct = searchProduct??{} as UserProduct
+
+        },
+        searchByString: (state, action:PayloadAction<string | null>)=>{
+            state.searchProduct = null
+          state.searchProductByString = action.payload
         }
 
     },
@@ -241,7 +248,7 @@ export const {
     // Pass in a selector that returns the posts slice of state
 } = userProductsAdapter.getSelectors<RootState>((state) => state.userProducts);
 
-export const {editProduct, searchProduct} = userProductsSlice.actions
+export const {editProduct, searchProduct, searchByString} = userProductsSlice.actions
 // export const searchUserProduct = createSelector(
 //     [selectUserProducts, (state:RootState, searchProductId) => searchProductId],
 //     (userProducts, searchProductId) => userProducts.filter(userProduct => userProduct.id === searchProductId)

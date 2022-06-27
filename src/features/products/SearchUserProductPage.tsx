@@ -8,18 +8,41 @@ import EditProductForm from "./EditProductForm";
 import BottomMenu from "../../app/BottomMenu/BottomMenu";
 import {useModal} from "../../component/Modal/UseModal";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {changeProductQuantity, ChangeQuantity, deleteUserProduct, editProduct, UserProduct} from "./userProductsSlice";
+import {
+    changeProductQuantity,
+    ChangeQuantity,
+    deleteUserProduct,
+    editProduct,
+    selectUserProducts,
+    UserProduct
+} from "./userProductsSlice";
 import {Link} from "react-router-dom";
 
 
 const SearchUserProductPage= ()=>{
     const dispatch = useAppDispatch()
+    const userProducts = useAppSelector(selectUserProducts);
     const searchUserProductFromSelect = useAppSelector(state=> state.userProducts.searchProduct)??{} as UserProduct
-    console.log(searchUserProductFromSelect)
-    const searchProducts: Array<UserProduct>=[]
-    searchProducts.push(searchUserProductFromSelect)
+    const searchInputValue= useAppSelector(state=>state.userProducts.searchProductByString)
+    let searchProducts: Array<UserProduct>=[]
+
+    if(searchInputValue ){
+        const searchUserProductsFromInput = userProducts.filter(userProduct=>userProduct.name.startsWith(searchInputValue??""))
+        searchProducts = searchUserProductsFromInput
+
+    } else {
+        searchProducts.push(searchUserProductFromSelect)
+    }
+
+    // if(searchUserProductFromSelect !== null){
+    //      const searchProducts = searchUserProductsFromInput.filter(item=>item.id !== searchUserProductFromSelect.id)
+    //       return searchProducts
+    // }
+
+   console.log(searchUserProductFromSelect)
+
     const categorySearchProduct = useAppSelector((state)=>state.categories.entities[searchUserProductFromSelect.categoryId])
-    console.log(categorySearchProduct)
+
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
@@ -48,7 +71,7 @@ const SearchUserProductPage= ()=>{
     const deleteUserOneProduct =  (userProduct: UserProduct)  => {
         dispatch(deleteUserProduct(userProduct))
     }
-
+  console.log(searchProducts)
     return(
         <>
             <div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
@@ -95,10 +118,11 @@ const SearchUserProductPage= ()=>{
                     </ul>
 
                 </div>
-                <BottomMenu />
+
                 <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
 
             </div>
+            <BottomMenu />
         </>
     )
 }
