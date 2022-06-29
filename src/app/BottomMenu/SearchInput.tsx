@@ -28,6 +28,33 @@ const SearchInput =()  => {
     const [inputString, setInputString] = useState("");
     const [preventOnChange, setPreventOnChange] = useState(false)
     //const [searchUserProductId, setSearchUserProductId] = useState<string>("");
+    const [searchOption, setSearchOption] = useState("")
+    const [doSearchByString, setDoSearchByString] = useState(false)
+    const [doSearchByOption, setDoSearchByOption] = useState(false)
+    useEffect(()=>{
+        console.log("use effect")
+        console.log(preventOnChange)
+        console.log(inputString)
+console.log(doSearchByOption)
+        console.log(doSearchByString)
+        console.log(searchOption)
+
+        if(doSearchByOption && !doSearchByString){
+            dispatch(searchProduct(searchOption))
+            navigate("/search")
+        }
+        if(doSearchByString){
+            setPreventOnChange(true)
+            dispatch(searchByString(inputString))
+            navigate("/search")
+            console.log("dosearchByString")
+        }
+        setDoSearchByOption(false)
+        setDoSearchByString(false)
+        setSearchOption("")
+        setPreventOnChange(false)
+
+    }, [doSearchByOption, doSearchByString ])
     const searchOptions = userProducts?.map(userProduct => {
         return {name: userProduct.name, value: userProduct.name}
     })
@@ -35,28 +62,36 @@ const SearchInput =()  => {
 
         return {label: userProduct.name + userProduct.capacity + userProduct.unit, value: userProduct.id}
     })
+console.log("render search input")
+    console.log(preventOnChange)
 
+
+    let preventInputOverwrite = false
     const onChange = (option: Option | null, actionMeta: ActionMeta<Option>) => {
 
-        if(preventOnChange){
-            console.log("onchange")
-            dispatch(searchProduct(option?.value??""))
-            navigate("/search")
+        if(!preventOnChange){
+            setSearchOption(option?.value??"")
+            setDoSearchByOption(true)
         }
     }
 
     const onInputTextChange=(e: string)=>{
-        console.log("oninputchange")
+        console.log(e)
+if(!preventInputOverwrite)
         setInputString(e);
     }
+
+    console.log(inputString)
     const onKeyDown=(e: any)=>{
-        console.log("onKeyDown")
+
+
         if(e.keyCode === 13){
+            console.log("onKeyDown")
+            preventInputOverwrite=true
             setPreventOnChange(true)
-            console.log(inputString)
-            dispatch(searchByString(inputString))
-            navigate("/search")
+            setDoSearchByString(true)
         }
+
     }
 
     return(
