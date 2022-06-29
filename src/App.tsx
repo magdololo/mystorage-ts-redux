@@ -29,8 +29,7 @@ library.add(fas)
 function App() {
     initializeApp(firebaseConfig);
     const navigate = useNavigate()
-    const user = useSelector(selectUser);
-    console.log(user)
+    //const user = useSelector(selectUser);
     const dispatch = useDispatch();
     const location = useLocation()
     console.log(location)
@@ -53,8 +52,6 @@ function App() {
         });
     }, []);
 
-
-    console.log(user)
     return (<>
             <div className="App">
                 <Routes>

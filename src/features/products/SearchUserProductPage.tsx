@@ -24,6 +24,8 @@ const SearchUserProductPage= ()=>{
     const userProducts = useAppSelector(selectUserProducts);
     const searchUserProductFromSelect = useAppSelector(state=> state.userProducts.searchProduct)??{} as UserProduct
     const searchInputValue= useAppSelector(state=>state.userProducts.searchProductByString)
+    console.log(searchInputValue)
+    console.log(searchUserProductFromSelect)
     let searchProducts: Array<UserProduct>=[]
 
     if(searchInputValue ){

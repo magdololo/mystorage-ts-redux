@@ -4,6 +4,7 @@ import {Modal} from "../../component/Modal/Modal";
 import React from "react";
 import AddProductForm from "../../features/products/AddProductForm";
 import {useModal} from "../../component/Modal/UseModal";
+import SearchInput2 from "./SearchInput2";
 
 const BottomMenu = () => {
 
@@ -15,7 +16,8 @@ const BottomMenu = () => {
                 <div className='w-screen fixed top-auto bottom-0 bg-white z-40  '>
                     <div className="flex flex-1 max-w-lg mx-auto py-8 ">
                         <Hamburger/>
-                        <SearchInput/>
+                        {<SearchInput2/>}
+                        {/*<SearchInput/>*/}
                         {/*variant="secondary"*/}
                         <button
                             className="text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 px-4 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"

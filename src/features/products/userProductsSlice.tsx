@@ -214,6 +214,7 @@ const userProductsSlice = createSlice({
         searchByString: (state, action:PayloadAction<string | null>)=>{
             state.searchProduct = null
           state.searchProductByString = action.payload
+
         }
 
     },
