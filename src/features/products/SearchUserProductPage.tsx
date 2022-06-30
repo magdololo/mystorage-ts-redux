@@ -12,11 +12,12 @@ import {
     changeProductQuantity,
     ChangeQuantity,
     deleteUserProduct,
-    editProduct,
+    editProduct, searchProduct,
     selectUserProducts,
     UserProduct
 } from "./userProductsSlice";
 import {Link} from "react-router-dom";
+import {selectAllCategories, selectCategoryById} from "../categories/categoriesSlice";
 
 
 const SearchUserProductPage= ()=>{
@@ -24,6 +25,7 @@ const SearchUserProductPage= ()=>{
     const userProducts = useAppSelector(selectUserProducts);
     const searchUserProductFromSelect = useAppSelector(state=> state.userProducts.searchProduct)??{} as UserProduct
     const searchInputValue= useAppSelector(state=>state.userProducts.searchProductByString)
+    const categories = useAppSelector(selectAllCategories)
     console.log(searchInputValue)
     console.log(searchUserProductFromSelect)
     let searchProducts: Array<UserProduct>=[]
@@ -37,7 +39,6 @@ const SearchUserProductPage= ()=>{
         searchProducts.push(searchUserProductFromSelect)
     }
 
-    const categorySearchProduct = useAppSelector((state)=>state.categories.entities[searchUserProductFromSelect.categoryId])
 
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
@@ -69,11 +70,15 @@ const SearchUserProductPage= ()=>{
     }
     console.log(searchProducts)
     let content;
-    if(searchProducts.length > 0){
 
+    const searchProductsWithCategory = searchProducts.map(searchProduct=>{
+        const searchProductCategory = categories.find(category=>category.id === searchProduct.categoryId)
+        return { ...searchProduct, categoryPath: searchProductCategory?.path, categoryTitle: searchProductCategory?.title}
+    })
+
+    if(searchProductsWithCategory.length > 0){
        content =  <ul className="pb-16 w-full relative">
-
-           {searchProducts.map((product) =>
+           {searchProductsWithCategory.map((product) =>
                <li key={product.id} className="flex flex-col relative px-6 py-6 border-b border-gray-extraLight w-full rounded-t-lg cursor-pointer">
                    <div className = "flex flex-row flex-nowrap w-full ">
 
@@ -88,7 +93,8 @@ const SearchUserProductPage= ()=>{
                            <div
                                className="text-gray-light">{product.capacity}{product.unit}
                            </div>
-                           <div className="text-gray-light">Kategoria: <Link to={"/categories/"+categorySearchProduct?.path}><span className="capitalize align-baseline text-gray font-bold">{categorySearchProduct?.title}</span></Link></div>
+                           <div className="text-gray-light">Kategoria: <Link to={"/categories/"+product.categoryPath}>
+                               <span className="capitalize align-baseline text-gray font-bold">{product.categoryTitle}</span></Link></div>
                        </div>
 
                        <div className="flex flex-auto flex-nowrap w-4/12 relative ">

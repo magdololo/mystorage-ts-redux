@@ -194,7 +194,8 @@ const initialState: EntityState<UserProduct>& { error: null | string | undefined
     error: null ,
     editProduct: null,
     searchProduct: null,
-    searchProductByString: null
+    searchProductByString: null,
+
 })
 
 const userProductsSlice = createSlice({
@@ -215,7 +216,7 @@ const userProductsSlice = createSlice({
             state.searchProduct = null
           state.searchProductByString = action.payload
 
-        }
+        },
 
     },
     extraReducers(builder) {

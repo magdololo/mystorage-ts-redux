@@ -11,7 +11,7 @@ const SearchInput2 =()=>{
     const [textFromInput, setTextFromInput] = useState("")
 
     const options =userProducts.map(userProduct => {
-        return{label: userProduct.name, value: userProduct.id}})
+        return{label: userProduct.name + userProduct.capacity + userProduct.unit, value: userProduct.id}})
 
     let searchFromOnChange = true;
     const onChange=(e: any)=>{
