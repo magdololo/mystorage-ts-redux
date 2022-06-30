@@ -26,7 +26,6 @@ export const CategoryList = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const modalHeader = "Dodaj nową kategorię"
-    console.log(user)
     const dispatch = useAppDispatch()
     const categoriesStatus = useAppSelector(((state) => state.categories.status))
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)

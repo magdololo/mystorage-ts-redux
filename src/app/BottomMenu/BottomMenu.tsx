@@ -10,7 +10,7 @@ const BottomMenu = () => {
 
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Dodaj produkt"
-    console.log("czesc bottom menu")
+
     return(
         <>
                 <div className='w-screen fixed top-auto bottom-0 bg-white z-40  '>

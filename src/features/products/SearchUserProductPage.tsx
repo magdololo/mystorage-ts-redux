@@ -26,13 +26,11 @@ const SearchUserProductPage= ()=>{
     const searchUserProductFromSelect = useAppSelector(state=> state.userProducts.searchProduct)??{} as UserProduct
     const searchInputValue= useAppSelector(state=>state.userProducts.searchProductByString)
     const categories = useAppSelector(selectAllCategories)
-    console.log(searchInputValue)
-    console.log(searchUserProductFromSelect)
+
     let searchProducts: Array<UserProduct>=[]
 
     if(searchInputValue ){
         const searchUserProductsFromInput = userProducts.filter(userProduct=>userProduct.name.startsWith(searchInputValue??""))
-        console.log(searchUserProductsFromInput)
         searchProducts = searchUserProductsFromInput
 
     } else {
@@ -47,7 +45,7 @@ const SearchUserProductPage= ()=>{
     const chooseEditProduct = (userProduct: UserProduct) =>{
         handleShown()
         let editingProduct = dispatch(editProduct(userProduct))
-        console.log(editingProduct)
+
     }
 
 
@@ -68,14 +66,15 @@ const SearchUserProductPage= ()=>{
     const deleteUserOneProduct =  (userProduct: UserProduct)  => {
         dispatch(deleteUserProduct(userProduct))
     }
-    console.log(searchProducts)
+
     let content;
 
     const searchProductsWithCategory = searchProducts.map(searchProduct=>{
         const searchProductCategory = categories.find(category=>category.id === searchProduct.categoryId)
         return { ...searchProduct, categoryPath: searchProductCategory?.path, categoryTitle: searchProductCategory?.title}
     })
-
+    console.log('producty w search')
+console.log(searchProductsWithCategory)
     if(searchProductsWithCategory.length > 0){
        content =  <ul className="pb-16 w-full relative">
            {searchProductsWithCategory.map((product) =>

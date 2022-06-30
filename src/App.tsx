@@ -18,18 +18,16 @@ import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
 import {ToastContainer} from "react-toastify";
 import CategoryPage from "./features/categories/CategoryPage";
-
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 import SearchUserProductPage from "./features/products/SearchUserProductPage";
-import BottomMenu from "./app/BottomMenu/BottomMenu";
+
 
 library.add(fas)
 
 function App() {
     initializeApp(firebaseConfig);
     const navigate = useNavigate()
-    //const user = useSelector(selectUser);
     const dispatch = useDispatch();
     const location = useLocation()
     console.log(location)
@@ -43,7 +41,6 @@ function App() {
                         provider: userAuth.providerId
                     })
                 );
-                console.log("navigate to categories")
                 navigate("/categories")
             } else {
                 dispatch(logout());

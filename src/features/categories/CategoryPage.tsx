@@ -38,7 +38,6 @@ const CategoryPage = () => {
     const categoryFromPath = useAppSelector((state) => categories.find(category => category.path === categoryPath))
     const categoryId = categoryFromPath?.id
     const productsOfCategory = useAppSelector((state) => userProducts.filter(product => product.categoryId === categoryId))
-    console.log(productsOfCategory)
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
@@ -71,8 +70,8 @@ const CategoryPage = () => {
     const deleteUserOneProduct =  (userProduct: UserProduct)  => {
          dispatch(deleteUserProduct(userProduct))
     }
-
-
+console.log('producty w category page')
+  console.log(productsOfCategory)
 
     return (
         <>
@@ -86,6 +85,7 @@ const CategoryPage = () => {
                 <div className="flex mt-2">
                     <ul className="pb-16 w-full relative">
                         {productsOfCategory.map((product) =>
+
                             <li key={product.id} className="flex flex-col relative px-6 py-6 border-b border-gray-extraLight w-full rounded-t-lg cursor-pointer">
                                 <div className = "flex flex-row flex-nowrap w-full ">
 

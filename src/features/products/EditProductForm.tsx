@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {useSelector} from "react-redux";
 import {useForm, Controller, SubmitHandler} from "react-hook-form";
 import {selectUser} from "../users/usersSlice";
-import {Category} from "../categories/categoriesSlice"
+import {Category, selectAllCategories} from "../categories/categoriesSlice"
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import 'react-toastify/dist/ReactToastify.css';
 import plLocale from "date-fns/locale/pl";
@@ -15,6 +15,7 @@ import {MenuItem} from "@mui/material";
 
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 import {editUserProduct, UserProduct} from "./userProductsSlice";
+import {useLocation, useNavigate} from "react-router-dom";
 
 type EditProductFormProps = {
     handleClose: () => void
@@ -38,12 +39,19 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
     } = useForm<EditFormValues>();
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
 
-    // const [selectedNewCategory, setSelectedNewCategory] = useState(null);
+
     const editProduct = useAppSelector(state=>state.userProducts.editProduct)
+    console.log('editProduct')
+    console.log(editProduct)
+    const allCategories = useAppSelector(selectAllCategories)
+    const editProductCategory = allCategories.find(category=>category.id === editProduct?.categoryId)
+    console.log('editProductCategory')
+    console.log(editProductCategory)
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
     const dispatch = useAppDispatch()
-
+    const navigate= useNavigate()
+    const location = useLocation()
     const units = [
         {value: 'gr'},
         {value: 'ml'},
@@ -51,15 +59,17 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         {value: 'szt'},
         {value: 'l'}];
     useEffect(() => {
-        if (currentCategory) {
-            setValue('newCategory', currentCategory);
+        if (editProductCategory ){
+            setValue('newCategory', editProductCategory);
         }
-    }, [currentCategory, setValue]);
-    console.log(currentCategory)
+    }, [editProductCategory, setValue]);
+    console.log(editProductCategory)
     const closeModal = () => {
         reset();
         handleClose();
     }
+
+
     const onSubmit: SubmitHandler<EditFormValues> = data => {
         console.log(data)
         let updatedProduct: UserProduct = {
@@ -87,7 +97,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         <Controller
             name="newCategory"
             control={control}
-            defaultValue={currentCategory}
+            defaultValue={editProductCategory}
             render={({field: {onChange, value}, fieldState: {error}}) => (
                 <AutocompleteWithCategoriesTitle
                     onChange= {onChange}
