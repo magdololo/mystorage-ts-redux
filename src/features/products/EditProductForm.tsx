@@ -51,7 +51,6 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
     const uid = user? user.uid: ""
     const dispatch = useAppDispatch()
     const navigate= useNavigate()
-    const location = useLocation()
     const units = [
         {value: 'gr'},
         {value: 'ml'},

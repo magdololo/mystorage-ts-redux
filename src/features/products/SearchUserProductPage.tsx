@@ -12,27 +12,33 @@ import {
     changeProductQuantity,
     ChangeQuantity,
     deleteUserProduct,
-    editProduct, searchProduct,
+    editProduct, searchProduct, selectUserProductById,
     selectUserProducts,
     UserProduct
 } from "./userProductsSlice";
 import {Link} from "react-router-dom";
-import {selectAllCategories, selectCategoryById} from "../categories/categoriesSlice";
+import {selectAllCategories} from "../categories/categoriesSlice";
 
 
 const SearchUserProductPage= ()=>{
     const dispatch = useAppDispatch()
     const userProducts = useAppSelector(selectUserProducts);
-    const searchUserProductFromSelect = useAppSelector(state=> state.userProducts.searchProduct)??{} as UserProduct
+    let searchProductId = useAppSelector(state=> state.userProducts.searchProduct)
+    let searchUserProductFromSelect = useAppSelector((state) => selectUserProductById(state, searchProductId??"")) ?? {}as UserProduct
+    console.log(searchUserProductFromSelect)
     const searchInputValue= useAppSelector(state=>state.userProducts.searchProductByString)
-    const categories = useAppSelector(selectAllCategories)
 
+    const categories = useAppSelector(selectAllCategories)
+    console.log("searchuserproductfromselect")
+    console.log(searchUserProductFromSelect)
+    console.log("searchInputvalue")
+    console.log(searchInputValue)
     let searchProducts: Array<UserProduct>=[]
 
     if(searchInputValue ){
         const searchUserProductsFromInput = userProducts.filter(userProduct=>userProduct.name.startsWith(searchInputValue??""))
-        searchProducts = searchUserProductsFromInput
-
+        let searchProducts = searchUserProductsFromInput
+        console.log(searchProducts)
     } else {
         searchProducts.push(searchUserProductFromSelect)
     }
@@ -49,16 +55,16 @@ const SearchUserProductPage= ()=>{
     }
 
 
-    const increment = (userProduct: UserProduct) => {
+    const increment = (searchProduct: UserProduct) => {
         const changeQuantityProduct: ChangeQuantity = {
-            userProduct: userProduct,
+            userProduct: searchProduct,
             changeQuantity: "increment"
         }
         dispatch(changeProductQuantity(changeQuantityProduct))
     }
-    const decrement = (userProduct: UserProduct)  => {
+    const decrement = (searchProduct: UserProduct)  => {
         const changeQuantityProduct: ChangeQuantity = {
-            userProduct: userProduct,
+            userProduct: searchProduct,
             changeQuantity: "decrement"
         }
         dispatch(changeProductQuantity(changeQuantityProduct))
