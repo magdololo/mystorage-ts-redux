@@ -11,7 +11,8 @@ import {
     signInWithPopup,
     GoogleAuthProvider,
     signOut,
-    updateProfile
+    updateProfile,
+    sendPasswordResetEmail
 } from 'firebase/auth';
 import { getFirestore } from "firebase/firestore";
 
@@ -52,5 +53,6 @@ export {
     signInWithEmailAndPassword,
     signInWithPopup,
     GoogleAuthProvider,
-    signOut
+    signOut,
+    sendPasswordResetEmail
 }

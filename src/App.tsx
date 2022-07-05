@@ -11,6 +11,7 @@ import {
 
 import CategoryList from "./features/categories/CategoryList";
 import LoginPage from "./features/users/LoginPage";
+import RemindPassword from "./features/users/RemindPassword";
 import ProductsList from "./features/products/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
 import './App.css';
@@ -56,6 +57,7 @@ function App() {
                     !user ?
                     < Route path="/" element={<LoginPage/>}/>
                     <Route path="/register" element={<RegisterPage/>}/>
+                    <Route path="/remindPassword" element={<RemindPassword/>}/>
                     :
                     <Route path="/categories" element={<CategoryList/>}/>
                     <Route path="/categories/:categoryPath" element={<CategoryPage/>}/>

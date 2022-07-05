@@ -6,8 +6,9 @@ module.exports = {
   theme: {
     screens: {
       xs: '0px',
-      sm: '520px',
-      md: '768px',
+      sm: '550px',
+      md:  '650px',
+      //md: '768px',
       lg: '960px',
       xl: '1440px',
     },
@@ -53,9 +54,13 @@ module.exports = {
       },
       fontSize: {
         'labelSize': '17.6px',
+        'sm' : '12px',
         'md': '16px',
         'lg': '20px',
       },
+      leading: {
+        '5': '1.25'
+      }
 
     },
   },

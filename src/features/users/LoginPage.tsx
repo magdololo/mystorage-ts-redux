@@ -115,6 +115,9 @@ const LoginPage = () => {
                         />
                         {errors?.password && <p>{errors.password.message}</p>}
                     </div>
+                    <p className="text-gray-800 mt-6 text-center pb-6">Nie pamiętasz hasła?
+                        <Link to="/remindPassword" className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1"> Przypomnij hasło</Link>
+                    </p>
                     <div className="flex justify-center space-x-6">
                     <button type="submit"
                                  className=" w-1/2
@@ -168,7 +171,7 @@ const LoginPage = () => {
 
             </div>
                     <p className="text-gray-800 mt-6 text-center">Nie masz konta?
-                        <Link to="/register" className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out">Zarejestruj się</Link>
+                        <Link to="/register" className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1">Zarejestruj się</Link>
                     </p>
                 </form>
             </div>

@@ -18,14 +18,20 @@ import {ToastContainer} from "react-toastify";
 import React, {useState} from "react";
 import {useAppDispatch} from "../../app/store";
 import {useModal} from "../../component/Modal/UseModal";
+import {Link} from "react-router-dom";
+import {selectAllCategories} from "../categories/categoriesSlice";
+import {useMediaQuery} from "@mui/material";
 
 const ProductsList = () => {
     const userProducts = useAppSelector(selectUserProducts)
     const dispatch = useAppDispatch()
+    const categories = useAppSelector(selectAllCategories)
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
-    const chooseEditProduct = (userProduct: UserProduct) =>{
+    const maxWidth440 = useMediaQuery('(max-width:440px)');
+
+    const chooseEditProduct = (userProduct: UserProduct) => {
         handleShown()
         let editingProduct = dispatch(editProduct(userProduct))
         console.log(editingProduct)
@@ -37,7 +43,7 @@ const ProductsList = () => {
         }
         dispatch(changeProductQuantity(changeQuantityProduct))
     }
-    const decrement = (userProduct: UserProduct)  => {
+    const decrement = (userProduct: UserProduct) => {
         const changeQuantityProduct: ChangeQuantity = {
             userProduct: userProduct,
             changeQuantity: "decrement"
@@ -45,62 +51,109 @@ const ProductsList = () => {
         dispatch(changeProductQuantity(changeQuantityProduct))
     }
 
-    const deleteUserOneProduct =  (userProduct: UserProduct)  => {
+    const deleteUserOneProduct = (userProduct: UserProduct) => {
         dispatch(deleteUserProduct(userProduct))
     }
-    return(
-       <>
-           <div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
-               <AppTitle/>
-               <ReturnToCategoryList/>
-               <div className="text-center text-gray-dark pt-2 pb-2px-6">
-                   <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">Lista produktów</h1>
-               </div>
+    const userProductsWithCategory = userProducts.map(userProduct => {
+        const searchProductCategory = categories.find(category => category.id === userProduct.categoryId)
+        return {...userProduct, categoryPath: searchProductCategory?.path, categoryTitle: searchProductCategory?.title}
+    })
+    return (
+        <>
+            <div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
+                <AppTitle/>
+                <div className="text-center text-gray-dark pt-2 pb-2px-6">
+                    <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">Lista produktów</h1>
+                </div>
+                <ReturnToCategoryList/>
+
+                <div className="flex mt-2">
+                    <ul className="pb-16 w-full relative">
+                        {userProductsWithCategory.map((product) =>
+                            <li key={product.id}
+                                className="flex flex-col relative px-6 py-6 border-b border-gray-extraLight w-full rounded-t-lg cursor-pointer">
+                                <div className="flex flex-row  w-full items-stretch">
+
+                                    <div className="flex-auto flex-row relative w-6/12 sm:flex-col  md:w-8/12">
+                                        <div
+                                            className="text-md capitalize align-baseline text-gray  font-bold sm:text-xl">{product.name}
+                                        </div>
+                                        <div
+                                            className={(product.expireDate !== null && product?.expireDate > todayDate) ? "text-gray-light" : "text-red font-bold"}>
+                                            {product.expireDate ? product.expireDate.toISOString().substring(0, 10) : ""}
+                                        </div>
+                                        <div
+                                            className="text-gray-light">{product.capacity}{product.unit}
+                                        </div>
+                                        <div className="text-gray-light text-md">Kategoria: <Link
+                                            to={"/categories/" + product.categoryPath}>
+                                            <span
+                                                className="capitalize text-md align-baseline text-gray font-bold">{product.categoryTitle}</span></Link>
+                                        </div>
+                                    </div>
+
+                                    {/*<div className="flex flex-auto  relative sm:w-6/12 md:w-8/12 ">*/}
+                                    <div className="flex flex-auto flex-row relative w-6/12 sm:flex-col md:w-4/12 items-center">
+                                        {maxWidth440 ?
+                                            <>
+                                                <div
+                                                    className="flex flex-col items-center justify-between max-h-20 ">
+                                                    <div className="h-1/2 pb-1">
+                                                        <FontAwesomeIcon className="text-xl text-blue-500 px-2"
+                                                                         icon={faPlus}
+                                                                         onClick={() => increment(product)}/>
+                                                        <span
+                                                            className="text-xl text-blue-800 px-2 ">{product.quantity}</span>
+                                                        <FontAwesomeIcon
+                                                            className="text-xl text-blue-500 border-blue-400  px-2"
+                                                            icon={faMinus} onClick={() => decrement(product)}/>
+                                                    </div>
+                                                    <div className="h-1/2 pt-1">
+                                                        <FontAwesomeIcon
+                                                            className="text-xl text-blue-800 border-blue-400 border-solid border-r px-6 "
+                                                            icon={faTrash}
+                                                            onClick={() => deleteUserOneProduct(product)}/>
+                                                        <FontAwesomeIcon className="text-xl text-blue-800 px-6 "
+                                                                         icon={faPen}
+                                                                         onClick={() => chooseEditProduct(product)}/>
+                                                    </div>
+                                                </div>
+                                            </>
+                                            :
+                                            <>
+                                                <div className="flex flex-row flex-nowrap absolute right-0 items-center">
+                                                    <FontAwesomeIcon className="text-xl text-blue-500 px-4"
+                                                                     icon={faPlus} onClick={() => increment(product)}/>
+                                                    <span
+                                                        className="text-xl text-blue-800 px-2 ">{product.quantity}</span>
+                                                    <FontAwesomeIcon
+                                                        className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4 "
+                                                        icon={faMinus} onClick={() => decrement(product)}/>
+                                                    <FontAwesomeIcon
+                                                        className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4 "
+                                                        icon={faTrash} onClick={() => deleteUserOneProduct(product)}/>
+                                                    <FontAwesomeIcon className="text-xl text-blue-800 px-4 "
+                                                                     icon={faPen}
+                                                                     onClick={() => chooseEditProduct(product)}/>
+                                                </div>
+                                            </>
+                                        }
+
+                                    </div>
+                                </div>
+                            </li>
+                        )}
+                    </ul>
+                    <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}
+                           modalContent={<EditProductForm handleClose={handleClose} isShown={isShown}/>}/>
+                </div>
+
+                <ToastContainer/>
 
 
-               <div className="flex mt-2">
-                   <ul className="pb-16 w-full relative">
-                       {userProducts.map((product) =>
-                           <li key={product.id} className="flex flex-col relative px-6 py-6 border-b border-gray-extraLight w-full rounded-t-lg cursor-pointer">
-                               <div className = "flex flex-row flex-nowrap w-full ">
-
-                                   <div className="flex-auto flex-col w-8/12 relative">
-                                       <div
-                                           className= "capitalize align-baseline text-gray text-xl font-bold">{product.name}
-                                       </div>
-                                       <div
-                                           className={ (product.expireDate !== null && product?.expireDate > todayDate ) ? "text-gray-light" : "text-red font-bold"}>
-                                           {product.expireDate ? product.expireDate.toISOString().substring(0,10) : ""}
-                                       </div>
-                                       <div
-                                           className="text-gray-light">{product.capacity}{product.unit}
-                                       </div>
-                                   </div>
-
-                                   <div className="flex flex-auto flex-nowrap w-4/12 relative ">
-                                       <div className="absolute right-0 self-center">
-
-                                           <FontAwesomeIcon className="text-xl text-blue-500 px-4" icon={faPlus} onClick={()=>increment(product)}/>
-                                           <span className="text-xl text-blue-800 px-2">{product.quantity}</span>
-                                           <FontAwesomeIcon className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4" icon={faMinus} onClick={() => decrement(product)}/>
-                                           <FontAwesomeIcon className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4" icon={faTrash} onClick={()=>deleteUserOneProduct(product)}/>
-                                           <FontAwesomeIcon className="text-xl text-blue-800 px-4" icon={faPen}  onClick={()=>chooseEditProduct(product) }/>
-
-                                       </div>
-
-                                   </div>
-                               </div>
-                           </li>
-                       )}
-                   </ul>
-                   <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
-               </div>
-               <BottomMenu />
-               <ToastContainer />
-
-
-           </div>
-       </>
-   )
+            </div>
+            <BottomMenu/>
+        </>
+    )
 }
 export default ProductsList
