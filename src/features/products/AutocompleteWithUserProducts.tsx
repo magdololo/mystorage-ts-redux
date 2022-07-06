@@ -12,7 +12,7 @@ const filter = createFilterOptions<ProductFromDictionary>();
 export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProductFromAutocomplete, setNewProductName}: AutocompleteWithUserProductsProps) => {
 
     const allProducts = useAppSelector(selectAllProducts)
-
+console.log(allProducts)
     return (
 
         <Autocomplete
@@ -33,7 +33,7 @@ export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProduc
                 return filtered as ProductFromDictionary[];
             }}
             isOptionEqualToValue={(option, value) => {
-                return option.name === value.name
+                return option.id === value.id
             }}
             autoSelect//dołacza wpisany tekst w jedna z opcji select z ktorej popbierze wartość
             handleHomeEndKeys

@@ -16,6 +16,7 @@ import {MenuItem} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Category} from "../categories/categoriesSlice";
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
+import { ErrorMessage } from '@hookform/error-message';
 
 
 export type FormValues = {
@@ -51,11 +52,15 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
     const user = useSelector(selectUser)
     const uid = user ? user.uid : ""
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
+    console.log(selectedProductFromAutocomplete)
+    console.log(currentCategory)
+    console.log(newProductName)
     const {
         handleSubmit,
         control,
         setValue,
-        reset
+        reset,
+        formState: {errors}
     } = useForm<FormValues>();
     const [errorMessage, setErrorMessage] = useState('');
     useEffect(() => {
@@ -77,32 +82,29 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
         handleClose();
     }
     const onSubmit: SubmitHandler<FormValues> = data => {
+            console.log(data)
+            let userProduct: UserProduct = {
+                productId: "",
+                name: data.productName,
+                categoryId: data.category ? data.category.id ?? "" : "",
+                capacity: data.capacity ?? 0,
+                unit: data.unit,
+                quantity: data.quantity ?? 0,
+                expireDate: data.expireDate,
+                userId: uid,
+                id: ""
 
-        let userProduct: UserProduct = {
-            productId: "",
-            name: data.productName,
-            categoryId: data.category ? data.category.id ?? "" : "",
-            capacity: data.capacity ?? 0,
-            unit: data.unit,
-            quantity: data.quantity ?? 0,
-            expireDate: data.expireDate,
-            userId: uid,
-            id: ""
 
-
+            }
+            dispatch(addUserProduct(userProduct))
+            closeModal();
         }
-        dispatch(addUserProduct(userProduct))
-        console.log(data);
-        closeModal();
-    }
     const units = [
         {
             value: 'gr',
-
         },
         {
             value: 'ml',
-
         },
         {
             value: 'kg',
@@ -118,13 +120,12 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
     ];
 
 
-
     return (
         <>
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                noValidate
+
             >
                 <Box>
                     <Box id="modal-modal-description" sx={{mt: 2, mb: 3, width: "80%", marginLeft: "10%"}}>
@@ -140,23 +141,29 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                                 />
                             )}
                         />
+                        {errorMessage === "Domyślnie produkty bez kategorii" && <p>{errorMessage}</p>}
                     </Box>
 
                     <Box id="modal-modal-description" sx={{mt: 2, mb: 3, width: "80%", marginLeft: "10%"}}>
                         <Controller
                             name="productName"
                             control={control}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                            rules={{required: true}}
+                            render={({field: {onChange, value}, fieldState: {error}, formState: {errors}}) => (<>
                                 <AutocompleteWithUserProducts
                                     value={value ?? ""}
                                     onChange={onChange}
+
                                     setSelectedProductFromAutocomplete={setSelectedProductFromAutocomplete}
                                     setNewProductName={setNewProductName}
 
                                 />
-
+                                    <ErrorMessage errors={errors} name="productName" />
+                                </>
                             )}
+
                         />
+
                     </Box>
                     <Box id="modal-modal-description" sx={{mt: 2, mb: 3, width: "100%"}}>
                         <Controller

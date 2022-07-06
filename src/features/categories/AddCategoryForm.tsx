@@ -27,8 +27,6 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
     const images = useAppSelector(((state) => state.categories.images))
 
-  console.log(images)
-
     const imagesOptions = images?.map(image=>(
         <div key={image.id} onClick={(event: React.MouseEvent<HTMLElement>) => {
             setPickedImage(image.url)
