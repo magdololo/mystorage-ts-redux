@@ -119,7 +119,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
 
     ];
 
-
+console.log(errors)
     return (
         <>
 
@@ -141,10 +141,10 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                                 />
                             )}
                         />
-                        {errorMessage === "Domyślnie produkty bez kategorii" && <p>{errorMessage}</p>}
+                        {errors.category && (<p>{"domyslnie produkty bez kategorii"}</p>)}
                     </Box>
 
-                    <Box id="modal-modal-description" sx={{mt: 2, mb: 3, width: "80%", marginLeft: "10%"}}>
+                    <Box id="modal-modal-description" sx={{mt: 2, width: "80%", marginLeft: "10%"}}>
                         <Controller
                             name="productName"
                             control={control}
@@ -158,17 +158,18 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                                     setNewProductName={setNewProductName}
 
                                 />
-                                    <ErrorMessage errors={errors} name="productName" />
                                 </>
                             )}
 
                         />
 
                     </Box>
+                    {errors.productName && (<p className="text-xs text-red ml-10">Nazwa produktu wymagana</p>)}
                     <Box id="modal-modal-description" sx={{mt: 2, mb: 3, width: "100%"}}>
                         <Controller
                             name="capacity"
                             control={control}
+                            rules={{required: true, min: 1}}
                             defaultValue={1}//{product ? product.capacity : "100"}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField sx={{width: "35%", marginLeft: "10%"}}
@@ -183,9 +184,11 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                                 />
                             )}
                         />
+                        {errors.capacity && (<p className="text-xs text-purple-700 ml-10">Ilość wymagana i musi być więksa od 0.</p>)}
                         <Controller
                             name="unit"
                             control={control}
+                            rules={{required: true}}
                             defaultValue={"kg"}//{product ? product.unit : "gr"}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField sx={{width: "35%", marginRight: "10%", marginLeft: "5%"}}
@@ -228,10 +231,11 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                         />
                     </Box>
 
-                    <Box id="modal-modal-description" sx={{mt: 2, mb: 3}}>
+                    <Box id="modal-modal-description" sx={{mt: 2, mb:3}}>
                         <Controller
                             name="quantity"
                             control={control}
+                            rules={{required: true, min: 1}}
                             defaultValue={1}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField
@@ -243,11 +247,11 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                                     onChange={onChange}
                                     error={!!error}
                                     helperText={error ? error.message : null}
-
                                 />
                             )}
                         />
                     </Box>
+                    {errors.quantity && (<p className="text-xs text-purple-700 ml-10">Ilość wymagana i musi być więksa od 0.</p>)}
 
                     {errorMessage !== '' ? <Alert severity="error">{errorMessage}</Alert> : null}
                     <Button sx={{marginLeft: "10%"}} type="submit" variant="contained" color="primary">Dodaj
