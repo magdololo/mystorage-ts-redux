@@ -87,6 +87,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                                placeholder="Nazwa kategorii"
                                value={title}
                                onChange={onTitleChange}/>
+                        {title===""&& <p>Pole wymagane</p>}
                     </div>
 
                     <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader}
@@ -118,10 +119,10 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                                id="exampleInput91"
                                placeholder={pickedImage === "" ? "Wybierz zdjęcie" : "Zmień zdjęcie"}
                                onClick={handleOpen}
-
-
                         />
+                        {pickedImage===""&& <p>Pole wymagane</p>}
                     </div>
+
                     {pickedImage !== "" ?
                         <div className="form-group mb-6">
                             <img src={pickedImage}/>

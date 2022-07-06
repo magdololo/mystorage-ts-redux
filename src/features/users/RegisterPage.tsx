@@ -73,7 +73,8 @@ const RegisterPage = () => {
                         <label className="form-label inline-block mb-2 text-gray-700">Email address</label>
                         <input type="email" {...register("email", {
                             required: true,
-                            pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            pattern:  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+
                         })}
                                placeholder="email"
                                className="  form-control
@@ -93,7 +94,8 @@ const RegisterPage = () => {
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                id="exampleInputEmail2"
                                aria-describedby="emailHelp"/>
-                        {errors?.email && <p>{errors.email.message}</p>}
+                        {errors.email?.type === 'required' && "Email is required"}
+                        {errors.email?.type === 'pattern' && "Nieprawidłowy email"}
                     </div>
                     <div className="form-group mb-6 relative">
 
@@ -117,7 +119,7 @@ const RegisterPage = () => {
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                id="exampleInputPassword2"/>
                         <i onClick={togglePasswordVisibility}>{eye}</i>{" "}
-                        {errors?.password && <p>{errors.password.message}</p>}
+                        {errors.password?.type === 'required' && 'Hasło wymagane'}
                     </div>
                     <div className="flex justify-center space-x-6">
                         <button type="submit"

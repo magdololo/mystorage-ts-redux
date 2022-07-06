@@ -92,12 +92,11 @@ const ProductsList = () => {
                                         </div>
                                     </div>
 
-                                    {/*<div className="flex flex-auto  relative sm:w-6/12 md:w-8/12 ">*/}
-                                    <div className="flex flex-auto flex-row relative w-6/12 sm:flex-col md:w-4/12 items-center">
+                                    <div className="flex flex-auto flex-row relative w-6/12 sm:flex-col md:w-4/12 items-center justify-center">
                                         {maxWidth440 ?
                                             <>
                                                 <div
-                                                    className="flex flex-col items-center justify-between max-h-20 ">
+                                                    className="flex flex-col items-center justify-between max-h-20 absolute right-0">
                                                     <div className="h-1/2 pb-1">
                                                         <FontAwesomeIcon className="text-xl text-blue-500 px-2"
                                                                          icon={faPlus}

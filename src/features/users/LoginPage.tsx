@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {useNavigate} from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {auth, signInWithEmailAndPassword,signInWithPopup, GoogleAuthProvider} from '../../firebase';
@@ -10,7 +10,7 @@ const LoginPage = () => {
 
     const dispatch = useDispatch()
     const provider = new GoogleAuthProvider();
-
+    const [errorMessage,setErrorMessage] = useState("");
     let navigate = useNavigate()
     const {
         register,
@@ -39,7 +39,16 @@ const LoginPage = () => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log("An error occured: ", errorCode, errorMessage);
-            });
+                if(errorCode === 'auth/wrong-password'){
+                    setErrorMessage('Niepoprawne hasło')
+                }
+                else if(errorCode === 'auth/wrong-email'){
+                    setErrorMessage('Niepoprawny email')
+                }
+                else if (errorCode === 'auth/user-not-found'){
+                    setErrorMessage('Konto nie istnieje')
+                }});
+                reset()
 
     });
 
@@ -52,6 +61,7 @@ const LoginPage = () => {
             }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
+            console.log(error.code)
             const errorMessage = error.message;
             // The email of the user's account used.
             const email = error.customData.email;
@@ -91,7 +101,10 @@ const LoginPage = () => {
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                id="exampleInputEmail2"
                                aria-describedby="emailHelp" />
-                        {errors?.email && <p>{errors.email.message}</p>}
+
+                        {errorMessage === 'Niepoprawny email' ? <p>{errorMessage}</p> : null}
+                        {errors.email?.type === 'required' && "Email is required"}
+                        {errors.email?.type === 'pattern' && "Nieprawidłowy email"}
                     </div>
                     <div className="form-group mb-6">
                         <label className="form-label inline-block mb-2 text-gray-700">Password</label>
@@ -113,7 +126,9 @@ const LoginPage = () => {
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                id="exampleInputPassword2"
                         />
-                        {errors?.password && <p>{errors.password.message}</p>}
+                        {errorMessage === 'Niepoprawne hasło' && <p>{errorMessage}</p>}
+                        {errorMessage === 'Konto nie istnieje' && <p>{errorMessage}</p>}
+                        {errors.password?.type === 'required' && 'Hasło wymagane'}
                     </div>
                     <p className="text-gray-800 mt-6 text-center pb-6">Nie pamiętasz hasła?
                         <Link to="/remindPassword" className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1"> Przypomnij hasło</Link>

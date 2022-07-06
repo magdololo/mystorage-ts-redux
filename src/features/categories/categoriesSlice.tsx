@@ -14,7 +14,7 @@ import {ProductFromDictionary} from "../products/allProductsSlice";
 
 export interface Category {
     id: string | null;
-    path: Required<string> | undefined;
+    path: Required<string>;
     url: Required<string>;
     title: Required<string>;
     user: string;

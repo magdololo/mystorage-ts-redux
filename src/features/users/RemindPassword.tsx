@@ -1,6 +1,6 @@
 
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {auth, sendPasswordResetEmail} from "../../firebase";
 
@@ -16,7 +16,7 @@ const RemindPassword=()=>{
         password: string
     }>();
     const [messageAfterSendPassword, setMessageAfterSendPassword] = useState(false)
-
+    const [errorMessage, setErrorMessage] = useState("")
 
 
     const navigateToLoginPage =()=>{
@@ -24,21 +24,25 @@ const RemindPassword=()=>{
     }
 
     const onSubmit = handleSubmit((data:{email:string}) => {
-        console.log(data)
-        setMessageAfterSendPassword(true)
-        reset({email: ""})
-        setTimeout(navigateToLoginPage, 3000)
-         // sendPasswordResetEmail(auth, data.email)
-         //    .then(()=> {
-         //        setMessageAfterSendPassword(true)
-         //        reset({email: ""})
-         //        setTimeout(navigateToLoginPage, 3000)
-         //    })
-         //    .catch((error) => {
-         //        const errorCode = error.code;
-         //        const errorMessage = error.message;
-         //
-         //    });
+         console.log(data)
+        // setMessageAfterSendPassword(true)
+        // reset({email: ""})
+        // setTimeout(navigateToLoginPage, 3000)
+         sendPasswordResetEmail(auth, data.email)
+            .then(()=> {
+                setMessageAfterSendPassword(true)
+                reset({email: ""})
+                setTimeout(navigateToLoginPage, 3000)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                if(errorCode === "auth/user-not-found"){
+                    setErrorMessage("User z podanym email-em nie istnieje w aplikacji. Sprubój inny email.")
+                    reset({email:""})
+                }
+
+            });
     });
 
     return(
@@ -71,16 +75,19 @@ const RemindPassword=()=>{
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                            id="exampleInputEmail2"
                            aria-describedby="emailHelp" />
-                    {errors?.email && <p>{errors.email.message}</p>}
+                    {errors.email?.type === 'required' && "Email is required"}
+                    {errors.email?.type === 'pattern' && "Nieprawidłowy email"}
+                    {errorMessage!="" && <p>{errorMessage}</p>}
                 </div>
-                <button type="submit"   className=" w-1/2
+                <div className ="flex flex row justify-between">
+                    <button type="submit"   className=" w-2/5
 
                                           px-1
-                                          py-4
+                                          py-3
                                           text-white
                                           font-bold
                                           bg-purple
-                                          text-md
+                                          text-sm
                                           leading-tight
                                           uppercase
                                           rounded
@@ -91,6 +98,29 @@ const RemindPassword=()=>{
                                           transition
                                           duration-150
                                           ease-in-out">Dalej</button>
+                    <button type="button"   className=" w-2/5
+                                          px-1
+                                          py-3
+                                          text-white
+                                          font-bold
+                                          bg-purple
+                                          text-sm
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-md
+                                          hover:shadow-lg
+                                          focus:shadow-lg focus:outline-none focus:ring-0
+                                          active:shadow-lg
+                                          transition
+                                          duration-150
+                                          ease-in-out"><Link to={'/register'}>Zarejestruj się
+                        </Link></button>
+
+
+                </div>
+
+
             </form>
                 {messageAfterSendPassword ?
                     <div className="bg-purple-100 rounded-lg py-5 px-6 mb-4 text-purple-700 mb-3 text-gray-700 my-6 text-2xl" role="alert">
