@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import AppTitle from "../../app/TopMenu/AppTitle";
 import TopMenu from "../../app/TopMenu/TopMenu";
@@ -18,6 +18,8 @@ import { Spinner } from '../../component/Spinner'
 import {fetchUserProducts} from "../products/userProductsSlice";
 import BottomMenu from "../../app/BottomMenu/BottomMenu";
 import {ToastContainer} from "react-toastify";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
 
 
 export const CategoryList = () => {
@@ -36,23 +38,53 @@ export const CategoryList = () => {
         dispatch(fetchUserProducts(user?.uid ?? ""))
         dispatch(fetchAllProducts())
     }, [user, dispatch])
+    const[toggleSwitch, setToggleSwitch] = useState(false);
 
+    const toggleEdit=()=>{
+        setToggleSwitch(!toggleSwitch)
+    }
 
     useEffect(()=> {
         dispatch(currentCategoryChange(null))
     }, [dispatch])
+
+
+
+
+
+
+
+
+
+//
+
+
     let content;
     if (categoriesStatus === "loading") {
       content = <Spinner text="Loading..." />;
     } else if (categoriesStatus === "succeeded") {
       const renderedCategories = categories?.map(category => (
 
-            <li className="h-auto flex flex-col relative" key={category?.id}>
-                <Link to={`/categories/${category?.path}`}>
-                    <img src={category?.url} className="w-full h-auto object-cover flex-1 flex-grow" alt="Louvre"/>
+            <li className={"h-auto flex flex-col relative "+ (toggleSwitch?"bg-black bg-opacity-90 ":"") } key={category?.id}>
+
+                    <Link to={`/categories/${category?.path}`}  className={toggleSwitch? "pointer-events-none" : ""} >
+                    <img src={category?.url} className={"w-full h-auto object-cover flex-1 flex-grow "+ (toggleSwitch?"brightness-[0.2]":"")} alt="Louvre" />
+
                     <span
-                        className="absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 capitalize text-center text-white font-bold">{category?.title}</span>
+                        className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 text-xl capitalize text-center text-white font-bold"+ (toggleSwitch?"hidden invisible":"")}>{category?.title}</span>
+
                 </Link>
+                <span className={"absolute bottom-2/4 left-0 right-0 mx-auto capitalize text-xl text-center text-white font-bold"+ (!toggleSwitch? "invisible hidden":"")}>{category?.title}</span>
+                {toggleSwitch &&
+                    <FontAwesomeIcon
+                        className="absolute align-middle top-10 left-10 inline-flex items-center justify-center text-white text-xl font-bold cursor-pointer"
+                        icon={faPen} onClick={()=>console.log('edycja kategorii')}/>
+                }
+                {toggleSwitch &&
+                    <FontAwesomeIcon
+                    className="absolute align-middle top-10 right-10 inline-flex items-center justify-center text-red text-2xl font-bold cursor-pointer"
+                    icon={faXmark} onClick={()=>console.log('delete kategorii')}/>
+                }
             </li>
         ))
         content =
@@ -94,7 +126,7 @@ export const CategoryList = () => {
     return (
         <>
             <AppTitle/>
-            <TopMenu/>
+            <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
             {content}
             <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={<AddCategoryForm closeAddCategoryModal={handleClose}/>}/>
 

@@ -15,8 +15,6 @@ export interface ProductFromDictionary{
 }
 const allProductsAdapter = createEntityAdapter<ProductFromDictionary>({
     sortComparer: (a: ProductFromDictionary, b: ProductFromDictionary) => {
-        console.log(a)
-        console.log(b)
         let aTitle = a.name.toLowerCase();
         let bTitle = b.name.toLowerCase();
 
@@ -56,7 +54,7 @@ export const fetchAllProducts = createAsyncThunk('allProducts/fetchAllProducts',
             let q = await query(collection(db, "allProducts"));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
-console.log(doc.data())
+// console.log(doc.data())
                 let productDoc = doc.data() as ProductFromDictionary;
                 productDoc.id = doc.id;
                 allProducts.push(productDoc);

@@ -35,7 +35,8 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         handleSubmit,
         control,
         setValue,
-        reset
+        reset,
+        formState: {errors}
     } = useForm<EditFormValues>();
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
 
@@ -92,10 +93,11 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         <>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
 <Box>
-                <Box id="modal-modal-description"  sx={{mt: 2, mb: 3, width: "80%", marginLeft: "10%"}}>
+                <Box id="modal-modal-description"  sx={{mt: 2, width: "80%", marginLeft: "10%"}}>
         <Controller
             name="newCategory"
             control={control}
+            rules={{required: true}}
             defaultValue={editProductCategory}
             render={({field: {onChange, value}, fieldState: {error}}) => (
                 <AutocompleteWithCategoriesTitle
@@ -107,10 +109,12 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
             )}
         />
         </Box>
-    <Box id="modal-modal-description" sx={{mt: 2, mb: 3}}>
+    {errors.newCategory && (<p className="text-xs text-red ml-10">{"Kategoria wymagana"}</p>)}
+    <Box id="modal-modal-description" sx={{mt: 2}}>
         <Controller
             name="newProductName"
             control={control}
+            rules={{required: true}}
             defaultValue={editProduct ? editProduct.name : ''}
             render={({field: {onChange, value}, fieldState: {error}}) => (
                 <TextField sx={{width: "80%", marginLeft: "10%"}}
@@ -123,10 +127,12 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
                 />
             )}/>
     </Box>
-    <Box id="modal-modal-description"  sx={{mt: 2, mb: 3, width: "100%"}}>
+    {errors.newProductName && (<p className="text-xs text-red ml-10">Nazwa produktu wymagana</p>)}
+    <Box id="modal-modal-description"  sx={{mt: 2, width: "100%"}}>
         <Controller
             name="newCapacity"
             control={control}
+            rules={{required: true, min: 1}}
             defaultValue={editProduct ? editProduct.capacity : null}
             render={({field: {onChange, value}, fieldState: {error}}) => (
                 <TextField sx={{width: "35%", marginLeft: "10%"}}
@@ -158,6 +164,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
                 </TextField>
             )}/>
     </Box>
+    {errors.newCapacity && (<p className="text-xs text-red ml-10">Pojemność wymagana i musi być więksa od 0.</p>)}
     <Box>
         <Controller
             name="newExpireDate"
@@ -170,16 +177,17 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
                         label="Data ważności"
                         value={value}
                         onChange={onChange}
-                        renderInput={(params) => <TextField {...params}  sx={{width: "80%", marginLeft: "10%"}}/>}
+                        renderInput={(params) => <TextField {...params}  sx={{width: "80%", marginLeft: "10%", marginTop: "5%"}}/>}
                     />
                 </LocalizationProvider>
             )}
         />
     </Box>
-    <Box id="modal-modal-description" sx={{mt: 2, mb: 3}}>
+    <Box id="modal-modal-description" sx={{mt: 2}}>
         <Controller
             name="newQuantity"
             control={control}
+            rules={{required: true, min: 1}}
             defaultValue={editProduct ? editProduct.quantity : null}
             render={({field: {onChange, value}, fieldState: {error}}) => (
                 <TextField sx={{width: "80%", marginLeft: "10%"}}
@@ -193,7 +201,8 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         />
 
     </Box>
-    <Button sx={{ marginLeft: "10%"}} type="submit" variant="contained" color="primary" >Edytuj produkt</Button>
+    {errors.newQuantity && (<p className="text-xs text-red ml-10">Ilość wymagana i musi być więksa od 0.</p>)}
+    <Button sx={{ marginLeft: "10%", marginTop: "5%"}} type="submit" variant="contained" color="primary" >Edytuj produkt</Button>
 </Box>
             </form>
         </>

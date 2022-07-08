@@ -60,6 +60,9 @@ module.exports = {
       },
       leading: {
         '5': '1.25'
+      },
+      filter: {
+        "brightness-20" :"0.2"
       }
 
     },

@@ -128,10 +128,11 @@ console.log(errors)
 
             >
                 <Box>
-                    <Box id="modal-modal-description" sx={{mt: 2, mb: 3, width: "80%", marginLeft: "10%"}}>
+                    <Box id="modal-modal-description" sx={{mt: 2, width: "80%", marginLeft: "10%"}}>
                         <Controller
                             name="category"
                             control={control}
+                            rules={{required: true}}
                             defaultValue={currentCategory ? currentCategory : null}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <AutocompleteWithCategoriesTitle
@@ -141,9 +142,8 @@ console.log(errors)
                                 />
                             )}
                         />
-                        {errors.category && (<p>{"domyslnie produkty bez kategorii"}</p>)}
                     </Box>
-
+                    {errors.category && (<p className="text-xs text-red ml-10">{"Kategoria wymagana"}</p>)}
                     <Box id="modal-modal-description" sx={{mt: 2, width: "80%", marginLeft: "10%"}}>
                         <Controller
                             name="productName"
@@ -162,10 +162,9 @@ console.log(errors)
                             )}
 
                         />
-
                     </Box>
                     {errors.productName && (<p className="text-xs text-red ml-10">Nazwa produktu wymagana</p>)}
-                    <Box id="modal-modal-description" sx={{mt: 2, mb: 3, width: "100%"}}>
+                    <Box id="modal-modal-description" sx={{mt: 2, width: "100%"}}>
                         <Controller
                             name="capacity"
                             control={control}
@@ -175,23 +174,23 @@ console.log(errors)
                                 <TextField sx={{width: "35%", marginLeft: "10%"}}
                                            id="standard-number"
                                            label="Pojemność"
+                                           type="number"
                                            value={value}
                                            onChange={onChange}
                                            error={!!error}
                                            helperText={error ? error.message : null}
-                                           type="number"
                                            variant="standard"
                                 />
                             )}
                         />
-                        {errors.capacity && (<p className="text-xs text-purple-700 ml-10">Ilość wymagana i musi być więksa od 0.</p>)}
+
                         <Controller
                             name="unit"
                             control={control}
                             rules={{required: true}}
                             defaultValue={"kg"}//{product ? product.unit : "gr"}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
-                                <TextField sx={{width: "35%", marginRight: "10%", marginLeft: "5%"}}
+                                <TextField sx={{width: "35%", marginRight: "10%", marginLeft: "10%"}}
                                            id="standard-select-currency"
                                            select
                                            label="Jednostka"
@@ -211,6 +210,7 @@ console.log(errors)
                             )}
                         />
                     </Box>
+                    {errors.capacity && (<p className="text-xs text-red ml-10">Pojemność wymagana i musi być więksa od 0.</p>)}
                     <Box>
                         <Controller
                             name="expireDate"
@@ -225,13 +225,13 @@ console.log(errors)
                                         value={value}
                                         onChange={onChange}
                                         renderInput={(params) => <TextField {...params}
-                                                                            sx={{width: "80%", marginLeft: "10%"}}/>}/>
+                                                                            sx={{width: "80%", marginLeft: "10%", marginTop:"5%"}}/>}/>
                                 </LocalizationProvider>
                             )}
                         />
                     </Box>
 
-                    <Box id="modal-modal-description" sx={{mt: 2, mb:3}}>
+                    <Box id="modal-modal-description" sx={{mt: 2}}>
                         <Controller
                             name="quantity"
                             control={control}
@@ -241,7 +241,7 @@ console.log(errors)
                                 <TextField
                                     sx={{width: "80%", marginLeft: "10%"}}
                                     //id="outlined-number"
-                                    label="ilość"
+                                    label="Ilość"
                                     type="number"
                                     value={value}
                                     onChange={onChange}
@@ -251,10 +251,10 @@ console.log(errors)
                             )}
                         />
                     </Box>
-                    {errors.quantity && (<p className="text-xs text-purple-700 ml-10">Ilość wymagana i musi być więksa od 0.</p>)}
+                    {errors.quantity && (<p className="text-xs text-red ml-10">Ilość wymagana i musi być więksa od 0.</p>)}
 
                     {errorMessage !== '' ? <Alert severity="error">{errorMessage}</Alert> : null}
-                    <Button sx={{marginLeft: "10%"}} type="submit" variant="contained" color="primary">Dodaj
+                    <Button sx={{marginLeft: "10%", marginTop: "10%"}} type="submit" variant="contained" color="primary">Dodaj
                         produkt</Button>
                 </Box>
             </form>

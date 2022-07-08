@@ -44,6 +44,8 @@ const ProductsList = () => {
         dispatch(changeProductQuantity(changeQuantityProduct))
     }
     const decrement = (userProduct: UserProduct) => {
+        if(userProduct.quantity === 1)
+            return
         const changeQuantityProduct: ChangeQuantity = {
             userProduct: userProduct,
             changeQuantity: "decrement"
