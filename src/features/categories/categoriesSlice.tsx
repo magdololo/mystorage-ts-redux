@@ -7,10 +7,11 @@ import {
     EntityState
 } from '@reduxjs/toolkit'
 
-import {RootState} from "../../app/store";
+import {AppDispatch, RootState} from "../../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../../firebase";
 import {ProductFromDictionary} from "../products/allProductsSlice";
+import {UserProduct} from "../products/userProductsSlice";
 
 export interface Category {
     id: string | null;
@@ -41,8 +42,8 @@ const categoriesAdapter = createEntityAdapter<Category>({
 const initialState: EntityState<Category> & { images: Image[]; error: null | string | undefined; status: string; currentCategory : Category | null } = categoriesAdapter.getInitialState({
     images: [],
     status: 'idle',
-    error: null ,
-    currentCategory:  null
+    error: null,
+    currentCategory: null,
 })
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async (userId: string) => {
 
@@ -94,6 +95,16 @@ export const addNewCategory = createAsyncThunk<Category,Category>("categories/ad
 
     }
 )
+export const editCategory = createAsyncThunk<Category, Category,{ //pierwsze to co zwracamy, drugie to co przyjmujemy jako parametr
+     dispatch: AppDispatch
+    state: RootState
+}>('categories/editCategory', async (category ,thunkApi)=> {
+    console.log(category)//zmieniony
+    let editingCategory = await thunkApi.getState().categories.currentCategory??{} as Category
+    console.log(editingCategory)//niezmieniony
+
+    return editingCategory
+})
 const categoriesSlice = createSlice({
     name: 'categories',
     initialState,

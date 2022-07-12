@@ -1,73 +1,77 @@
-import React, {useState} from 'react'
-import {useSelector} from "react-redux";
-import {Category} from "./categoriesSlice";
-import {Modal} from "../../component/Modal/Modal";
-import {selectUser} from "../users/usersSlice";
-import slugify from "slugify";
-import {addNewCategory} from "../categories/categoriesSlice"
-import {useAppDispatch, useAppSelector} from "../../app/store";
-import 'react-toastify/dist/ReactToastify.css';
-import {useModal} from "../../component/Modal/UseModal";
 
-type AddCategoryFormProps = {
+import {useAppSelector, useAppDispatch} from "../../app/store";
+import React, {FocusEvent, useState, useEffect} from "react";
+import {addNewCategory,editCategory, Category} from "./categoriesSlice";
+import {Modal} from "../../component/Modal/Modal";
+import {useModal} from "../../component/Modal/UseModal";
+import {SubmitHandler} from "react-hook-form";
+import {editUserProduct, UserProduct} from "../products/userProductsSlice";
+import slugify from "slugify";
+import {useSelector} from "react-redux";
+import {selectUser} from "../users/usersSlice";
+type EditCategoryFormProps = {
     closeAddCategoryModal: ()=> void
 }
-// interface FocusEvent<T = Element> {
-//     relatedTarget: EventTarget | null;
-//     target: EventTarget & T;
-// }
-const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
-
+export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps) => {
+    const dispatch = useAppDispatch();
+       const categoryBeingEdited = useAppSelector((state=>state.categories.currentCategory)) as Category
+    const [newCategoryTitle, setNewCategoryTitle] = useState("")
+    const [newPickedImage, setNewPickedImage] = useState("")
+    // const inputRef = useRef<HTMLInputElement | null>(null);
+    console.log(categoryBeingEdited)
+    console.log(newPickedImage)
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
-    const dispatch = useAppDispatch()
-    const [title, setTitle] = useState('')
-    const [pickedImage, setPickedImage] = useState('')
-    const [addRequestStatus, setAddRequestStatus] = useState('idle')
     const {isShown, handleShown, handleClose} = useModal()
+    const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewCategoryTitle(e.target.value);
     const modalHeader = "Wybierz zdjęcie"
-    const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
     const images = useAppSelector(((state) => state.categories.images))
 
     const imagesOptions = images?.map(image=>(
         <div key={image.id} onClick={(event: React.MouseEvent<HTMLElement>) => {
-            setPickedImage(image.url)
+            setNewPickedImage(image.url)
             handleClose()
-             console.log(pickedImage)}}>
-                <img alt="gallery" src={image.url}/>
+            console.log(newPickedImage)}}>
+            <img alt="gallery" src={image.url}/>
         </div>
     ))
-    const canSave =  [title, pickedImage, uid].every(Boolean) && addRequestStatus === 'idle'
+
+    useEffect(()=>{
+        setNewCategoryTitle(categoryBeingEdited?.title);
+    }, [categoryBeingEdited]);
+    useEffect(()=>{
+            setNewPickedImage(categoryBeingEdited.url);
+    }, [categoryBeingEdited]);
+
+    const handleFocusEvent = (e: FocusEvent<HTMLInputElement>) => {
+    setNewCategoryTitle("")
+    }
+
+    const canSave =  [newCategoryTitle, newPickedImage, uid].every(Boolean) //&& addRequestStatus === 'idle'
     const onSaveCategory = ()=>{
         if (canSave) {
-            let newCategory: Category = {
-                id: null,
-                title: title,
-                url: pickedImage,
-                path: slugify(title, "_"),
+            let afterEditingCategory: Category = {
+                id: categoryBeingEdited.id,
+                title: newCategoryTitle,
+                url: newPickedImage,
+                path: slugify(newCategoryTitle, "_"),
                 user: uid,
                 required: "false"
             }
-            setAddRequestStatus('pending')
-            dispatch(addNewCategory(newCategory))
-                .unwrap()
-                .then((originalPromiseResult: Category) => {
-                    setTitle("")
-                    setPickedImage("")
-                    closeAddCategoryModal()
-                })
+            //setAddRequestStatus('pending')
+            dispatch(editCategory(afterEditingCategory))
+            handleClose()
         }
-        setAddRequestStatus('idle')
+        //setAddRequestStatus('idle')
 
     }
-
-
     return(
         <>
             <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
                 <form>
                     <div className="form-group mb-6 ">
                         <input type="text"
+                               // ref={inputRef}
                                className=" form-control
                                             block
                                             w-5/6
@@ -86,19 +90,12 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                                             focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none"
                                id="exampleInput90"
                                placeholder="Nazwa kategorii"
-
-                               value={title}
+                               onFocus={handleFocusEvent}
+                               value={newCategoryTitle}
                                onChange={onTitleChange}/>
-                        {title===""&& <p>Pole wymagane</p>}
+                        {newCategoryTitle===""&& <p>Pole wymagane</p>}
                     </div>
 
-                    <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}
-                           modalContent={
-                               <div className="grid grid-cols-2 gap-1">
-                                   {imagesOptions}
-                               </div>
-
-                           }/>
 
                     <div className="form-group mb-6">
 
@@ -119,19 +116,28 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                                             mx-auto
                                             focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none"
                                id="exampleInput91"
-                               placeholder={pickedImage === "" ? "Wybierz zdjęcie" : "Zmień zdjęcie"}
+                               placeholder={newPickedImage === "" ? "Wybierz zdjęcie" : "Zmień zdjęcie"}
                                onClick={handleShown}
+
                         />
-                        {pickedImage===""&& <p>Pole wymagane</p>}
+                        {newPickedImage===""&& <p>Pole wymagane</p>}
                     </div>
 
-                    {pickedImage !== "" ?
+                    {newPickedImage !== "" ?
                         <div className="form-group mb-6">
-                            <img src={pickedImage}/>
+                            <img src={newPickedImage}/>
                         </div>
-                    : null}
+                        : null}
+                    <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}
+                           modalContent={
+                               <div className="grid grid-cols-2 gap-1">
+                                   {imagesOptions}
+                               </div>
+
+                           }/>
+
                     <div className="form-group mb-6">
-                    <button type="button" className="
+                        <button type="button" className="
                           w-5/6
                           px-2
                           py-3.5
@@ -152,13 +158,14 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                           duration-150
                           mx-auto
                           ease-in-out"
-                    onClick={onSaveCategory}>Dodaj
-                    </button>
+                                onClick={()=> {onSaveCategory()}}>Edytuj
+                        </button>
                     </div>
                 </form>
             </div>
         </>
     )
+
 }
 
-export default AddCategoryForm;
+export default EditCategoryForm;

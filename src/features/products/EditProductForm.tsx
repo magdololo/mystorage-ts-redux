@@ -38,20 +38,17 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         reset,
         formState: {errors}
     } = useForm<EditFormValues>();
-    const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
+
 
 
     const editProduct = useAppSelector(state=>state.userProducts.editProduct)
-    console.log('editProduct')
-    console.log(editProduct)
     const allCategories = useAppSelector(selectAllCategories)
     const editProductCategory = allCategories.find(category=>category.id === editProduct?.categoryId)
-    console.log('editProductCategory')
-    console.log(editProductCategory)
+
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
     const dispatch = useAppDispatch()
-    const navigate= useNavigate()
+
     const units = [
         {value: 'gr'},
         {value: 'ml'},
@@ -63,7 +60,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
             setValue('newCategory', editProductCategory);
         }
     }, [editProductCategory, setValue]);
-    console.log(editProductCategory)
+
     const closeModal = () => {
         reset();
         handleClose();
@@ -85,7 +82,6 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
 
 
         }
-        console.log(updatedProduct)
         dispatch(editUserProduct(updatedProduct))
         closeModal()
     }

@@ -11,23 +11,25 @@ import {useAppDispatch, useAppSelector} from "../../app/store";
 import {
     currentCategoryChange,
     fetchCategories, fetchImages,
-    selectAllCategoriesSortedByRequired
+    selectAllCategoriesSortedByRequired,
+    Category
 } from "./categoriesSlice";
 import {fetchAllProducts} from "../products/allProductsSlice";
 import { Spinner } from '../../component/Spinner'
-import {fetchUserProducts} from "../products/userProductsSlice";
+import {editProduct, fetchUserProducts, UserProduct} from "../products/userProductsSlice";
 import BottomMenu from "../../app/BottomMenu/BottomMenu";
 import {ToastContainer} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {useModal} from "../../component/Modal/UseModal";
+import EditCategoryForm from "./EditCategoryForm";
 
 
 export const CategoryList = () => {
     let user = useSelector(selectUser);
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const modalHeader = "Dodaj nową kategorię"
+    const {isShown, handleShown, handleClose} = useModal()
+    const modalAddHeader = "Dodaj nową kategorię"
+    const modalEditHeader = "Edytuj kategorię"
     const dispatch = useAppDispatch()
     const categoriesStatus = useAppSelector(((state) => state.categories.status))
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
@@ -47,8 +49,11 @@ export const CategoryList = () => {
     useEffect(()=> {
         dispatch(currentCategoryChange(null))
     }, [dispatch])
-
-
+    const chooseEditCategory = (category: Category) => {
+        handleShown()
+        let editingCategory = dispatch(currentCategoryChange(category))
+        console.log(editingCategory)
+    }
 
 
 
@@ -78,12 +83,12 @@ export const CategoryList = () => {
                 {toggleSwitch &&
                     <FontAwesomeIcon
                         className="absolute align-middle top-10 left-10 inline-flex items-center justify-center text-white text-xl font-bold cursor-pointer"
-                        icon={faPen} onClick={()=>console.log('edycja kategorii')}/>
+                        icon={faPen} onClick={()=>{chooseEditCategory(category as Category)}}/>
                 }
                 {toggleSwitch &&
                     <FontAwesomeIcon
                     className="absolute align-middle top-10 right-10 inline-flex items-center justify-center text-red text-2xl font-bold cursor-pointer"
-                    icon={faXmark} onClick={()=>console.log('delete kategorii')}/>
+                    icon={faXmark} onClick={()=>console.log("delete")}/>
                 }
             </li>
         ))
@@ -95,7 +100,7 @@ export const CategoryList = () => {
                             <div className="grid grid-cols-2 gap-1 overflow-y-auto lg:grid-cols-3 lg:gap-2 ">
                             {renderedCategories}
                                 <div className=" relative overflow-hidden bg-no-repeat bg-cover border-solid border-purple border-2 border-opacity-25"
-                                     onClick={handleOpen}>
+                                     onClick={handleShown}>
                                         <img src="http://placehold.jp/ffffff/ffffff/1280x900.png"
                                              className="bg-cover"/>
                                             <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed">
@@ -128,7 +133,7 @@ export const CategoryList = () => {
             <AppTitle/>
             <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
             {content}
-            <Modal isShown={open} hide={handleClose} modalHeaderText={modalHeader} modalContent={<AddCategoryForm closeAddCategoryModal={handleClose}/>}/>
+            <Modal isShown={isShown} hide={handleClose} modalHeaderText={ !toggleSwitch ? modalAddHeader : modalEditHeader } modalContent={ !toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleClose}/> : <EditCategoryForm closeAddCategoryModal={handleClose}/>}  />
 
             <BottomMenu />
             <ToastContainer />
