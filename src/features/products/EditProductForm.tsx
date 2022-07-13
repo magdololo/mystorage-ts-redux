@@ -1,21 +1,22 @@
 import React, {useEffect} from 'react'
 import {useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../../app/store";
 import {useForm, Controller, SubmitHandler} from "react-hook-form";
 import {selectUser} from "../users/usersSlice";
 import {Category, selectAllCategories} from "../categories/categoriesSlice"
-import {useAppDispatch, useAppSelector} from "../../app/store";
+
 import 'react-toastify/dist/ReactToastify.css';
 import plLocale from "date-fns/locale/pl";
-import {Button, TextField} from "@mui/material";
+import {Button, TextField, MenuItem} from "@mui/material";
 import Box from "@mui/material/Box";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
-import {MenuItem} from "@mui/material";
+
 
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 import {editUserProduct, UserProduct} from "./userProductsSlice";
-import {useLocation, useNavigate} from "react-router-dom";
+
 
 type EditProductFormProps = {
     handleClose: () => void
@@ -68,7 +69,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
 
 
     const onSubmit: SubmitHandler<EditFormValues> = data => {
-        console.log(data)
+
         let updatedProduct: UserProduct = {
             productId: editProduct?.productId??"",
             name: data.newProductName,

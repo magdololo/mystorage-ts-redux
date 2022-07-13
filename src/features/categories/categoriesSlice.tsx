@@ -8,10 +8,9 @@ import {
 } from '@reduxjs/toolkit'
 
 import {AppDispatch, RootState} from "../../app/store";
-import {addDoc, collection, getDocs, query} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "firebase/firestore";
 import {db} from "../../firebase";
-import {ProductFromDictionary} from "../products/allProductsSlice";
-import {UserProduct} from "../products/userProductsSlice";
+
 
 export interface Category {
     id: string | null;
@@ -102,9 +101,26 @@ export const editCategory = createAsyncThunk<Category, Category,{ //pierwsze to 
     console.log(category)//zmieniony
     let editingCategory = await thunkApi.getState().categories.currentCategory??{} as Category
     console.log(editingCategory)//niezmieniony
-
-    return editingCategory
+    if (category.title != editingCategory.title || category.url != editingCategory.url){
+        const docRef = doc(db, "users/" + category.user + "/categories", category.id!);
+        await setDoc(docRef, category);
+    }
+    return category as Category
 })
+
+export const deleteCategory = createAsyncThunk('categories/deleteCategory', async (category: Category)=> {
+     if(category.title != "produkty bez kategorii"){
+    try {
+        await deleteDoc(doc(db, "users/" + category.user + "/categories/" , category.id!))
+        return category.id
+
+    }    catch(error){
+        console.log(error)
+        return {error: error}
+
+    }
+}})
+
 const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
@@ -132,6 +148,12 @@ const categoriesSlice = createSlice({
                 state.images = action.payload as Image[]
             })
             .addCase(addNewCategory.fulfilled, categoriesAdapter.addOne )
+            .addCase(editCategory.fulfilled, (state, action)=>{
+                categoriesAdapter.setOne(state, action.payload)
+            })
+            .addCase(deleteCategory.fulfilled,(state,action)=>{
+                categoriesAdapter.removeOne(state, action.payload as string)
+            })
     }
 })
 export const {

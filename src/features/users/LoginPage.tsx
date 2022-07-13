@@ -1,10 +1,11 @@
 import React,{useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { useForm } from "react-hook-form";
 import {auth, signInWithEmailAndPassword,signInWithPopup, GoogleAuthProvider} from '../../firebase';
-import { useDispatch } from 'react-redux';
+
 import {login} from "./usersSlice";
-import {Link} from "react-router-dom";
+
 
 const LoginPage = () => {
 

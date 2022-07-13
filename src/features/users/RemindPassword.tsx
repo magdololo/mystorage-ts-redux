@@ -1,7 +1,6 @@
-
 import React, {useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {auth, sendPasswordResetEmail} from "../../firebase";
 
 const RemindPassword=()=>{
@@ -24,10 +23,7 @@ const RemindPassword=()=>{
     }
 
     const onSubmit = handleSubmit((data:{email:string}) => {
-         console.log(data)
-        // setMessageAfterSendPassword(true)
-        // reset({email: ""})
-        // setTimeout(navigateToLoginPage, 3000)
+
          sendPasswordResetEmail(auth, data.email)
             .then(()=> {
                 setMessageAfterSendPassword(true)

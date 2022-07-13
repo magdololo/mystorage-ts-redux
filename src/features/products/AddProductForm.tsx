@@ -1,23 +1,23 @@
-import {useSelector} from "react-redux";
-import {selectUser} from "../users/usersSlice";
 import React, {useEffect, useState} from "react";
-import {useForm, SubmitHandler} from 'react-hook-form';
-import {addUserProduct, UserProduct} from "./userProductsSlice";
-import 'react-datepicker/dist/react-datepicker.css';
-import {Controller, useFormContext} from 'react-hook-form';
+import {useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import {useForm, SubmitHandler, Controller} from 'react-hook-form';
+
 import {AutocompleteWithUserProducts} from "./AutocompleteWithUserProducts";
-import {Alert, Button, Modal, TextField, useMediaQuery} from "@mui/material";
+import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
+
+import {selectUser} from "../users/usersSlice";
+import {addUserProduct, UserProduct} from "./userProductsSlice";
+import {Category} from "../categories/categoriesSlice";
+
+import {Alert, Button, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import plLocale from 'date-fns/locale/pl';
 import {MenuItem} from "@mui/material";
-import {useAppDispatch, useAppSelector} from "../../app/store";
-import {Category} from "../categories/categoriesSlice";
-import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
-import { ErrorMessage } from '@hookform/error-message';
-
+import 'react-datepicker/dist/react-datepicker.css';
 
 export type FormValues = {
     expireDate: Date | null
@@ -52,9 +52,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
     const user = useSelector(selectUser)
     const uid = user ? user.uid : ""
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
-    console.log(selectedProductFromAutocomplete)
-    console.log(currentCategory)
-    console.log(newProductName)
+
     const {
         handleSubmit,
         control,
@@ -119,14 +117,11 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
 
     ];
 
-console.log(errors)
+
     return (
         <>
 
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-
-            >
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <Box>
                     <Box id="modal-modal-description" sx={{mt: 2, width: "80%", marginLeft: "10%"}}>
                         <Controller
@@ -160,7 +155,6 @@ console.log(errors)
                                 />
                                 </>
                             )}
-
                         />
                     </Box>
                     {errors.productName && (<p className="text-xs text-red ml-10">Nazwa produktu wymagana</p>)}
@@ -183,7 +177,6 @@ console.log(errors)
                                 />
                             )}
                         />
-
                         <Controller
                             name="unit"
                             control={control}
@@ -254,8 +247,7 @@ console.log(errors)
                     {errors.quantity && (<p className="text-xs text-red ml-10">Ilość wymagana i musi być więksa od 0.</p>)}
 
                     {errorMessage !== '' ? <Alert severity="error">{errorMessage}</Alert> : null}
-                    <Button sx={{marginLeft: "10%", marginTop: "10%"}} type="submit" variant="contained" color="primary">Dodaj
-                        produkt</Button>
+                    <Button sx={{marginLeft: "10%", marginTop: "10%"}} type="submit" variant="contained" color="primary">Dodaj produkt</Button>
                 </Box>
             </form>
         </>

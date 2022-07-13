@@ -1,13 +1,14 @@
-import AppTitle from "../../app/TopMenu/AppTitle";
-import ReturnToCategoryList from "../../component/ReturnToCategoryList";
 import React, {useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {Modal} from "../../component/Modal/Modal";
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import {Link} from "react-router-dom";
+
 import EditProductForm from "./EditProductForm";
 import BottomMenu from "../../app/BottomMenu/BottomMenu";
+import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
-import {useAppDispatch, useAppSelector} from "../../app/store";
+import AppTitle from "../../app/TopMenu/AppTitle";
+import ReturnToCategoryList from "../../component/ReturnToCategoryList";
+
 import {
     changeProductQuantity,
     ChangeQuantity,
@@ -16,44 +17,37 @@ import {
     selectUserProducts,
     UserProduct
 } from "./userProductsSlice";
-import {Link} from "react-router-dom";
 import {selectAllCategories} from "../categories/categoriesSlice";
-import {useMediaQuery} from "@mui/material";
 
+import {useMediaQuery} from "@mui/material";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 const SearchUserProductPage= ()=>{
     const dispatch = useAppDispatch()
     const userProducts = useAppSelector(selectUserProducts);
     let searchProductId = useAppSelector(state=> state.userProducts.searchProduct)
     let searchUserProductFromSelect = useAppSelector((state) => selectUserProductById(state, searchProductId??"")) ?? {}as UserProduct
-    console.log(searchUserProductFromSelect)
     const searchInputValue= useAppSelector(state=>state.userProducts.searchProductByString)
     const maxWidth440 = useMediaQuery('(max-width:440px)');
     const categories = useAppSelector(selectAllCategories)
+    let [todayDate] = useState(new Date());
+    const {isShown, handleShown, handleClose} = useModal()
+    const modalHeader = "Edytuj produkt"
     let searchProducts: Array<UserProduct>=[]
 
     if(searchInputValue ){
         const searchUserProductsFromInput = userProducts.filter(userProduct=>userProduct.name.startsWith(searchInputValue??""))
-        console.log(searchUserProductsFromInput)
         searchUserProductsFromInput.forEach((searchUserProduct)=>searchProducts.push(searchUserProduct))
-
-
     } else {
         searchProducts.push(searchUserProductFromSelect)
     }
-    console.log(searchProducts)
-
-    let [todayDate] = useState(new Date());
-    const {isShown, handleShown, handleClose} = useModal()
-    const modalHeader = "Edytuj produkt"
 
     const chooseEditProduct = (userProduct: UserProduct) =>{
         handleShown()
-        let editingProduct = dispatch(editProduct(userProduct))
+        dispatch(editProduct(userProduct))
 
     }
-
-
     const increment = (userProduct: UserProduct) => {
         const changeQuantityProduct: ChangeQuantity = {
             userProduct: userProduct,
@@ -81,8 +75,6 @@ const SearchUserProductPage= ()=>{
         return { ...searchProduct, categoryPath: searchProductCategory.path, categoryTitle: searchProductCategory.title}
     })
 
-    console.log('producty w search')
-console.log(searchProductsWithCategory)
     if(searchProductsWithCategory.length > 0){
        content =
            <ul className="pb-16 w-full relative">

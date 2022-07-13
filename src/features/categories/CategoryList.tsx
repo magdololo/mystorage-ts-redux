@@ -1,28 +1,34 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import {Link} from 'react-router-dom';
 import AppTitle from "../../app/TopMenu/AppTitle";
 import TopMenu from "../../app/TopMenu/TopMenu";
+import BottomMenu from "../../app/BottomMenu/BottomMenu";
 import {Modal} from "../../component/Modal/Modal";
+import {useModal} from "../../component/Modal/UseModal";
 import AddCategoryForm from "./AddCategoryForm";
+import EditCategoryForm from "./EditCategoryForm";
+import { Spinner } from '../../component/Spinner'
 import {selectUser} from "../users/usersSlice";
+
 import {skipToken} from "@reduxjs/toolkit/query";
-import {Link} from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from "../../app/store";
 import {
     currentCategoryChange,
-    fetchCategories, fetchImages,
+    deleteCategory,
+    fetchCategories,
+    fetchImages,
     selectAllCategoriesSortedByRequired,
     Category
 } from "./categoriesSlice";
 import {fetchAllProducts} from "../products/allProductsSlice";
-import { Spinner } from '../../component/Spinner'
-import {editProduct, fetchUserProducts, UserProduct} from "../products/userProductsSlice";
-import BottomMenu from "../../app/BottomMenu/BottomMenu";
+import { fetchUserProducts} from "../products/userProductsSlice";
+
 import {ToastContainer} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
-import {useModal} from "../../component/Modal/UseModal";
-import EditCategoryForm from "./EditCategoryForm";
+
+
 
 
 export const CategoryList = () => {
@@ -33,7 +39,7 @@ export const CategoryList = () => {
     const dispatch = useAppDispatch()
     const categoriesStatus = useAppSelector(((state) => state.categories.status))
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
-    const images = useAppSelector((state)=> state.categories.images)
+
     useEffect(() => {
         dispatch(fetchCategories(user?.uid ?? ""))
         dispatch(fetchImages())
@@ -49,20 +55,15 @@ export const CategoryList = () => {
     useEffect(()=> {
         dispatch(currentCategoryChange(null))
     }, [dispatch])
+
     const chooseEditCategory = (category: Category) => {
         handleShown()
         let editingCategory = dispatch(currentCategoryChange(category))
         console.log(editingCategory)
     }
-
-
-
-
-
-
-
-//
-
+    const deletingCategory = (category: Category) => {
+        dispatch(deleteCategory(category))
+    }
 
     let content;
     if (categoriesStatus === "loading") {
@@ -88,7 +89,7 @@ export const CategoryList = () => {
                 {toggleSwitch &&
                     <FontAwesomeIcon
                     className="absolute align-middle top-10 right-10 inline-flex items-center justify-center text-red text-2xl font-bold cursor-pointer"
-                    icon={faXmark} onClick={()=>console.log("delete")}/>
+                    icon={faXmark} onClick={()=>deletingCategory(category as Category)}/>
                 }
             </li>
         ))

@@ -1,13 +1,14 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {useForm, SubmitHandler} from "react-hook-form";
 import {useDispatch} from 'react-redux';
-import {addNewUserToUsersCollection, login} from "./usersSlice";
+import {useForm, SubmitHandler} from "react-hook-form";
+
+import {addNewUserToUsersCollection, login, addDefaultCategoriesToNewUser} from "./usersSlice";
 import {
     auth,
     createUserWithEmailAndPassword,
 } from '../../firebase';
-import {addDefaultCategoriesToNewUser} from "./usersSlice";
+
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
 

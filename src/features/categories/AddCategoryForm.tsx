@@ -1,21 +1,20 @@
 import React, {useState} from 'react'
 import {useSelector} from "react-redux";
-import {Category} from "./categoriesSlice";
-import {Modal} from "../../component/Modal/Modal";
-import {selectUser} from "../users/usersSlice";
-import slugify from "slugify";
-import {addNewCategory} from "../categories/categoriesSlice"
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import 'react-toastify/dist/ReactToastify.css';
+
+import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
+import {selectUser} from "../users/usersSlice";
+import {addNewCategory, Category} from "../categories/categoriesSlice"
+
+import slugify from "slugify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 type AddCategoryFormProps = {
     closeAddCategoryModal: ()=> void
 }
-// interface FocusEvent<T = Element> {
-//     relatedTarget: EventTarget | null;
-//     target: EventTarget & T;
-// }
+
 const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
 
     const user = useSelector(selectUser)

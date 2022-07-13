@@ -1,14 +1,12 @@
-
-import {useAppSelector, useAppDispatch} from "../../app/store";
 import React, {FocusEvent, useState, useEffect} from "react";
-import {addNewCategory,editCategory, Category} from "./categoriesSlice";
+import {useSelector} from "react-redux";
+import {useAppSelector, useAppDispatch} from "../../app/store";
 import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
-import {SubmitHandler} from "react-hook-form";
-import {editUserProduct, UserProduct} from "../products/userProductsSlice";
 import slugify from "slugify";
-import {useSelector} from "react-redux";
+import {editCategory, Category} from "./categoriesSlice";
 import {selectUser} from "../users/usersSlice";
+
 type EditCategoryFormProps = {
     closeAddCategoryModal: ()=> void
 }
@@ -18,8 +16,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
     const [newCategoryTitle, setNewCategoryTitle] = useState("")
     const [newPickedImage, setNewPickedImage] = useState("")
     // const inputRef = useRef<HTMLInputElement | null>(null);
-    console.log(categoryBeingEdited)
-    console.log(newPickedImage)
+
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
     const {isShown, handleShown, handleClose} = useModal()
@@ -30,8 +27,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
     const imagesOptions = images?.map(image=>(
         <div key={image.id} onClick={(event: React.MouseEvent<HTMLElement>) => {
             setNewPickedImage(image.url)
-            handleClose()
-            console.log(newPickedImage)}}>
+            handleClose()}}>
             <img alt="gallery" src={image.url}/>
         </div>
     ))
@@ -46,7 +42,11 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
     const handleFocusEvent = (e: FocusEvent<HTMLInputElement>) => {
     setNewCategoryTitle("")
     }
-
+    const closeModal = () => {
+        setNewCategoryTitle("");
+        setNewPickedImage("")
+        closeAddCategoryModal();
+    }
     const canSave =  [newCategoryTitle, newPickedImage, uid].every(Boolean) //&& addRequestStatus === 'idle'
     const onSaveCategory = ()=>{
         if (canSave) {
@@ -60,7 +60,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
             }
             //setAddRequestStatus('pending')
             dispatch(editCategory(afterEditingCategory))
-            handleClose()
+            closeModal()
         }
         //setAddRequestStatus('idle')
 

@@ -1,10 +1,16 @@
 import React from 'react';
-import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
-import {TextField} from "@mui/material";
+import {useAppSelector} from "../../app/store";
+
+import {AutocompleteWithUserProductsProps} from "./AddProductForm";
+
 import { UserProduct} from "./userProductsSlice";
 import {ProductFromDictionary, selectAllProducts} from "./allProductsSlice";
-import {useAppSelector} from "../../app/store";
-import {AutocompleteWithUserProductsProps} from "./AddProductForm";
+
+import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
+import {TextField} from "@mui/material";
+
+
+
 
 const filter = createFilterOptions<ProductFromDictionary>();
 
@@ -12,13 +18,13 @@ const filter = createFilterOptions<ProductFromDictionary>();
 export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProductFromAutocomplete, setNewProductName}: AutocompleteWithUserProductsProps) => {
 
     const allProducts = useAppSelector(selectAllProducts)
-console.log(allProducts)
+
     return (
 
         <Autocomplete
             value={value}
             onChange={(_, data) => {
-                console.log(data)
+
                 onChange(data);
                 if(data && typeof data === "object" ){
                     setSelectedProductFromAutocomplete(data as UserProduct);

@@ -1,11 +1,15 @@
 import React, {useEffect,useState} from "react";
 import {useParams} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from "../../app/store";
 import AppTitle from "../../app/TopMenu/AppTitle";
 import ReturnToCategoryList from "../../component/ReturnToCategoryList";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {Modal} from "../../component/Modal/Modal";
+import {useModal} from "../../component/Modal/UseModal";
+import EditProductForm from "../products/EditProductForm";
+import BottomMenu from "../../app/BottomMenu/BottomMenu";
 import {skipToken} from "@reduxjs/toolkit/query";
 import {selectAllCategories, currentCategoryChange, Category} from "./categoriesSlice";
-import {useAppDispatch, useAppSelector} from "../../app/store";
+
 import {
     ChangeQuantity,
     deleteUserProduct,
@@ -20,12 +24,9 @@ import {
     faMinus, // a cup of coffee
     faPen
 } from "@fortawesome/free-solid-svg-icons";
-import {Modal} from "../../component/Modal/Modal";
-import EditProductForm from "../products/EditProductForm";
-import {useModal} from "../../component/Modal/UseModal";
-import BottomMenu from "../../app/BottomMenu/BottomMenu";
-import {ToastContainer} from "react-toastify";
 
+import {ToastContainer} from "react-toastify";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
@@ -48,8 +49,8 @@ const CategoryPage = () => {
 
      const chooseEditProduct = (userProduct: UserProduct) =>{
         handleShown()
-        let editingProduct = dispatch(editProduct(userProduct))
-        console.log(editingProduct)
+         dispatch(editProduct(userProduct))
+
     }
 
 
@@ -72,8 +73,7 @@ const CategoryPage = () => {
     const deleteUserOneProduct =  (userProduct: UserProduct)  => {
          dispatch(deleteUserProduct(userProduct))
     }
-console.log('producty w category page')
-  console.log(productsOfCategory)
+
 
     return (
         <>

@@ -3,7 +3,7 @@ import {
     createAsyncThunk,
     createEntityAdapter,
     EntityState,
-    PayloadAction, createSelector
+    PayloadAction
 } from '@reduxjs/toolkit'
 import {RootState, AppDispatch} from "../../app/store";
 import {
@@ -23,7 +23,7 @@ import {
 } from "firebase/firestore";
 import {db} from "../../firebase";
 import {fetchProductFromDictionaryId} from "./allProductsSlice";
-import {selectAllCategories} from "../categories/categoriesSlice";
+
 
 
 
@@ -250,8 +250,4 @@ export const {
 } = userProductsAdapter.getSelectors<RootState>((state) => state.userProducts);
 
 export const {editProduct, searchProduct, searchByString} = userProductsSlice.actions
-// export const searchUserProduct = createSelector(
-//     [selectUserProducts, (state:RootState, searchProductId) => searchProductId],
-//     (userProducts, searchProductId) => userProducts.filter(userProduct => userProduct.id === searchProductId)
-// );
 export default userProductsSlice.reducer

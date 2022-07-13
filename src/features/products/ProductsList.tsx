@@ -1,4 +1,13 @@
-import {useAppSelector} from "../../app/store";
+import React, {useState} from "react";
+import {useAppSelector, useAppDispatch} from "../../app/store";
+import {Link} from "react-router-dom";
+import AppTitle from "../../app/TopMenu/AppTitle";
+import ReturnToCategoryList from "../../component/ReturnToCategoryList";
+import {Modal} from "../../component/Modal/Modal";
+import {useModal} from "../../component/Modal/UseModal";
+import EditProductForm from "./EditProductForm";
+import BottomMenu from "../../app/BottomMenu/BottomMenu";
+
 import {
     changeProductQuantity,
     ChangeQuantity,
@@ -7,19 +16,11 @@ import {
     selectUserProducts,
     UserProduct
 } from "./userProductsSlice";
-import AppTitle from "../../app/TopMenu/AppTitle";
-import ReturnToCategoryList from "../../component/ReturnToCategoryList";
+import {selectAllCategories} from "../categories/categoriesSlice";
+
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {Modal} from "../../component/Modal/Modal";
-import EditProductForm from "./EditProductForm";
-import BottomMenu from "../../app/BottomMenu/BottomMenu";
 import {ToastContainer} from "react-toastify";
-import React, {useState} from "react";
-import {useAppDispatch} from "../../app/store";
-import {useModal} from "../../component/Modal/UseModal";
-import {Link} from "react-router-dom";
-import {selectAllCategories} from "../categories/categoriesSlice";
 import {useMediaQuery} from "@mui/material";
 
 const ProductsList = () => {
@@ -33,8 +34,8 @@ const ProductsList = () => {
 
     const chooseEditProduct = (userProduct: UserProduct) => {
         handleShown()
-        let editingProduct = dispatch(editProduct(userProduct))
-        console.log(editingProduct)
+        dispatch(editProduct(userProduct))
+
     }
     const increment = (userProduct: UserProduct) => {
         const changeQuantityProduct: ChangeQuantity = {
