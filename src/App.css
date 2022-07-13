@@ -65,3 +65,9 @@ li {
   border: 2px solid purple !important;
   box-shadow: 0 0 0 1px purple !important;
 }
+.Toastify__progress-bar--success {
+  color: rebeccapurple;
+}
+.toast-success {
+  background-color: #d813c8 !important;
+}

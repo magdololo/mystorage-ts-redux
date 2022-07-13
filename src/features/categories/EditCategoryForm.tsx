@@ -6,6 +6,7 @@ import {useModal} from "../../component/Modal/UseModal";
 import slugify from "slugify";
 import {editCategory, Category} from "./categoriesSlice";
 import {selectUser} from "../users/usersSlice";
+import {toast} from "react-toastify";
 
 type EditCategoryFormProps = {
     closeAddCategoryModal: ()=> void
@@ -23,6 +24,16 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewCategoryTitle(e.target.value);
     const modalHeader = "Wybierz zdjęcie"
     const images = useAppSelector(((state) => state.categories.images))
+    const notify = () => toast.success('🦄 Kategoria zmieniona!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+
+    });
 
     const imagesOptions = images?.map(image=>(
         <div key={image.id} onClick={(event: React.MouseEvent<HTMLElement>) => {
@@ -61,6 +72,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
             //setAddRequestStatus('pending')
             dispatch(editCategory(afterEditingCategory))
             closeModal()
+            notify()
         }
         //setAddRequestStatus('idle')
 

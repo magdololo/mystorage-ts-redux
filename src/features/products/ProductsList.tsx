@@ -20,7 +20,8 @@ import {selectAllCategories} from "../categories/categoriesSlice";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {ToastContainer} from "react-toastify";
+import {ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import {useMediaQuery} from "@mui/material";
 
 const ProductsList = () => {
@@ -31,7 +32,16 @@ const ProductsList = () => {
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
     const maxWidth440 = useMediaQuery('(max-width:440px)');
+    const notify = () => toast.success('🦄 Produkt usunięty!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
 
+    });
     const chooseEditProduct = (userProduct: UserProduct) => {
         handleShown()
         dispatch(editProduct(userProduct))
@@ -56,11 +66,14 @@ const ProductsList = () => {
 
     const deleteUserOneProduct = (userProduct: UserProduct) => {
         dispatch(deleteUserProduct(userProduct))
+        notify()
+
     }
     const userProductsWithCategory = userProducts.map(userProduct => {
         const searchProductCategory = categories.find(category => category.id === userProduct.categoryId)
         return {...userProduct, categoryPath: searchProductCategory?.path, categoryTitle: searchProductCategory?.title}
     })
+
     return (
         <>
             <div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
@@ -114,7 +127,10 @@ const ProductsList = () => {
                                                         <FontAwesomeIcon
                                                             className="text-xl text-blue-800 border-blue-400 border-solid border-r px-6 "
                                                             icon={faTrash}
-                                                            onClick={() => deleteUserOneProduct(product)}/>
+                                                            onClick={() =>{
+                                                                deleteUserOneProduct(product)
+
+                                                            }}/>
                                                         <FontAwesomeIcon className="text-xl text-blue-800 px-6 "
                                                                          icon={faPen}
                                                                          onClick={() => chooseEditProduct(product)}/>
@@ -133,7 +149,10 @@ const ProductsList = () => {
                                                         icon={faMinus} onClick={() => decrement(product)}/>
                                                     <FontAwesomeIcon
                                                         className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4 "
-                                                        icon={faTrash} onClick={() => deleteUserOneProduct(product)}/>
+                                                        icon={faTrash} onClick={() => {
+                                                            deleteUserOneProduct(product)
+
+                                                    }}/>
                                                     <FontAwesomeIcon className="text-xl text-blue-800 px-4 "
                                                                      icon={faPen}
                                                                      onClick={() => chooseEditProduct(product)}/>

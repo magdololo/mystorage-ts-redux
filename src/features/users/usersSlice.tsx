@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction, createSelector, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit'
 import {AppDispatch, RootState} from "../../app/store";
 import {
     doc,
@@ -86,6 +86,9 @@ const usersSlice = createSlice({
         })
             .addCase(addNewUserToUsersCollection.rejected,(state, action)=>{
                 console.log("rejected")
+            })
+            .addCase(addDefaultCategoriesToNewUser.fulfilled,(state, action)=>{
+                console.log("dodales domyslne kategorie nowemy userowi")
             })
     }
 });

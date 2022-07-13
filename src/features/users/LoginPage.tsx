@@ -59,6 +59,11 @@ const LoginPage = () => {
             .then((result) => {
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential?.accessToken
+                const user = result.user;
+
+                console.log("log with google" + user)
+                console.log(user)
             }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;

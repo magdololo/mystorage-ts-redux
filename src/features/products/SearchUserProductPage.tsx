@@ -22,6 +22,7 @@ import {selectAllCategories} from "../categories/categoriesSlice";
 import {useMediaQuery} from "@mui/material";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {toast} from "react-toastify";
 
 const SearchUserProductPage= ()=>{
     const dispatch = useAppDispatch()
@@ -34,6 +35,16 @@ const SearchUserProductPage= ()=>{
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
+    const notify = () => toast.success('🦄 Produkt usunięty!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+
+    });
     let searchProducts: Array<UserProduct>=[]
 
     if(searchInputValue ){
@@ -66,6 +77,7 @@ const SearchUserProductPage= ()=>{
     }
     const deleteUserOneProduct =  (userProduct: UserProduct)  => {
         dispatch(deleteUserProduct(userProduct))
+        notify()
     }
 
     let content;

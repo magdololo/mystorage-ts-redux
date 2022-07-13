@@ -25,9 +25,10 @@ import {
     faPen
 } from "@fortawesome/free-solid-svg-icons";
 
-import {ToastContainer} from "react-toastify";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const CategoryPage = () => {
@@ -42,6 +43,17 @@ const CategoryPage = () => {
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
+    const notify = () => toast.success('🦄 Produkt usunięty!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+
+    });
+
     useEffect(()=> {
         dispatch(currentCategoryChange(categoryFromPath as Category))
     }, [dispatch, categoryFromPath])
@@ -72,6 +84,7 @@ const CategoryPage = () => {
     }
     const deleteUserOneProduct =  (userProduct: UserProduct)  => {
          dispatch(deleteUserProduct(userProduct))
+        notify()
     }
 
 

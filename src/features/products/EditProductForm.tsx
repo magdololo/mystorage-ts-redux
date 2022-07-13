@@ -16,6 +16,7 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 import {editUserProduct, UserProduct} from "./userProductsSlice";
+import {toast} from "react-toastify";
 
 
 type EditProductFormProps = {
@@ -40,8 +41,6 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         formState: {errors}
     } = useForm<EditFormValues>();
 
-
-
     const editProduct = useAppSelector(state=>state.userProducts.editProduct)
     const allCategories = useAppSelector(selectAllCategories)
     const editProductCategory = allCategories.find(category=>category.id === editProduct?.categoryId)
@@ -49,6 +48,17 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
     const dispatch = useAppDispatch()
+
+    const notify = () => toast.success('🦄 Zmiany zostały dodane!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+
+    });
 
     const units = [
         {value: 'gr'},
@@ -85,6 +95,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         }
         dispatch(editUserProduct(updatedProduct))
         closeModal()
+        notify()
     }
     return(
         <>
