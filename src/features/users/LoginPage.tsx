@@ -1,10 +1,17 @@
-import React,{useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useForm } from "react-hook-form";
 import {auth, signInWithEmailAndPassword,signInWithPopup, GoogleAuthProvider} from '../../firebase';
 
-import {login} from "./usersSlice";
+import {addDefaultCategoriesToNewUser, addNewUserToUsersCollection, login} from "./usersSlice";
+import {
+    doc,
+    getDoc,
+
+} from "firebase/firestore";
+import {db} from "../../firebase";
+import {Category, currentCategoryChange} from "../categories/categoriesSlice";
 
 
 const LoginPage = () => {
@@ -12,7 +19,10 @@ const LoginPage = () => {
     const dispatch = useDispatch()
     const provider = new GoogleAuthProvider();
     const [errorMessage,setErrorMessage] = useState("");
+    const [doExist, setDoExist] = useState(false)
+    const [content, setContent] = useState(false)
     let navigate = useNavigate()
+
     const {
         register,
         handleSubmit,
@@ -53,18 +63,42 @@ const LoginPage = () => {
 
     });
 
+    let message;
+    const socialSignIn= async()=> {
 
-    const socialSignIn=()=>{
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
+
+        try {
+            let result = await signInWithPopup(auth, provider)
+            // This gives you a Google Access Token. You can use it to access the Google API.
+
+            const user = result.user;
+
+            console.log("log with google" + user)
+            console.log(user)
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+
+            setDoExist(docSnap.exists())
+            console.log(doExist)
+            if (!doExist) {
+                console.log("maC")
+                setContent(true)
+                    // navigate("/register")
+                   // setErrorMessage(
+                   //     "Konto nie istnieje. Zarejestruj się!"
+                   // )
+
+
+                // let myTimeout = setTimeout(()=> navigate("/register"), 2000)
+
+
+            } else {
+                console.log("else")
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential?.accessToken
-                const user = result.user;
+            }
 
-                console.log("log with google" + user)
-                console.log(user)
-            }).catch((error) => {
+        } catch (error: any){
             // Handle Errors here.
             const errorCode = error.code;
             console.log(error.code)
@@ -74,10 +108,11 @@ const LoginPage = () => {
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
             // ...
-        });
+        }
     }
 
 
+        console.log(content)
     return(
         <>
 
@@ -191,11 +226,19 @@ const LoginPage = () => {
 
 
             </div>
+                    {errorMessage === "Konto nie istnieje. Zarejestruj się!" ? <p>{errorMessage}</p> : null}
                     <p className="text-gray-800 mt-6 text-center">Nie masz konta?
                         <Link to="/register" className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1">Zarejestruj się</Link>
                     </p>
                 </form>
             </div>
+            {message && {message}}
+            {content &&
+                <div className="bg-purple rounded-lg py-5 px-6 mb-4 text-base text-blue-600 mb-3 " role="alert">
+                    A simple secondary alert with <a href="#" className="font-bold text-blue-800">an example link</a>.
+                    Give it a click if you like.
+                </div>
+            }
         </>
     )
 }

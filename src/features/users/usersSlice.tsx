@@ -20,16 +20,20 @@ export interface User{
 
 interface UserState {
     user: User | null
+
 }
 
 const initialState: UserState = {
-    user: null
+    user: null,
+
 }
-export const checkIfUserExists = createAsyncThunk ("users/checkIfUserExist", async (userId:string)=>{
-    const docRef = doc(db, "users", userId);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists()
-})
+// export const checkIfUserExists = createAsyncThunk ("users/checkIfUserExist", async (userId:string)=>{
+//     const docRef = doc(db, "users", userId);
+//     const docSnap = await getDoc(docRef);
+//
+//       return docSnap.exists()
+//
+// })
 
 export const addNewUserToUsersCollection = createAsyncThunk('users/addNewUserToUsersCollection', async (user: User)=>{
     try {
@@ -90,6 +94,11 @@ const usersSlice = createSlice({
             .addCase(addDefaultCategoriesToNewUser.fulfilled,(state, action)=>{
                 console.log("dodales domyslne kategorie nowemy userowi")
             })
+            // .addCase(checkIfUserExists.fulfilled,(state, action)=>{
+            //   const userExistInUsers = action.payload;
+            //
+            //
+            // })
     }
 });
 export const { login, logout, saveUser} = usersSlice.actions;
