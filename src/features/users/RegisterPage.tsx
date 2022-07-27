@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from 'react-redux';
 import {useForm, SubmitHandler} from "react-hook-form";
@@ -28,33 +28,62 @@ const RegisterPage = () => {
         handleSubmit,
         formState: {errors}
     } = useForm<Inputs>();
+    const [checkboxState, setCheckboxState] =useState(false);
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>)=>{
+        setCheckboxState(!checkboxState)
+    }
+   const [message, setMessage] = useState("");
+
     const onSubmit: SubmitHandler<Inputs> = (data, e) => {
         console.log(data);
         e?.preventDefault()
-        createUserWithEmailAndPassword(auth, data.email, data.password)
-            .then((userCredential) => {
+        if(checkboxState){
+            console.log("checboxTreue")
+            createUserWithEmailAndPassword(auth, data.email, data.password)
+                .then((userCredential) => {
 
-                const user = userCredential.user;
-                console.log("Registered user: ", user);
-                dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId}))
-                dispatch( addDefaultCategoriesToNewUser(user.uid))
+                    const user = userCredential.user;
+                    console.log("Registered user: ", user);
+                    dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId}))
+                    dispatch( addDefaultCategoriesToNewUser(user.uid))
 
-                dispatch(
-                    login({
-                        uid: user.uid,
-                        email: user.email ?? "",
-                        provider: user.providerId
-                    })
-                )
-                navigate("/categories")
-                reset();
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log("Error ocured: ", errorCode, errorMessage);
-            });
-    }
+                    dispatch(
+                        login({
+                            uid: user.uid,
+                            email: user.email ?? "",
+                            provider: user.providerId
+                        })
+                    )
+                    navigate("/categories")
+                    reset();
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log("Error ocured: ", errorCode, errorMessage);
+                    switch (error.code){
+                        case "auth/wrong-password":
+                            setMessage ("Błedne hasło. Przypomnij hasło.")
+                            break;
+                        case "auth/user-not-found":
+                            setMessage ("Nie masz jeszcze konta. Zarejestruj się");
+                            break;
+                        case "auth/user-disabled":
+                            setMessage  ("Użytkownik zablokowany.");
+                            break;
+                        case "auth/weak-password":
+                            setMessage ("Hasło nie spełnia reguł bezpieczeństwa.");
+                            break;
+                        default:
+                            setMessage("Nieznany błąd. Zgłoś się do administaratora.");
+                    }
+
+                })
+        } else {
+            setMessage("Wymagana akceptacja regulaminu!")
+            console.log("hejjjjj")
+        }
+        }
 
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisibility = () => {
@@ -122,7 +151,16 @@ const RegisterPage = () => {
                         <i onClick={togglePasswordVisibility}>{eye}</i>{" "}
                         {errors.password?.type === 'required' && 'Hasło wymagane'}
                     </div>
-                    <div className="flex justify-center space-x-6">
+                    <div className="mx-auto max-w-sm px-6">
+                        <input
+                            className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox" onChange={handleInputChange} checked={checkboxState} id="flexCheckDefault">
+                        </input>
+                        <label className="form-check-label inline-block text-gray-800 " htmlFor="flexCheckDefault">
+                            Akceptuję regulamin serwisu.
+                        </label>
+                    </div>
+                    <div className="flex justify-center space-x-6 mt-3">
                         <button type="submit"
                                 className=" w-1/2
                                           px-6
@@ -145,6 +183,7 @@ const RegisterPage = () => {
                             zarejestruj
                         </button>
                     </div>
+                    {message}
                 </form>
             </div>
         </>
