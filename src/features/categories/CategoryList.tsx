@@ -10,7 +10,7 @@ import {useModal} from "../../component/Modal/UseModal";
 import AddCategoryForm from "./AddCategoryForm";
 import EditCategoryForm from "./EditCategoryForm";
 import { Spinner } from '../../component/Spinner'
-import {selectUser} from "../users/usersSlice";
+import {changeSeeGreetingToTrue, selectUser, User} from "../users/usersSlice";
 
 import {skipToken} from "@reduxjs/toolkit/query";
 import {
@@ -32,13 +32,63 @@ import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
 
 
 export const CategoryList = () => {
+
+
     let user = useSelector(selectUser);
+    console.log(user)
+    let didSee = user?.didSeeGreeting;
+    console.log(didSee)
     const {isShown, handleShown, handleClose} = useModal()
     const modalAddHeader = "Dodaj nową kategorię"
     const modalEditHeader = "Edytuj kategorię"
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const handleOpen = () => setIsOpen(true);
+    const handleCloseGreeting = () => setIsOpen(false);
     const dispatch = useAppDispatch()
     const categoriesStatus = useAppSelector(((state) => state.categories.status))
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
+    const closeModalWithGreeting = () =>{
+        console.log("close modal")
+        handleCloseGreeting();
+        dispatch(changeSeeGreetingToTrue(user as User))
+    }
+    useEffect(()=>{
+        if(didSee === false){
+            setIsOpen(true)
+        }
+    },[user])
+    let greeting =   <>
+             <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""} modalContent={<><h1>Dziękujemy za rejestrację!</h1><h2> Witamy w serwisie!</h2>
+                 <div
+                     className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 rounded-b-md">
+                     <button type="button" className="px-6
+          py-2.5
+          bg-purple
+          text-white
+          font-medium
+          text-xs
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          hover:bg-purple-700 hover:shadow-lg
+          focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-purple-800 active:shadow-lg
+          transition
+          duration-150
+          ease-in-out" data-bs-dismiss="modal" onClick={closeModalWithGreeting}>Close
+                     </button>
+                 </div></>} />
+                  </>;
+    // useEffect(()=>{
+    //     if(!didSee) {
+    //         informAfterFirstRegister =
+    //             <>
+    //                 <h1>Dziękujemy za rejestrację! Witamy w serwisie!</h1>
+    //             </>
+    //         didSee = true
+    //     }
+    // })
 
     useEffect(() => {
         dispatch(fetchCategories(user?.uid ?? ""))
@@ -133,9 +183,10 @@ export const CategoryList = () => {
         <>
             <AppTitle/>
             <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
+
             {content}
             <Modal isShown={isShown} hide={handleClose} modalHeaderText={ !toggleSwitch ? modalAddHeader : modalEditHeader } modalContent={ !toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleClose}/> : <EditCategoryForm closeAddCategoryModal={handleClose}/>}  />
-
+            {didSee === false && greeting}
             <BottomMenu />
             <ToastContainer />
         </>

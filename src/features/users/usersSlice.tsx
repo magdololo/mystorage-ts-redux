@@ -6,16 +6,22 @@ import {
     query,
     setDoc,
     getDoc,
-    collection
+    collection,
+    updateDoc
 } from "firebase/firestore";
 import {db} from "../../firebase";
 import {addNewCategory, Category} from "../categories/categoriesSlice";
+import {UserProduct} from "../products/userProductsSlice";
+// import {fetchProductFromDictionaryId} from "../products/allProductsSlice";
+// import {toast} from "react-toastify";
+
 
 
 export interface User{
     uid: Required<string>;
     email: string;
-    provider: string
+    provider: string;
+    didSeeGreeting: boolean
 }
 
 interface UserState {
@@ -40,7 +46,8 @@ export const addNewUserToUsersCollection = createAsyncThunk('users/addNewUserToU
         await setDoc(doc(db, "users", user.uid),{
             uid: user.uid,
             email: user.email,
-            provider: user.provider
+            provider: user.provider,
+            didSeeGreeting: false
 
         })
     } catch (e){
@@ -69,6 +76,25 @@ export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, string,{ 
     }
    return true
 })
+export const changeSeeGreetingToTrue = createAsyncThunk<boolean,User,{
+    dispatch: AppDispatch
+    state: RootState
+}>('users/changeSeeGreetingToTrue', async (user: User, thunkApi)=>{
+    console.log(user)
+console.log("dispatch changeSeeGreetingToTrue")
+    try{
+        const docRef = doc(db, "users/" + user?.uid);
+        const userDoc = await getDoc(docRef);
+        console.log(docRef)
+        await updateDoc(docRef, {"didSeeGreeting": true})
+
+
+    } catch (e){
+        console.log(e)
+    }
+    console.log("after firebase update")
+   return true
+})
 const usersSlice = createSlice({
     name: 'users',
     initialState,
@@ -85,14 +111,30 @@ const usersSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-        .addCase(addNewUserToUsersCollection.fulfilled,(state, action)=>{
+            .addCase(addNewUserToUsersCollection.fulfilled,(state, action)=>{
             console.log("fulfilled")
-        })
+            })
             .addCase(addNewUserToUsersCollection.rejected,(state, action)=>{
                 console.log("rejected")
             })
             .addCase(addDefaultCategoriesToNewUser.fulfilled,(state, action)=>{
                 console.log("dodales domyslne kategorie nowemy userowi")
+            })
+            .addCase(changeSeeGreetingToTrue.fulfilled,(state, action)=>{
+                console.log("zmieniłes didSeeGreeting na true")
+                console.log(action.payload)
+                // let user = state.user!!
+                // user.didSeeGreeting = true
+                // state.user = user
+                let user = state.user!!
+                let newUser = {
+                    uid: user.uid,
+                    email: user.email,
+                    provider: user.provider,
+                    didSeeGreeting: true
+
+                }
+                state.user = newUser
             })
             // .addCase(checkIfUserExists.fulfilled,(state, action)=>{
             //   const userExistInUsers = action.payload;

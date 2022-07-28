@@ -18,7 +18,8 @@ import {faEye} from "@fortawesome/free-solid-svg-icons";
 interface User{
     uid: string;
     email: string;
-    providerId: string
+    providerId: string;
+
 }
 const LoginPage = () => {
 
@@ -60,7 +61,8 @@ const LoginPage = () => {
                 dispatch(
                     login({uid: user.uid,
                                 email: user.email ?? "",
-                                provider: user.providerId})
+                                provider: user.providerId,
+                                didSeeGreeting: true})
                 )
                 navigate("/categories")
             })
@@ -116,7 +118,8 @@ const LoginPage = () => {
                dispatch(
                    login({uid: user.uid,
                        email: user.email ?? "",
-                       provider: user.providerId})
+                       provider: user.providerId,
+                       didSeeGreeting: true})
                )
                navigate("/categories")
             }
@@ -139,7 +142,8 @@ const LoginPage = () => {
             dispatch(addNewUserToUsersCollection({
                 uid: user.uid,
                 email: user.email ?? "",
-                provider: user.providerId
+                provider: user.providerId,
+                didSeeGreeting: false
             }))
             dispatch(addDefaultCategoriesToNewUser(user.uid))
 
@@ -147,7 +151,8 @@ const LoginPage = () => {
                 login({
                     uid: user.uid,
                     email: user.email ?? "",
-                    provider: user.providerId
+                    provider: user.providerId,
+                    didSeeGreeting: false
                 }))
             navigate("/categories")
         } else {

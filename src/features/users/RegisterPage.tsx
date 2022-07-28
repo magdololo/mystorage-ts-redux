@@ -44,14 +44,15 @@ const RegisterPage = () => {
 
                     const user = userCredential.user;
                     console.log("Registered user: ", user);
-                    dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId}))
+                    dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId, didSeeGreeting: false}))
                     dispatch( addDefaultCategoriesToNewUser(user.uid))
 
                     dispatch(
                         login({
                             uid: user.uid,
                             email: user.email ?? "",
-                            provider: user.providerId
+                            provider: user.providerId,
+                            didSeeGreeting: false
                         })
                     )
                     navigate("/categories")
@@ -67,6 +68,9 @@ const RegisterPage = () => {
                             break;
                         case "auth/user-not-found":
                             setMessage ("Nie masz jeszcze konta. Zarejestruj się");
+                            break;
+                        case "auth/email-already-in-use":
+                            setMessage("Konto dla tego emaila już istnieje.");
                             break;
                         case "auth/user-disabled":
                             setMessage  ("Użytkownik zablokowany.");

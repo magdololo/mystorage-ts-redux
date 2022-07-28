@@ -75,7 +75,8 @@ function App() {
                     login({
                         uid: auth.uid,
                         email: auth.email ?? "",
-                        provider: auth.providerId
+                        provider: auth.providerId,
+                        didSeeGreeting: auth.didSeeGreeting
                     })
                 );
                 navigate("/categories")
