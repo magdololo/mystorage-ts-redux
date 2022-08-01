@@ -1,14 +1,39 @@
 import React,{useState} from 'react';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
+import {db} from "../firebase";
+import {addCategoryImage, ImageFromUser} from "../features/categories/categoriesSlice";
+import {useAppDispatch} from "../app/store";
+// Add a new document with a generated id.
 
 
 const SearchOwnPictureCategory =()=>{
-    const [newFile, setNewFile] = useState(null)
+    const storage = getStorage();
+    const dispatch = useAppDispatch()
+
+    // const [newFile, setNewFile] = useState<File | null>(null)
+    // const [fileName, setFileName] =useState("")
     const onChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
         let files = e.target.value
+        let paths = e.target.files!![0]
+        let newImageFromUser: ImageFromUser ={
+            newPictureName : files.replace(/^.*[\\\/]/, ''),
+            newPicture : paths
+        }
+        let urlUserPicture;
+
        console.log(files)
-        let filename = files.replace(/^.*[\\\/]/, '')
+
+        // setFileName(filename)
+        if(!e.target.files) return;
+        // setNewFile(e.target.files[0])
+        console.log(e.target.files[0])
+      dispatch(addCategoryImage(newImageFromUser))
+
 
     }
+
+
 
     return(
         <>

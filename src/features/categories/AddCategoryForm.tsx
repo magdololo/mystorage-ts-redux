@@ -10,6 +10,7 @@ import {addNewCategory, Category} from "../categories/categoriesSlice"
 import slugify from "slugify";
 import 'react-toastify/dist/ReactToastify.css';
 import {toast} from "react-toastify";
+import SearchOwnPictureCategory from "../../component/SearchOwnPictureCategory";
 
 
 type AddCategoryFormProps = {
@@ -105,10 +106,12 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
 
                     <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}
                            modalContent={
+                        <>
                                <div className="grid grid-cols-2 gap-1">
                                    {imagesOptions}
                                </div>
-
+                            <SearchOwnPictureCategory/>
+                        </>
                            }/>
 
                     <div className="form-group mb-6">

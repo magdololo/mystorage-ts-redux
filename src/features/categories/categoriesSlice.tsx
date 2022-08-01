@@ -10,6 +10,8 @@ import {
 import {AppDispatch, RootState} from "../../app/store";
 import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "firebase/firestore";
 import {db} from "../../firebase";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+const storage = getStorage();
 
 
 export interface Category {
@@ -25,7 +27,10 @@ export interface Image {
     url: Required<string>;
     id: Required<string>;
 }
-
+export interface ImageFromUser{
+    newPicture: File,
+    newPictureName: string
+}
 
 const categoriesAdapter = createEntityAdapter<Category>({
     sortComparer: (a: Category, b: Category) => {
@@ -43,6 +48,9 @@ const initialState: EntityState<Category> & { images: Image[]; error: null | str
     status: 'idle',
     error: null,
     currentCategory: null,
+
+
+
 })
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async (userId: string) => {
 
@@ -121,6 +129,52 @@ export const deleteCategory = createAsyncThunk('categories/deleteCategory', asyn
     }
 }})
 
+async function uploadCategoryPicture(fileName: string, file: File):Promise<string>{
+    return new Promise(function (resolve, reject){
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                // Observe state change events such as progress, pause, and resume
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused');
+                        break;
+                    case 'running':
+                        console.log('Upload is running');
+                        break;
+                }
+            },
+            (error) => {
+                // Handle unsuccessful uploads
+            },
+            () => {
+                // Handle successful uploads on complete
+                // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                getDownloadURL(uploadTask.snapshot.ref).then ((downloadURL) => {
+                    resolve(downloadURL)}
+                )
+            })
+    })
+}
+
+export const addCategoryImage = createAsyncThunk<Image, ImageFromUser,{
+    dispatch: AppDispatch
+    state: RootState
+}>('categories/addCategoryImage', async (imageFromUser: ImageFromUser ,thunkApi)=> {
+
+    const storageUrl = await uploadCategoryPicture( imageFromUser.newPictureName, imageFromUser.newPicture) //musimy poczekac na to co zwroci czyli storageUrl zeby dodac do imagesow i stamsad pobrac id i dopiero caly obiekt Image dodac do stamu czyli tablicy imagesów
+    const result =  await addDoc(collection(db, "images"), {
+        url: storageUrl
+    })
+
+    return { url: storageUrl, id: result.id} as Image
+})
+
+
 const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
@@ -153,6 +207,10 @@ const categoriesSlice = createSlice({
             })
             .addCase(deleteCategory.fulfilled,(state,action)=>{
                 categoriesAdapter.removeOne(state, action.payload as string)
+            })
+            .addCase(addCategoryImage.fulfilled,(state, action)=>{
+                console.log(action.payload)
+                state.images.push(action.payload)
             })
     }
 })
