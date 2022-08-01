@@ -19,7 +19,7 @@ import {
     fetchCategories,
     fetchImages,
     selectAllCategoriesSortedByRequired,
-    Category
+    Category, fetchUserImages
 } from "./categoriesSlice";
 import {fetchAllProducts} from "../products/allProductsSlice";
 import { fetchUserProducts} from "../products/userProductsSlice";
@@ -81,9 +81,10 @@ export const CategoryList = () => {
                   </>;
 
     useEffect(() => {
-        dispatch(fetchCategories(user?.uid ?? ""))
+        dispatch(fetchCategories(user?.uid!!))
         dispatch(fetchImages())
-        dispatch(fetchUserProducts(user?.uid ?? ""))
+        dispatch(fetchUserImages(user?.uid!!))
+        dispatch(fetchUserProducts(user?.uid!!))
         dispatch(fetchAllProducts())
     }, [user, dispatch])
     const[toggleSwitch, setToggleSwitch] = useState(false);
