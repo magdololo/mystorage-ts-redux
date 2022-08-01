@@ -4,12 +4,16 @@ import { collection, addDoc } from "firebase/firestore";
 import {db} from "../firebase";
 import {addCategoryImage, ImageFromUser} from "../features/categories/categoriesSlice";
 import {useAppDispatch} from "../app/store";
+import {useSelector} from "react-redux";
+import {selectUser} from "../features/users/usersSlice";
 // Add a new document with a generated id.
 
 
 const SearchOwnPictureCategory =()=>{
     const storage = getStorage();
     const dispatch = useAppDispatch()
+    const user = useSelector(selectUser)
+    const uid = user? user.uid: ""
 
     // const [newFile, setNewFile] = useState<File | null>(null)
     // const [fileName, setFileName] =useState("")
@@ -17,8 +21,9 @@ const SearchOwnPictureCategory =()=>{
         let files = e.target.value
         let paths = e.target.files!![0]
         let newImageFromUser: ImageFromUser ={
-            newPictureName : files.replace(/^.*[\\\/]/, ''),
-            newPicture : paths
+            newPictureName : uid+"/"+ files.replace(/^.*[\\\/]/, ''),//to tworzy nowy katalog w storage ktorego nazwa uid i w nim nazwy zdjec
+            newPicture : paths,
+            uid: uid
         }
         let urlUserPicture;
 

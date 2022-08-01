@@ -26,10 +26,12 @@ export interface Category {
 export interface Image {
     url: Required<string>;
     id: Required<string>;
+    uid: string | null;
 }
 export interface ImageFromUser{
     newPicture: File,
-    newPictureName: string
+    newPictureName: string,
+    uid: string
 }
 
 const categoriesAdapter = createEntityAdapter<Category>({
@@ -90,6 +92,25 @@ export const fetchImages = createAsyncThunk('categories/fetchImages', async()=>{
 
         })
         return images
+    } catch (error) {
+        console.log(error)
+        return {error: error}
+    }
+})
+
+export  const fetchUserImages = createAsyncThunk('categories/fetchUserImages', async(uid: string)=>{
+    try{
+        const userImages: Array<Image> = []
+        let q = await query(collection(db, "users/" + uid + "/images"));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+
+            let productDoc = doc.data() as Image;
+            productDoc.id = doc.id;
+            userImages.push(productDoc);
+
+        })
+        return userImages
     } catch (error) {
         console.log(error)
         return {error: error}
@@ -167,8 +188,8 @@ export const addCategoryImage = createAsyncThunk<Image, ImageFromUser,{
 }>('categories/addCategoryImage', async (imageFromUser: ImageFromUser ,thunkApi)=> {
 
     const storageUrl = await uploadCategoryPicture( imageFromUser.newPictureName, imageFromUser.newPicture) //musimy poczekac na to co zwroci czyli storageUrl zeby dodac do imagesow i stamsad pobrac id i dopiero caly obiekt Image dodac do stamu czyli tablicy imagesów
-    const result =  await addDoc(collection(db, "images"), {
-        url: storageUrl
+    const result =  await addDoc(collection(db, "users/"+ imageFromUser.uid +"/images"), {
+        url: storageUrl,
     })
 
     return { url: storageUrl, id: result.id} as Image
@@ -200,6 +221,10 @@ const categoriesSlice = createSlice({
             })
             .addCase(fetchImages.fulfilled,(state,action)=>{
                 state.images = action.payload as Image[]
+            })
+            .addCase(fetchUserImages.fulfilled, (state, action)=>{
+                const newImages = state.images.concat(action.payload as Image[])
+                state.images = newImages;
             })
             .addCase(addNewCategory.fulfilled, categoriesAdapter.addOne )
             .addCase(editCategory.fulfilled, (state, action)=>{
