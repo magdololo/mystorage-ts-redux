@@ -35,9 +35,8 @@ export const CategoryList = () => {
 
 
     let user = useSelector(selectUser);
-    console.log(user)
     let didSee = user?.didSeeGreeting;
-    console.log(didSee)
+
     const {isShown, handleShown, handleClose} = useModal()
     const modalAddHeader = "Dodaj nową kategorię"
     const modalEditHeader = "Edytuj kategorię"
@@ -80,15 +79,6 @@ export const CategoryList = () => {
                      </button>
                  </div></>} />
                   </>;
-    // useEffect(()=>{
-    //     if(!didSee) {
-    //         informAfterFirstRegister =
-    //             <>
-    //                 <h1>Dziękujemy za rejestrację! Witamy w serwisie!</h1>
-    //             </>
-    //         didSee = true
-    //     }
-    // })
 
     useEffect(() => {
         dispatch(fetchCategories(user?.uid ?? ""))
@@ -121,10 +111,10 @@ export const CategoryList = () => {
     } else if (categoriesStatus === "succeeded") {
       const renderedCategories = categories?.map(category => (
 
-            <li className={"h-auto flex flex-col relative "+ (toggleSwitch?"bg-black bg-opacity-90 ":"") } key={category?.id}>
+            <li className={"h-auto flex flex-col relative" + (toggleSwitch?" bg-black bg-opacity-90 ":"") } key={category?.id}>
 
                     <Link to={`/categories/${category?.path}`}  className={toggleSwitch? "pointer-events-none" : ""} >
-                    <img src={category?.url} className={"w-full h-auto object-cover flex-1 flex-grow "+ (toggleSwitch?"brightness-[0.2]":"")} alt="Louvre" />
+                    <img src={category?.url} className={"w-full h-auto object-cover flex-1 flex-grow"+ (toggleSwitch?" brightness-[0.2]":"")} alt="Louvre" />
 
                     <span
                         className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 text-xl capitalize text-center text-white font-bold"+ (toggleSwitch?"hidden invisible":"")}>{category?.title}</span>
@@ -150,6 +140,7 @@ export const CategoryList = () => {
                         <div className="flex flex-wrap min-w-fit w-10/12 mx-4 pb-36">
                             <div className="grid grid-cols-2 gap-1 overflow-y-auto lg:grid-cols-3 lg:gap-2 ">
                             {renderedCategories}
+                                {!toggleSwitch &&
                                 <div className=" relative overflow-hidden bg-no-repeat bg-cover border-solid border-purple border-2 border-opacity-25"
                                      onClick={handleShown}>
                                         <img src="http://placehold.jp/ffffff/ffffff/1280x900.png"
@@ -168,7 +159,7 @@ export const CategoryList = () => {
                                             </div>
                                             </div>
 
-                                 </div>
+                                 </div>}
                             </div>
                         </div>
                     </div>
