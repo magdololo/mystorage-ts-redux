@@ -34,6 +34,7 @@ export interface ImageFromUser{
     uid: string
 }
 
+
 const categoriesAdapter = createEntityAdapter<Category>({
     sortComparer: (a: Category, b: Category) => {
         let aTitle = a.title.toLowerCase();
@@ -171,6 +172,8 @@ async function uploadCategoryPicture(fileName: string, file: File):Promise<strin
             },
             (error) => {
                 // Handle unsuccessful uploads
+                console.log(error.code)
+                console.log(error.message)
             },
             () => {
                 // Handle successful uploads on complete
@@ -236,6 +239,8 @@ const categoriesSlice = createSlice({
             .addCase(addCategoryImage.fulfilled,(state, action)=>{
                 console.log(action.payload)
                 state.images.push(action.payload)
+                // const userPictureUrl = action.payload.url
+                // state.imageUrlFromUser = userPictureUrl
             })
     }
 })
