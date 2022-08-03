@@ -18,6 +18,7 @@ const CropImages =({image}: ImagePathFromUser) => {
 
     return (
         <>
+
             <div className ="crop_content">
             <div className="crop-container">
                 <div className="crop">

@@ -30,51 +30,45 @@ const SearchOwnPictureCategory =()=>{
     const modalHeader = "Dostosuj zdjęcie"
     // const [newFile, setNewFile] = useState<File | null>(null)
     // const [fileName, setFileName] =useState("")
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
+    // const onChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
+    //
+    //     let files = e.target.value
+    //     let paths = e.target.files!![0]
+    //     console.log(files)
+    //     console.log(paths)
+    //
+    //     let end = reader.onloadend
+    //     let newImageFromUser: ImageFromUser ={
+    //         newPictureName : uid+"/"+ files.replace(/^.*[\\\/]/, ''),//to tworzy nowy katalog w storage ktorego nazwa uid i w nim nazwy zdjec
+    //         newPicture : paths,
+    //         uid: uid
+    //     }
+    //     let urlUserPicture;
+    //
+    //    console.log(files)
+    //
+    //     //
+    //
+    //     // setNewFile(e.target.files[0])
+    //     console.log(e.target.files[0])
+    //   //dispatch(addCategoryImage(newImageFromUser))
+    //
+    //
+    // }
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>)=> {
 
-        let files = e.target.value
-        let paths = e.target.files!![0]
-        console.log(files)
-        console.log(paths)
-        let reader = new FileReader();
-        reader.readAsDataURL(paths)
-        reader.onload = (e) => {
-            let imagePath = reader.result;
-            setImage(imagePath as string)
-            handleShown()
-        }
-        let end = reader.onloadend
-        let newImageFromUser: ImageFromUser ={
-            newPictureName : uid+"/"+ files.replace(/^.*[\\\/]/, ''),//to tworzy nowy katalog w storage ktorego nazwa uid i w nim nazwy zdjec
-            newPicture : paths,
-            uid: uid
-        }
-        let urlUserPicture;
-
-       console.log(files)
-
-        // setFileName(filename)
         if(!e.target.files) return;
-        // setNewFile(e.target.files[0])
-        console.log(e.target.files[0])
-      //dispatch(addCategoryImage(newImageFromUser))
-
+        let files = e.target.value//nazwa pliku
+        let reader = new FileReader();
+            reader.readAsDataURL(e.target.files!![0])
+            reader.onload = (e) => {
+                let imagePath = reader.result;
+                setImage(imagePath as string)
+                handleShown()
+            }
 
     }
-    // const onChange = (e: any) => {
-    //     e.preventDefault();
-    //     let files;
-    //     if (e.dataTransfer) {
-    //         files = e.dataTransfer.files;
-    //     } else if (e.target) {
-    //         files = e.target.files;
-    //     }
-    //     const reader = new FileReader();
-    //     reader.onload = () => {
-    //         setImage(reader.result as any);
-    //     };
-    //     reader.readAsDataURL(files[0]);
-    // };
+
 
 
     return(
