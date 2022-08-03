@@ -6,7 +6,18 @@ import {addCategoryImage, ImageFromUser} from "../features/categories/categories
 import {useAppDispatch} from "../app/store";
 import {useSelector} from "react-redux";
 import {selectUser} from "../features/users/usersSlice";
+import CropImages from "./CropImages";
+import {useModal} from "./Modal/UseModal";
+import {ModalWithCrop} from "./Modal/ModalWithCrop";
+import AddProductForm from "../features/products/AddProductForm";
+import {readFile} from "fs/promises";
+
 // Add a new document with a generated id.
+
+
+export type ImagePathFromUser={
+    image: string
+}
 
 
 const SearchOwnPictureCategory =()=>{
@@ -14,12 +25,25 @@ const SearchOwnPictureCategory =()=>{
     const dispatch = useAppDispatch()
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
-
+    const [image, setImage] = useState("")
+    const {isShown, handleShown, handleClose} = useModal()
+    const modalHeader = "Dostosuj zdjęcie"
     // const [newFile, setNewFile] = useState<File | null>(null)
     // const [fileName, setFileName] =useState("")
     const onChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
+
         let files = e.target.value
         let paths = e.target.files!![0]
+        console.log(files)
+        console.log(paths)
+        let reader = new FileReader();
+        reader.readAsDataURL(paths)
+        reader.onload = (e) => {
+            let imagePath = reader.result;
+            setImage(imagePath as string)
+            handleShown()
+        }
+        let end = reader.onloadend
         let newImageFromUser: ImageFromUser ={
             newPictureName : uid+"/"+ files.replace(/^.*[\\\/]/, ''),//to tworzy nowy katalog w storage ktorego nazwa uid i w nim nazwy zdjec
             newPicture : paths,
@@ -33,18 +57,31 @@ const SearchOwnPictureCategory =()=>{
         if(!e.target.files) return;
         // setNewFile(e.target.files[0])
         console.log(e.target.files[0])
-      dispatch(addCategoryImage(newImageFromUser))
+      //dispatch(addCategoryImage(newImageFromUser))
 
 
     }
-
+    // const onChange = (e: any) => {
+    //     e.preventDefault();
+    //     let files;
+    //     if (e.dataTransfer) {
+    //         files = e.dataTransfer.files;
+    //     } else if (e.target) {
+    //         files = e.target.files;
+    //     }
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //         setImage(reader.result as any);
+    //     };
+    //     reader.readAsDataURL(files[0]);
+    // };
 
 
     return(
         <>
             <div className="flex justify-center">
                 <div className="mb-3 w-96">
-                    <label htmlFor="formFileMultiple" className="form-label inline-block mb-2 text-gray-700">Dodaj własne zdjęcie</label>
+                    <label htmlFor="formFileMultiple" className="form-label block mb-2 mt-2 text-gray-500 text-center text-xl">Dodaj własne zdjęcie</label>
                     <input className="  form-control
                                         block
                                         w-full
@@ -61,8 +98,10 @@ const SearchOwnPictureCategory =()=>{
                                         m-0
                                         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                            type="file" id="formFileMultiple" onChange={onChange}/>
+
                 </div>
             </div>
+            <ModalWithCrop className={"crop-modal"} isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={CropImages({image})}/>
         </>
     )
 }

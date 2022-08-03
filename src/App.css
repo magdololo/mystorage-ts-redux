@@ -71,3 +71,39 @@ li {
 .toast-success {
   background-color: #d813c8 !important;
 }
+
+/*style do komponentu cropImages*/
+.crop-container{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 85%;
+  margin-top: 1em;
+
+}
+.crop {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  bottom: 80px;
+}
+
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 50%;
+  transform: translateX(-50%);
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+slider {
+  padding: 22px 0px;
+}
+.button-crop {
+
+}
