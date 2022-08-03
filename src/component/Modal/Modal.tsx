@@ -16,6 +16,7 @@ export interface ModalProps {
     hide: () => void;
     modalContent: JSX.Element;
     modalHeaderText: string | null;
+    className?: string | null;
 
 }
 
@@ -24,7 +25,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
                                                          hide,
                                                          modalContent,
                                                          modalHeaderText,
-
+className
                                                      }) => {
 
     const modal = (
@@ -34,7 +35,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
 
 
             }}/>
-            <Wrapper tabIndex={-1} className="">
+            <Wrapper tabIndex={-1} className={className??""}>
                 <StyledModal>
                     <Header>
                         <HeaderText>{modalHeaderText}</HeaderText>

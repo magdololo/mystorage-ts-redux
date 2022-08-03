@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 700;
-  width: 450px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;
   @media(max-width: 500px){
     width: 85%;
@@ -31,10 +30,10 @@ export const StyledModal = styled.div`
   border-radius: 8px;
   padding: 2em;
   overflow-y: scroll;
+  max-height: 80vh;
   @media (min-width: 60em) {
-    height: 75%;
     margin: 0 auto;
-    max-height: 57em;
+    max-height: 85vh;
   }
 `;
 
