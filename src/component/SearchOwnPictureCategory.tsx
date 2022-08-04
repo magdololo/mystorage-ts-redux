@@ -15,9 +15,9 @@ import {readFile} from "fs/promises";
 // Add a new document with a generated id.
 
 
-export type ImagePathFromUser={
-    image: string
-}
+// export type ImagePathFromUser={
+//     image: string
+// }
 
 
 const SearchOwnPictureCategory =()=>{
@@ -26,6 +26,7 @@ const SearchOwnPictureCategory =()=>{
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
     const [image, setImage] = useState("")
+    const [newImageName, setNewImageName] = useState( "")
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Dostosuj zdjęcie"
     // const [newFile, setNewFile] = useState<File | null>(null)
@@ -59,6 +60,8 @@ const SearchOwnPictureCategory =()=>{
 
         if(!e.target.files) return;
         let files = e.target.value//nazwa pliku
+        const newPictureName = uid+"/"+ files.replace(/^.*[\\\/]/, '')
+        setNewImageName(newPictureName)
         let reader = new FileReader();
             reader.readAsDataURL(e.target.files!![0])
             reader.onload = (e) => {
@@ -95,7 +98,7 @@ const SearchOwnPictureCategory =()=>{
 
                 </div>
             </div>
-            <ModalWithCrop className={"crop-modal"} isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={CropImages({image})}/>
+            <ModalWithCrop className={"crop-modal"} isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={CropImages({image, newImageName, uid, handleClose} )}/>
         </>
     )
 }

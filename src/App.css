@@ -104,6 +104,7 @@ li {
 slider {
   padding: 22px 0px;
 }
-.button-crop {
-
+.modal-info {
+  z-index: 2000 !important;
+  width: 25% !important
 }
