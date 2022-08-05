@@ -5,7 +5,7 @@ import Cropper from "react-easy-crop";
 import { Point, Area } from "react-easy-crop/types";
 //import "./styles.css";
 import getCroppedImg from './canvasUtils'
-import {addCategoryImage, ImageFromUser} from "../features/categories/categoriesSlice";
+import {addCategoryImage, ImageFromUser} from "../features/images/imagesSlice";
 import {useAppDispatch} from "../app/store";
 import AddProductForm from "../features/products/AddProductForm";
 import {Modal} from "./Modal/Modal"
@@ -16,6 +16,7 @@ import {ModalWithCrop} from "./Modal/ModalWithCrop";
 
 type CropImagesProps = {
     handleClose: () => void
+    // setImage: ()=> void
     image: string
     newImageName: string
     uid: string
@@ -33,9 +34,10 @@ const customStyles = {
     },
 };
 
-const CropImages =({image, handleClose, newImageName, uid}: CropImagesProps ) => {
+const CropImages =({image,setImage, handleClose, newImageName, uid}: CropImagesProps ) => {
     const dispatch = useAppDispatch();
-    const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
+    const [crop, setCrop] = useState<Crop>({
+        unit: 'px', x: 0, y: 0, width: 1280, height: 815 });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -73,7 +75,7 @@ const CropImages =({image, handleClose, newImageName, uid}: CropImagesProps ) =>
             }else{
                 dispatch(addCategoryImage(newImageFromUser));
                 handleClose()
-                setImage("");
+                // setImage("");
             }
 
 
@@ -116,11 +118,15 @@ const CropImages =({image, handleClose, newImageName, uid}: CropImagesProps ) =>
             </div>
 
                 </div>
-            <div className="absolute bottom-6 right-12">
-                <button  className="w-24 text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 px-4 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+            <div className="absolute bottom-6 right-14">
+                <button  className="w-24 text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                          onClick={showCroppedImage}>Zatwierdź </button>
-
+                <button  className="w-24 text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 ml-4 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                         onClick={handleClose}>Zamknij </button>
             </div>
+
+
+
             </div>
             <Modal className={"modal-info"} isShown={isOpen} hide={handleCloseModal} modalHeaderText={"Rozmiar zdjęcia jest za duży!"}  modalContent={<button onClick={handleCloseModal}>Zamknij</button>}/>
       </>

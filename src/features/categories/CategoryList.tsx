@@ -17,10 +17,10 @@ import {
     currentCategoryChange,
     deleteCategory,
     fetchCategories,
-    fetchImages,
     selectAllCategoriesSortedByRequired,
-    Category, fetchUserImages
+    Category,
 } from "./categoriesSlice";
+import {fetchImages} from "../images/imagesSlice";
 import {fetchAllProducts} from "../products/allProductsSlice";
 import { fetchUserProducts} from "../products/userProductsSlice";
 
@@ -82,8 +82,7 @@ export const CategoryList = () => {
 
     useEffect(() => {
         dispatch(fetchCategories(user?.uid!!))
-        dispatch(fetchImages())
-        dispatch(fetchUserImages(user?.uid!!))
+        dispatch(fetchImages(user?.uid!!))
         dispatch(fetchUserProducts(user?.uid!!))
         dispatch(fetchAllProducts())
     }, [user, dispatch])
@@ -121,7 +120,7 @@ export const CategoryList = () => {
                         className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 text-xl capitalize text-center text-white font-bold"+ (toggleSwitch?"hidden invisible":"")}>{category?.title}</span>
 
                 </Link>
-                <span className={"absolute bottom-2/4 left-0 right-0 mx-auto capitalize text-xl text-center text-white font-bold"+ (!toggleSwitch? "invisible hidden":"")}>{category?.title}</span>
+                <span className={"absolute bottom-2/4 left-0 right-0 mx-auto capitalize text-xl text-center text-white font-bold "+ (!toggleSwitch? "invisible hidden":"")}>{category?.title}</span>
                 {toggleSwitch &&
                     <FontAwesomeIcon
                         className="absolute align-middle top-10 left-10 inline-flex items-center justify-center text-white text-xl font-bold cursor-pointer"
@@ -177,7 +176,7 @@ export const CategoryList = () => {
             <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
 
             {content}
-            <Modal isShown={isShown} hide={handleClose} modalHeaderText={ !toggleSwitch ? modalAddHeader : modalEditHeader } modalContent={ !toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleClose}/> : <EditCategoryForm closeAddCategoryModal={handleClose}/>}  />
+            <Modal className={"addCategory-modal"} isShown={isShown} hide={handleClose} modalHeaderText={ !toggleSwitch ? modalAddHeader : modalEditHeader } modalContent={ !toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleClose}/> : <EditCategoryForm closeAddCategoryModal={handleClose}/>}  />
             {didSee === false && greeting}
             <BottomMenu />
             <ToastContainer />

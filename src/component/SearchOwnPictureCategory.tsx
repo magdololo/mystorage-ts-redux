@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import {db} from "../firebase";
-import {addCategoryImage, ImageFromUser} from "../features/categories/categoriesSlice";
+import {addCategoryImage, ImageFromUser} from "../features/images/imagesSlice";
 import {useAppDispatch} from "../app/store";
 import {useSelector} from "react-redux";
 import {selectUser} from "../features/users/usersSlice";
