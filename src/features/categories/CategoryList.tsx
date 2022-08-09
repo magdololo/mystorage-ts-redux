@@ -117,18 +117,18 @@ export const CategoryList = () => {
                     <img src={category?.url} className={"w-full h-auto object-cover flex-1 flex-grow"+ (toggleSwitch?" brightness-[0.2]":"")} alt="Louvre" />
 
                     <span
-                        className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70 text-xl capitalize text-center text-white font-bold"+ (toggleSwitch?"hidden invisible":"")}>{category?.title}</span>
+                        className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70  text-md sm:text-lg capitalize text-center text-white font-bold"+ (toggleSwitch?"hidden invisible":"")}>{category?.title}</span>
 
                 </Link>
-                <span className={"absolute bottom-2/4 left-0 right-0 mx-auto capitalize text-xl text-center text-white font-bold "+ (!toggleSwitch? "invisible hidden":"")}>{category?.title}</span>
+                <span className={"absolute bottom-1/4 left-0 right-0 mx-auto capitalize text-center text-white font-bold text-md sm:text-lg"+ (!toggleSwitch? "invisible hidden":"")}>{category?.title}</span>
                 {toggleSwitch &&
                     <FontAwesomeIcon
-                        className="absolute align-middle top-10 left-10 inline-flex items-center justify-center text-white text-xl font-bold cursor-pointer"
+                        className="absolute align-middle top-8 left-8 inline-flex items-center justify-center text-white text-md sm:text-lg font-bold cursor-pointer"
                         icon={faPen} onClick={()=>{chooseEditCategory(category as Category)}}/>
                 }
                 {toggleSwitch &&
                     <FontAwesomeIcon
-                    className="absolute align-middle top-10 right-10 inline-flex items-center justify-center text-red text-2xl font-bold cursor-pointer"
+                    className="absolute align-middle top-8 right-8 inline-flex items-center justify-center text-red text-lg font-bold cursor-pointer"
                     icon={faXmark} onClick={()=>deletingCategory(category as Category)}/>
                 }
             </li>
@@ -152,9 +152,9 @@ export const CategoryList = () => {
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/>
                                                     </svg>
                                                 </div>
-                                            <div className="relative text-center top-1/3  text-gray font-bold text-2xl px-6 md:px-12 ">
+                                            <div className="relative text-center top-1/3  text-gray font-bold pt-2 px-6 md:px-12 ">
                                                 <button className="font-bold text-md leading-tight uppercase text-center">
-                                                    <span className="text-center block justify-center align-middle uppercase text-gray-500 z-100 ">Dodaj katregorię</span>
+                                                    <span className="text-center block justify-center align-middle uppercase text-gray-500 z-100 text-sm sm:text-md">Dodaj katregorię</span>
                                                 </button>
                                             </div>
                                             </div>
