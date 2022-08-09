@@ -53,16 +53,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
     const user = useSelector(selectUser)
     const uid = user ? user.uid : ""
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
-    const notify = () => toast.success('🦄 Produkt dodany!', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
 
-    });
     const {
         handleSubmit,
         control,
@@ -106,7 +97,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
             }
             dispatch(addUserProduct(userProduct))
             closeModal();
-            notify();
+
         }
     const units = [
         {

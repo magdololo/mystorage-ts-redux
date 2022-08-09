@@ -95,7 +95,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         }
         dispatch(editUserProduct(updatedProduct))
         closeModal()
-        notify()
+        //notify()
     }
     return(
         <>

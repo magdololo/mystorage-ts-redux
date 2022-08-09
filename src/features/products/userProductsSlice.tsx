@@ -23,11 +23,8 @@ import {
 } from "firebase/firestore";
 import {db} from "../../firebase";
 import {fetchProductFromDictionaryId} from "./allProductsSlice";
-
-
-
-
-
+import {toast} from "react-toastify";
+import {notify} from "../../helpers";
 
 
 export interface UserProduct{
@@ -232,12 +229,15 @@ const userProductsSlice = createSlice({
             })
             .addCase(deleteUserProduct.fulfilled,(state,action)=>{
               userProductsAdapter.removeOne(state, action.payload as string)
+                notify('🦄 Produkt usunięty!')
             })
             .addCase(addUserProduct.fulfilled,(state,action)=>{
                 userProductsAdapter.addOne(state, action.payload)
+                notify('🦄 Produkt dodany!')
             })
             .addCase(editUserProduct.fulfilled, (state, action)=>{
                 userProductsAdapter.setOne(state, action.payload)
+                notify('🦄 Zmiany zostały dodane!')
             })
     }
 })

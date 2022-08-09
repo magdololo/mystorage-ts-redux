@@ -11,6 +11,7 @@ import {AppDispatch, RootState} from "../../app/store";
 import {addDoc, collection, getDocs, query, setDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {notify} from "../../helpers";
 
 
 const storage = getStorage();
@@ -145,7 +146,9 @@ const imagesSlice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message
             })
-            .addCase(addCategoryImage.fulfilled, imagesAdapter.addOne )
+            .addCase(addCategoryImage.fulfilled, (state, action)=> {
+                imagesAdapter.addOne(state, action.payload)
+                notify("Zdjęcie dodane!")})
             .addCase(addCategoryImage.rejected, (state, action)=>{
                 state.status = 'failed'
                 state.error = action.error.message

@@ -9,7 +9,7 @@ import {addNewCategory, Category} from "../categories/categoriesSlice"
 
 import slugify from "slugify";
 import 'react-toastify/dist/ReactToastify.css';
-import {toast} from "react-toastify";
+// import {toast} from "react-toastify";
 import SearchOwnPictureCategory from "../../component/SearchOwnPictureCategory";
 import {selectAllImages} from "../images/imagesSlice";
 
@@ -30,16 +30,16 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const modalHeader = "Wybierz zdjęcie"
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
     const images = useAppSelector(selectAllImages)
-    const notify = () => toast.success('🦄 Kategoria dodana!', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-
-    });
+    // const notify = () => toast.success('🦄 Kategoria dodana!', {
+    //     position: "top-center",
+    //     autoClose: 2000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //
+    // });
 
     const imagesOptions = images?.map(image=>(
         <div key={image.id} onClick={(event: React.MouseEvent<HTMLElement>) => {
@@ -67,7 +67,6 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                     setTitle("")
                     setPickedImage("")
                     closeAddCategoryModal()
-                    notify()
                 })
         }
         setAddRequestStatus('idle')
