@@ -94,26 +94,6 @@ const RemindPassword=()=>{
                                           transition
                                           duration-150
                                           ease-in-out">Dalej</button>
-                    <button type="button"   className=" w-2/5
-                                          px-1
-                                          py-3
-                                          text-white
-                                          font-bold
-                                          bg-purple
-                                          text-sm
-                                          leading-tight
-                                          uppercase
-                                          rounded
-                                          shadow-md
-                                          hover:shadow-lg
-                                          focus:shadow-lg focus:outline-none focus:ring-0
-                                          active:shadow-lg
-                                          transition
-                                          duration-150
-                                          ease-in-out"><Link to={'/register'}>Zarejestruj się
-                        </Link></button>
-
-
                 </div>
 
 

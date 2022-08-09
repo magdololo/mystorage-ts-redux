@@ -4,6 +4,7 @@ import allProductsReducer from '../features/products/allProductsSlice'
 import categoriesReducer from '../features/categories/categoriesSlice'
 import usersReducer from '../features/users/usersSlice'
 import userProductsReducer from '../features/products/userProductsSlice'
+import imagesReducer from '../features/images/imagesSlice'
 import {useDispatch,TypedUseSelectorHook, useSelector} from "react-redux";
 import userProductsSlice from "../features/products/userProductsSlice";
 const store = configureStore({
@@ -13,6 +14,7 @@ const store = configureStore({
         users: usersReducer,
         allProducts: allProductsReducer,
         userProducts: userProductsReducer,
+        images: imagesReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false

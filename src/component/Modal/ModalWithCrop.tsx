@@ -1,4 +1,4 @@
- import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent} from 'react';
 import ReactDOM from 'react-dom';
 
 import {
@@ -9,7 +9,7 @@ import {
     Content,
     Backdrop,
 
-} from './modalStyle';
+} from './modalWithCropStyle';
 
 export interface ModalProps {
     isShown: boolean;
@@ -20,26 +20,25 @@ export interface ModalProps {
 
 }
 
-export const Modal: FunctionComponent<ModalProps> = ({
+export const ModalWithCrop: FunctionComponent<ModalProps> = ({
                                                          isShown,
                                                          hide,
                                                          modalContent,
                                                          modalHeaderText,
-className
+                                                         className
                                                      }) => {
 
     const modal = (
         <React.Fragment>
             <Backdrop onClick={() => {
                 hide();
-
-
             }}/>
+
             <Wrapper tabIndex={-1} className={className??""}>
+                <Header>
+                    <HeaderText>{modalHeaderText}</HeaderText>
+                </Header>
                 <StyledModal>
-                    <Header>
-                        <HeaderText>{modalHeaderText}</HeaderText>
-                    </Header>
                     <Content>{modalContent}</Content>
                 </StyledModal>
             </Wrapper>
@@ -48,5 +47,3 @@ className
 
     return isShown ? ReactDOM.createPortal(modal, document.body) : null;
 };
-
-

@@ -55,8 +55,8 @@ module.exports = {
       fontSize: {
         'labelSize': '17.6px',
         'sm' : '12px',
-        'md': '16px',
-        'lg': '20px',
+        'md': '15px',
+        'lg': '18px',
       },
       leading: {
         '5': '1.25'

@@ -11,6 +11,7 @@ import slugify from "slugify";
 import 'react-toastify/dist/ReactToastify.css';
 import {toast} from "react-toastify";
 import SearchOwnPictureCategory from "../../component/SearchOwnPictureCategory";
+import {selectAllImages} from "../images/imagesSlice";
 
 
 type AddCategoryFormProps = {
@@ -28,7 +29,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Wybierz zdjęcie"
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-    const images = useAppSelector(((state) => state.categories.images))
+    const images = useAppSelector(selectAllImages)
     const notify = () => toast.success('🦄 Kategoria dodana!', {
         position: "top-center",
         autoClose: 2000,
@@ -45,7 +46,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
             setPickedImage(image.url)
             handleClose()
              console.log(pickedImage)}}>
-                <img alt="gallery" src={image.url}/>
+                <img className="object-contain h-full w-full" alt="gallery" src={image.url}/>
         </div>
     ))
     const canSave =  [title, pickedImage, uid].every(Boolean) && addRequestStatus === 'idle'
@@ -76,7 +77,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
 
     return(
         <>
-            <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+            <div className="block p-6 rounded-lg bg-white max-w-sm mx-auto">
                 <form>
                     <div className="form-group mb-6 ">
                         <input type="text"

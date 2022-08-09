@@ -7,6 +7,7 @@ import slugify from "slugify";
 import {editCategory, Category} from "./categoriesSlice";
 import {selectUser} from "../users/usersSlice";
 import {toast} from "react-toastify";
+import {selectAllImages} from "../images/imagesSlice";
 
 type EditCategoryFormProps = {
     closeAddCategoryModal: ()=> void
@@ -23,7 +24,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
     const {isShown, handleShown, handleClose} = useModal()
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewCategoryTitle(e.target.value);
     const modalHeader = "Wybierz zdjęcie"
-    const images = useAppSelector(((state) => state.categories.images))
+    const images = useAppSelector(selectAllImages)
     const notify = () => toast.success('🦄 Kategoria zmieniona!', {
         position: "top-center",
         autoClose: 2000,
