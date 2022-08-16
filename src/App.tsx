@@ -15,6 +15,7 @@ import LoginPage from "./features/users/LoginPage";
 import RemindPassword from "./features/users/RemindPassword";
 import ProductsList from "./features/products/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
+import Home from "./features/api/Home";
 import './App.css';
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
@@ -61,7 +62,6 @@ function App() {
             // const user = result.uid;
 
             if (!doExist) {
-                console.log("kurwa")
                 content =
                     <>
                         <div className="bg-purple-100 py-5 px-6 mb-4 text-base text-purple-700 mb-3" role="alert">
@@ -142,7 +142,8 @@ function App() {
                 <Routes>
 
                     !user ?
-                    < Route path="/" element={<LoginPage/>}/>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/login" element={<LoginPage/>}/>
                     <Route path="/register" element={<RegisterPage/>}/>
                     <Route path="/remindPassword" element={<RemindPassword/>}/>
                     :

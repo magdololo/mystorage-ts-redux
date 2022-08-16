@@ -30,16 +30,23 @@ module.exports = {
       'labelColor': '#6B7280',
       'purple-700': '#6D28D9',
       'purple-400': '#C084FC',
+      'purple-800': '#6B21A8',
+      'purple-900': '#581C87',
       'blue-600':'#2563EB',
       'blue-500':'#3B82F6',
       'blue-400':'#60A5FA',
       'blue-800': 'rgb(1, 87, 155)',
-      'blue-900': '#1E3A8A'
+      'blue-900': '#1E3A8A',
+      'font-home': '#233748'
 
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
+      'poppins' : ['"Poppins"'],
+      'noto-sans' : ['"Noto Sans"'],
+      'sonsie-one' : ['"Sonsie One"'],
+      'courgette': ['"Courgette"']
     },
     minHeight: {
       '4/10': '40%',
@@ -57,6 +64,7 @@ module.exports = {
         'sm' : '12px',
         'md': '15px',
         'lg': '18px',
+        '2lg' : '30px'
       },
       leading: {
         '5': '1.25'
