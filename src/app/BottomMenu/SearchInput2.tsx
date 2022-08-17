@@ -3,7 +3,10 @@ import React, {useEffect, useState} from "react";
 import {useAppDispatch,useAppSelector} from "../store";
 import {searchByString, searchProduct, selectUserProducts} from "../../features/products/userProductsSlice";
 import {useNavigate} from "react-router-dom";
-
+import {
+  faHandPointer
+} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 const SearchInput2 =()=>{
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -37,9 +40,15 @@ const SearchInput2 =()=>{
     return(
         <>
             <div className="flex flex-1 pr-1">
-                <Select options={options} menuPlacement={"top"} isClearable className="react-select-container" classNamePrefix="react-select"  onChange={onChange} onInputChange={onInputChange} onKeyDown={onKeyDown}/>
+                <Select options={options} menuPlacement={"top"}
+                        isClearable
+                        className="react-select-container"
+                        classNamePrefix="react-select"
+                        onChange={onChange}
+                        onInputChange={onInputChange}
+                        onKeyDown={onKeyDown}
+                    />
                 {/*styles={singleSelectStyle(variant)}*/}
-                <div/>
             </div>
         </>
     )

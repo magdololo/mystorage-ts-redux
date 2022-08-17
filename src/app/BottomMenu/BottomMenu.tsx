@@ -13,8 +13,8 @@ const BottomMenu = () => {
 
     return(
         <>
-                <div className='w-screen fixed top-auto bottom-0 bg-white z-40  '>
-                    <div className="flex flex-1 max-w-lg mx-auto py-8 ">
+                <div className='w-screen fixed top-auto bottom-0 bg-white z-100 '>
+                    <div className="w-11/12 flex flex-1 max-w-lg py-8 mx-auto ">
                         <Hamburger/>
                         {<SearchInput2/>}
                         {/*<SearchInput/>*/}

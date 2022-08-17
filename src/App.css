@@ -1,8 +1,7 @@
 
-/*.App {*/
-/*  text-align: center;*/
+.App {
 
-/*}*/
+}
 .MuiAutocomplete-root {
   width: 100% !important;
 }
@@ -53,7 +52,9 @@ li {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
+  /*border: 1px solid purple !important;!*do screena*!*/
+  /*border-radius: 4px;!*do screena*!*/
+  /*box-shadow: 0 0 0 1px purple !important;!*do screena*!*/
 }
 
 .react-select__control {

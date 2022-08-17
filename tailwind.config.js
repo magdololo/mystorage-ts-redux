@@ -37,7 +37,8 @@ module.exports = {
       'blue-400':'#60A5FA',
       'blue-800': 'rgb(1, 87, 155)',
       'blue-900': '#1E3A8A',
-      'font-home': '#233748'
+      'font-home': 'rgb(35, 55, 72)',
+      'homeSection': "#f7fafd",
 
     },
     fontFamily: {
@@ -66,11 +67,17 @@ module.exports = {
         'lg': '18px',
         '2lg' : '30px'
       },
+      width: {
+        'w-44' : '185px'
+      },
       leading: {
         '5': '1.25'
       },
       filter: {
         "brightness-20" :"0.2"
+      },
+      zIndex: {
+        "z-100" : "2500"
       }
 
     },

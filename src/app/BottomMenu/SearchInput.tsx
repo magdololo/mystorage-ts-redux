@@ -93,8 +93,13 @@ if(!preventInputOverwrite)
         <>
 
             <div className="flex flex-1 pr-1">
-                <Select options={options} menuPlacement={"top"} isClearable className="react-select-container" classNamePrefix="react-select"  onKeyDown={onKeyDown} onInputChange={onInputTextChange}  onChange={onChange}/>
-                {/*styles={singleSelectStyle(variant)}*/}
+                <Select options={options} menuPlacement={"top"}
+                        isClearable
+                        className="react-select-container" classNamePrefix="react-select"
+                        onKeyDown={onKeyDown}
+                        onInputChange={onInputTextChange}
+                        onChange={onChange}
+                />
                     <div/>
                 </div>
 

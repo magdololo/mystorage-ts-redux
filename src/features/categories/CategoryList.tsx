@@ -135,6 +135,7 @@ export const CategoryList = () => {
         ))
         content =
             <>
+
                 <div className="w-screen-xs mx-auto max-w-screen-xl mb-32">
                     <div className="flex flex-nowrap w-full min-h-min items-center">
                         <div className="flex flex-wrap min-w-fit w-10/12 mx-4 pb-36">
@@ -164,6 +165,7 @@ export const CategoryList = () => {
                         </div>
                     </div>
                 </div>
+
             </>
 
     } else if (categoriesStatus === "failed") {
@@ -172,9 +174,9 @@ export const CategoryList = () => {
 
     return (
         <>
+
             <AppTitle/>
             <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
-
             {content}
             <Modal className={"addCategory-modal"} isShown={isShown} hide={handleClose} modalHeaderText={ !toggleSwitch ? modalAddHeader : modalEditHeader } modalContent={ !toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleClose}/> : <EditCategoryForm closeAddCategoryModal={handleClose}/>}  />
             {didSee === false && greeting}

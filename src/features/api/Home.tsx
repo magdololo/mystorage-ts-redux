@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 const Home = ()=>{
 
@@ -49,12 +50,12 @@ const Home = ()=>{
              </div>
              <div className="px-6 flex align-middle font-noto-sans">
                  <button type="button"
-                         className=" inline-block px-6 py-2 border-none text-gray-dark text-lg font-bold leading-10 capitalize rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-                         >Zaloguj się
+                         className=" inline-block px-6 py-2 mr-1 text-gray-light text-lg font-bold leading-10 hover:border-b-2 hover:border-b-purple hover:border-opacity-50 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                         ><Link to="/login">Zaloguj się</Link>
                  </button>
                  <button
                      type="button"
-                     className="inline-block px-6 py-2.5 bg-purple-800 text-white text-lg font-bold leading-tight capitalize rounded shadow-md hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+                     className="inline-block px-6 py-2.5 bg-purple-800 text-white text-lg font-bold leading-tight rounded-2xl shadow-md hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
                      data-mdb-ripple="true"
                      data-mdb-ripple-color="light"
                  >
@@ -63,13 +64,37 @@ const Home = ()=>{
 
              </div>
                  </nav>
-
-                 <div className="max-w-5xl w-full mx-auto p-12 bg-gray-100 text-gray-extraDark">
-                     <h2 className="font-semibold text-4xl mb-4">Heading</h2>
-                     <h4 className="font-semibold text-xl mb-6">Subheading</h4>
-
+            <div className="relative flex items-center w-full  max-w-6xl mx-auto pt-12 font-noto-sans">
+                 <div className="px-6 text-left w-3/5 mr-5 max-w-2xl ">
+                     <h2 className="font-bold  text-font-home text-7xl mb-4 leading-tight">Twoje produkty zawsze pod ręką</h2>
+                     <h4 className=" text-gray-light text-xl mb-6 leading-loose">Zdobądź łatwy dostęp do produktów w swoim domu aby lepiej planować zakupy, posiłki i czas.</h4>
+                     <button
+                         type="button"
+                         className="inline-block px-6 py-3.5 bg-purple-800 text-white text-lg font-bold leading-tight rounded-2xl shadow-md hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+                         data-mdb-ripple="true"
+                         data-mdb-ripple-color="light"
+                     >
+                         Zarejestruj się
+                     </button>
                  </div>
+                <div className="px-6">
+                    <img src="../images/categories_screen.png" className={"max-h-144"}/>
+
+                </div>
+            </div>
              </header>
+             <section className={"pt-5 max-w-full bg-homeSection mx-auto relative"}>
+                 <div className={"flex max-w-7xl w-full  mx-auto relative items-center flex-wrap"}>
+                     <div className="px-6 text-left w-2/5 max-w-2xl pl-20">
+                         <img  src="../images/addCategory_screen.png" className={"max-h-144"}/>
+                     </div>
+                     <div className="px-6 text-left w-1/2  max-w-2xl ml-3">
+                         <h2 className="font-bold  text-font-home text-5xl mb-4 leading-normal">Twórz własne kategorie</h2>
+                         <h4 className=" text-gray-light text-xl mb-6 leading-loose">Nazwy kategorii układają się alfabetycznie dzięki czemu łatwo je odnajdziesz. Możesz także dodawać własne obrazki i zdjęcia.</h4>
+                     </div>
+                 </div>
+
+             </section>
          </>
     )
 };
