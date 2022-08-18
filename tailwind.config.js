@@ -78,6 +78,9 @@ module.exports = {
       },
       zIndex: {
         "z-100" : "2500"
+      },
+      boxShadow: {
+        "zz" : "3em 3em 5em #1F2937"
       }
 
     },
