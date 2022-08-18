@@ -81,6 +81,11 @@ module.exports = {
       },
       boxShadow: {
         "zz" : "3em 3em 5em #1F2937"
+      },
+      translate: {
+        "translate-x-50": "transform:translateX(-50%)",
+        "translate-y-50": "transform:translate(-50%)"
+
       }
 
     },
