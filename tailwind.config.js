@@ -39,6 +39,7 @@ module.exports = {
       'blue-900': '#1E3A8A',
       'font-home': 'rgb(35, 55, 72)',
       'homeSection': "#f7fafd",
+      'footerLight' : "#A3A3A3"
 
     },
     fontFamily: {
@@ -80,7 +81,8 @@ module.exports = {
         "z-100" : "2500"
       },
       boxShadow: {
-        "zz" : "3em 3em 5em #1F2937"
+        "zz" : "0 0 3em #E7E5E4",
+        "mm" : "0 0 3em #000000"
       },
       translate: {
         "translate-x-50": "transform:translateX(-50%)",
