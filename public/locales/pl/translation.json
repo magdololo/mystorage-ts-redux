@@ -1,0 +1,20 @@
+{
+  "app_title": "Domowa spiżarnia",
+  "home_header_heading": "Twoje produkty zawsze pod ręką",
+  "home_heading_subheading": "Zdobądź łatwy dostęp do produktów w swoim domu aby lepiej planować zakupy, posiłki i czas.",
+  "home_section1_heading": "Twórz wlasne kategorie i dodawaj produkty",
+  "home_section1_subheading" : "Nazwy kategorii układają się alfabetycznie dzięki czemu łatwo je odnajdziesz. Możesz także dodawać własne obrazki i zdjęcia.",
+  "home_section2_heading": "Latwa edytowanie",
+  "home_section2_subheading" : "Szybko dodawaj i usuwaj wybrany produkt. Mozesz zmienic kategorie oraz sprawdziC czy produkt przekroczył date ważności.",
+  "home_section3_heading": "Szybkie wyszukiwanie",
+  "home_section3_subheading" : "Dzięki wyszukiwarce odnajdziesz wszystkie podobne produkty jak również konkretny produkt.",
+  "home_footer_word1" : "Akceptuje",
+  "home_footer_word2" : "serwisu",
+  "home_footer_link" : "regulamin",
+  "button_register": "Zajoguj się",
+  "button_logIn" : "Zarejestruj się",
+  "button_logOut" : "Wyloguj się",
+  "button_remindPassword" : "Dalej"
+
+
+}
