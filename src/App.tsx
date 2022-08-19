@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, Suspense} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {auth, signOut, onAuthStateChanged, signInWithPopup, db, GoogleAuthProvider } from './firebase';
 
@@ -10,12 +10,14 @@ import {
 
 } from "react-router-dom";
 
+import Loading from "./component/Loading";
 import CategoryList from "./features/categories/CategoryList";
 import LoginPage from "./features/users/LoginPage";
 import RemindPassword from "./features/users/RemindPassword";
 import ProductsList from "./features/products/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
 import Home from "./features/api/Home";
+
 import './App.css';
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
@@ -136,7 +138,9 @@ function App() {
         }*/
 
 
-    return (<>
+    return (
+        <>
+        <Suspense fallback={<Loading />}>
             <div className="App">
                 {content}
                 <Routes>
@@ -153,7 +157,7 @@ function App() {
                     <Route path="/search" element={<SearchUserProductPage/>}/>
                 </Routes>
             </div>
-
+            </Suspense>
         </>
     );
 }
