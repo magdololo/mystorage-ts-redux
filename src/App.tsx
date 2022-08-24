@@ -87,56 +87,6 @@ function App() {
             }
         })
         }, []);
-/*        const onAuthStateChanged = async(auth: any)=> {
-            if (auth) {
-
-                let result = await signInWithPopup(auth, provider)
-                // This gives you a Google Access Token. You can use it to access the Google API.
-
-                const user = result.user;
-
-                console.log("log with google" + user)
-                console.log(user)
-                const docRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(docRef);
-
-                let doExist = docSnap.exists()
-                console.log(doExist)
-                // let result = await signInWithPopup(auth, provider)
-                // // This gives you a Google Access Token. You can use it to access the Google API.
-                //
-                // const user = result.uid;
-
-                if (!doExist) {
-                    console.log("kurwa")
-                    content =
-                        <>
-                            <div className="bg-purple-100 py-5 px-6 mb-4 text-base text-purple-700 mb-3" role="alert">
-                                A simple secondary alert with <a href="#" className="font-bold text-puclassName800">an example link</a>.
-                                Give it a click if you like.
-                            </div>
-                        </>
-                     navigate("/register")
-
-                }
-                else {
-                dispatch(
-                    login({
-                        uid: auth.uid,
-                        email: auth.email ?? "",
-                        provider: auth.providerId,
-                        didSeeGreeting: auth.didSeeGreeting
-                    })
-                );
-                navigate("/categories")
-            }}
-            else {
-                dispatch(logout());
-                navigate("/")
-            }
-
-        }*/
-
 
     return (
         <>

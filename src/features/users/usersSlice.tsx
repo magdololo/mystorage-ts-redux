@@ -7,11 +7,13 @@ import {
     setDoc,
     getDoc,
     collection,
-    updateDoc
+    updateDoc,
+    where
 } from "firebase/firestore";
 import {db} from "../../firebase";
 import {addNewCategory, Category} from "../categories/categoriesSlice";
 import {UserProduct} from "../products/userProductsSlice";
+import {changeLanguage} from "i18next";
 // import {fetchProductFromDictionaryId} from "../products/allProductsSlice";
 // import {toast} from "react-toastify";
 
@@ -56,20 +58,26 @@ export const addNewUserToUsersCollection = createAsyncThunk('users/addNewUserToU
 
 
 })
-export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, string,{ //pierwsze to typ tego co zwracamy, drugie to typ tego co przyjmujemy jako parametr
+export interface AddDefaultCategoriesToNewUserProps {
+    userId : string,
+    userLanguage: string
+}
+export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, AddDefaultCategoriesToNewUserProps,{ //pierwsze to typ tego co zwracamy, drugie to typ tego co przyjmujemy jako parametr
     dispatch: AppDispatch
     state: RootState
-}>("users/addDefaultCategoriesToNewUser", async (userId: string, thunkApi)=>{
+}>("users/addDefaultCategoriesToNewUser", async (addDefaultCategoriesToNewUserProps: AddDefaultCategoriesToNewUserProps, thunkApi)=>{
     let defaultCategories:Array<Category> =[];
     try{
-        let q = await query(collection(db, "categories"));
+
+        let q = await query(collection(db, "categories"), where("language","==",addDefaultCategoriesToNewUserProps.userLanguage));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             let category: Category = doc.data() as Category
             category.id = doc.id
-            category.user = userId
+            category.user = addDefaultCategoriesToNewUserProps.userId
             defaultCategories.push(category);
             thunkApi.dispatch(addNewCategory(category))
+            console.log(doc.id, " => ", doc.data());
         })
     } catch{
 

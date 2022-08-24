@@ -7,17 +7,24 @@ import userProductsReducer from '../features/products/userProductsSlice'
 import imagesReducer from '../features/images/imagesSlice'
 import {useDispatch,TypedUseSelectorHook, useSelector} from "react-redux";
 import userProductsSlice from "../features/products/userProductsSlice";
+
+
+
 const store = configureStore({
+
     reducer: {
 
         categories: categoriesReducer,
         users: usersReducer,
         allProducts: allProductsReducer,
         userProducts: userProductsReducer,
-        images: imagesReducer
+        images: imagesReducer,
+
     },
+
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: false
+        serializableCheck: false,
+
         //     {
         //     ignoredActions: [actionTypes.LOGIN, actionTypes.AUTH_LINK_ERROR]
         // }

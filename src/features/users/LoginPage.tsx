@@ -1,10 +1,11 @@
 import React, {useEffect, useState, ChangeEvent} from "react";
 import {useNavigate, Link} from "react-router-dom";
 import { useDispatch } from 'react-redux';
+import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import {auth, signInWithEmailAndPassword,signInWithPopup, GoogleAuthProvider} from '../../firebase';
 
-import {addDefaultCategoriesToNewUser, addNewUserToUsersCollection, login} from "./usersSlice";
+import {addDefaultCategoriesToNewUser, addNewUserToUsersCollection, login, AddDefaultCategoriesToNewUserProps} from "./usersSlice";
 import {
     doc,
     getDoc,
@@ -21,8 +22,12 @@ interface User{
     providerId: string;
 
 }
-const LoginPage = () => {
 
+
+const LoginPage = () => {
+    const { t, i18n } = useTranslation();
+    console.log(i18n.language)
+    const userLanguage = i18n.language;
     const dispatch = useDispatch()
     const provider = new GoogleAuthProvider();
     const [errorMessage,setErrorMessage] = useState("");
@@ -145,7 +150,11 @@ const LoginPage = () => {
                 provider: user.providerId,
                 didSeeGreeting: false
             }))
-            dispatch(addDefaultCategoriesToNewUser(user.uid))
+            const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
+                userId: user.uid,
+                userLanguage: userLanguage
+            }
+            dispatch(addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
 
             dispatch(
                 login({

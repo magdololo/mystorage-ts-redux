@@ -1,9 +1,10 @@
 import React, {ChangeEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from 'react-redux';
+import { useTranslation } from "react-i18next";
 import {useForm, SubmitHandler} from "react-hook-form";
 
-import {addNewUserToUsersCollection, login, addDefaultCategoriesToNewUser} from "./usersSlice";
+import {addNewUserToUsersCollection, login, addDefaultCategoriesToNewUser,AddDefaultCategoriesToNewUserProps} from "./usersSlice";
 import {
     auth,
     createUserWithEmailAndPassword,
@@ -11,6 +12,7 @@ import {
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
+
 
 const eye = <FontAwesomeIcon icon={faEye}/>;
 
@@ -20,6 +22,9 @@ type Inputs = {
 
 }
 const RegisterPage = () => {
+    const { t, i18n } = useTranslation();
+
+    const userLanguage = i18n.language;
     const dispatch = useDispatch();
     let navigate = useNavigate()
     let {
@@ -43,9 +48,13 @@ const RegisterPage = () => {
                 .then((userCredential) => {
 
                     const user = userCredential.user;
+                    const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
+                        userId: user.uid,
+                        userLanguage: userLanguage
+                    }
                     console.log("Registered user: ", user);
                     dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId, didSeeGreeting: false}))
-                    dispatch( addDefaultCategoriesToNewUser(user.uid))
+                    dispatch( addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
 
                     dispatch(
                         login({

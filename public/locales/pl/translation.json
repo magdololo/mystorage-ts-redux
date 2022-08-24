@@ -14,7 +14,18 @@
   "button_register": "Zaloguj się",
   "button_logIn" : "Zarejestruj się",
   "button_logOut" : "Wyloguj się",
-  "button_remindPassword" : "Dalej"
+  "button_remindPassword" : "Dalej",
+  "categories": {
+      "CategoryList": {
+          "editButton": "Edytuj kategorie",
+          "categoryListButton": "Lista kategorii"
+      }
+  },
+  "buttons": {
+    "addProduct": "Dodaj produkt",
+    "addCategory": "Dodaj kategorie"
+  }
+
 
 
 }
