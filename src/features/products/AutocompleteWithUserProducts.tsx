@@ -8,6 +8,7 @@ import {ProductFromDictionary, selectAllProducts} from "./allProductsSlice";
 
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import {TextField} from "@mui/material";
+import {useTranslation} from "react-i18next";
 
 
 
@@ -16,7 +17,7 @@ const filter = createFilterOptions<ProductFromDictionary>();
 
 
 export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProductFromAutocomplete, setNewProductName}: AutocompleteWithUserProductsProps) => {
-
+    const { t, i18n } = useTranslation();
     const allProducts = useAppSelector(selectAllProducts)
 
     return (
@@ -49,7 +50,7 @@ export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProduc
             renderOption={(props, option) => <li {...props} key={option.id}>{option.name} {option.capacity} {option.unit}</li>}
             freeSolo
             renderInput={(params) => (
-                <TextField  {...params} label="Nazwa produktu"/>
+                <TextField  {...params} label={t("products.AddProductForm.label_productName")}/>
             )}
 
         />

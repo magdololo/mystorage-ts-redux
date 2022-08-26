@@ -7,10 +7,11 @@ import {Category, selectAllCategoriesSortedByRequired} from "./categoriesSlice";
 
 import TextField from '@mui/material/TextField';
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
+import {useTranslation} from "react-i18next";
 const filter = createFilterOptions<Category>();
 
 export default function AutocompleteWithCategoriesTitle({ value, onChange, disabled}:AutocompleteWithCategoriesTitleProps) {
-
+    const { t } = useTranslation();
     const categories = useAppSelector(selectAllCategoriesSortedByRequired) as Category[]
 
     return (
@@ -36,7 +37,7 @@ export default function AutocompleteWithCategoriesTitle({ value, onChange, disab
             // freeSolo bo tu chcemy tylko z listy wybierac
             disabled={disabled}
             renderInput={(params) => (
-                <TextField  {...params} label= "Nazwa kategorii" />
+                <TextField  {...params} label={t("products.AddProductForm.label_categoryName")} />
             )}
 
         />

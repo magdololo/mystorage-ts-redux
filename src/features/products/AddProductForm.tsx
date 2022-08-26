@@ -19,6 +19,7 @@ import plLocale from 'date-fns/locale/pl';
 import {MenuItem} from "@mui/material";
 import 'react-datepicker/dist/react-datepicker.css';
 import {toast} from "react-toastify";
+import {useTranslation} from "react-i18next";
 
 export type FormValues = {
     expireDate: Date | null
@@ -47,6 +48,7 @@ export type AutocompleteWithCategoriesTitleProps = {
 
 }
 const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
+    const { t, i18n } = useTranslation();
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
     const [newProductName, setNewProductName] = useState<string | null>(null);
@@ -169,7 +171,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField sx={{width: "35%", marginLeft: "10%"}}
                                            id="standard-number"
-                                           label="Pojemność"
+                                           label={t("products.AddProductForm.label_capacity")}
                                            type="number"
                                            value={value}
                                            onChange={onChange}
@@ -188,7 +190,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                                 <TextField sx={{width: "35%", marginRight: "10%", marginLeft: "10%"}}
                                            id="standard-select-currency"
                                            select
-                                           label="Jednostka"
+                                           label={t("products.AddProductForm.label_unit")}
                                            onChange={onChange}
                                            value={value}
                                            error={!!error}
@@ -216,7 +218,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                                     dateAdapter={AdapterDateFns} locale={plLocale}>
                                     <DatePicker
                                         mask={'__.__.____'}
-                                        label="Data ważności"
+                                        label={t("products.AddProductForm.label_expireDate")}
                                         value={value}
                                         onChange={onChange}
                                         renderInput={(params) => <TextField {...params}
@@ -236,7 +238,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                                 <TextField
                                     sx={{width: "80%", marginLeft: "10%"}}
                                     //id="outlined-number"
-                                    label="Ilość"
+                                    label={t("products.AddProductForm.label_quantity")}
                                     type="number"
                                     value={value}
                                     onChange={onChange}
@@ -249,7 +251,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                     {errors.quantity && (<p className="text-xs text-red ml-10">Ilość wymagana i musi być więksa od 0.</p>)}
 
                     {errorMessage !== '' ? <Alert severity="error">{errorMessage}</Alert> : null}
-                    <Button sx={{marginLeft: "10%", marginTop: "10%"}} type="submit" variant="contained" color="primary">Dodaj produkt</Button>
+                    <Button sx={{marginLeft: "10%", marginTop: "10%"}} type="submit" variant="contained" color="primary">{t("buttons.addProduct")}</Button>
                 </Box>
             </form>
         </>

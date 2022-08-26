@@ -15,15 +15,34 @@
   "button_logIn" : "Zarejestruj się",
   "button_logOut" : "Wyloguj się",
   "button_remindPassword" : "Dalej",
+  "returnToCategoryList" : "Wróć do listy kategorii",
   "categories": {
       "CategoryList": {
           "editButton": "Edytuj kategorie",
-          "categoryListButton": "Lista kategorii"
+          "categoryListButton": "Lista kategorii",
+          "modalWithGreeting_h1" : "Dziękujemy za rejestrację!",
+          "modalWithGreeting_h2" : "Witamy w serwisie!",
+          "categoriesStatusFailed": "ups.. coś poszło nie tak"
       }
+  },
+  "products": {
+      "AddProductForm": {
+          "formAddProductTitle": "Dodaj produkt",
+          "label_quantity": "Ilość",
+          "label_expireDate": "Data waznosci",
+          "label_productName": "Nazwa produktu",
+          "label_categoryName": "Nazwa kategorii",
+          "label_capacity": "Pojemność",
+          "label_unit": "Jednostka"
+
+
+    }
   },
   "buttons": {
     "addProduct": "Dodaj produkt",
-    "addCategory": "Dodaj kategorie"
+    "addCategory": "Dodaj kategorie",
+    "closeModalWithGreeting": "Zamknij"
+
   }
 
 

@@ -27,12 +27,15 @@ import { fetchUserProducts} from "../products/userProductsSlice";
 import {ToastContainer} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {useTranslation} from "react-i18next";
 
 
 
 
 export const CategoryList = () => {
 
+    const { t, i18n } = useTranslation();
+    console.log(i18n.language)
 
     let user = useSelector(selectUser);
     let didSee = user?.didSeeGreeting;
@@ -57,7 +60,7 @@ export const CategoryList = () => {
         }
     },[user])
     let greeting =   <>
-             <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""} modalContent={<><h1>Dziękujemy za rejestrację!</h1><h2> Witamy w serwisie!</h2>
+             <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""} modalContent={<><h1>{t("categories.CategoryList.modalWithGreeting_h1")}</h1><h2> {t("categories.CategoryList.modalWithGreeting_h1")}</h2>
                  <div
                      className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 rounded-b-md">
                      <button type="button" className="px-6
@@ -75,7 +78,7 @@ export const CategoryList = () => {
           active:bg-purple-800 active:shadow-lg
           transition
           duration-150
-          ease-in-out" data-bs-dismiss="modal" onClick={closeModalWithGreeting}>Close
+          ease-in-out" data-bs-dismiss="modal" onClick={closeModalWithGreeting}>{t("buttons.closeModalWithGreeting")}
                      </button>
                  </div></>} />
                   </>;
@@ -155,7 +158,7 @@ export const CategoryList = () => {
                                                 </div>
                                             <div className="relative text-center top-1/3  text-gray font-bold pt-2 px-6 md:px-12 ">
                                                 <button className="font-bold text-md leading-tight uppercase text-center">
-                                                    <span className="text-center block justify-center align-middle uppercase text-gray-500 z-100 text-sm sm:text-md">Dodaj katregorię</span>
+                                                    <span className="text-center block justify-center align-middle uppercase text-gray-500 z-100 text-sm sm:text-md">{t("buttons.addCategory")}</span>
                                                 </button>
                                             </div>
                                             </div>
@@ -169,7 +172,7 @@ export const CategoryList = () => {
             </>
 
     } else if (categoriesStatus === "failed") {
-        content = <div><span> ups.. coś poszło nie tak</span></div>;
+        content = <div><span> {t("categories.CategoryList.categoriesStatusFailed")}</span></div>;
     }
 
     return (

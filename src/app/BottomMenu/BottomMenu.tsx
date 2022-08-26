@@ -5,11 +5,13 @@ import React from "react";
 import AddProductForm from "../../features/products/AddProductForm";
 import {useModal} from "../../component/Modal/UseModal";
 import SearchInput2 from "./SearchInput2";
+import {useTranslation} from "react-i18next";
 
 const BottomMenu = () => {
-
+    const { t, i18n } = useTranslation();
+    console.log(i18n.language)
     const {isShown, handleShown, handleClose} = useModal()
-    const modalHeader = "Dodaj produkt"
+    const modalHeader = t("products.AddProductForm.formAddProductTitle")
 
     return(
         <>
@@ -21,8 +23,7 @@ const BottomMenu = () => {
                         {/*variant="secondary"*/}
                         <button
                             className="text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 px-4 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
-                            onClick={handleShown}>
-                            dodaj product
+                            onClick={handleShown}>{t("buttons.addProduct")}
                         </button>
 
 

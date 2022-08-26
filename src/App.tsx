@@ -12,6 +12,7 @@ import {
 
 import Loading from "./component/Loading";
 import CategoryList from "./features/categories/CategoryList";
+import CategoryListScreenEn from "./features/categories/CategoryListScreenEn"
 import LoginPage from "./features/users/LoginPage";
 import RemindPassword from "./features/users/RemindPassword";
 import ProductsList from "./features/products/ProductsList";
@@ -101,7 +102,7 @@ function App() {
                     <Route path="/register" element={<RegisterPage/>}/>
                     <Route path="/remindPassword" element={<RemindPassword/>}/>
                     :
-                    <Route path="/categories" element={<CategoryList/>}/>
+                    <Route path="/categories" element={<CategoryListScreenEn/>}/>
                     <Route path="/categories/:categoryPath" element={<CategoryPage/>}/>
                     <Route path="/products" element={<ProductsList/>}/>
                     <Route path="/search" element={<SearchUserProductPage/>}/>

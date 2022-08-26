@@ -38,8 +38,10 @@ module.exports = {
       'blue-800': 'rgb(1, 87, 155)',
       'blue-900': '#1E3A8A',
       'font-home': 'rgb(35, 55, 72)',
-      'homeSection': "#f7fafd",
-      'footerLight' : "#A3A3A3"
+      'homeSection': '#f7fafd',
+      'footerLight' : '#A3A3A3',
+      'fuchsia-800' : '#86198F',
+      'fuchsia-900' : '#701A75'
 
     },
     fontFamily: {
@@ -69,7 +71,8 @@ module.exports = {
         '2lg' : '30px'
       },
       width: {
-        'w-44' : '185px'
+        'w-44' : '185px',
+        'w-8/9' : '98%'
       },
       leading: {
         '5': '1.25'
@@ -88,6 +91,9 @@ module.exports = {
         "translate-x-50": "transform:translateX(-50%)",
         "translate-y-50": "transform:translate(-50%)"
 
+      },
+      padding: {
+        'pr-2/5' : 'padding-right: -0.175rem',
       }
 
     },

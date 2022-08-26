@@ -63,7 +63,8 @@ const Home = () => {
                     <div className=" px-6 py-10 md:py-0 md:2/5">
                         <span
                             className="absolute bottom-0 h-1 w-full text-gray-light shadow-xs box-decoration-clone"></span>
-                        <img src="../images/categories_screen.png" className="max-h-128 lg:max-h-144"/>
+                        {i18n.language === "pl" ? <img src="../images/categories_screen.png" className="max-h-128 lg:max-h-144"/> :  <img src="../images/categories_screen_en.png" className="max-h-128 lg:max-h-144"/>}
+
                     </div>
                 </div>
             </header>
@@ -73,7 +74,7 @@ const Home = () => {
                 <div
                     className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-12 font-noto-sans md:flex-row lg:flex-row">
                     <div className=" px-6 py-10 md:py-0 md:2/5">
-                        <img src="../images/addProduct_screen.png" className="max-h-128 lg:max-h-144"/>
+                        {i18n.language === "pl" ? <img src="../images/addProduct_screen.png" className="max-h-128 lg:max-h-144"/> : <img src="../images/addProduct_screen_en.png" className="max-h-128 lg:max-h-144"/>}
                     </div>
                     <div className=" px-12  md:text-left md:w-3/5 md:ml-8 md:max-w-2xl ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-5xl lg:leading-tight">{t("home_section1_heading")}</h2>
@@ -92,7 +93,7 @@ const Home = () => {
                         <h4 className="text-center text-gray-light text-lg mb-6 leading-loose md:text-lg md:text-left lg:text-xl lg:leading-10">{t("home_section2_subheading")}</h4>
                     </div>
                     <div className=" px-6 py-10 md:py-0 md:2/5">
-                        <img src="../images/addProduct_screen.png" className="max-h-128 lg:max-h-144"/>
+                        {i18n.language === "pl" ? <img src="../images/edit_screen.png" className="max-h-128 lg:max-h-144"/> : <img src="../images/edit_screen_en.png" className="max-h-128 lg:max-h-144"/>}
                     </div>
                     <div className=" px-12 md:hidden ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-5xl lg:leading-tight">{t("home_section2_heading")}</h2>
@@ -106,7 +107,7 @@ const Home = () => {
                     <div className=" px-6 py-10 md:py-0 md:2/5">
                         <span
                             className="absolute bottom-0 h-1 w-full text-gray-light shadow-zz box-decoration-clone"></span>
-                        <img src="../images/addProduct_screen.png" className="max-h-128 lg:max-h-144"/>
+                        {i18n.language === "pl" ? <img src="../images/search_screen.png" className="max-h-128 lg:max-h-144"/> : <img src="../images/search_screen_en.png" className="max-h-128 lg:max-h-144"/>}
                     </div>
                     <div className=" px-12  md:text-left md:w-3/5 md:ml-8 md:max-w-2xl ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-5xl lg:leading-tight">{t("home_section3_heading")}</h2>

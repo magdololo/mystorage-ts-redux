@@ -14,7 +14,36 @@
   "button_register": "Sign Up",
   "button_logIn" : "Sign In",
   "button_logOut" : "Sign Out",
-  "button_remindPassword" : "Next"
+  "button_remindPassword" : "Next",
+  "returnToCategoryList" : "Return to category list",
+  "categories": {
+    "CategoryList": {
+      "editButton": "Edit categories",
+      "categoryListButton": "Category list",
+      "modalWithGreeting_h1" : "Thanks for your signing up!",
+      "modalWithGreeting_h2" : "Welcome to the website!",
+      "categoriesStatusFailed": "ups.. something went wrong"
+    }
+  },
+  "products": {
+    "AddProductForm": {
+      "formAddProductTitle": "Add product",
+      "label_quantity": "Quantity",
+      "label_expireDate": "Expire date",
+      "label_productName": "Product name",
+      "label_categoryName": "Category name",
+      "label_capacity": "Capacity",
+      "label_unit": "Unit"
+
+
+    }
+  },
+  "buttons": {
+    "addProduct": "Add product",
+    "addCategory": "Add category",
+    "closeModalWithGreeting": "Close"
+
+  }
 
 
 }
