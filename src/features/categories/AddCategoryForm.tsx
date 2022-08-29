@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
 import {selectUser} from "../users/usersSlice";
-import {addNewCategory, Category} from "../categories/categoriesSlice"
+import {addNewCategory, AddNewCategoryParams, Category} from "../categories/categoriesSlice"
 
 import slugify from "slugify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -61,9 +61,9 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                 required: "false"
             }
             setAddRequestStatus('pending')
-            dispatch(addNewCategory(newCategory))
+            dispatch(addNewCategory({category: newCategory, notify: true}))
                 .unwrap()
-                .then((originalPromiseResult: Category) => {
+                .then((originalPromiseResult: AddNewCategoryParams) => {
                     setTitle("")
                     setPickedImage("")
                     closeAddCategoryModal()

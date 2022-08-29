@@ -70,11 +70,15 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
         }
     }
 )
-
-export const addNewCategory = createAsyncThunk<Category,Category>("categories/addNewCategory",
-    async (newCategory: Category) => {
-            let result = await addDoc(collection(db, "users/" + newCategory.user + "/categories"), newCategory);
-            return {...newCategory, id: result.id} as Category
+export type AddNewCategoryParams = {
+    category: Category
+    notify: boolean
+}
+export const addNewCategory = createAsyncThunk<AddNewCategoryParams,AddNewCategoryParams>("categories/addNewCategory",
+    async (addNewCategoryParams: AddNewCategoryParams) => {
+            let result = await addDoc(collection(db, "users/" + addNewCategoryParams.category.user + "/categories"), addNewCategoryParams.category);
+            const newCategory = {...addNewCategoryParams.category, id: result.id} as Category
+            return {"category":newCategory, "notify": addNewCategoryParams.notify}
 
     }
 )
@@ -130,8 +134,9 @@ const categoriesSlice = createSlice({
                 state.error = action.error.message
             })
             .addCase(addNewCategory.fulfilled, (state, action) =>{
-                categoriesAdapter.addOne(state, action.payload)
-                notify("Nowa kategoria została dodana!")
+                categoriesAdapter.addOne(state, action.payload.category)
+                if(action.payload.notify)
+                    notify("Nowa kategoria została dodana!")
             } )
             .addCase(editCategory.fulfilled, (state, action)=>{
                 categoriesAdapter.setOne(state, action.payload)

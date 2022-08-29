@@ -45,101 +45,32 @@ export const CategoryListScreenEn = () => {
     console.log(i18n.language)
 
     let user = useSelector(selectUser);
-    const [textFromInput, setTextFromInput] = useState("")
 
-    // const {isShown, handleShown, handleClose} = useModal()
-    // const modalAddHeader = "Dodaj nową kategorię"
-    // const modalEditHeader = "Edytuj kategorię"
-    // const [isOpen, setIsOpen] = useState<boolean>(false);
-    // const handleOpen = () => setIsOpen(true);
-    // const handleCloseGreeting = () => setIsOpen(false);
      const dispatch = useAppDispatch()
-    // const categoriesStatus = useAppSelector(((state) => state.categories.status))
+
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
-    // const closeModalWithGreeting = () =>{
-    //     console.log("close modal")
-    //     handleCloseGreeting();
-    //     dispatch(changeSeeGreetingToTrue(user as User))
-    // }
-    // useEffect(()=>{
-    //     if(didSee === false){
-    //         setIsOpen(true)
-    //     }
-    // },[user])
-    // let greeting =   <>
-    //     <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""} modalContent={<><h1>{t("categories.CategoryList.modalWithGreeting_h1")}</h1><h2> {t("categories.CategoryList.modalWithGreeting_h1")}</h2>
-    //         <div
-    //             className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 rounded-b-md">
-    //             <button type="button" className="px-6
-    //       py-2.5
-    //       bg-purple
-    //       text-white
-    //       font-medium
-    //       text-xs
-    //       leading-tight
-    //       uppercase
-    //       rounded
-    //       shadow-md
-    //       hover:bg-purple-700 hover:shadow-lg
-    //       focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0
-    //       active:bg-purple-800 active:shadow-lg
-    //       transition
-    //       duration-150
-    //       ease-in-out" data-bs-dismiss="modal" onClick={closeModalWithGreeting}>{t("buttons.closeModalWithGreeting")}
-    //             </button>
-    //         </div></>} />
-    // </>;
 
     useEffect(() => {
         dispatch(fetchCategories(user?.uid!!))
          dispatch(fetchImages(user?.uid!!))
-        // dispatch(fetchUserProducts(user?.uid!!))
-        // dispatch(fetchAllProducts())
+
     }, [user, dispatch])
     const[toggleSwitch, setToggleSwitch] = useState(false);
 
     const toggleEdit=()=>{
         setToggleSwitch(!toggleSwitch)
     }
-    //
-    // useEffect(()=> {
-    //     dispatch(currentCategoryChange(null))
-    // }, [dispatch])
-
-    // const chooseEditCategory = (category: Category) => {
-    //     handleShown()
-    //     let editingCategory = dispatch(currentCategoryChange(category))
-    //     console.log(editingCategory)
-    // }
-    // const deletingCategory = (category: Category) => {
-    //     dispatch(deleteCategory(category))
-    // }
-    //
-    const onChange=(e: any)=>{
-            dispatch(searchProduct(e.value))
-
-        }
-
-
-    const onInputChange=(e:string)=>{
-        setTextFromInput(e)
-    }
     let content;
-    // if (categoriesStatus === "loading") {
-    //     content = <Spinner text="Loading..." />;
-    // } else if (categoriesStatus === "succeeded") {
+
         const renderedCategories = categories?.map(category => (
 
             <li className={"h-auto flex flex-col relative" } key={category?.id}>
 
-                {/*<Link to={`/categories/${category?.path}`}  className={toggleSwitch? "pointer-events-none" : ""} >*/}
                     <img src={category?.url} className={"w-full h-auto object-cover flex-1 flex-grow"} alt="Louvre" />
 
                     <span
                         className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70  text-md sm:text-lg capitalize text-center text-white font-bold"+ (toggleSwitch?"hidden invisible":"")}>{category?.title}</span>
 
-                {/*</Link>*/}
-                {/*<span className={"absolute bottom-1/4 left-0 right-0 mx-auto capitalize text-center text-white font-bold text-md sm:text-lg"}>{category?.title}</span>*/}
             </li>
         ))
         content =
@@ -190,16 +121,6 @@ export const CategoryListScreenEn = () => {
         { value: 'rapeseed oil', label: 'rapeseed oil 500ml' },
         { value: 'linseed oil', label: 'linseed oil 1l' }
     ]
-    // interface SelectProps<
-    // Option = unknown,
-    // IsMulti extends boolean = false,
-    //  Group extends GroupBase<Option> = GroupBase<Option>>{}
-    // interface GroupBase<Option> {
-    //     readonly options: readonly Option[];
-    //     readonly label?: string;
-    // }
-    // @ts-ignore
-    // @ts-ignore
     return (
         <>
 
@@ -213,18 +134,8 @@ export const CategoryListScreenEn = () => {
                     {/*{<SearchInput2/>}*/}
 
                     <div className="flex flex-1 border-fuchsia-800 border-2 rounded-md mr-0.5">
-                        <span>oi</span>
-                        {/*<Select className = "react-select-container border-fuchsia-800 border-2 rounded-md "*/}
-                        {/*        menuPlacement={"top"}*/}
-                        {/*        classNamePrefix="react-select"*/}
-                        {/*        options={options}*/}
-                        {/*        defaultValue={"oi"}*/}
-                        {/*        onChange={onChange}*/}
-                        {/*        onInputChange={onInputChange}*/}
-
-                        {/*/>*/}
-                        {/*styles={singleSelectStyle(variant)}*/}
                         <div className=" w-full h-full ">
+                           <div className="absolute top-4 px-2 text-gray">oi<span className="text-black">|</span></div>
                             <ul
                                 className="
 
@@ -236,7 +147,7 @@ export const CategoryListScreenEn = () => {
           z-50
           float-left
           py-2
-          px-2
+
           list-none
           text-left
           rounded-lg

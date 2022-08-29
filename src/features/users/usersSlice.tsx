@@ -76,7 +76,7 @@ export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, AddDefaul
             category.id = doc.id
             category.user = addDefaultCategoriesToNewUserProps.userId
             defaultCategories.push(category);
-            thunkApi.dispatch(addNewCategory(category))
+            thunkApi.dispatch(addNewCategory({category, notify: false}))
             console.log(doc.id, " => ", doc.data());
         })
     } catch{
