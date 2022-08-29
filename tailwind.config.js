@@ -5,9 +5,10 @@ module.exports = {
   ],
   theme: {
     screens: {
-      xs: '0px',
-      sm: '550px',
-      md:  '650px',
+
+      xs: '0',
+      sm: '390px',//'550px',
+      md:  '650px',//'650px',
       //md: '768px',
       lg: '960px',
       xl: '1440px',
@@ -68,11 +69,14 @@ module.exports = {
         'sm' : '12px',
         'md': '15px',
         'lg': '18px',
+        '1/5lg' : '24px',
         '2lg' : '30px'
       },
       width: {
         'w-44' : '185px',
-        'w-8/9' : '98%'
+        'w-8/9' : '98%',
+        'w-2/3' : '66,6%',
+        'w-1/3' : '33,3%'
       },
       leading: {
         '5': '1.25'

@@ -13,13 +13,13 @@ const Home = () => {
         <>
             <header className="">
                 <nav
-                    className="navbar max-w-7xl w-full mx-auto h-40 fixed bg-white relative flex items-center justify-between z-50 top-0 left-0 font-courgette text-purple-800 flex-row ">
-                    <div className="px-6 ">
+                    className="navbar max-w-7xl w-full mx-auto h-28 fixed bg-white relative flex items-center  z-50 top-0 left-0 font-courgette text-purple-800 flex-row sm:h-40 sm:justify-between">
+                    <div className="px-2 w-2/3 sm:px-6">
                         <div className="navbar-collapse collapse grow items-center w-full">
-                            <ul className="navbar-nav mr-auto flex flex-col md:flex-row">
-                                <li className="nav-item">
+                            <ul className="navbar-nav mr-auto ">
+                                <li className="nav-item ">
                                     <a
-                                        className="nav-link block p-4 sm:p-10 md:p-10 text-gray-400 text-2lg hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out "
+                                        className="nav-link block  text-gray-400  hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out text-1/5lg p-4 sm:text-2lg sm:p-20 "
                                         href="#!"
                                         data-mdb-ripple="true"
                                         data-mdb-ripple-color="light"
@@ -30,16 +30,15 @@ const Home = () => {
                         </div>
 
                     </div>
-                    <div className="px-6 flex align-middle font-noto-sans">
+                    <div className="px-2 flex w:1/3 font-noto-sans sm:px-6">
                         <button type="button"
-                                className=" inline-block bg-purple-800 text-white px-3 py-2.5 text-md rounded-md leading-tight shadow-md hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring
-                                            sm:bg-white sm:border-0 sm:mr-1 sm:hover:border-b-2 sm:hover:border-b-purple sm:hover:border-opacity-50 sm:focus:outline-none sm:focus:ring-0 sm:transition duration-150 ease-in-out sm:rounded-0 sm:shadow-0 sm:text-gray-light sm:hover:bg-white  sm:focus:bg-white sm:focus:shadow-0 sm:focus:outline-none sm:focus:ring
-                                            md:text-md lg:text-lg "
+                                className=" inline-block  py-6 text-gray text-md font-bold  capitalize hover:border-b-2 hover:border-purple-800 focus:outline-none focus:ring-0 transition duration-150 ease-in-out
+                                             sm:px-4 sm:text-lg md:text-md "
                         ><Link to="/login">{t("button_logIn")}</Link>
                         </button>
                         <button
                             type="button"
-                            className="inline-block px-6 py-2.5 bg-purple-800 text-white text-base md:text-md lg:text-lg font-bold leading-tight rounded-2xl shadow-md hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out hidden md:block"
+                            className="inline-block px-5 py-2.5 bg-purple-800 text-white text-base  font-bold leading-tight rounded-2xl shadow-md hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out hidden sm:justify-center md:block md:text-md "
                             data-mdb-ripple="true"
                             data-mdb-ripple-color="light"
                         ><Link to="/register">{t("button_register")}</Link>
@@ -50,7 +49,7 @@ const Home = () => {
 
 
                 <div
-                    className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-12 font-noto-sans md:flex-row lg:flex-row">
+                    className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-6 font-noto-sans sm:pt-12 md:flex-row lg:flex-row">
                     <div className=" px-12  md:text-left md:w-3/5 md:mr-8 md:max-w-2xl ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-7xl lg:leading-tight">{t("home_header_heading")}</h2>
                         <h4 className="text-center text-gray-light text-lg mb-6 leading-loose md:text-lg md:text-left lg:text-xl lg:leading-10">{t("home_heading_subheading")}</h4>
