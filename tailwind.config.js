@@ -70,7 +70,8 @@ module.exports = {
         'md': '15px',
         'lg': '18px',
         '1/5lg' : '24px',
-        '2lg' : '30px'
+        '2lg' : '30px',
+
       },
       width: {
         'w-44' : '185px',
