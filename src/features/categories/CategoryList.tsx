@@ -60,7 +60,7 @@ export const CategoryList = () => {
         }
     },[user])
     let greeting =   <>
-             <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""} modalContent={<><h1>{t("categories.CategoryList.modalWithGreeting_h1")}</h1><h2> {t("categories.CategoryList.modalWithGreeting_h1")}</h2>
+             <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""} modalContent={<><h1>{t("categories.CategoryList.modalWithGreeting_h1")}</h1><h2> {t("categories.CategoryList.modalWithGreeting_h2")}</h2>
                  <div
                      className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 rounded-b-md">
                      <button type="button" className="px-6
