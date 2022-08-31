@@ -18,7 +18,7 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import plLocale from 'date-fns/locale/pl';
 import {MenuItem} from "@mui/material";
 import 'react-datepicker/dist/react-datepicker.css';
-import {toast} from "react-toastify";
+
 import {useTranslation} from "react-i18next";
 
 export type FormValues = {

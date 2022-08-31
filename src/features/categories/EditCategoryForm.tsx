@@ -19,7 +19,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
        const categoryBeingEdited = useAppSelector((state=>state.categories.currentCategory)) as Category
     const [newCategoryTitle, setNewCategoryTitle] = useState("")
     const [newPickedImage, setNewPickedImage] = useState("")
-    // const inputRef = useRef<HTMLInputElement | null>(null);
+
 
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""

@@ -12,10 +12,7 @@ import {
 } from "firebase/firestore";
 import {db} from "../../firebase";
 import {addNewCategory, Category} from "../categories/categoriesSlice";
-import {UserProduct} from "../products/userProductsSlice";
-import {changeLanguage} from "i18next";
-// import {fetchProductFromDictionaryId} from "../products/allProductsSlice";
-// import {toast} from "react-toastify";
+
 
 
 
@@ -35,13 +32,7 @@ const initialState: UserState = {
     user: null,
 
 }
-// export const checkIfUserExists = createAsyncThunk ("users/checkIfUserExist", async (userId:string)=>{
-//     const docRef = doc(db, "users", userId);
-//     const docSnap = await getDoc(docRef);
-//
-//       return docSnap.exists()
-//
-// })
+
 
 export const addNewUserToUsersCollection = createAsyncThunk('users/addNewUserToUsersCollection', async (user: User)=>{
     try {
@@ -144,11 +135,7 @@ const usersSlice = createSlice({
                 }
                 state.user = newUser
             })
-            // .addCase(checkIfUserExists.fulfilled,(state, action)=>{
-            //   const userExistInUsers = action.payload;
-            //
-            //
-            // })
+
     }
 });
 export const { login, logout, saveUser} = usersSlice.actions;

@@ -9,17 +9,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Divider from "@mui/material/Divider";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {selectUser} from "../../features/users/usersSlice";
-import {useAppDispatch} from "../../app/store";
+
 import {auth, signOut} from "../../firebase";
 import {Accordion} from "react-accordion-ts";
 import 'react-accordion-ts/src/panel.css';
 import {useSelector} from "react-redux";
 
 const BottomHamburgerMenu = () => {
-    const location = useLocation()
-    const dispatch = useAppDispatch()
+
     const navigate = useNavigate()
     let user = useSelector(selectUser);
     const [isOpen, setIsOpen] =useState(false);

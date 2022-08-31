@@ -7,7 +7,7 @@ import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
 import EditProductForm from "../products/EditProductForm";
 import BottomMenu from "../../app/BottomMenu/BottomMenu";
-import {skipToken} from "@reduxjs/toolkit/query";
+
 import {selectAllCategories, currentCategoryChange, Category} from "./categoriesSlice";
 
 import {

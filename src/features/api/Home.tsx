@@ -2,7 +2,6 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {
     faCopyright,
-    faCopy
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";

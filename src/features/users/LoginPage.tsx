@@ -1,4 +1,4 @@
-import React, {useEffect, useState, ChangeEvent} from "react";
+import React, { useState, ChangeEvent} from "react";
 import {useNavigate, Link} from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useTranslation } from "react-i18next";
@@ -12,7 +12,6 @@ import {
 
 } from "firebase/firestore";
 import {db} from "../../firebase";
-import {Category, currentCategoryChange} from "../categories/categoriesSlice";
 import {BsArrowLeft} from "react-icons/bs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
@@ -31,7 +30,7 @@ const LoginPage = () => {
     const dispatch = useDispatch()
     const provider = new GoogleAuthProvider();
     const [errorMessage,setErrorMessage] = useState("");
-    // const [doExist, setDoExist] = useState(false)
+
     const [content, setContent] = useState(false)
     let navigate = useNavigate()
     const [checkboxState, setCheckboxState] =useState(false);
@@ -91,10 +90,6 @@ const LoginPage = () => {
     let message;
 
 
-// //
-//     }
-//
-
     const socialSignIn= async()=> {
         try {
             let result = await signInWithPopup(auth, provider)
@@ -108,10 +103,9 @@ const LoginPage = () => {
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
             const userExist = docSnap.exists()
-            // setDoExist(userExist)
-            console.log(userExist)
+
            if(!userExist){
-                // console.log("maC")
+
                 setContent(true);
                 setUser(user as User)
 
@@ -134,16 +128,12 @@ const LoginPage = () => {
             const errorCode = error.code;
             console.log(error.code)
             const errorMessage = error.message;
-            // The email of the user's account used.
-            //const email = error.customData.email;
-            // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
             // ...
         }
     }
     const signUserIfCheckboxStateIsTrue=(user: User)=> {
         if(checkboxState) {
-            console.log("signUserIfcheckboxtrue")
             dispatch(addNewUserToUsersCollection({
                 uid: user.uid,
                 email: user.email ?? "",
@@ -168,12 +158,7 @@ const LoginPage = () => {
             console.log("checkboxIsFalse")
         }
 
-
-        //<Link to="/" className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1">Przejdź do serwisu.</Link>
     }
-
-        //console.log(content)
-    console.log(checkboxState)
 
     return(
         <>

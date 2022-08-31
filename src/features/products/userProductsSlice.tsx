@@ -23,7 +23,7 @@ import {
 } from "firebase/firestore";
 import {db} from "../../firebase";
 import {fetchProductFromDictionaryId} from "./allProductsSlice";
-import {toast} from "react-toastify";
+
 import {notify} from "../../helpers";
 
 

@@ -17,7 +17,7 @@ const filter = createFilterOptions<ProductFromDictionary>();
 
 
 export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProductFromAutocomplete, setNewProductName}: AutocompleteWithUserProductsProps) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const allProducts = useAppSelector(selectAllProducts)
 
     return (

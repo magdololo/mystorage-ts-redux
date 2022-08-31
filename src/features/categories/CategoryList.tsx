@@ -12,7 +12,7 @@ import EditCategoryForm from "./EditCategoryForm";
 import { Spinner } from '../../component/Spinner'
 import {changeSeeGreetingToTrue, selectUser, User} from "../users/usersSlice";
 
-import {skipToken} from "@reduxjs/toolkit/query";
+
 import {
     currentCategoryChange,
     deleteCategory,
@@ -44,7 +44,6 @@ export const CategoryList = () => {
     const modalAddHeader = "Dodaj nową kategorię"
     const modalEditHeader = "Edytuj kategorię"
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const handleOpen = () => setIsOpen(true);
     const handleCloseGreeting = () => setIsOpen(false);
     const dispatch = useAppDispatch()
     const categoriesStatus = useAppSelector(((state) => state.categories.status))

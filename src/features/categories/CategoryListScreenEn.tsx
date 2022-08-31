@@ -4,37 +4,25 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {Link} from 'react-router-dom';
+
 import AppTitle from "../../app/TopMenu/AppTitle";
 import TopMenu from "../../app/TopMenu/TopMenu";
-import BottomMenu from "../../app/BottomMenu/BottomMenu";
-import {Modal} from "../../component/Modal/Modal";
-import {useModal} from "../../component/Modal/UseModal";
-import AddCategoryForm from "./AddCategoryForm";
-import EditCategoryForm from "./EditCategoryForm";
-import { Spinner } from '../../component/Spinner'
-import {changeSeeGreetingToTrue, selectUser, User} from "../users/usersSlice";
 
-import {skipToken} from "@reduxjs/toolkit/query";
+import { selectUser} from "../users/usersSlice";
+
 import {
-    currentCategoryChange,
-    deleteCategory,
     fetchCategories,
     selectAllCategoriesSortedByRequired,
-    Category,
+
 } from "./categoriesSlice";
 import {fetchImages} from "../images/imagesSlice";
-import {fetchAllProducts} from "../products/allProductsSlice";
-import {fetchUserProducts, searchProduct} from "../products/userProductsSlice";
+
 
 import {ToastContainer} from "react-toastify";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
+
 import {useTranslation} from "react-i18next";
 import Hamburger from "../../app/BottomMenu/Hamburger";
-import SearchInput2 from "../../app/BottomMenu/SearchInput2";
-import AddProductForm from "../products/AddProductForm";
-import Select from "react-select";
+
 
 
 

@@ -1,14 +1,12 @@
 import {
     createSlice,
-    createSelector,
-    PayloadAction,
     createAsyncThunk,
     createEntityAdapter,
     EntityState
 } from '@reduxjs/toolkit'
 
 import {AppDispatch, RootState} from "../../app/store";
-import {addDoc, collection, getDocs, query, setDoc} from "firebase/firestore";
+import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {notify} from "../../helpers";
@@ -65,24 +63,6 @@ export const fetchImages = createAsyncThunk('images/fetchImages', async(uid: str
     }
 })
 
-// export  const fetchUserImages = createAsyncThunk('categories/fetchUserImages', async(uid: string)=>{
-//     try{
-//         const userImages: Array<Image> = []
-//         let q = await query(collection(db, "users/" + uid + "/images"));
-//         const querySnapshot = await getDocs(q);
-//         querySnapshot.forEach((doc) => {
-//
-//             let productDoc = doc.data() as Image;
-//             productDoc.id = doc.id;
-//             userImages.push(productDoc);
-//
-//         })
-//         return userImages
-//     } catch (error) {
-//         console.log(error)
-//         return {error: error}
-//     }
-// })
 async function uploadCategoryPicture(fileName: string, file: File):Promise<string>{
     return new Promise(function (resolve, reject){
         const storageRef = ref(storage, fileName);
