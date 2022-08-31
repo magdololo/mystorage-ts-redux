@@ -8,11 +8,13 @@ import {editCategory, Category} from "./categoriesSlice";
 import {selectUser} from "../users/usersSlice";
 import {toast} from "react-toastify";
 import {selectAllImages} from "../images/imagesSlice";
+import {useTranslation} from "react-i18next";
 
 type EditCategoryFormProps = {
     closeAddCategoryModal: ()=> void
 }
 export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps) => {
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
        const categoryBeingEdited = useAppSelector((state=>state.categories.currentCategory)) as Category
     const [newCategoryTitle, setNewCategoryTitle] = useState("")
@@ -80,7 +82,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
     }
     return(
         <>
-            <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+            <div className="block p-6 rounded-lg shadow-lg bg-white ">
                 <form>
                     <div className="form-group mb-6 ">
                         <input type="text"
@@ -129,7 +131,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
                                             mx-auto
                                             focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none"
                                id="exampleInput91"
-                               placeholder={newPickedImage === "" ? "Wybierz zdjęcie" : "Zmień zdjęcie"}
+                               placeholder={newPickedImage === "" ? t("categories.EditCategoryForm.inputImageChoose") :  t("categories.EditCategoryForm.inputImageChange")}
                                onClick={handleShown}
 
                         />
@@ -171,7 +173,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
                           duration-150
                           mx-auto
                           ease-in-out"
-                                onClick={()=> {onSaveCategory()}}>Edytuj
+                                onClick={()=> {onSaveCategory()}}>{t("categories.EditCategoryForm.editButton")}
                         </button>
                     </div>
                 </form>

@@ -110,5 +110,5 @@ slider {
   width: 25% !important
 }
 .addCategoryModal{
-
+    max-width: 28rem!important;
 }

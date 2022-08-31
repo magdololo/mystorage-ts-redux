@@ -23,6 +23,11 @@
       "modalWithGreeting_h1" : "Thanks for your signing up!",
       "modalWithGreeting_h2" : "Welcome to the website!",
       "categoriesStatusFailed": "ups.. something went wrong"
+    },
+    "EditCategoryForm": {
+      "inputImageChange" : "change picture",
+      "inputImageChoose" : "select a picture",
+      "editButton" : "edit"
     }
   },
   "products": {
@@ -34,8 +39,10 @@
       "label_categoryName": "Category name",
       "label_capacity": "Capacity",
       "label_unit": "Unit"
-
-
+    },
+    "SearchUserProductPage": {
+      "searchResult": "Search result",
+      "noSearchResult" :"No search results"
     }
   },
   "buttons": {

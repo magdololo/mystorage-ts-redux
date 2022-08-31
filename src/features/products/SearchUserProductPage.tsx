@@ -23,8 +23,10 @@ import {useMediaQuery} from "@mui/material";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {toast} from "react-toastify";
+import {useTranslation} from "react-i18next";
 
 const SearchUserProductPage= ()=>{
+    const { t } = useTranslation();
     const dispatch = useAppDispatch()
     const userProducts = useAppSelector(selectUserProducts);
     let searchProductId = useAppSelector(state=> state.userProducts.searchProduct)
@@ -171,7 +173,7 @@ const SearchUserProductPage= ()=>{
             <div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
                 <AppTitle/>
                 <div className="text-center text-gray-dark pt-2 pb-2px-6">
-                    <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">Wyniki wyszukiwania</h1>
+                    <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">{t("products.SearchUserProductPage.searchResult")}</h1>
                 </div>
                 <ReturnToCategoryList/>
                 <div className="flex mt-2">

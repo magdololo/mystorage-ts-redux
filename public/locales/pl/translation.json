@@ -5,10 +5,10 @@
   "home_section1_heading": "Twórz wlasne kategorie i dodawaj produkty",
   "home_section1_subheading" : "Nazwy kategorii układają się alfabetycznie dzięki czemu łatwo je odnajdziesz. Możesz także dodawać własne obrazki i zdjęcia.",
   "home_section2_heading": "Latwa edytowanie",
-  "home_section2_subheading" : "Szybko dodawaj i usuwaj wybrany produkt. Mozesz zmienic kategorie oraz sprawdziC czy produkt przekroczył date ważności.",
+  "home_section2_subheading" : "Szybko dodawaj i usuwaj wybrany produkt. Mozesz zmienic kategorię oraz sprawdzić czy produkt przekroczył date ważności.",
   "home_section3_heading": "Szybkie wyszukiwanie",
   "home_section3_subheading" : "Dzięki wyszukiwarce odnajdziesz wszystkie podobne produkty jak również konkretny produkt.",
-  "home_footer_word1" : "Akceptuje",
+  "home_footer_word1" : "Akceptuję",
   "home_footer_word2" : "serwisu",
   "home_footer_link" : "regulamin",
   "button_register": "Zaloguj się",
@@ -23,24 +23,33 @@
           "modalWithGreeting_h1" : "Dziękujemy za rejestrację!",
           "modalWithGreeting_h2" : "Witamy w serwisie!",
           "categoriesStatusFailed": "ups.. coś poszło nie tak"
-      }
+      },
+    "EditCategoryForm": {
+      "inputImageChange" : "zmień zdjęcie",
+      "inputImageChoose" : "wybierz zdjęcie",
+      "editButton" : "edytuj"
+    }
   },
   "products": {
       "AddProductForm": {
           "formAddProductTitle": "Dodaj produkt",
           "label_quantity": "Ilość",
-          "label_expireDate": "Data waznosci",
+          "label_expireDate": "Data ważnosci",
           "label_productName": "Nazwa produktu",
           "label_categoryName": "Nazwa kategorii",
           "label_capacity": "Pojemność",
           "label_unit": "Jednostka"
 
 
+    },
+    "SearchUserProductPage": {
+      "searchResult": "Wyniki wyszukiwania",
+      "noSearchResult" :"Brak wyników wyszukiwania"
     }
   },
   "buttons": {
     "addProduct": "Dodaj produkt",
-    "addCategory": "Dodaj kategorie",
+    "addCategory": "Dodaj kategorię",
     "closeModalWithGreeting": "Zamknij"
 
   }

@@ -9,16 +9,19 @@ export const Wrapper = styled.div`
   box-shadow: rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;
   max-width: 1000px;
   @media(max-width: 500px){
-    width: 85%;
+    width: 20rem;
   }
   @media(min-width: 501px) and (max-width: 800px){
+    
     width: 70%;
+    max-width: 26rem;
   }
   @media(min-width: 801px) and (max-width: 1100px){
-    width: 60%;
+    width: 50%;
+    max-width: 28rem;
   }
   @media(min-width: 1101px){
-    width: 45%;
+    width: 28rem;
   }
 `;
 
