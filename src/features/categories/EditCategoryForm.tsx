@@ -108,7 +108,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
                                onFocus={handleFocusEvent}
                                value={newCategoryTitle}
                                onChange={onTitleChange}/>
-                        {newCategoryTitle===""&& <p>Pole wymagane</p>}
+                        {newCategoryTitle===""&& <p>{t("validationInputs")}</p>}
                     </div>
 
 
@@ -135,7 +135,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
                                onClick={handleShown}
 
                         />
-                        {newPickedImage===""&& <p>Pole wymagane</p>}
+                        {newPickedImage===""&& <p>{t("validationInputs")}</p>}
                     </div>
 
                     {newPickedImage !== "" ?

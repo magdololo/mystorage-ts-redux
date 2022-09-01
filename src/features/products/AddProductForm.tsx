@@ -48,7 +48,7 @@ export type AutocompleteWithCategoriesTitleProps = {
 
 }
 const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
     const [newProductName, setNewProductName] = useState<string | null>(null);

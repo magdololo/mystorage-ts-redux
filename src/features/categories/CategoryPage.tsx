@@ -104,27 +104,27 @@ const CategoryPage = () => {
                             <li key={product.id} className="flex flex-col relative px-6 py-6 border-b border-gray-extraLight w-full rounded-t-lg cursor-pointer">
                                 <div className = "flex flex-col flex-nowrap w-full sm:flex-row">
 
-                                    <div className="flex-auto flex-row relative w-full sm:w-6/12 sm:flex-col  md:w-8/12 relative">
+                                    <div className="flex-auto flex-row relative w-full w-4/12 md:w-6/12 sm:flex-col  relative">
                                         <div
-                                            className= "text-md capitalize align-baseline text-gray  font-bold sm:text-xl">{product.name}
+                                            className= "text-md capitalize align-baseline text-gray  font-bold text-lg md:text-xl">{product.name}
                                         </div>
                                         <div
-                                            className={ (product.expireDate !== null && product?.expireDate > todayDate ) ? "text-gray-light" : "text-red font-bold"}>
+                                            className= {"text-base md:text-lg" + (product.expireDate !== null && product?.expireDate > todayDate ) ? "text-gray-light" : "text-red font-bold"} >
                                             {product.expireDate ? product.expireDate.toISOString().substring(0,10) : ""}
                                         </div>
                                         <div
-                                            className="text-gray-light">{product.capacity}{product.unit}
+                                            className="text-gray-light text-md md:text-base">{product.capacity}{product.unit}
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-auto flex-nowrap  relative sm:w-6/12 md:w-8/12 ">
+                                    <div className="flex flex-auto flex-nowrap  relative  sm:w-8/12 md:w-6/12 ">
                                         <div className="flex-row absolute right-0 self-center">
 
-                                            <FontAwesomeIcon className="text-md text-blue-500 px-4 sm:text-xl" icon={faPlus} onClick={()=>increment(product)}/>
-                                            <span className="text-md text-blue-800 px-2 sm:text-xl">{product.quantity}</span>
-                                            <FontAwesomeIcon className="text-md text-blue-500 border-blue-400 border-solid border-r px-4 sm:text-xl" icon={faMinus} onClick={() => decrement(product)}/>
+                                            <FontAwesomeIcon className="text-md text-blue-500 px-4 sm:text-lg" icon={faPlus} onClick={()=>increment(product)}/>
+                                            <span className="text-md text-blue-800 px-2 sm:text-lg">{product.quantity}</span>
+                                            <FontAwesomeIcon className="text-md text-blue-500 border-blue-400 border-solid border-r px-4 sm:text-lg" icon={faMinus} onClick={() => decrement(product)}/>
                                             <FontAwesomeIcon className="text-md text-blue-800 border-blue-400 border-solid border-r px-4 sm:text-xl" icon={faTrash} onClick={()=>deleteUserOneProduct(product)}/>
-                                            <FontAwesomeIcon className="text-md text-blue-800 px-4 sm:text-xl" icon={faPen}  onClick={()=>chooseEditProduct(product) }/>
+                                            <FontAwesomeIcon className="text-md text-blue-800 px-4 sm:text-lg" icon={faPen}  onClick={()=>chooseEditProduct(product) }/>
 
                                         </div>
 

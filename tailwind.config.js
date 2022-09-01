@@ -99,8 +99,11 @@ module.exports = {
       },
       padding: {
         'pr-2/5' : 'padding-right: -0.175rem',
-      }
 
+      },
+      inset:{
+         'bottom-1/10': "bottom: 10rem"
+      }
     },
   },
 

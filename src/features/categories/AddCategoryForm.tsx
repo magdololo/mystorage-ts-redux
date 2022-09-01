@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import SearchOwnPictureCategory from "../../component/SearchOwnPictureCategory";
 import {selectAllImages} from "../images/imagesSlice";
+import {useTranslation} from "react-i18next";
 
 
 type AddCategoryFormProps = {
@@ -19,7 +20,7 @@ type AddCategoryFormProps = {
 }
 
 const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
-
+    const { t, i18n } = useTranslation();
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
     const dispatch = useAppDispatch()
@@ -27,7 +28,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const [pickedImage, setPickedImage] = useState('')
     const [addRequestStatus, setAddRequestStatus] = useState('idle')
     const {isShown, handleShown, handleClose} = useModal()
-    const modalHeader = "Wybierz zdjęcie"
+    const modalHeader = t("categories.AddCategoryForm.modalHeaderWithPictures")
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
     const images = useAppSelector(selectAllImages)
 
@@ -87,11 +88,11 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                                             mx-auto
                                             focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none"
                                id="exampleInput90"
-                               placeholder="Nazwa kategorii"
+                               placeholder={t("categories.AddCategoryForm.placeholderCategoryName")}
 
                                value={title}
                                onChange={onTitleChange}/>
-                        {title===""&& <p>Pole wymagane</p>}
+                        {title===""&& <p>{t("validationInputs")}</p>}
                     </div>
 
                     <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}
@@ -123,10 +124,10 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                                             mx-auto
                                             focus:text-gray-700 focus:bg-white focus:border-purple focus:outline-none"
                                id="exampleInput91"
-                               placeholder={pickedImage === "" ? "Wybierz zdjęcie" : "Zmień zdjęcie"}
+                               placeholder={pickedImage === "" ? t("categories.AddCategoryForm.placeholderPickedImagesChoose") : t("categories.AddCategoryForm.placeholderPickedImagesChange")}
                                onClick={handleShown}
                         />
-                        {pickedImage===""&& <p>Pole wymagane</p>}
+                        {pickedImage===""&& <p>{t("validationInputs")}</p>}
                     </div>
 
                     {pickedImage !== "" ?
@@ -156,7 +157,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                           duration-150
                           mx-auto
                           ease-in-out"
-                    onClick={onSaveCategory}>Dodaj
+                    onClick={onSaveCategory}>{t("buttons.add")}
                     </button>
                     </div>
                 </form>

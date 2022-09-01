@@ -17,6 +17,7 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 import {editUserProduct, UserProduct} from "./userProductsSlice";
 import {toast} from "react-toastify";
+import {useTranslation} from "react-i18next";
 
 
 type EditProductFormProps = {
@@ -32,7 +33,8 @@ type EditFormValues= {
     newUnit: string
     newQuantity: number | null
 }
-const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
+const EditProductForm = ({handleClose}: EditProductFormProps) => {
+    const {t} = useTranslation()
     const {
         handleSubmit,
         control,
@@ -127,7 +129,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
             render={({field: {onChange, value}, fieldState: {error}}) => (
                 <TextField sx={{width: "80%", marginLeft: "10%"}}
                            id="standard-basic"
-                           label="Nazwa produktu"
+                           label={t("products.EditProductForm.labelProductName")}
                            variant="outlined"
                            value={value}
                            onChange={onChange}
@@ -135,7 +137,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
                 />
             )}/>
     </Box>
-    {errors.newProductName && (<p className="text-xs text-red ml-10">Nazwa produktu wymagana</p>)}
+    {errors.newProductName && (<p className="text-xs text-red ml-10">{t("products.EditProductForm.validationProductName")}</p>)}
     <Box id="modal-modal-description"  sx={{mt: 2, width: "100%"}}>
         <Controller
             name="newCapacity"
@@ -145,7 +147,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
             render={({field: {onChange, value}, fieldState: {error}}) => (
                 <TextField sx={{width: "35%", marginLeft: "10%"}}
                            id="standard-basic"
-                           label="Pojemność"
+                           label={t("products.EditProductForm.labelCapacity")}
                            variant="standard"
                            value={value}
                            onChange={onChange}
@@ -159,7 +161,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
                 <TextField sx={{width: "35%", marginRight: "10%", marginLeft: "5%"}}
                            id="standard-select-currency"
                            select
-                           label="Jednostka"
+                           label={t("products.EditProductForm.labelUnit")}
                            value={value}
                            onChange={onChange}
                            variant="standard"
@@ -172,7 +174,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
                 </TextField>
             )}/>
     </Box>
-    {errors.newCapacity && (<p className="text-xs text-red ml-10">Pojemność wymagana i musi być więksa od 0.</p>)}
+    {errors.newCapacity && (<p className="text-xs text-red ml-10">{t("products.EditProductForm.validationCapacity")}</p>)}
     <Box>
         <Controller
             name="newExpireDate"
@@ -182,7 +184,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
                 <LocalizationProvider dateAdapter={AdapterDateFns} locale={plLocale}>
                     <DatePicker
                         mask={'__.__.____'}
-                        label="Data ważności"
+                        label={t("products.EditProductForm.labelExpireDate")}
                         value={value}
                         onChange={onChange}
                         renderInput={(params) => <TextField {...params}  sx={{width: "80%", marginLeft: "10%", marginTop: "5%"}}/>}
@@ -200,7 +202,7 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
             render={({field: {onChange, value}, fieldState: {error}}) => (
                 <TextField sx={{width: "80%", marginLeft: "10%"}}
                            id="outlined-number"
-                           label="Ilość"
+                           label={t("products.EditProductForm.labelQuantity")}
                            value={value}
                            type="number"
                            onChange={onChange}
@@ -209,8 +211,8 @@ const EditProductForm = ({handleClose, isShown}: EditProductFormProps) => {
         />
 
     </Box>
-    {errors.newQuantity && (<p className="text-xs text-red ml-10">Ilość wymagana i musi być więksa od 0.</p>)}
-    <Button sx={{ marginLeft: "10%", marginTop: "5%"}} type="submit" variant="contained" color="primary" >Edytuj produkt</Button>
+    {errors.newQuantity && (<p className="text-xs text-red ml-10">{t("products.EditProductForm.validationQuantity")}</p>)}
+    <Button sx={{ marginLeft: "10%", marginTop: "5%"}} type="submit" variant="contained" color="primary" >{t("buttons.editProduct")}</Button>
 </Box>
             </form>
         </>

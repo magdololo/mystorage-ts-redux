@@ -18,12 +18,20 @@
   "returnToCategoryList" : "Wróć do listy kategorii",
   "categories": {
       "CategoryList": {
-          "editButton": "Edytuj kategorie",
-          "categoryListButton": "Lista kategorii",
+
           "modalWithGreeting_h1" : "Dziękujemy za rejestrację!",
           "modalWithGreeting_h2" : "Witamy w serwisie!",
-          "categoriesStatusFailed": "ups.. coś poszło nie tak"
+          "categoriesStatusFailed": "ups.. coś poszło nie tak",
+          "modalAddHeader": "Dodaj nową kategorię",
+          "modalEditHeader" : "Edytuj kategorię"
       },
+    "AddCategoryForm": {
+        "placeholderCategoryName": "Nazwa kategorii",
+        "placeholderPickedImagesChoose": "Wybierz zdjęcie",
+        "placeholderPickedImagesChange": "Zmień zdjęcie",
+        "modalHeaderWithPictures" : "Wybierz zdjęcie"
+
+    },
     "EditCategoryForm": {
       "inputImageChange" : "zmień zdjęcie",
       "inputImageChoose" : "wybierz zdjęcie",
@@ -32,28 +40,45 @@
   },
   "products": {
       "AddProductForm": {
-          "formAddProductTitle": "Dodaj produkt",
-          "label_quantity": "Ilość",
-          "label_expireDate": "Data ważnosci",
-          "label_productName": "Nazwa produktu",
-          "label_categoryName": "Nazwa kategorii",
-          "label_capacity": "Pojemność",
-          "label_unit": "Jednostka"
-
-
-    },
+        "formAddProductTitle": "Dodaj produkt",
+        "label_quantity": "Ilość",
+        "label_expireDate": "Data ważnosci",
+        "label_productName": "Nazwa produktu",
+        "label_categoryName": "Nazwa kategorii",
+        "label_capacity": "Pojemność",
+        "label_unit": "Jednostka"
+      },
+      "EditProductForm": {
+        "validationCategoryName": "Kategoria wymagana",
+        "validationProductName": "Nazwa produktu wymagana",
+        "labelProductName": "Nazwa produktu",
+        "labelCapacity": "Pojemność",
+        "validationCapacity": "Pojemność wymagana i musi być więksa od 0.",
+        "labelUnit": "Jednostka",
+        "labelExpireDate": "Data ważności",
+        "labelQuantity": "Ilość",
+        "validationQuantity": "Ilość wymagana i musi być więksa od 0."
+      },
     "SearchUserProductPage": {
       "searchResult": "Wyniki wyszukiwania",
       "noSearchResult" :"Brak wyników wyszukiwania"
     }
   },
   "buttons": {
+    "editCategoriesButton": "Edytuj kategorie",
+    "categoryListButton": "Lista kategorii",
     "addProduct": "Dodaj produkt",
     "addCategory": "Dodaj kategorię",
-    "closeModalWithGreeting": "Zamknij"
+    "editProduct": "Edytuj produkt",
+    "closeModalWithGreeting": "Zamknij",
+    "add": "Dodaj"
 
-  }
-
-
-
+  },
+  "component": {
+    "SearchOwnPictureCategory": {
+      "addYourOwnPicture": "Dodaj własne zdjęcie",
+      "matchPhoto": "Dostosuj zdjęcie"
+    }
+  },
+  "validationInputs": "Pole wymagane",
 }

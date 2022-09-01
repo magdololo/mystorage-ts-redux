@@ -1,61 +1,24 @@
 import React,{useState} from 'react';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
-import {db} from "../firebase";
-import {addCategoryImage, ImageFromUser} from "../features/images/imagesSlice";
-import {useAppDispatch} from "../app/store";
 import {useSelector} from "react-redux";
 import {selectUser} from "../features/users/usersSlice";
 import CropImages from "./CropImages";
 import {useModal} from "./Modal/UseModal";
 import {ModalWithCrop} from "./Modal/ModalWithCrop";
-import AddProductForm from "../features/products/AddProductForm";
-import {readFile} from "fs/promises";
-
-// Add a new document with a generated id.
+import {useTranslation} from "react-i18next";
 
 
-// export type ImagePathFromUser={
-//     image: string
-// }
+
 
 
 const SearchOwnPictureCategory =()=>{
-    const storage = getStorage();
-    const dispatch = useAppDispatch()
+    const {t} = useTranslation()
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
     const [image, setImage] = useState("")
     const [newImageName, setNewImageName] = useState( "")
     const {isShown, handleShown, handleClose} = useModal()
-    const modalHeader = "Dostosuj zdjęcie"
-    // const [newFile, setNewFile] = useState<File | null>(null)
-    // const [fileName, setFileName] =useState("")
-    // const onChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
-    //
-    //     let files = e.target.value
-    //     let paths = e.target.files!![0]
-    //     console.log(files)
-    //     console.log(paths)
-    //
-    //     let end = reader.onloadend
-    //     let newImageFromUser: ImageFromUser ={
-    //         newPictureName : uid+"/"+ files.replace(/^.*[\\\/]/, ''),//to tworzy nowy katalog w storage ktorego nazwa uid i w nim nazwy zdjec
-    //         newPicture : paths,
-    //         uid: uid
-    //     }
-    //     let urlUserPicture;
-    //
-    //    console.log(files)
-    //
-    //     //
-    //
-    //     // setNewFile(e.target.files[0])
-    //     console.log(e.target.files[0])
-    //   //dispatch(addCategoryImage(newImageFromUser))
-    //
-    //
-    // }
+    const modalHeader = t("component.SearchOwnPictureCategory.matchPhoto")
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>)=> {
 
         if(!e.target.files) return;
@@ -72,13 +35,11 @@ const SearchOwnPictureCategory =()=>{
 
     }
 
-
-
     return(
         <>
             <div className="flex justify-center">
                 <div className="mb-3 w-96">
-                    <label htmlFor="formFileMultiple" className="form-label block mb-2 mt-2 text-gray-500 text-center text-xl">Dodaj własne zdjęcie</label>
+                    <label htmlFor="formFileMultiple" className="form-label block mb-2 mt-2 text-gray-500 text-center text-xl">{t("component.SearchOwnPictureCategory.addYourOwnPicture")}</label>
                     <input className="  form-control
                                         block
                                         w-full

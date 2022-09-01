@@ -18,11 +18,18 @@
   "returnToCategoryList" : "Return to category list",
   "categories": {
     "CategoryList": {
-      "editButton": "Edit categories",
-      "categoryListButton": "Category list",
+
       "modalWithGreeting_h1" : "Thanks for your signing up!",
       "modalWithGreeting_h2" : "Welcome to the website!",
-      "categoriesStatusFailed": "ups.. something went wrong"
+      "categoriesStatusFailed": "ups.. something went wrong",
+      "modalAddHeader": "Add new category",
+      "modalEditHeader" : "Edit category"
+    },
+    "AddCategoryForm": {
+      "placeholderCategoryName": "Category name",
+      "placeholderPickedImagesChoose": "Choose picture",
+      "placeholderPickedImagesChange": "Change picture",
+      "modalHeaderWithPictures" : "Choose photo"
     },
     "EditCategoryForm": {
       "inputImageChange" : "change picture",
@@ -40,17 +47,38 @@
       "label_capacity": "Capacity",
       "label_unit": "Unit"
     },
+    "EditProductForm": {
+      "validationCategoryName": "Category required",
+      "validationProductName": "Product name required",
+      "labelProductName": "Product name",
+      "labelCapacity": "Capacity",
+      "labelUnit": "Unit",
+      "labelExpireDate": "Expire date",
+      "labelQuantity": "Quantity",
+      "validationCapacity": "Capacity required and must be greater than 0.",
+      "validationQuantity": "Quantity required and must be greater than 0."
+
+    },
     "SearchUserProductPage": {
       "searchResult": "Search result",
       "noSearchResult" :"No search results"
     }
   },
   "buttons": {
+    "editCategoriesButton": "Edit categories",
+    "categoryListButton": "Category list",
     "addProduct": "Add product",
+    "editProduct": "Edit product",
     "addCategory": "Add category",
-    "closeModalWithGreeting": "Close"
+    "closeModalWithGreeting": "Close",
+    "add": "Add"
 
-  }
-
-
+  },
+  "component": {
+    "SearchOwnPictureCategory": {
+      "addYourOwnPicture": "Add your own photo",
+      "matchPhoto": "Match photo"
+    }
+  },
+  "validationInputs": "Required field"
 }

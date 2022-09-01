@@ -41,8 +41,8 @@ export const CategoryList = () => {
     let didSee = user?.didSeeGreeting;
 
     const {isShown, handleShown, handleClose} = useModal()
-    const modalAddHeader = "Dodaj nową kategorię"
-    const modalEditHeader = "Edytuj kategorię"
+    const modalAddHeader = t("categories.CategoryList.modalAddHeader")
+    const modalEditHeader = t("categories.CategoryList.modalEditHeader")
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const handleCloseGreeting = () => setIsOpen(false);
     const dispatch = useAppDispatch()
@@ -119,10 +119,10 @@ export const CategoryList = () => {
                     <img src={category?.url} className={"w-full h-auto object-cover flex-1 flex-grow"+ (toggleSwitch?" brightness-[0.2]":"")} alt="Louvre" />
 
                     <span
-                        className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70  text-md sm:text-lg capitalize text-center text-white font-bold"+ (toggleSwitch?"hidden invisible":"")}>{category?.title}</span>
+                        className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70  text-sm sm:text-md md:text-lg capitalize text-center text-white font-bold"+ (toggleSwitch?"hidden invisible":"")}>{category?.title}</span>
 
                 </Link>
-                <span className={"absolute bottom-1/4 left-0 right-0 mx-auto capitalize text-center text-white font-bold text-md sm:text-lg"+ (!toggleSwitch? "invisible hidden":"")}>{category?.title}</span>
+                <span className={"absolute bottom-3  left-0 right-0 mx-auto capitalize text-center text-white font-bold text-sm sm:text-md md:text-lg md:bottom-1/4" + (!toggleSwitch? "invisible hidden":"")}>{category?.title}</span>
                 {toggleSwitch &&
                     <FontAwesomeIcon
                         className="absolute align-middle top-8 left-8 inline-flex items-center justify-center text-white text-md sm:text-lg font-bold cursor-pointer"
