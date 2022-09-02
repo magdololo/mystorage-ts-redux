@@ -69,7 +69,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
             reset()
             setSelectedProductFromAutocomplete(null)
         }
-    }, [isShown])
+    }, [isShown, reset])
     useEffect(() => {
         if (selectedProductFromAutocomplete) {
             setValue('capacity', selectedProductFromAutocomplete.capacity);

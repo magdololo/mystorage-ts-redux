@@ -51,16 +51,16 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
     const uid = user? user.uid: ""
     const dispatch = useAppDispatch()
 
-    const notify = () => toast.success('🦄 Zmiany zostały dodane!', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-
-    });
+    // const notify = () => toast.success('🦄 Zmiany zostały dodane!', {
+    //     position: "top-center",
+    //     autoClose: 2000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //
+    // });
 
     const units = [
         {value: 'gr'},
@@ -97,7 +97,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
         }
         dispatch(editUserProduct(updatedProduct))
         closeModal()
-        //notify()
+
     }
     return(
         <>

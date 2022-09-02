@@ -112,7 +112,7 @@ const LoginPage = () => {
             } else {
                 console.log("else")
                 const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential?.accessToken
+
                console.log("Singed in user: ", user);
                dispatch(
                    login({uid: user.uid,
@@ -125,10 +125,10 @@ const LoginPage = () => {
 
         } catch (error: any){
             // Handle Errors here.
-            const errorCode = error.code;
+            // const errorCode = error.code;
             console.log(error.code)
-            const errorMessage = error.message;
-            const credential = GoogleAuthProvider.credentialFromError(error);
+            // const errorMessage = error.message;
+            // const credential = GoogleAuthProvider.credentialFromError(error);
             // ...
         }
     }

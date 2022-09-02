@@ -75,7 +75,7 @@ const RemindPassword=()=>{
                            aria-describedby="emailHelp" />
                     {errors.email?.type === 'required' && <span className="text-sm text-red">{t("users.errors.emailTypeRequired")}</span>}
                     {errors.email?.type === 'pattern' && <span className="text-sm text-red">{ t("users.errors.emailTypePattern")}</span>}
-                    {errorMessage!="" && <p>{errorMessage}</p>}
+                    {errorMessage!=="" && <p>{errorMessage}</p>}
                 </div>
                 <div className ="flex flex row justify-between">
                     <button type="submit"   className=" w-2/5

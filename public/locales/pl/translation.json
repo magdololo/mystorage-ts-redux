@@ -12,12 +12,9 @@
   "home_footer_word2" : "serwisu",
   "home_footer_link" : "regulamin",
   "acceptRegulations": "Akceptuję regulamin serwisu.",
-
-
   "returnToCategoryList" : "Wróć do listy kategorii",
   "categories": {
       "CategoryList": {
-
           "modalWithGreeting_h1" : "Dziękujemy za rejestrację!",
           "modalWithGreeting_h2" : "Witamy w serwisie!",
           "categoriesStatusFailed": "ups.. coś poszło nie tak",
@@ -28,8 +25,8 @@
         "placeholderCategoryName": "Nazwa kategorii",
         "placeholderPickedImagesChoose": "Wybierz zdjęcie",
         "placeholderPickedImagesChange": "Zmień zdjęcie",
-        "modalHeaderWithPictures" : "Wybierz zdjęcie"
-
+        "modalHeaderWithPictures" : "Wybierz zdjęcie",
+        "altPickedImage": "zdjęcia kategorii"
     },
     "EditCategoryForm": {
       "inputImageChange" : "zmień zdjęcie",
@@ -78,7 +75,7 @@
         "p1": "Próbowałeś zalogować się poprzez Google.",
         "p2": "Niestety nie masz jeszcze konta w serwisie.",
         "p3": "Aby je utworzyc zaakceptuj regulamin i nacisnij guzik zarejestruj."
-      },
+      }
 
     },
     "RegisterPage": {

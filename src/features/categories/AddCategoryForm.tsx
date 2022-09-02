@@ -20,7 +20,7 @@ type AddCategoryFormProps = {
 }
 
 const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
     const dispatch = useAppDispatch()
@@ -132,7 +132,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
 
                     {pickedImage !== "" ?
                         <div className="form-group mb-6">
-                            <img src={pickedImage}/>
+                            <img src={pickedImage} alt={t("categories.AddCategoryForm.altPickedImage")}/>
                         </div>
                     : null}
                     <div className="form-group mb-6">

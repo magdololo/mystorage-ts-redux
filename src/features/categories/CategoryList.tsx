@@ -57,7 +57,7 @@ export const CategoryList = () => {
         if(didSee === false){
             setIsOpen(true)
         }
-    },[user])
+    },[user, didSee])
     let greeting =   <>
              <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""} modalContent={<><h1>{t("categories.CategoryList.modalWithGreeting_h1")}</h1><h2> {t("categories.CategoryList.modalWithGreeting_h2")}</h2>
                  <div
@@ -146,7 +146,7 @@ export const CategoryList = () => {
                                 {!toggleSwitch &&
                                 <div className=" relative overflow-hidden bg-no-repeat bg-cover border-solid border-purple border-2 border-opacity-25"
                                      onClick={handleShown}>
-                                        <img src="http://placehold.jp/ffffff/ffffff/1280x900.png"
+                                        <img src="http://placehold.jp/ffffff/ffffff/1280x900.png" alt={"placeholder"}
                                              className="bg-cover"/>
                                             <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed">
                                                 <div className="relative mx-auto top-1/3 text-purple font-bold text-2xl h-5 w-5 ">

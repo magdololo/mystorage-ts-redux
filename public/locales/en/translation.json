@@ -12,8 +12,6 @@
   "home_footer_word2" : "service",
   "home_footer_link" : "regulations",
   "acceptRegulations": "I accept the website regulations.",
-
-
   "returnToCategoryList" : "Return to category list",
   "categories": {
     "CategoryList": {
@@ -27,7 +25,8 @@
       "placeholderCategoryName": "Category name",
       "placeholderPickedImagesChoose": "Choose picture",
       "placeholderPickedImagesChange": "Change picture",
-      "modalHeaderWithPictures" : "Choose photo"
+      "modalHeaderWithPictures" : "Choose photo",
+      "altPickedImage": "pictures of categories"
     },
     "EditCategoryForm": {
       "inputImageChange" : "change picture",
