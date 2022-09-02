@@ -94,7 +94,7 @@ module.exports = {
       },
       translate: {
         "translate-x-50": "transform:translateX(-50%)",
-        "translate-y-50": "transform:translate(-50%)"
+        "translate-y-50": "transform:translateY(-50%)"
 
       },
       padding: {
@@ -102,7 +102,9 @@ module.exports = {
 
       },
       inset:{
-         'bottom-1/10': "bottom: 10rem"
+         'bottom-1/10': "bottom: 10rem",
+
+
       }
     },
   },

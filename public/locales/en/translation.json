@@ -10,11 +10,10 @@
   "home_section3_subheading" : "Thanks to the search engine, you will find all similar products as well as a specific product.",
   "home_footer_word1" : "Accept",
   "home_footer_word2" : "service",
-  "home_footer_link" : "statute",
-  "button_register": "Sign Up",
-  "button_logIn" : "Sign In",
-  "button_logOut" : "Sign Out",
-  "button_remindPassword" : "Next",
+  "home_footer_link" : "regulations",
+  "acceptRegulations": "I accept the website regulations.",
+
+
   "returnToCategoryList" : "Return to category list",
   "categories": {
     "CategoryList": {
@@ -38,7 +37,8 @@
   },
   "products": {
     "ProductsList": {
-        "title" : "Product list"
+        "title" : "Product list",
+        "productCategory" : "Category"
     },
     "AddProductForm": {
       "formAddProductTitle": "Add product",
@@ -71,30 +71,38 @@
       "questionRemember": "Do not remember the password?",
       "linkToRememberPassword": "Remind password",
       "questionAccount": "You dont have an account yet?",
-      "linkToRegister" : "Register",
-      "errorMessage": {
-        "email" : "Wrong email!",
-        "password" : "Wrong password!",
-        "account": "Account does not exist!",
-        "register": "Account does not exist. Please register!"
-      },
-      "errors": {
-        "emailTypeRequired": "Email required",
-        "emailTypePattern": "Wrong email!",
-        "passwordTypeRequired": "Password required"
-      },
+      "linkToRegister": "Register",
       "content": {
         "p1": "You tried to log in with Google.",
         "p2": "Unfortunately, you do not have an account on the site yet.",
         "p3": "To create them, accept the regulations and press the register button."
-      },
-      "acceptRegulations": "I accept the website regulations."
-  },
+      }
+    },
     "RegisterPage": {
-
+      "message": {
+        "wrongPassword": "Wrong password!",
+        "userNotFound": "Account does not exist. Please register!",
+        "emailAlreadyInUse": "Email already in use!",
+        "userDisabled": "User disabled!",
+        "weakPassword": "Weak password!",
+        "default": "Unknown error. Report to the administrator!"
+      }
     },
     "RemindPassword": {
-
+      "header_h3": "Recover password",
+      "header_h2": "Enter the email address of the account you want to regain access to.",
+      "messageAfterSendPassword": " We have sent the password for the account restoration to your e-mail address!"
+    },
+    "errorMessage": {
+      "email": "Wrong email!",
+      "password": "Wrong password!",
+      "account": "Account does not exist!",
+      "register": "Account does not exist. Please register!"
+    },
+    "errors": {
+      "emailTypeRequired": "Email required!",
+      "emailTypePattern": "Wrong email!",
+      "passwordTypeRequired": "Password required!"
     }
   },
   "buttons": {
@@ -105,9 +113,10 @@
     "addCategory": "Add category",
     "closeModalWithGreeting": "Close",
     "add": "Add",
-    "logIn": "Log In",
-    "register": "Sign Up"
-
+    "logIn": "Sign In",
+    "logOut": "Sign Out",
+    "register": "Sign Up",
+    "remindPassword" : "Next"
   },
   "component": {
     "SearchOwnPictureCategory": {
@@ -115,5 +124,12 @@
       "matchPhoto": "Match photo"
     }
   },
-  "validationInputs": "Required field"
+  "validationInputs": "Required field",
+  "BottomHamburgerMenu": {
+    "categoryList": "Category list",
+    "productList": "Product list",
+    "myAccount": "My account",
+    "signOut": "Sign out"
+
+  }
 }

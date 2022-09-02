@@ -16,9 +16,10 @@ import {auth, signOut} from "../../firebase";
 import {Accordion} from "react-accordion-ts";
 import 'react-accordion-ts/src/panel.css';
 import {useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
 
 const BottomHamburgerMenu = () => {
-
+    const {t} = useTranslation()
     const navigate = useNavigate()
     let user = useSelector(selectUser);
     const [isOpen, setIsOpen] =useState(false);
@@ -38,7 +39,7 @@ const BottomHamburgerMenu = () => {
 
     };
     const myAccordion = [
-        {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />Moje konto</span>,
+        {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />{t("BottomHamburgerMenu.myAccount")}</span>,
         content: <span className="text-sm font-bold">{user?.email}</span>}
     ]
     return (
@@ -52,13 +53,13 @@ const BottomHamburgerMenu = () => {
             >
                 <div className="flex justify-center">
                     <ul className="bg-white rounded-lg w-96 text-gray text-lg mt-10">
-                        <li key='1' className="px-6 py-2  w-full rounded-t-lg" onClick={handleClick}><Link to={'/categories'}> <FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />Lista kategorii</Link></li>
-                        <li key='2' className="px-6 py-2  w-full" onClick={handleClick}><Link to={'/products'}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />Lista produktów</Link></li>
+                        <li key='1' className="px-6 py-2  w-full rounded-t-lg" onClick={handleClick}><Link to={'/categories'}> <FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />{t("BottomHamburgerMenu.categoryList")}</Link></li>
+                        <li key='2' className="px-6 py-2  w-full" onClick={handleClick}><Link to={'/products'}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />{t("BottomHamburgerMenu.productList")}</Link></li>
                         <Divider />
                         <li key='3' className="px-6 py-2  w-full cursor-pointer -toggle-down" >
                             <Accordion items={myAccordion} duration={300} multiple={false}/>
                         </li>
-                        <li key='4' className="px-6 py-2  w-full cursor-pointer" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />Wyloguj się</li>
+                        <li key='4' className="px-6 py-2  w-full cursor-pointer" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />{t("BottomHamburgerMenu.signOut")}</li>
                     </ul>
 
                 </div>

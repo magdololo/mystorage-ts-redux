@@ -11,10 +11,9 @@
   "home_footer_word1" : "Akceptuję",
   "home_footer_word2" : "serwisu",
   "home_footer_link" : "regulamin",
-  "button_register": "Zaloguj się",
-  "button_logIn" : "Zarejestruj się",
-  "button_logOut" : "Wyloguj się",
-  "button_remindPassword" : "Dalej",
+  "acceptRegulations": "Akceptuję regulamin serwisu.",
+
+
   "returnToCategoryList" : "Wróć do listy kategorii",
   "categories": {
       "CategoryList": {
@@ -41,7 +40,7 @@
   "products": {
     "ProductsList": {
         "title" : "Lista produktów",
-
+        "productCategory" : "Kategoria"
     },
       "AddProductForm": {
         "formAddProductTitle": "Dodaj produkt",
@@ -74,29 +73,39 @@
       "linkToRememberPassword": "Przypomnij hasło",
       "questionAccount": "Nie masz jeszcze konta?",
       "linkToRegister" : "Zarejestruj się",
-      "errorMessage": {
-        "email" : "Nieprawidłowy email!",
-        "password" : "Nieprawidłowe hasło!",
-        "account": "Konto nie istnieje!",
-        "register": "Konto nie istnieje. Zarejestruj się!"
-      },
-      "errors": {
-        "emailTypeRequired": "Pole wymagane",
-        "emailTypePattern": "Nieprwidłowy email!",
-        "passwordTypeRequired": "Hasło wymagane"
-      },
+
       "content": {
         "p1": "Próbowałeś zalogować się poprzez Google.",
         "p2": "Niestety nie masz jeszcze konta w serwisie.",
         "p3": "Aby je utworzyc zaakceptuj regulamin i nacisnij guzik zarejestruj."
       },
-      "acceptRegulations": "Akceptuję regulamin serwisu."
+
     },
     "RegisterPage": {
-
+      "message": {
+        "wrongPassword": "Błedne hasło!",
+        "userNotFound" : "Nie masz jeszcze konta. Zarejestruj się!",
+        "emailAlreadyInUse": "Konto dla tego emaila już istnieje.",
+        "userDisabled": "Użytkownik zablokowany.",
+        "weakPassword": "Hasło nie spełnia reguł bezpieczeństwa.",
+        "default": "Nieznany błąd. Zgłoś się do administaratora."
+      }
     },
     "RemindPassword": {
-
+      "header_h3": "Odzyskaj konto",
+      "header_h2": "Wpisz adres e-mail konta do którego chcesz odzyskać dostęp.",
+      "messageAfterSendPassword": " Na twój adres email wysłaliśmy hasło do restu konta!"
+    },
+    "errorMessage": {
+      "email" : "Nieprawidłowy email!",
+      "password" : "Nieprawidłowe hasło!",
+      "account": "Konto nie istnieje!",
+      "register": "Konto nie istnieje. Zarejestruj się!"
+    },
+    "errors": {
+      "emailTypeRequired": "Pole wymagane",
+      "emailTypePattern": "Nieprwidłowy email!",
+      "passwordTypeRequired": "Hasło wymagane"
     }
   },
   "buttons": {
@@ -108,9 +117,9 @@
     "closeModalWithGreeting": "Zamknij",
     "add": "Dodaj",
     "logIn": "Zaloguj",
-    "register": "Zarejestruj się"
-
-
+    "logOut": "Wyloguj się",
+    "register": "Zarejestruj się",
+    "remindPassword" : "Dalej"
   },
   "component": {
     "SearchOwnPictureCategory": {
@@ -119,4 +128,12 @@
     }
   },
   "validationInputs": "Pole wymagane",
+  "BottomHamburgerMenu": {
+    "categoryList": "Lista kategorii",
+    "productList": "Lista produktów",
+    "myAccount": "Moje konto",
+    "signOut": "Wyloguj się"
+
+  }
 }
+

@@ -33,14 +33,14 @@ const Home = () => {
                         <button type="button"
                                 className="inline-block  py-6 text-gray text-md font-bold  capitalize hover:border-b-2 hover:border-purple-800 focus:outline-none focus:ring-0 transition duration-150 ease-in-out
                                              sm:text-1/2lg md:mr-4 lg:text-xl"
-                        ><Link to="/login">{t("button_logIn")}</Link>
+                        ><Link to="/login">{t("buttons.logIn")}</Link>
                         </button>
                         <button
                             type="button"
                             className="inline-block  hidden sm:justify-center md:block  "
                             data-mdb-ripple="true"
                             data-mdb-ripple-color="light"
-                        ><Link to="/register" className="px-4 py-3.5 bg-purple-800 text-white text-md  font-bold leading-tight rounded-2xl shadow-md  hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out lg:text-xl">{t("button_register")}</Link>
+                        ><Link to="/register" className="px-4 py-3.5 bg-purple-800 text-white text-md  font-bold leading-tight rounded-2xl shadow-md  hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out lg:text-xl">{t("buttons.register")}</Link>
                         </button>
 
                     </div>
@@ -57,14 +57,14 @@ const Home = () => {
                             className="block mx-auto  bg-purple-800 text-white font-bold px-4 py-3.5 text-lg rounded-md md:inline-block md:px-6 md:py-3.5 md:text-lg  leading-tight md:rounded-2xl shadow-md hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
                             data-mdb-ripple="true"
                             data-mdb-ripple-color="light"
-                        ><Link to="/register">{t("button_register")}</Link>
+                        ><Link to="/register">{t("buttons.register")}</Link>
                         </button>
                     </div>
 
                     <div className=" px-6 py-10 md:py-0 md:2/5">
                         <span
                             className="absolute bottom-0 h-1 w-full text-gray-light shadow-xs box-decoration-clone"></span>
-                        {i18n.language === "pl" ? <img src="../images/categories_screen.png" className="max-h-128 lg:max-h-144"/> :  <img src="../images/categories_screen_en.png" className="max-h-128 lg:max-h-144"/>}
+                        {i18n.language === "pl" ? <img src="../images/categories_screen.png" className="max-h-128 lg:max-h-144" alt={"zdjęcie ekranu z kategoriami"}/> :  <img src="../images/categories_screen_en.png" className="max-h-128 lg:max-h-144" alt={"image screen with categories"}/>}
 
                     </div>
                 </div>
@@ -75,7 +75,7 @@ const Home = () => {
                 <div
                     className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-12 font-noto-sans md:flex-row lg:flex-row">
                     <div className=" px-6 py-10 md:py-0 md:2/5">
-                        {i18n.language === "pl" ? <img src="../images/addProduct_screen.png" className="max-h-128 lg:max-h-144"/> : <img src="../images/addProduct_screen_en.png" className="max-h-128 lg:max-h-144"/>}
+                        {i18n.language === "pl" ? <img src="../images/addProduct_screen.png" className="max-h-128 lg:max-h-144" alt={"zdjęcie strony formularza do dodawania produktu"}/> : <img src="../images/addProduct_screen_en.png" className="max-h-128 lg:max-h-144" alt={"image screen with add product form"}/>}
                     </div>
                     <div className=" px-12  md:text-left md:w-3/5 md:ml-8 md:max-w-2xl ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-5xl lg:leading-tight">{t("home_section1_heading")}</h2>
@@ -94,7 +94,7 @@ const Home = () => {
                         <h4 className="text-center text-gray-light text-lg mb-6 leading-loose md:text-lg md:text-left lg:text-xl lg:leading-10">{t("home_section2_subheading")}</h4>
                     </div>
                     <div className=" px-6 py-10 md:py-0 md:2/5">
-                        {i18n.language === "pl" ? <img src="../images/edit_screen.png" className="max-h-128 lg:max-h-144"/> : <img src="../images/edit_screen_en.png" className="max-h-128 lg:max-h-144"/>}
+                        {i18n.language === "pl" ? <img src="../images/edit_screen.png" className="max-h-128 lg:max-h-144" alt={"zdjęcie ekranu z listą produktów i menu do szybkiej edycji"}/> : <img src="../images/edit_screen_en.png" className="max-h-128 lg:max-h-144" alt={"image with screen with product list and menu for quick editing"}/>}
                     </div>
                     <div className=" px-12 md:hidden ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-5xl lg:leading-tight">{t("home_section2_heading")}</h2>
@@ -108,7 +108,7 @@ const Home = () => {
                     <div className=" px-6 py-10 md:py-0 md:2/5">
                         <span
                             className="absolute bottom-0 h-1 w-full text-gray-light shadow-zz box-decoration-clone"></span>
-                        {i18n.language === "pl" ? <img src="../images/search_screen.png" className="max-h-128 lg:max-h-144"/> : <img src="../images/search_screen_en.png" className="max-h-128 lg:max-h-144"/>}
+                        {i18n.language === "pl" ? <img src="../images/search_screen.png" className="max-h-128 lg:max-h-144" alt={"zdjęcie ekranu z wyszukiwarką produktów"}/> : <img src="../images/search_screen_en.png" className="max-h-128 lg:max-h-144" alt={"image with screen with product finder "}/>}
                     </div>
                     <div className=" px-12  md:text-left md:w-3/5 md:ml-8 md:max-w-2xl ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-5xl lg:leading-tight">{t("home_section3_heading")}</h2>

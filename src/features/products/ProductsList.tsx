@@ -103,7 +103,7 @@ const ProductsList = () => {
                                         <div
                                             className="text-gray-light">{product.capacity}{product.unit}
                                         </div>
-                                        <div className="text-gray-light text-md">Kategoria: <Link
+                                        <div className="text-gray-light text-md">{t("products.ProductsList.productCategory")}: <Link
                                             to={"/categories/" + product.categoryPath}>
                                             <span
                                                 className="capitalize text-md align-baseline text-gray font-bold">{product.categoryTitle}</span></Link>

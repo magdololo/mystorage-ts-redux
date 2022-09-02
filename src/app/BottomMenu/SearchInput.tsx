@@ -29,13 +29,6 @@ const SearchInput =()  => {
     const [doSearchByString, setDoSearchByString] = useState(false)
     const [doSearchByOption, setDoSearchByOption] = useState(false)
     useEffect(()=>{
-        console.log("use effect")
-        console.log(preventOnChange)
-        console.log(inputString)
-console.log(doSearchByOption)
-        console.log(doSearchByString)
-        console.log(searchOption)
-
         if(doSearchByOption && !doSearchByString){
             dispatch(searchProduct(searchOption))
             navigate("/search")
@@ -44,7 +37,7 @@ console.log(doSearchByOption)
             setPreventOnChange(true)
             dispatch(searchByString(inputString))
             navigate("/search")
-            console.log("dosearchByString")
+
         }
         setDoSearchByOption(false)
         setDoSearchByString(false)

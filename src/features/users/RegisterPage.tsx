@@ -73,22 +73,22 @@ const RegisterPage = () => {
                     console.log("Error ocured: ", errorCode, errorMessage);
                     switch (error.code){
                         case "auth/wrong-password":
-                            setMessage ("Błedne hasło. Przypomnij hasło.")
+                            setMessage (t("users.RegisterPage.message.wrongPassword"))
                             break;
                         case "auth/user-not-found":
-                            setMessage ("Nie masz jeszcze konta. Zarejestruj się");
+                            setMessage (t("users.RegisterPage.message.userNotFound"));
                             break;
                         case "auth/email-already-in-use":
-                            setMessage("Konto dla tego emaila już istnieje.");
+                            setMessage(t("users.RegisterPage.message.emailAlreadyInUse"));
                             break;
                         case "auth/user-disabled":
-                            setMessage  ("Użytkownik zablokowany.");
+                            setMessage  (t("users.RegisterPage.message.userDisabled"));
                             break;
                         case "auth/weak-password":
-                            setMessage ("Hasło nie spełnia reguł bezpieczeństwa.");
+                            setMessage (t("users.RegisterPage.message.weakPassword"));
                             break;
                         default:
-                            setMessage("Nieznany błąd. Zgłoś się do administaratora.");
+                            setMessage(t("users.RegisterPage.message.default"));
                     }
 
                 })
@@ -108,7 +108,7 @@ const RegisterPage = () => {
         <>
 
             <div className="text-center bg-gray-50 text-gray-dark pt-20 pb-4 px-6">
-                <h1 className="text-4xl font-bold mt-0 mb-6">Domowa spiżarnia</h1>
+                <h1 className="text-4xl font-bold mt-0 mb-6">{t("app_title")}</h1>
             </div>
             <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm mx-auto">
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -137,8 +137,8 @@ const RegisterPage = () => {
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                id="exampleInputEmail2"
                                aria-describedby="emailHelp"/>
-                        {errors.email?.type === 'required' && "Email is required"}
-                        {errors.email?.type === 'pattern' && "Nieprawidłowy email"}
+                        {errors.email?.type === 'required' && <span className="text-sm text-red">{t("users.errors.emailTypeRequired")}</span>}
+                        {errors.email?.type === 'pattern' && <span className="text-sm text-red">{ t("users.errors.emailTypePattern")}</span>}
                     </div>
                     <div className="form-group mb-6 relative">
 
@@ -162,7 +162,7 @@ const RegisterPage = () => {
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                id="exampleInputPassword2"/>
                         <i onClick={togglePasswordVisibility}>{eye}</i>{" "}
-                        {errors.password?.type === 'required' && 'Hasło wymagane'}
+                        {errors.password?.type === 'required' && <span className="text-sm text-red">{t("users.errors.passwordTypeRequired")}</span>}
                     </div>
                     <div className="mx-auto max-w-sm px-6">
                         <input
@@ -170,7 +170,7 @@ const RegisterPage = () => {
                             type="checkbox" onChange={handleInputChange} checked={checkboxState} id="flexCheckDefault">
                         </input>
                         <label className="form-check-label inline-block text-gray-800 " htmlFor="flexCheckDefault">
-                            Akceptuję regulamin serwisu.
+                            {t("acceptRegulations")}
                         </label>
                     </div>
                     <div className="flex justify-center space-x-6 mt-3">
@@ -178,7 +178,6 @@ const RegisterPage = () => {
                                 className=" w-1/2
                                           px-6
                                           py-2.5
-
                                           text-purple
                                           font-bold
                                           text-xs
@@ -193,7 +192,7 @@ const RegisterPage = () => {
                                           duration-150
                                           ease-in-out"
                         >
-                            zarejestruj
+                            {t("buttons.register")}
                         </button>
                     </div>
                     {message}

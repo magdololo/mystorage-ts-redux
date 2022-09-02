@@ -194,9 +194,9 @@ const LoginPage = () => {
                                    id="exampleInputEmail2"
                                    aria-describedby="emailHelp"/>
 
-                            {errorMessage === 'Niepoprawny email' ? <p>{t("users.LoginPage.errorMessage.email")}</p> : null}
-                            {errors.email?.type === 'required' && t("users.LoginPage.errors.emailTypeRequired")}
-                            {errors.email?.type === 'pattern' && t("users.LoginPage.errors.emailTypePattern")}
+                            {errorMessage === 'Niepoprawny email' ? <span className="text-sm text-red">{t("users.errorMessage.email")}</span> : null}
+                            {errors.email?.type === 'required' && <span className="text-sm text-red">{t("users.errors.emailTypeRequired")}</span>}
+                            {errors.email?.type === 'pattern' && <span className="text-sm text-red">{ t("users.errors.emailTypePattern")}</span>}
                         </div>
                         <div className="form-group mb-6 relative">
                             <label className="form-label inline-block mb-2 text-gray-700">Password</label>
@@ -219,9 +219,9 @@ const LoginPage = () => {
                                    id="exampleInputPassword2"
                             />
                             <i onClick={togglePasswordVisibility}>{eye}</i>{" "}
-                            {errorMessage === 'Niepoprawne hasło' && <p>{t("users.LoginPage.errorMessage.password")}</p>}
-                            {errorMessage === 'Konto nie istnieje' && <p>{t("users.LoginPage.errorMessage.account")}</p>}
-                            {errors.password?.type === 'required' && t("users.LoginPage.errors.passwordTypeRequired")}
+                            {errorMessage === 'Niepoprawne hasło' && <p className="text-sm text-red">{t("users.errorMessage.password")}</p>}
+                            {errorMessage === 'Konto nie istnieje' && <p className="text-sm text-red">{t("users.errorMessage.account")}</p>}
+                            {errors.password?.type === 'required' && <span className="text-sm text-red">{t("users.errors.passwordTypeRequired")}</span>}
                         </div>
                         <p className="text-gray-800 mt-6 text-center pb-6">{t("users.LoginPage.questionRemember")}
                             <Link to="/remindPassword"
@@ -293,7 +293,7 @@ const LoginPage = () => {
 
 
                         </div>
-                        {errorMessage === "Konto nie istnieje. Zarejestruj się!" ? <p>{t("users.LoginPage.errorMessage.register")}</p> : null}
+                        {errorMessage === "Konto nie istnieje. Zarejestruj się!" ? <p className="text-sm text-red">{t("users.errorMessage.register")}</p> : null}
                         <p className="text-gray-800 mt-6 text-center">{t("users.LoginPage.questionAccount")}
                             <Link to="/register"
                                   className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1">{t("users.LoginPage.linkToRegister")}</Link>

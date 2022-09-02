@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {auth, sendPasswordResetEmail} from "../../firebase";
+import {useTranslation} from "react-i18next";
 
 const RemindPassword=()=>{
+    const {t} = useTranslation()
     const navigate = useNavigate()
     const {
         reset,
@@ -44,11 +46,11 @@ const RemindPassword=()=>{
     return(
         <>
             <div className="text-center text-gray-dark pt-20 pb-4 px-6">
-            <h1 className="text-4xl font-bold mt-0 mb-6">Domowa spiżarnia</h1>
-                <h3 className="text-gray-700 my-6 text-2xl">Odzyskaj konto</h3>
+            <h1 className="text-4xl font-bold mt-0 mb-6">{t("app_title")}</h1>
+                <h3 className="text-gray-700 my-6 text-2xl">{t("users.RemindPassword.header_h3")}</h3>
            </div>
             <div className="block p-6  bg-white max-w-sm mx-auto">
-            <h2 className="text-gray-light my-8 text-xl"> Wpisz adres e-mail konta do którego chcesz odzyskać dostęp.</h2>
+            <h2 className="text-gray-light my-8 text-xl">{t("users.RemindPassword.header_h2")}</h2>
             <form onSubmit={onSubmit}>
                 <div className="form-group mb-6">
                     {/*<label className="form-label inline-block mb-2 text-gray-700">Email address</label>*/}
@@ -71,8 +73,8 @@ const RemindPassword=()=>{
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                            id="exampleInputEmail2"
                            aria-describedby="emailHelp" />
-                    {errors.email?.type === 'required' && "Email is required"}
-                    {errors.email?.type === 'pattern' && "Nieprawidłowy email"}
+                    {errors.email?.type === 'required' && <span className="text-sm text-red">{t("users.errors.emailTypeRequired")}</span>}
+                    {errors.email?.type === 'pattern' && <span className="text-sm text-red">{ t("users.errors.emailTypePattern")}</span>}
                     {errorMessage!="" && <p>{errorMessage}</p>}
                 </div>
                 <div className ="flex flex row justify-between">
@@ -93,7 +95,7 @@ const RemindPassword=()=>{
                                           active:shadow-lg
                                           transition
                                           duration-150
-                                          ease-in-out">Dalej</button>
+                                          ease-in-out">{t("buttons.remindPassword")}</button>
                 </div>
 
 
