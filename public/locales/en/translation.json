@@ -18,7 +18,6 @@
   "returnToCategoryList" : "Return to category list",
   "categories": {
     "CategoryList": {
-
       "modalWithGreeting_h1" : "Thanks for your signing up!",
       "modalWithGreeting_h2" : "Welcome to the website!",
       "categoriesStatusFailed": "ups.. something went wrong",
@@ -38,6 +37,9 @@
     }
   },
   "products": {
+    "ProductsList": {
+        "title" : "Product list"
+    },
     "AddProductForm": {
       "formAddProductTitle": "Add product",
       "label_quantity": "Quantity",
@@ -64,6 +66,37 @@
       "noSearchResult" :"No search results"
     }
   },
+  "users": {
+    "LoginPage": {
+      "questionRemember": "Do not remember the password?",
+      "linkToRememberPassword": "Remind password",
+      "questionAccount": "You dont have an account yet?",
+      "linkToRegister" : "Register",
+      "errorMessage": {
+        "email" : "Wrong email!",
+        "password" : "Wrong password!",
+        "account": "Account does not exist!",
+        "register": "Account does not exist. Please register!"
+      },
+      "errors": {
+        "emailTypeRequired": "Email required",
+        "emailTypePattern": "Wrong email!",
+        "passwordTypeRequired": "Password required"
+      },
+      "content": {
+        "p1": "You tried to log in with Google.",
+        "p2": "Unfortunately, you do not have an account on the site yet.",
+        "p3": "To create them, accept the regulations and press the register button."
+      },
+      "acceptRegulations": "I accept the website regulations."
+  },
+    "RegisterPage": {
+
+    },
+    "RemindPassword": {
+
+    }
+  },
   "buttons": {
     "editCategoriesButton": "Edit categories",
     "categoryListButton": "Category list",
@@ -71,7 +104,9 @@
     "editProduct": "Edit product",
     "addCategory": "Add category",
     "closeModalWithGreeting": "Close",
-    "add": "Add"
+    "add": "Add",
+    "logIn": "Log In",
+    "register": "Sign Up"
 
   },
   "component": {

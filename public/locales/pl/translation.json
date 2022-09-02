@@ -39,6 +39,10 @@
     }
   },
   "products": {
+    "ProductsList": {
+        "title" : "Lista produktów",
+
+    },
       "AddProductForm": {
         "formAddProductTitle": "Dodaj produkt",
         "label_quantity": "Ilość",
@@ -64,6 +68,37 @@
       "noSearchResult" :"Brak wyników wyszukiwania"
     }
   },
+  "users": {
+    "LoginPage": {
+      "questionRemember": "Nie pamiętasz hasła?",
+      "linkToRememberPassword": "Przypomnij hasło",
+      "questionAccount": "Nie masz jeszcze konta?",
+      "linkToRegister" : "Zarejestruj się",
+      "errorMessage": {
+        "email" : "Nieprawidłowy email!",
+        "password" : "Nieprawidłowe hasło!",
+        "account": "Konto nie istnieje!",
+        "register": "Konto nie istnieje. Zarejestruj się!"
+      },
+      "errors": {
+        "emailTypeRequired": "Pole wymagane",
+        "emailTypePattern": "Nieprwidłowy email!",
+        "passwordTypeRequired": "Hasło wymagane"
+      },
+      "content": {
+        "p1": "Próbowałeś zalogować się poprzez Google.",
+        "p2": "Niestety nie masz jeszcze konta w serwisie.",
+        "p3": "Aby je utworzyc zaakceptuj regulamin i nacisnij guzik zarejestruj."
+      },
+      "acceptRegulations": "Akceptuję regulamin serwisu."
+    },
+    "RegisterPage": {
+
+    },
+    "RemindPassword": {
+
+    }
+  },
   "buttons": {
     "editCategoriesButton": "Edytuj kategorie",
     "categoryListButton": "Lista kategorii",
@@ -71,7 +106,10 @@
     "addCategory": "Dodaj kategorię",
     "editProduct": "Edytuj produkt",
     "closeModalWithGreeting": "Zamknij",
-    "add": "Dodaj"
+    "add": "Dodaj",
+    "logIn": "Zaloguj",
+    "register": "Zarejestruj się"
+
 
   },
   "component": {

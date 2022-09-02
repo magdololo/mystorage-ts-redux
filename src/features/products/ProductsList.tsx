@@ -23,8 +23,10 @@ import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons
 import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useMediaQuery} from "@mui/material";
+import {useTranslation} from "react-i18next";
 
 const ProductsList = () => {
+    const {t} = useTranslation()
     const userProducts = useAppSelector(selectUserProducts)
     const dispatch = useAppDispatch()
     const categories = useAppSelector(selectAllCategories)
@@ -79,7 +81,7 @@ const ProductsList = () => {
             <div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
                 <AppTitle/>
                 <div className="text-center text-gray-dark pt-2 pb-2px-6">
-                    <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">Lista produktów</h1>
+                    <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">{t("products.ProductsList.title")}</h1>
                 </div>
                 <ReturnToCategoryList/>
 

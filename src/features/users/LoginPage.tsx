@@ -164,7 +164,7 @@ const LoginPage = () => {
         <>
 
             <div className="text-center bg-gray-50 text-gray-dark pt-20 pb-4 px-6">
-                <h1 className="text-4xl font-bold mt-0 mb-6">Domowa spiżarnia</h1>
+                <h1 className="text-4xl font-bold mt-0 mb-6">{t("app_title")}</h1>
             </div>
             <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm mx-auto">
                 {!content &&
@@ -194,9 +194,9 @@ const LoginPage = () => {
                                    id="exampleInputEmail2"
                                    aria-describedby="emailHelp"/>
 
-                            {errorMessage === 'Niepoprawny email' ? <p>{errorMessage}</p> : null}
-                            {errors.email?.type === 'required' && "Email is required"}
-                            {errors.email?.type === 'pattern' && "Nieprawidłowy email"}
+                            {errorMessage === 'Niepoprawny email' ? <p>{t("users.LoginPage.errorMessage.email")}</p> : null}
+                            {errors.email?.type === 'required' && t("users.LoginPage.errors.emailTypeRequired")}
+                            {errors.email?.type === 'pattern' && t("users.LoginPage.errors.emailTypePattern")}
                         </div>
                         <div className="form-group mb-6 relative">
                             <label className="form-label inline-block mb-2 text-gray-700">Password</label>
@@ -219,21 +219,19 @@ const LoginPage = () => {
                                    id="exampleInputPassword2"
                             />
                             <i onClick={togglePasswordVisibility}>{eye}</i>{" "}
-                            {errorMessage === 'Niepoprawne hasło' && <p>{errorMessage}</p>}
-                            {errorMessage === 'Konto nie istnieje' && <p>{errorMessage}</p>}
-                            {errors.password?.type === 'required' && 'Hasło wymagane'}
+                            {errorMessage === 'Niepoprawne hasło' && <p>{t("users.LoginPage.errorMessage.password")}</p>}
+                            {errorMessage === 'Konto nie istnieje' && <p>{t("users.LoginPage.errorMessage.account")}</p>}
+                            {errors.password?.type === 'required' && t("users.LoginPage.errors.passwordTypeRequired")}
                         </div>
-                        <p className="text-gray-800 mt-6 text-center pb-6">Nie pamiętasz hasła?
+                        <p className="text-gray-800 mt-6 text-center pb-6">{t("users.LoginPage.questionRemember")}
                             <Link to="/remindPassword"
-                                  className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1"> Przypomnij
-                                hasło</Link>
+                                  className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1">{t("users.LoginPage.linkToRememberPassword")}</Link>
                         </p>
                         <div className="flex justify-center space-x-6">
                             <button type="submit"
                                     className=" w-1/2
                                           px-6
                                           py-2.5
-
                                           text-purple
                                           font-bold
                                           text-xs
@@ -247,7 +245,7 @@ const LoginPage = () => {
                                           transition
                                           duration-150
                                           ease-in-out">
-                                Zaloguj
+                                {t("buttons.logIn")}
                             </button>
                             <button type="button"
                                     className=" w-1/2
@@ -295,11 +293,10 @@ const LoginPage = () => {
 
 
                         </div>
-                        {errorMessage === "Konto nie istnieje. Zarejestruj się!" ? <p>{errorMessage}</p> : null}
-                        <p className="text-gray-800 mt-6 text-center">Nie masz konta?
+                        {errorMessage === "Konto nie istnieje. Zarejestruj się!" ? <p>{t("users.LoginPage.errorMessage.register")}</p> : null}
+                        <p className="text-gray-800 mt-6 text-center">{t("users.LoginPage.questionAccount")}
                             <Link to="/register"
-                                  className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1">Zarejestruj
-                                się</Link>
+                                  className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1">{t("users.LoginPage.linkToRegister")}</Link>
                         </p>
                     </form>
                 }
@@ -308,9 +305,9 @@ const LoginPage = () => {
             {content &&
                 <>
                     <div className="bg-white rounded-lg py-5 px-6 mt-4 text-md text-purple-600 mb-3 max-w-sm mx-auto form-check" >
-                        <p className=" text-gray-light mt-8 ">Próbowałeś zalogować się poprzez Google.</p>
-                        <p className=" text-gray-light pt-2 ">Niestety nie masz jeszcze konta w serwisie.</p>
-                        <p className=" text-gray-light pt-2 ">Aby je utworzyc zaakceptuj regulamin i nacisnij guzik zarejestruj.</p>
+                        <p className=" text-gray-light mt-8 ">{t("users.LoginPage.content.p1")}</p>
+                        <p className=" text-gray-light pt-2 ">{t("users.LoginPage.content.p2")}</p>
+                        <p className=" text-gray-light pt-2 ">{t("users.LoginPage.content.p3")}</p>
                     </div>
                     <div className="mx-auto max-w-sm px-6">
                         <input
@@ -318,13 +315,13 @@ const LoginPage = () => {
                             type="checkbox" onChange={handleInputChange} checked={checkboxState} id="flexCheckDefault">
                         </input>
                         <label className="form-check-label inline-block text-gray-800 " htmlFor="flexCheckDefault">
-                        Akceptuję regulamin serwisu.
+                            {t("users.LoginPage.content.acceptRegulations")}
                         </label>
                     </div>
                     <div className="mx-auto text-lg text-purple text-center max-w-sm  ">
                          <button type="button"
                             className="mt-4 inline-block px-6 py-2 border-2 border-purple-600 text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-                            onClick={()=>signUserIfCheckboxStateIsTrue(user)}>Zarejestruj
+                            onClick={()=>signUserIfCheckboxStateIsTrue(user)}>{t("buttons.register")}
                          </button>
                     </div>
                     <div className="text-lg" >

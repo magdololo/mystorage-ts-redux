@@ -119,7 +119,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             )}
         />
         </Box>
-    {errors.newCategory && (<p className="text-xs text-red ml-10">{"Kategoria wymagana"}</p>)}
+    {errors.newCategory && (<p className="text-xs text-red ml-10">{t("products.EditProductForm.validationCategoryName")}</p>)}
     <Box id="modal-modal-description" sx={{mt: 2}}>
         <Controller
             name="newProductName"
