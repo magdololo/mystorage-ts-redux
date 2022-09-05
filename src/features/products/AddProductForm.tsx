@@ -133,7 +133,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                             control={control}
                             rules={{required: true}}
                             defaultValue={currentCategory ? currentCategory : null}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                            render={({field: {onChange, value}, fieldState: {}}) => (
                                 <AutocompleteWithCategoriesTitle
                                     value={value}
                                     onChange={onChange}
@@ -142,17 +142,16 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                             )}
                         />
                     </Box>
-                    {errors.category && (<p className="text-xs text-red ml-10">{"Kategoria wymagana"}</p>)}
+                    {errors.category && (<p className="text-xs text-red ml-10">{t("products.AddProductForm.validationCategoryName")}</p>)}
                     <Box id="modal-modal-description" sx={{mt: 2, width: "80%", marginLeft: "10%"}}>
                         <Controller
                             name="productName"
                             control={control}
                             rules={{required: true}}
-                            render={({field: {onChange, value}, fieldState: {error}, formState: {errors}}) => (<>
+                            render={({field: {onChange, value}, fieldState: {}, formState: {}}) => (<>
                                 <AutocompleteWithUserProducts
                                     value={value ?? ""}
                                     onChange={onChange}
-
                                     setSelectedProductFromAutocomplete={setSelectedProductFromAutocomplete}
                                     //setNewProductName={setNewProductName}
 
@@ -161,7 +160,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                             )}
                         />
                     </Box>
-                    {errors.productName && (<p className="text-xs text-red ml-10">Nazwa produktu wymagana</p>)}
+                    {errors.productName && (<p className="text-xs text-red ml-10">{t("products.AddProductForm.validationProductName")}</p>)}
                     <Box id="modal-modal-description" sx={{mt: 2, width: "100%"}}>
                         <Controller
                             name="capacity"
@@ -207,13 +206,13 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                             )}
                         />
                     </Box>
-                    {errors.capacity && (<p className="text-xs text-red ml-10">Pojemność wymagana i musi być więksa od 0.</p>)}
+                    {errors.capacity && (<p className="text-xs text-red ml-10">{t("products.AddProductForm.validationCapacity")}</p>)}
                     <Box>
                         <Controller
                             name="expireDate"
                             control={control}
                             defaultValue={null}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                            render={({field: {onChange, value}, fieldState: {}}) => (
                                 <LocalizationProvider
                                     dateAdapter={AdapterDateFns} locale={plLocale}>
                                     <DatePicker
@@ -248,7 +247,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                             )}
                         />
                     </Box>
-                    {errors.quantity && (<p className="text-xs text-red ml-10">Ilość wymagana i musi być więksa od 0.</p>)}
+                    {errors.quantity && (<p className="text-xs text-red ml-10">{t("products.AddProductForm.validationQuantity")}</p>)}
 
                     {errorMessage !== '' ? <Alert severity="error">{errorMessage}</Alert> : null}
                     <Button sx={{marginLeft: "10%", marginTop: "10%"}} type="submit" variant="contained" color="primary">{t("buttons.addProduct")}</Button>

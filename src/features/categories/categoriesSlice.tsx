@@ -11,6 +11,7 @@ import {AppDispatch, RootState} from "../../app/store";
 import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 import {notify} from "../../helpers";
+import i18next from "i18next";
 
 
 
@@ -136,15 +137,15 @@ const categoriesSlice = createSlice({
             .addCase(addNewCategory.fulfilled, (state, action) =>{
                 categoriesAdapter.addOne(state, action.payload.category)
                 if(action.payload.notify)
-                    notify("Nowa kategoria została dodana!")
+                    notify(i18next.t("categories.categoriesSlice.notify.addCategory"))
             } )
             .addCase(editCategory.fulfilled, (state, action)=>{
                 categoriesAdapter.setOne(state, action.payload)
-                notify("Kategoria została zmieniona!")
+                notify(i18next.t("categories.categoriesSlice.notify.changeCategory"))
             })
             .addCase(deleteCategory.fulfilled,(state,action)=>{
                 categoriesAdapter.removeOne(state, action.payload as string)
-                notify("Kategoria została usunięta!")
+                notify(i18next.t("categories.categoriesSlice.notify.removeCategory"))
             })
 
     }

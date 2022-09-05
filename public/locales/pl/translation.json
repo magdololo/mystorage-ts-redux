@@ -3,65 +3,84 @@
   "home_header_heading": "Twoje produkty zawsze pod ręką",
   "home_heading_subheading": "Zdobądź łatwy dostęp do produktów w swoim domu aby lepiej planować zakupy, posiłki i czas.",
   "home_section1_heading": "Twórz wlasne kategorie i dodawaj produkty",
-  "home_section1_subheading" : "Nazwy kategorii układają się alfabetycznie dzięki czemu łatwo je odnajdziesz. Możesz także dodawać własne obrazki i zdjęcia.",
+  "home_section1_subheading": "Nazwy kategorii układają się alfabetycznie dzięki czemu łatwo je odnajdziesz. Możesz także dodawać własne obrazki i zdjęcia.",
   "home_section2_heading": "Latwa edytowanie",
-  "home_section2_subheading" : "Szybko dodawaj i usuwaj wybrany produkt. Mozesz zmienic kategorię oraz sprawdzić czy produkt przekroczył date ważności.",
+  "home_section2_subheading": "Szybko dodawaj i usuwaj wybrany produkt. Mozesz zmienic kategorię oraz sprawdzić czy produkt przekroczył date ważności.",
   "home_section3_heading": "Szybkie wyszukiwanie",
-  "home_section3_subheading" : "Dzięki wyszukiwarce odnajdziesz wszystkie podobne produkty jak również konkretny produkt.",
-  "home_footer_word1" : "Akceptuję",
-  "home_footer_word2" : "serwisu",
-  "home_footer_link" : "regulamin",
+  "home_section3_subheading": "Dzięki wyszukiwarce odnajdziesz wszystkie podobne produkty jak również konkretny produkt.",
+  "home_footer_word1": "Akceptuję",
+  "home_footer_word2": "serwisu",
+  "home_footer_link": "regulamin",
   "acceptRegulations": "Akceptuję regulamin serwisu.",
-  "returnToCategoryList" : "Wróć do listy kategorii",
+  "returnToCategoryList": "Wróć do listy kategorii",
   "categories": {
-      "CategoryList": {
-          "modalWithGreeting_h1" : "Dziękujemy za rejestrację!",
-          "modalWithGreeting_h2" : "Witamy w serwisie!",
-          "categoriesStatusFailed": "ups.. coś poszło nie tak",
-          "modalAddHeader": "Dodaj nową kategorię",
-          "modalEditHeader" : "Edytuj kategorię"
-      },
+    "CategoryList": {
+      "modalWithGreeting_h1": "Dziękujemy za rejestrację!",
+      "modalWithGreeting_h2": "Witamy w serwisie!",
+      "categoriesStatusFailed": "ups.. coś poszło nie tak",
+      "modalAddHeader": "Dodaj nową kategorię",
+      "modalEditHeader": "Edytuj kategorię"
+    },
+    "CategoryPage": {
+      "editProduct": "Edytuj produkt",
+      "toastSuccessfully" : "Produkt usunięty"
+    },
     "AddCategoryForm": {
-        "placeholderCategoryName": "Nazwa kategorii",
-        "placeholderPickedImagesChoose": "Wybierz zdjęcie",
-        "placeholderPickedImagesChange": "Zmień zdjęcie",
-        "modalHeaderWithPictures" : "Wybierz zdjęcie",
-        "altPickedImage": "zdjęcia kategorii"
+      "placeholderCategoryName": "Nazwa kategorii",
+      "placeholderPickedImagesChoose": "Wybierz zdjęcie",
+      "placeholderPickedImagesChange": "Zmień zdjęcie",
+      "modalHeaderWithPictures": "Wybierz zdjęcie",
+      "altPickedImage": "zdjęcia kategorii"
     },
     "EditCategoryForm": {
-      "inputImageChange" : "zmień zdjęcie",
-      "inputImageChoose" : "wybierz zdjęcie",
-      "editButton" : "edytuj"
+      "inputImageChange": "zmień zdjęcie",
+      "inputImageChoose": "wybierz zdjęcie",
+      "editButton": "edytuj"
+    },
+    "categoriesSlice": {
+      "notify": {
+        "changeCategory": "Kategoria została zmieniona!",
+        "removeCategory": "Kategoria została usunieta!",
+        "addCategory":    "Nowa kategoria została dodana!"
+      }
     }
   },
   "products": {
     "ProductsList": {
-        "title" : "Lista produktów",
-        "productCategory" : "Kategoria"
+      "title": "Lista produktów",
+      "productCategory": "Kategoria"
+
     },
-      "AddProductForm": {
-        "formAddProductTitle": "Dodaj produkt",
-        "label_quantity": "Ilość",
-        "label_expireDate": "Data ważnosci",
-        "label_productName": "Nazwa produktu",
-        "label_categoryName": "Nazwa kategorii",
-        "label_capacity": "Pojemność",
-        "label_unit": "Jednostka"
-      },
-      "EditProductForm": {
-        "validationCategoryName": "Kategoria wymagana",
-        "validationProductName": "Nazwa produktu wymagana",
-        "labelProductName": "Nazwa produktu",
-        "labelCapacity": "Pojemność",
-        "validationCapacity": "Pojemność wymagana i musi być więksa od 0.",
-        "labelUnit": "Jednostka",
-        "labelExpireDate": "Data ważności",
-        "labelQuantity": "Ilość",
-        "validationQuantity": "Ilość wymagana i musi być więksa od 0."
-      },
+    "AddProductForm": {
+      "formAddProductTitle": "Dodaj produkt",
+      "label_quantity": "Ilość",
+      "label_expireDate": "Data ważnosci",
+      "label_productName": "Nazwa produktu",
+      "label_categoryName": "Nazwa kategorii",
+      "label_capacity": "Pojemność",
+      "label_unit": "Jednostka",
+      "validationCategoryName": "Kategoria wymagana",
+      "validationProductName": "Nazwa produktu wymagana",
+      "validationCapacity": "Pojemność wymagana i musi być więksa od 0.",
+      "validationQuantity": "Ilość wymagana i musi być więksa od 0."
+    },
+    "EditProductForm": {
+      "validationCategoryName": "Kategoria wymagana",
+      "validationProductName": "Nazwa produktu wymagana",
+      "labelProductName": "Nazwa produktu",
+      "labelCapacity": "Pojemność",
+      "validationCapacity": "Pojemność wymagana i musi być więksa od 0.",
+      "labelUnit": "Jednostka",
+      "labelExpireDate": "Data ważności",
+      "labelQuantity": "Ilość",
+      "validationQuantity": "Ilość wymagana i musi być więksa od 0."
+    },
     "SearchUserProductPage": {
       "searchResult": "Wyniki wyszukiwania",
-      "noSearchResult" :"Brak wyników wyszukiwania"
+      "noSearchResult": "Brak wyników wyszukiwania",
+      "toastSuccess": "Produkt usunięty!",
+      "category": "Kategoria",
+      "editProduct" : "Edytuj produkt"
     }
   },
   "users": {
@@ -69,19 +88,17 @@
       "questionRemember": "Nie pamiętasz hasła?",
       "linkToRememberPassword": "Przypomnij hasło",
       "questionAccount": "Nie masz jeszcze konta?",
-      "linkToRegister" : "Zarejestruj się",
-
+      "linkToRegister": "Zarejestruj się",
       "content": {
         "p1": "Próbowałeś zalogować się poprzez Google.",
         "p2": "Niestety nie masz jeszcze konta w serwisie.",
         "p3": "Aby je utworzyc zaakceptuj regulamin i nacisnij guzik zarejestruj."
       }
-
     },
     "RegisterPage": {
       "message": {
         "wrongPassword": "Błedne hasło!",
-        "userNotFound" : "Nie masz jeszcze konta. Zarejestruj się!",
+        "userNotFound": "Nie masz jeszcze konta. Zarejestruj się!",
         "emailAlreadyInUse": "Konto dla tego emaila już istnieje.",
         "userDisabled": "Użytkownik zablokowany.",
         "weakPassword": "Hasło nie spełnia reguł bezpieczeństwa.",
@@ -94,8 +111,8 @@
       "messageAfterSendPassword": " Na twój adres email wysłaliśmy hasło do restu konta!"
     },
     "errorMessage": {
-      "email" : "Nieprawidłowy email!",
-      "password" : "Nieprawidłowe hasło!",
+      "email": "Nieprawidłowy email!",
+      "password": "Nieprawidłowe hasło!",
       "account": "Konto nie istnieje!",
       "register": "Konto nie istnieje. Zarejestruj się!"
     },
@@ -116,7 +133,7 @@
     "logIn": "Zaloguj",
     "logOut": "Wyloguj się",
     "register": "Zarejestruj się",
-    "remindPassword" : "Dalej"
+    "remindPassword": "Dalej"
   },
   "component": {
     "SearchOwnPictureCategory": {
@@ -130,7 +147,6 @@
     "productList": "Lista produktów",
     "myAccount": "Moje konto",
     "signOut": "Wyloguj się"
-
   }
 }
 

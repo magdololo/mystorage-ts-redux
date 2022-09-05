@@ -36,8 +36,8 @@ const SearchUserProductPage= ()=>{
     const categories = useAppSelector(selectAllCategories)
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
-    const modalHeader = "Edytuj produkt"
-    const notify = () => toast.success('🦄 Produkt usunięty!', {
+    const modalHeader = t("products.SearchUserProductPage.editProduct")
+    const notify = () => toast.success(t('🦄 Products.SearchUserProductPage.toastSuccess!'), {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -108,7 +108,7 @@ const SearchUserProductPage= ()=>{
                            <div
                                className="text-gray-light">{product.capacity}{product.unit}
                            </div>
-                           <div className="text-gray-light text-md">Kategoria: <Link to={"/categories/"+product.categoryPath}>
+                           <div className="text-gray-light text-md">{t("products.SearchUserProductPage.category")}: <Link to={"/categories/"+product.categoryPath}>
                                <span className="capitalize text-md align-baseline text-gray font-bold">{product.categoryTitle}</span></Link>
                            </div>
                        </div>
@@ -166,7 +166,7 @@ const SearchUserProductPage= ()=>{
            )}
            </ul>
     } else {
-        content = <h2>Brak wyników wyszukiwania.</h2>
+        content = <h2>{t("products.SearchUserProductPage.noSearchResult")}.</h2>
     }
     return(
         <>

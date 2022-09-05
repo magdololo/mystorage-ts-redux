@@ -43,6 +43,7 @@ function App() {
         onAuthStateChanged(auth,async (user) => {
 
             if(user === null) {
+                console.log("logout")
                 dispatch(logout())
                 navigate("/")
                 return
@@ -80,7 +81,7 @@ function App() {
                 navigate("/categories")
             }
         })
-        }, [dispatch, navigate]);
+        }, []);
 
     return (
         <>
