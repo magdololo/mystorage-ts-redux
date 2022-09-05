@@ -90,7 +90,7 @@ export const editCategory = createAsyncThunk<Category, Category,{ //pierwsze to 
     console.log(category)//zmieniony
     let editingCategory = await thunkApi.getState().categories.currentCategory??{} as Category
     console.log(editingCategory)//niezmieniony
-    if (category.title !== editingCategory.title || category.url !== editingCategory.url && category.title !== "produkty bez kategorii"){
+    if ((category.title !== editingCategory.title || category.url !== editingCategory.url) && category.title !== "produkty bez kategorii"){
         const docRef = doc(db, "users/" + category.user + "/categories", category.id!);
         await setDoc(docRef, category);
     }

@@ -81,7 +81,7 @@ function App() {
                 navigate("/categories")
             }
         })
-        }, []);
+        }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <>
