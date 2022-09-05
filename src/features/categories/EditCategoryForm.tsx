@@ -140,7 +140,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
 
                     {newPickedImage !== "" ?
                         <div className="form-group mb-6">
-                            <img src={newPickedImage} alt={"new picked image"}/>
+                            <img src={newPickedImage} alt={"new picked"}/>
                         </div>
                         : null}
                     <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}
