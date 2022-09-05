@@ -133,7 +133,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                             control={control}
                             rules={{required: true}}
                             defaultValue={currentCategory ? currentCategory : null}
-                            render={({field: {onChange, value}, fieldState: {}}) => (
+                            render={({field: {onChange, value}}) => (
                                 <AutocompleteWithCategoriesTitle
                                     value={value}
                                     onChange={onChange}
@@ -148,7 +148,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                             name="productName"
                             control={control}
                             rules={{required: true}}
-                            render={({field: {onChange, value}, fieldState: {}, formState: {}}) => (<>
+                            render={({field: {onChange, value}}) => (<>
                                 <AutocompleteWithUserProducts
                                     value={value ?? ""}
                                     onChange={onChange}
@@ -212,7 +212,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                             name="expireDate"
                             control={control}
                             defaultValue={null}
-                            render={({field: {onChange, value}, fieldState: {}}) => (
+                            render={({field: {onChange, value}}) => (
                                 <LocalizationProvider
                                     dateAdapter={AdapterDateFns} locale={plLocale}>
                                     <DatePicker
