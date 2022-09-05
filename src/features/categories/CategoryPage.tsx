@@ -29,10 +29,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {useTranslation} from "react-i18next";
 
 
 const CategoryPage = () => {
-
+    const {t} = useTranslation()
     const dispatch = useAppDispatch();
     const {categoryPath} = useParams();
     const userProducts = useAppSelector(selectUserProducts)
@@ -42,8 +43,8 @@ const CategoryPage = () => {
     const productsOfCategory = useAppSelector((state) => userProducts.filter(product => product.categoryId === categoryId))
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
-    const modalHeader = "Edytuj produkt"
-    const notify = () => toast.success('🦄 Produkt usunięty!', {
+    const modalHeader = t("categories.CategoryPage.editProduct")
+    const notify = () => toast.success('🦄 t("categories.CategoryPage.toastSuccessfully!")', {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,

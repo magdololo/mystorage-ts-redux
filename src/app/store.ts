@@ -1,12 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {actionTypes} from "react-redux-firebase";
 import allProductsReducer from '../features/products/allProductsSlice'
 import categoriesReducer from '../features/categories/categoriesSlice'
 import usersReducer from '../features/users/usersSlice'
 import userProductsReducer from '../features/products/userProductsSlice'
 import imagesReducer from '../features/images/imagesSlice'
 import {useDispatch,TypedUseSelectorHook, useSelector} from "react-redux";
-import userProductsSlice from "../features/products/userProductsSlice";
+
 
 
 

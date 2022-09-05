@@ -13,10 +13,8 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 
-
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 import {editUserProduct, UserProduct} from "./userProductsSlice";
-import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 
 

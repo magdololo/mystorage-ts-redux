@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 const Home = () => {
     const { t, i18n } = useTranslation();
-    console.log(i18n.language)
+
     return (
         <>
             <header className="">
@@ -47,8 +47,8 @@ const Home = () => {
                 </nav>
 
 
-                <div
-                    className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-6 font-noto-sans md:pt-12 md:flex-row lg:flex-row">
+                <div className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-6 font-noto-sans md:pt-12 md:flex-row lg:flex-row">
+
                     <div className=" px-12  md:text-left md:w-3/5 md:mr-8 md:max-w-2xl ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-7xl lg:leading-tight">{t("home_header_heading")}</h2>
                         <h4 className="text-center text-gray-light text-lg mb-6 leading-loose md:text-lg md:text-left lg:text-xl lg:leading-10">{t("home_heading_subheading")}</h4>
@@ -63,9 +63,9 @@ const Home = () => {
 
                     <div className=" px-6 py-10 md:py-0 md:2/5">
                         <span
-                            className="absolute bottom-0 h-1 w-full text-gray-light shadow-xs box-decoration-clone"></span>
-                        {i18n.language === "pl" ? <img src="../images/categories_screen.png" className="max-h-128 lg:max-h-144" alt={"zdjęcie ekranu z kategoriami"}/> :  <img src="../images/categories_screen_en.png" className="max-h-128 lg:max-h-144" alt={"image screen with categories"}/>}
-
+                            className=" bottom-0 w-full text-gray-light shadow-xs box-decoration-clone">
+                        {i18n.language === "pl" ? <img src="../images/categories_screen.png" className="max-h-128 lg:max-h-144" alt={"ekran z kategoriami"}/> :  <img src="../images/categories_screen_en.png" className="max-h-128 lg:max-h-144" alt={"screen with categories"}/>}
+                        </span>
                     </div>
                 </div>
             </header>
@@ -75,7 +75,7 @@ const Home = () => {
                 <div
                     className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-12 font-noto-sans md:flex-row lg:flex-row">
                     <div className=" px-6 py-10 md:py-0 md:2/5">
-                        {i18n.language === "pl" ? <img src="../images/addProduct_screen.png" className="max-h-128 lg:max-h-144" alt={"zdjęcie strony formularza do dodawania produktu"}/> : <img src="../images/addProduct_screen_en.png" className="max-h-128 lg:max-h-144" alt={"image screen with add product form"}/>}
+                        {i18n.language === "pl" ? <img src="../images/addProduct_screen.png" className="max-h-128 lg:max-h-144" alt={" strona formularza do dodawania produktu"}/> : <img src="../images/addProduct_screen_en.png" className="max-h-128 lg:max-h-144" alt={"screen with add product form"}/>}
                     </div>
                     <div className=" px-12  md:text-left md:w-3/5 md:ml-8 md:max-w-2xl ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-5xl lg:leading-tight">{t("home_section1_heading")}</h2>
@@ -94,7 +94,7 @@ const Home = () => {
                         <h4 className="text-center text-gray-light text-lg mb-6 leading-loose md:text-lg md:text-left lg:text-xl lg:leading-10">{t("home_section2_subheading")}</h4>
                     </div>
                     <div className=" px-6 py-10 md:py-0 md:2/5">
-                        {i18n.language === "pl" ? <img src="../images/edit_screen.png" className="max-h-128 lg:max-h-144" alt={"zdjęcie ekranu z listą produktów i menu do szybkiej edycji"}/> : <img src="../images/edit_screen_en.png" className="max-h-128 lg:max-h-144" alt={"image with screen with product list and menu for quick editing"}/>}
+                        {i18n.language === "pl" ? <img src="../images/edit_screen.png" className="max-h-128 lg:max-h-144" alt={"ekran z listą produktów i menu do szybkiej edycji"}/> : <img src="../images/edit_screen_en.png" className="max-h-128 lg:max-h-144" alt={"screen with product list and menu for quick editing"}/>}
                     </div>
                     <div className=" px-12 md:hidden ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-5xl lg:leading-tight">{t("home_section2_heading")}</h2>
@@ -107,9 +107,10 @@ const Home = () => {
                     className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-12 font-noto-sans md:flex-row lg:flex-row">
                     <div className=" px-6 py-10 md:py-0 md:2/5">
                         <span
-                            className="absolute bottom-0 h-1 w-full text-gray-light shadow-zz box-decoration-clone"></span>
-                        {i18n.language === "pl" ? <img src="../images/search_screen.png" className="max-h-128 lg:max-h-144" alt={"zdjęcie ekranu z wyszukiwarką produktów"}/> : <img src="../images/search_screen_en.png" className="max-h-128 lg:max-h-144" alt={"image with screen with product finder "}/>}
-                    </div>
+                            className="bottom-0 h-1 w-full text-gray-light shadow-zz box-decoration-clone">
+                        {i18n.language === "pl" ? <img src="../images/search_screen.png" className="max-h-128 lg:max-h-144" alt={"ekran z wyszukiwarką produktów"}/> : <img src="../images/search_screen_en.png" className="max-h-128 lg:max-h-144" alt={"screen with product finder "}/>}
+                        </span>
+                        </div>
                     <div className=" px-12  md:text-left md:w-3/5 md:ml-8 md:max-w-2xl ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-5xl lg:leading-tight">{t("home_section3_heading")}</h2>
                         <h4 className="text-center text-gray-light text-lg mb-6 leading-loose md:text-lg md:text-left lg:text-xl lg:leading-10">{t("home_section3_subheading")}</h4>

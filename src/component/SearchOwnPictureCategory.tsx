@@ -23,7 +23,7 @@ const SearchOwnPictureCategory =()=>{
 
         if(!e.target.files) return;
         let files = e.target.value//nazwa pliku
-        const newPictureName = uid+"/"+ files.replace(/^.*[\\\/]/, '')
+        const newPictureName = uid+"/"+ files.replace(/^.*[\\]/, '')
         setNewImageName(newPictureName)
         let reader = new FileReader();
             reader.readAsDataURL(e.target.files!![0])

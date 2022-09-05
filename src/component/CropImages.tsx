@@ -2,39 +2,35 @@
 import React, { useState, useCallback } from "react";
 import Slider from "@material-ui/core/Slider";
  import Cropper from "react-easy-crop";
-import { Point, Area } from "react-easy-crop/types";
-//import "./styles.css";
+import { Area } from "react-easy-crop/types";
+
 import getCroppedImg from './canvasUtils'
 import {addCategoryImage, ImageFromUser} from "../features/images/imagesSlice";
 import {useAppDispatch} from "../app/store";
-import AddProductForm from "../features/products/AddProductForm";
+
 import {Modal} from "./Modal/Modal"
-import {useModal} from "./Modal/UseModal";
-import {ModalWithCrop} from "./Modal/ModalWithCrop";
-// import {useModal} from "./Modal/UseModal";
-// import {Modal} from ".rect";
+
 
 type CropImagesProps = {
     handleClose: () => void
-    // setImage: ()=> void
     image: string
     newImageName: string
     uid: string
 }
 
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        zIndex: "1500"
-    },
-};
+// const customStyles = {
+//     content: {
+//         top: '50%',
+//         left: '50%',
+//         right: 'auto',
+//         bottom: 'auto',
+//         marginRight: '-50%',
+//         transform: 'translate(-50%, -50%)',
+//         zIndex: "1500"
+//     },
+// };
 
-const CropImages =({image,setImage, handleClose, newImageName, uid}: CropImagesProps ) => {
+const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => {
     const dispatch = useAppDispatch();
     const [crop, setCrop] = useState<Crop>({
         unit: 'px', x: 0, y: 0, width: 1280, height: 815 });
@@ -75,19 +71,17 @@ const CropImages =({image,setImage, handleClose, newImageName, uid}: CropImagesP
             }else{
                 dispatch(addCategoryImage(newImageFromUser));
                 handleClose()
-                // setImage("");
+
             }
 
-
-            // setCroppedImage(croppedImage)
         } catch (e) {
             console.error(e)
         }
-    }, [croppedAreaPixels])
+    }, [croppedAreaPixels, dispatch,handleClose,image, newImageName,uid])
 
-    const onClose = useCallback(() => {
-        setCroppedImage(null)
-    }, [])
+    // const onClose = useCallback(() => {
+    //     setCroppedImage(null)
+    // }, [])
 
     return (
         <>

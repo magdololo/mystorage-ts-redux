@@ -21,6 +21,10 @@
       "modalAddHeader": "Add new category",
       "modalEditHeader" : "Edit category"
     },
+    "CategoryPage": {
+      "editProduct": "Edit product",
+      "toastSuccessfully" : "Product remove"
+    },
     "AddCategoryForm": {
       "placeholderCategoryName": "Category name",
       "placeholderPickedImagesChoose": "Choose picture",
@@ -32,12 +36,20 @@
       "inputImageChange" : "change picture",
       "inputImageChoose" : "select a picture",
       "editButton" : "edit"
+    },
+    "categoriesSlice": {
+      "notify": {
+        "changeCategory": "Category changed!",
+        "removeCategory": "Category removed!",
+        "addCategory":    "New category added!"
+      }
     }
   },
   "products": {
     "ProductsList": {
         "title" : "Product list",
         "productCategory" : "Category"
+
     },
     "AddProductForm": {
       "formAddProductTitle": "Add product",
@@ -46,7 +58,11 @@
       "label_productName": "Product name",
       "label_categoryName": "Category name",
       "label_capacity": "Capacity",
-      "label_unit": "Unit"
+      "label_unit": "Unit",
+      "validationCategoryName": "Category required",
+      "validationProductName": "Product name required",
+      "validationCapacity": "Capacity required and must be greater than 0.",
+      "validationQuantity": "Quantity required and must be greater than 0."
     },
     "EditProductForm": {
       "validationCategoryName": "Category required",
@@ -62,7 +78,10 @@
     },
     "SearchUserProductPage": {
       "searchResult": "Search result",
-      "noSearchResult" :"No search results"
+      "noSearchResult" :"No search results",
+      "toastSuccess": "Product removed!",
+      "category": "Category",
+      "editProduct" : "Edit product"
     }
   },
   "users": {

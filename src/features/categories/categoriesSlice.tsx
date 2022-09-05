@@ -11,6 +11,7 @@ import {AppDispatch, RootState} from "../../app/store";
 import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 import {notify} from "../../helpers";
+import i18next from "i18next";
 
 
 
@@ -89,7 +90,7 @@ export const editCategory = createAsyncThunk<Category, Category,{ //pierwsze to 
     console.log(category)//zmieniony
     let editingCategory = await thunkApi.getState().categories.currentCategory??{} as Category
     console.log(editingCategory)//niezmieniony
-    if (category.title !== editingCategory.title || category.url !== editingCategory.url && category.title !== "produkty bez kategorii"){
+    if ((category.title !== editingCategory.title || category.url !== editingCategory.url) && category.title !== "produkty bez kategorii"){
         const docRef = doc(db, "users/" + category.user + "/categories", category.id!);
         await setDoc(docRef, category);
     }
@@ -97,7 +98,7 @@ export const editCategory = createAsyncThunk<Category, Category,{ //pierwsze to 
 })
 
 export const deleteCategory = createAsyncThunk('categories/deleteCategory', async (category: Category)=> {
-     if(category.title != "produkty bez kategorii"){
+     if(category.title !== "produkty bez kategorii"){
     try {
         await deleteDoc(doc(db, "users/" + category.user + "/categories/" , category.id!))
         return category.id
@@ -136,15 +137,15 @@ const categoriesSlice = createSlice({
             .addCase(addNewCategory.fulfilled, (state, action) =>{
                 categoriesAdapter.addOne(state, action.payload.category)
                 if(action.payload.notify)
-                    notify("Nowa kategoria została dodana!")
+                    notify(i18next.t("categories.categoriesSlice.notify.addCategory"))
             } )
             .addCase(editCategory.fulfilled, (state, action)=>{
                 categoriesAdapter.setOne(state, action.payload)
-                notify("Kategoria została zmieniona!")
+                notify(i18next.t("categories.categoriesSlice.notify.changeCategory"))
             })
             .addCase(deleteCategory.fulfilled,(state,action)=>{
                 categoriesAdapter.removeOne(state, action.payload as string)
-                notify("Kategoria została usunięta!")
+                notify(i18next.t("categories.categoriesSlice.notify.removeCategory"))
             })
 
     }

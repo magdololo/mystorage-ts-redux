@@ -111,7 +111,7 @@ const LoginPage = () => {
 
             } else {
                 console.log("else")
-                const credential = GoogleAuthProvider.credentialFromResult(result);
+                GoogleAuthProvider.credentialFromResult(result);
 
                console.log("Singed in user: ", user);
                dispatch(
@@ -173,7 +173,7 @@ const LoginPage = () => {
                             <label className="form-label inline-block mb-2 text-gray-700">Email address</label>
                             <input {...register("email", {
                                 required: true,
-                                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                             })}
                                    placeholder="email"
                                    className="  form-control
