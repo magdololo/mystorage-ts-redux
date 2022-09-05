@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+
 
 
 import { initializeApp } from 'firebase/app';
@@ -39,7 +39,7 @@ export const firebaseConfig = {
 
 //init firebase app
 export const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+getAnalytics(app);
 //init services
 const auth = getAuth();
 const db = getFirestore(app)

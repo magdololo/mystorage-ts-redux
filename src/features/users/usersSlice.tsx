@@ -83,7 +83,7 @@ export const changeSeeGreetingToTrue = createAsyncThunk<boolean,User,{
 console.log("dispatch changeSeeGreetingToTrue")
     try{
         const docRef = doc(db, "users/" + user?.uid);
-        const userDoc = await getDoc(docRef);
+        await getDoc(docRef);
         console.log(docRef)
         await updateDoc(docRef, {"didSeeGreeting": true})
 

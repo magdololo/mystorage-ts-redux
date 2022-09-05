@@ -38,7 +38,7 @@ export type AutocompleteWithUserProductsProps = {
     onChange: (data: any) => void
     value: string
     setSelectedProductFromAutocomplete: (userProduct: UserProduct) => void;
-    setNewProductName: (data: string) => void
+    //setNewProductName: (data: string) => void
 }
 export type AutocompleteWithCategoriesTitleProps = {
     onChange: (data: any) => void
@@ -51,7 +51,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
-    const [newProductName, setNewProductName] = useState<string | null>(null);
+
     const user = useSelector(selectUser)
     const uid = user ? user.uid : ""
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
@@ -154,7 +154,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                                     onChange={onChange}
 
                                     setSelectedProductFromAutocomplete={setSelectedProductFromAutocomplete}
-                                    setNewProductName={setNewProductName}
+                                    //setNewProductName={setNewProductName}
 
                                 />
                                 </>

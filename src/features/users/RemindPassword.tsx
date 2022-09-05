@@ -34,7 +34,7 @@ const RemindPassword=()=>{
             })
             .catch((error) => {
                 const errorCode = error.code;
-                const errorMessage = error.message;
+                // const errorMessage = error.message;
                 if(errorCode === "auth/user-not-found"){
                     setErrorMessage("User z podanym email-em nie istnieje w aplikacji. Sprubój inny email.")
                     reset({email:""})

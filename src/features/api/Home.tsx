@@ -47,8 +47,8 @@ const Home = () => {
                 </nav>
 
 
-                <div
-                    className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-6 font-noto-sans md:pt-12 md:flex-row lg:flex-row">
+                <div className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-6 font-noto-sans md:pt-12 md:flex-row lg:flex-row">
+
                     <div className=" px-12  md:text-left md:w-3/5 md:mr-8 md:max-w-2xl ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-7xl lg:leading-tight">{t("home_header_heading")}</h2>
                         <h4 className="text-center text-gray-light text-lg mb-6 leading-loose md:text-lg md:text-left lg:text-xl lg:leading-10">{t("home_heading_subheading")}</h4>
@@ -63,9 +63,9 @@ const Home = () => {
 
                     <div className=" px-6 py-10 md:py-0 md:2/5">
                         <span
-                            className="absolute bottom-0 h-1 w-full text-gray-light shadow-xs box-decoration-clone"></span>
+                            className=" bottom-0 w-full text-gray-light shadow-xs box-decoration-clone">
                         {i18n.language === "pl" ? <img src="../images/categories_screen.png" className="max-h-128 lg:max-h-144" alt={"zdjęcie ekranu z kategoriami"}/> :  <img src="../images/categories_screen_en.png" className="max-h-128 lg:max-h-144" alt={"image screen with categories"}/>}
-
+                        </span>
                     </div>
                 </div>
             </header>

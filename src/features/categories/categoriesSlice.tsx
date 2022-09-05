@@ -97,7 +97,7 @@ export const editCategory = createAsyncThunk<Category, Category,{ //pierwsze to 
 })
 
 export const deleteCategory = createAsyncThunk('categories/deleteCategory', async (category: Category)=> {
-     if(category.title != "produkty bez kategorii"){
+     if(category.title !== "produkty bez kategorii"){
     try {
         await deleteDoc(doc(db, "users/" + category.user + "/categories/" , category.id!))
         return category.id

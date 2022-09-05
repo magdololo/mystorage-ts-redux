@@ -1,6 +1,6 @@
 import React, {useEffect, Suspense} from "react";
 import {useDispatch} from 'react-redux';
-import {auth, onAuthStateChanged, db, GoogleAuthProvider } from './firebase';
+import {auth, onAuthStateChanged, db} from './firebase';
 
 import { login, logout, User} from "./features/users/usersSlice";
 import {
@@ -41,8 +41,6 @@ function App() {
     let content;
     console.log(location)
     useEffect(() => {
-
-
         onAuthStateChanged(auth,async (user) => {
 
             if(user === null) {
@@ -61,13 +59,13 @@ function App() {
 
 
             if (!doExist) {
-                content =
-                    <>
-                        <div className="bg-purple-100 py-5 px-6 mb-4 text-base text-purple-700 mb-3" role="alert">
-                            A simple secondary alert with <a href="#" className="font-bold text-puclassName800">an example link</a>.
-                            Give it a click if you like.
-                        </div>
-                    </>
+                // content =
+                //     <>
+                //         <div className="bg-purple-100 py-5 px-6 mb-4 text-base text-purple-700 mb-3" role="alert">
+                //             A simple secondary alert with <a href="#" className="font-bold text-puclassName800">an example link</a>.
+                //             Give it a click if you like.
+                //         </div>
+                //     </>
                 navigate("/register")
 
             }
@@ -89,7 +87,7 @@ function App() {
         <>
         <Suspense fallback={<Loading />}>
             <div className="App">
-                {content}
+                {/*{content}*/}
                 <Routes>
 
                     !user ?

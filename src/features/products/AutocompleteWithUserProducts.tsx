@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useAppSelector} from "../../app/store";
 
 import {AutocompleteWithUserProductsProps} from "./AddProductForm";
@@ -16,10 +16,11 @@ import {useTranslation} from "react-i18next";
 const filter = createFilterOptions<ProductFromDictionary>();
 
 
-export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProductFromAutocomplete, setNewProductName}: AutocompleteWithUserProductsProps) => {
+export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProductFromAutocomplete}: AutocompleteWithUserProductsProps) => {
     const { t } = useTranslation();
     const allProducts = useAppSelector(selectAllProducts)
-
+    const [newProductName, setNewProductName] = useState<string | null>(null);
+    console.log(newProductName)
     return (
 
         <Autocomplete

@@ -1,12 +1,8 @@
 import Select from "react-select";
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import {useAppDispatch,useAppSelector} from "../store";
 import {searchByString, searchProduct, selectUserProducts} from "../../features/products/userProductsSlice";
 import {useNavigate} from "react-router-dom";
-import {
-  faHandPointer
-} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 const SearchInput2 =()=>{
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
