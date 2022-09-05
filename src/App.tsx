@@ -38,7 +38,6 @@ function App() {
     const location = useLocation()
 
 
-    let content;
     console.log(location)
     useEffect(() => {
         onAuthStateChanged(auth,async (user) => {
@@ -81,7 +80,7 @@ function App() {
                 navigate("/categories")
             }
         })
-        }, []);
+        }, [dispatch, navigate]);
 
     return (
         <>

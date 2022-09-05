@@ -77,7 +77,7 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
         } catch (e) {
             console.error(e)
         }
-    }, [croppedAreaPixels])
+    }, [croppedAreaPixels, dispatch,handleClose,image, newImageName,uid])
 
     // const onClose = useCallback(() => {
     //     setCroppedImage(null)

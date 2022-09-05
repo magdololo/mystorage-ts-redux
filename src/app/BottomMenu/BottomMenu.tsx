@@ -1,4 +1,3 @@
-import SearchInput from "./SearchInput";
 import Hamburger from "./Hamburger";
 import {Modal} from "../../component/Modal/Modal";
 import React from "react";

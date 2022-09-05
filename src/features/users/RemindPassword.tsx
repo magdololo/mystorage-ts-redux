@@ -54,7 +54,7 @@ const RemindPassword=()=>{
             <form onSubmit={onSubmit}>
                 <div className="form-group mb-6">
                     {/*<label className="form-label inline-block mb-2 text-gray-700">Email address</label>*/}
-                    <input {...register("email",{ required: true, pattern:  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, })}
+                    <input {...register("email",{ required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, })}
                            placeholder="email"
                            className="  form-control
                                             block
