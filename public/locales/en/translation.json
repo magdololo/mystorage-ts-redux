@@ -103,7 +103,8 @@
         "emailAlreadyInUse": "Email already in use!",
         "userDisabled": "User disabled!",
         "weakPassword": "Weak password!",
-        "default": "Unknown error. Report to the administrator!"
+        "default": "Unknown error. Report to the administrator!",
+        "acceptRegulations": "Acceptance of the regulations required!"
       }
     },
     "RemindPassword": {
@@ -129,17 +130,21 @@
     "addProduct": "Add product",
     "editProduct": "Edit product",
     "addCategory": "Add category",
-    "closeModalWithGreeting": "Close",
+    "close": "Close",
     "add": "Add",
     "logIn": "Sign In",
     "logOut": "Sign Out",
     "register": "Sign Up",
-    "remindPassword" : "Next"
+    "remindPassword" : "Next",
+    "confirm": "confirm"
   },
   "component": {
     "SearchOwnPictureCategory": {
       "addYourOwnPicture": "Add your own photo",
       "matchPhoto": "Match photo"
+    },
+    "CropImages": {
+      "informationAboutSizeOfPicture": "The photo size is too large!"
     }
   },
   "validationInputs": "Required field",

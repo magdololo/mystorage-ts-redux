@@ -102,7 +102,8 @@
         "emailAlreadyInUse": "Konto dla tego emaila już istnieje.",
         "userDisabled": "Użytkownik zablokowany.",
         "weakPassword": "Hasło nie spełnia reguł bezpieczeństwa.",
-        "default": "Nieznany błąd. Zgłoś się do administaratora."
+        "default": "Nieznany błąd. Zgłoś się do administaratora.",
+        "acceptRegulations": "Wymagana akceptacja regulaminu!"
       }
     },
     "RemindPassword": {
@@ -128,17 +129,21 @@
     "addProduct": "Dodaj produkt",
     "addCategory": "Dodaj kategorię",
     "editProduct": "Edytuj produkt",
-    "closeModalWithGreeting": "Zamknij",
+    "close": "Zamknij",
     "add": "Dodaj",
     "logIn": "Zaloguj",
     "logOut": "Wyloguj się",
     "register": "Zarejestruj się",
-    "remindPassword": "Dalej"
+    "remindPassword": "Dalej",
+    "confirm": "zatwierdź"
   },
   "component": {
     "SearchOwnPictureCategory": {
       "addYourOwnPicture": "Dodaj własne zdjęcie",
       "matchPhoto": "Dostosuj zdjęcie"
+    },
+    "CropImages": {
+      "informationAboutSizeOfPicture": "Rozmiar zdjęcia jest za duży!"
     }
   },
   "validationInputs": "Pole wymagane",

@@ -93,7 +93,7 @@ const RegisterPage = () => {
 
                 })
         } else {
-            setMessage("Wymagana akceptacja regulaminu!")
+            setMessage((t("users.RegisterPage.message.acceptRegulations")))
             console.log("hejjjjj")
         }
         }
