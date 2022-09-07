@@ -5,95 +5,43 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import {Nav,BoxMain, NavCollapse, NavLogo} from "./Home.components";
 
-const Nav = styled.nav`
-  max-width: 1280px;
-  width: 100%;
-  height: 112px;
-  border: 1px solid rgba(0,0,0,0.2);
-  margin-left: auto;
-  margin-right: auto;
-  position: fixed;
-  background-color: white;
-  display: flex;
-  flex-direction: row;
-  justify-items: center;
-  z-index: 50;
-  top: 0;
-  left: 0;
-  font-family: "Courgette", serif;
-  color: rgb(107,33,168);
-  @media (min-width: 390px) {
-    justify-content: space-between;
-  }
-  @media (min-width: 650px) {
-    height: 160px;
-  }
-  @media (min-width: 960px) {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-`
-const Box= styled.div`
-  padding-left: 16px;
-  width: 66.6%;
-  @media (min-width: 650px) {
-    width: 50%
-  }
-`
-
-const NavCollapse= styled.div`
-  align-items: center;
-  flex-grow: 1;
-  @media (min-width: 650px) {
-    width: 50%
-  }
-`
 const Home = () => {
     const { t, i18n } = useTranslation();
 
     return (
         <>
             <header>
-                <nav
-                    className="navbar max-w-7xl w-full mx-auto h-28 fixed bg-white relative flex items-center  z-50 top-0 left-0 font-courgette text-purple-800 flex-row md:h-40 sm:justify-between lg:px-12">
-                    <div className="pl-4 w-2/3 md:w-6/12">
-                        <div className="navbar-collapse collapse grow items-center w-full">
-                            <ul className="navbar-nav mr-auto ">
-                                <li className="nav-item ">
-                                    <a
-                                        className="nav-link block text-gray-400  hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out text-2xl p-4 sm:text-3xl sm:p-2  md:text-4xl lg:text-5xl"
-                                        href="#!"
-                                        data-mdb-ripple="true"
-                                        data-mdb-ripple-color="light"
-                                    >{t('app_title')}</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
+                <BoxMain>
+                    <Nav>
+                        <NavCollapse>
+                            <NavLogo>{t('app_title')}</NavLogo>
 
-                    </div>
-                    <div className="flex w-1/3 justify-end font-noto-sans px-6 sm:pr-8 md:w-6/12">
-                        <button type="button"
-                                className="inline-block  py-6 text-gray text-md font-bold  capitalize hover:border-b-2 hover:border-purple-800 focus:outline-none focus:ring-0 transition duration-150 ease-in-out
+                        </NavCollapse>
+
+                        <div className="flex w-1/3 justify-end font-noto-sans px-6 sm:pr-8 md:w-6/12">
+                            <button type="button"
+                                    className="inline-block  py-6 text-gray text-md font-bold  capitalize hover:border-b-2 hover:border-purple-800 focus:outline-none focus:ring-0 transition duration-150 ease-in-out
                                              sm:text-1/2lg md:mr-4 lg:text-xl"
-                        ><Link to="/login">{t("buttons.logIn")}</Link>
-                        </button>
-                        <button
-                            type="button"
-                            className="inline-block  hidden sm:justify-center md:block  "
-                            data-mdb-ripple="true"
-                            data-mdb-ripple-color="light"
-                        ><Link to="/register" className="px-4 py-3.5 bg-purple-800 text-white text-md  font-bold leading-tight rounded-2xl shadow-md  hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out lg:text-xl">{t("buttons.register")}</Link>
-                        </button>
+                            ><Link to="/login">{t("buttons.logIn")}</Link>
+                            </button>
+                            <button
+                                type="button"
+                                className="inline-block  hidden sm:justify-center md:block  "
+                                data-mdb-ripple="true"
+                                data-mdb-ripple-color="light"
+                            ><Link to="/register"
+                                   className="px-4 py-3.5 bg-purple-800 text-white text-md  font-bold leading-tight rounded-2xl shadow-md  hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out lg:text-xl">{t("buttons.register")}</Link>
+                            </button>
 
-                    </div>
-                </nav>
+                        </div>
+                    </Nav>
+                </BoxMain>
 
 
-                <div className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto pt-6 font-noto-sans md:pt-12 md:flex-row lg:flex-row">
+                <div
+                    className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto mt-36 font-noto-sans md:pt-12 md:flex-row lg:flex-row">
 
                     <div className=" px-12  md:text-left md:w-3/5 md:mr-8 md:max-w-2xl ">
                         <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-7xl lg:leading-tight">{t("home_header_heading")}</h2>
@@ -110,7 +58,11 @@ const Home = () => {
                     <div className=" px-6 py-10 md:py-0 md:2/5">
                         <span
                             className=" bottom-0 w-full text-gray-light shadow-xs box-decoration-clone">
-                        {i18n.language === "pl" ? <img src="../images/categories_screen.png" className="max-h-128 lg:max-h-144" alt={"ekran z kategoriami"}/> :  <img src="../images/categories_screen_en.png" className="max-h-128 lg:max-h-144" alt={"screen with categories"}/>}
+                        {i18n.language === "pl" ?
+                            <img src="../images/categories_screen.png" className="max-h-128 lg:max-h-144"
+                                 alt={"ekran z kategoriami"}/> :
+                            <img src="../images/categories_screen_en.png" className="max-h-128 lg:max-h-144"
+                                 alt={"screen with categories"}/>}
                         </span>
                     </div>
                 </div>
