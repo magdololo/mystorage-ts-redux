@@ -53,7 +53,6 @@ const RemindPassword=()=>{
             <h2 className="text-gray-light my-8 text-xl">{t("users.RemindPassword.header_h2")}</h2>
             <form onSubmit={onSubmit}>
                 <div className="form-group mb-6">
-                    {/*<label className="form-label inline-block mb-2 text-gray-700">Email address</label>*/}
                     <input {...register("email",{ required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, })}
                            placeholder="email"
                            className="  form-control

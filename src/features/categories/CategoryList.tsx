@@ -77,7 +77,7 @@ export const CategoryList = () => {
           active:bg-purple-800 active:shadow-lg
           transition
           duration-150
-          ease-in-out" data-bs-dismiss="modal" onClick={closeModalWithGreeting}>{t("buttons.closeModalWithGreeting")}
+          ease-in-out" data-bs-dismiss="modal" onClick={closeModalWithGreeting}>{t("buttons.close")}
                      </button>
                  </div></>} />
                   </>;

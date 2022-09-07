@@ -9,6 +9,7 @@ import {addCategoryImage, ImageFromUser} from "../features/images/imagesSlice";
 import {useAppDispatch} from "../app/store";
 
 import {Modal} from "./Modal/Modal"
+import {useTranslation} from "react-i18next";
 
 
 type CropImagesProps = {
@@ -31,6 +32,7 @@ type CropImagesProps = {
 // };
 
 const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => {
+    const {t} = useTranslation()
     const dispatch = useAppDispatch();
     const [crop, setCrop] = useState<Crop>({
         unit: 'px', x: 0, y: 0, width: 1280, height: 815 });
@@ -114,15 +116,15 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
                 </div>
             <div className="absolute bottom-6 right-14">
                 <button  className="w-24 text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
-                         onClick={showCroppedImage}>Zatwierdź </button>
+                         onClick={showCroppedImage}>{t("buttons.confirm")}</button>
                 <button  className="w-24 text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 ml-4 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
-                         onClick={handleClose}>Zamknij </button>
+                         onClick={handleClose}>{t("buttons.close")} </button>
             </div>
 
 
 
             </div>
-            <Modal className={"modal-info"} isShown={isOpen} hide={handleCloseModal} modalHeaderText={"Rozmiar zdjęcia jest za duży!"}  modalContent={<button onClick={handleCloseModal}>Zamknij</button>}/>
+            <Modal className={"modal-info"} isShown={isOpen} hide={handleCloseModal} modalHeaderText={t("component.CropImages.informationAboutSizeOfPicture")}  modalContent={<button onClick={handleCloseModal}>{t("buttons.close")}</button>}/>
       </>
 
     );
