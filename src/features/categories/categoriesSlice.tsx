@@ -12,6 +12,9 @@ import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "fireba
 import {db} from "../../firebase";
 import {notify} from "../../helpers";
 import i18next from "i18next";
+import firebase from "firebase/compat";
+import QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
+import DocumentData = firebase.firestore.DocumentData;
 
 
 
@@ -45,7 +48,7 @@ const initialState: EntityState<Category> & {  error: null | string | undefined;
 
 
 })
-// images: [],images: Image[];
+
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async (userId: string) => {
 
 
@@ -56,10 +59,10 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 
             let q = await query(collection(db, "users/" + userId + "/categories"));
             const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
+            querySnapshot.forEach((result) => {
 
-                let categoryDoc = doc.data() as Category;
-                categoryDoc.id = doc.id;
+                let categoryDoc = result.data() as Category;
+                categoryDoc.id = result.id;
                 categories.push(categoryDoc);
 
             })
@@ -108,7 +111,8 @@ export const deleteCategory = createAsyncThunk('categories/deleteCategory', asyn
         return {error: error}
 
     }
-}})
+}
+})
 
 
 const categoriesSlice = createSlice({

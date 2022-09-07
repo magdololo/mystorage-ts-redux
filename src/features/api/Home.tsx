@@ -5,12 +5,58 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+
+const Nav = styled.nav`
+  max-width: 1280px;
+  width: 100%;
+  height: 112px;
+  border: 1px solid rgba(0,0,0,0.2);
+  margin-left: auto;
+  margin-right: auto;
+  position: fixed;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  font-family: "Courgette", serif;
+  color: rgb(107,33,168);
+  @media (min-width: 390px) {
+    justify-content: space-between;
+  }
+  @media (min-width: 650px) {
+    height: 160px;
+  }
+  @media (min-width: 960px) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+`
+const Box= styled.div`
+  padding-left: 16px;
+  width: 66.6%;
+  @media (min-width: 650px) {
+    width: 50%
+  }
+`
+
+const NavCollapse= styled.div`
+  align-items: center;
+  flex-grow: 1;
+  @media (min-width: 650px) {
+    width: 50%
+  }
+`
 const Home = () => {
     const { t, i18n } = useTranslation();
 
     return (
         <>
-            <header className="">
+            <header>
                 <nav
                     className="navbar max-w-7xl w-full mx-auto h-28 fixed bg-white relative flex items-center  z-50 top-0 left-0 font-courgette text-purple-800 flex-row md:h-40 sm:justify-between lg:px-12">
                     <div className="pl-4 w-2/3 md:w-6/12">
