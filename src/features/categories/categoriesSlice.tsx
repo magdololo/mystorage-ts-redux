@@ -12,9 +12,6 @@ import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "fireba
 import {db} from "../../firebase";
 import {notify} from "../../helpers";
 import i18next from "i18next";
-import firebase from "firebase/compat";
-import QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
-import DocumentData = firebase.firestore.DocumentData;
 
 
 
