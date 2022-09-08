@@ -5,7 +5,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
-import {Nav,BoxMain, NavCollapse, NavLogo} from "./Home.components";
+import {
+    Nav,
+    BoxMain,
+    NavCollapse,
+    NavLogo,
+    MainMenu,
+    MenuButtonLogin,
+    MenuButtonRegister,
+    MainMenuLinkRegister, MainSection,
+    HeaderSectionText, HeaderSectionTextTitle, HeaderSectionTextTSubtitle, HeaderSectionButtonRegister
+} from "./Home.components";
 
 const Home = () => {
     const { t, i18n } = useTranslation();
@@ -17,43 +27,30 @@ const Home = () => {
                     <Nav>
                         <NavCollapse>
                             <NavLogo>{t('app_title')}</NavLogo>
-
                         </NavCollapse>
 
-                        <div className="flex w-1/3 justify-end font-noto-sans px-6 sm:pr-8 md:w-6/12">
-                            <button type="button"
-                                    className="inline-block  py-6 text-gray text-md font-bold  capitalize hover:border-b-2 hover:border-purple-800 focus:outline-none focus:ring-0 transition duration-150 ease-in-out
-                                             sm:text-1/2lg md:mr-4 lg:text-xl"
-                            ><Link to="/login">{t("buttons.logIn")}</Link>
-                            </button>
-                            <button
-                                type="button"
-                                className="inline-block  hidden sm:justify-center md:block  "
-                                data-mdb-ripple="true"
-                                data-mdb-ripple-color="light"
-                            ><Link to="/register"
-                                   className="px-4 py-3.5 bg-purple-800 text-white text-md  font-bold leading-tight rounded-2xl shadow-md  hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out lg:text-xl">{t("buttons.register")}</Link>
-                            </button>
-
-                        </div>
+                       <MainMenu>
+                            <MenuButtonLogin>
+                            <Link to="/login">{t("buttons.logIn")}</Link>
+                            </MenuButtonLogin>
+                            <MenuButtonRegister>
+                                <MainMenuLinkRegister as={Link} to="/register">
+                                    {t("buttons.register")}</MainMenuLinkRegister>
+                            </MenuButtonRegister>
+                       </MainMenu>
                     </Nav>
                 </BoxMain>
 
 
-                <div
-                    className="relative flex flex-col items-center justify-center w-full  max-w-6xl mx-auto mt-36 font-noto-sans md:pt-12 md:flex-row lg:flex-row">
+                <MainSection>
 
-                    <div className=" px-12  md:text-left md:w-3/5 md:mr-8 md:max-w-2xl ">
-                        <h2 className="text-center font-bold  text-font-home text-3xl mb-4 leading-snug md:text-4xl md:leading-snug md:text-left lg:text-7xl lg:leading-tight">{t("home_header_heading")}</h2>
-                        <h4 className="text-center text-gray-light text-lg mb-6 leading-loose md:text-lg md:text-left lg:text-xl lg:leading-10">{t("home_heading_subheading")}</h4>
-                        <button
-                            type="button"
-                            className="block mx-auto  bg-purple-800 text-white font-bold px-4 py-3.5 text-lg rounded-md md:inline-block md:px-6 md:py-3.5 md:text-lg  leading-tight md:rounded-2xl shadow-md hover:bg-purple-900 hover:shadow-lg focus:bg-purple-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-                            data-mdb-ripple="true"
-                            data-mdb-ripple-color="light"
-                        ><Link to="/register">{t("buttons.register")}</Link>
-                        </button>
-                    </div>
+                    <HeaderSectionText>
+                        <HeaderSectionTextTitle>{t("home_header_heading")}</HeaderSectionTextTitle>
+                        <HeaderSectionTextTSubtitle>{t("home_heading_subheading")}</HeaderSectionTextTSubtitle>
+                        <HeaderSectionButtonRegister as="button">
+                            <Link to="/register">{t("buttons.register")}</Link>
+                        </HeaderSectionButtonRegister>
+                    </HeaderSectionText>
 
                     <div className=" px-6 py-10 md:py-0 md:2/5">
                         <span
@@ -65,7 +62,8 @@ const Home = () => {
                                  alt={"screen with categories"}/>}
                         </span>
                     </div>
-                </div>
+
+                </MainSection>
             </header>
 
 
