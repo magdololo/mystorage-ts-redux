@@ -56,9 +56,6 @@ const NavLogo = styled.span`
   color: rgb(107, 33, 168);
   font-size: 1.5rem; /* 24px */
   line-height: 2rem; /* 32px */
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
   
   @media (min-width: 390px) {
     font-size: 1.875rem; /* 30px */
@@ -97,15 +94,7 @@ const MenuButtonLogin = styled.button`
   font-size: 15px;
   font-weight: bold;
   text-transform: capitalize;
-  &:hover {
-    border-bottom: 2px solid rgb(107, 33, 168);
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
-  }
-  &:focus {
-    outline: none;
-  }
+ 
   @media (min-width: 390px) {
     font-size: 18px;
   }
@@ -115,6 +104,19 @@ const MenuButtonLogin = styled.button`
   @media (min-width: 960px) {
     font-size: 1.25rem; /* 20px */
     line-height: 1.75rem; /* 28px */
+  }
+`
+const MainMenuLinkLogin = styled.link`
+  display: inline-block;
+  padding: 0.875rem 0;
+  &:hover {
+    border-bottom: 2px solid rgb(107, 33, 168);
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  &:focus {
+    outline: none;
   }
 `
 const MenuButtonRegister = styled.button`
@@ -159,15 +161,13 @@ const MainSection = styled.div`
   @media (min-width: 650px) {
     flex-direction: row;
     margin-top: 3rem;
-    
   }
   @media (min-width: 960px) {
-    flex-direction: row;
     max-width: 72rem;
   }
 `
-const HeaderSectionText = styled.div`
-  padding: 0 3rem;
+const HeaderSectionBoxText = styled.div`
+  padding: 0 2rem;
   @media (min-width: 650px) {
     text-align: left;
     width: 60%;
@@ -179,18 +179,18 @@ const HeaderSectionText = styled.div`
 const HeaderSectionTextTitle = styled.h2`
   text-align: center;
   margin-bottom: 1rem;
-  color: rgb(35, 55, 72);
-  font-size: 1.875rem; /* 30px */
-  line-height: 2.25rem; /* 36px, 1.375 */
+  color: rgb(54, 70, 84);
+  font-size: 2.2rem;/*1.875rem; /* 30px */
+  line-height: 3rem;/*2.25rem; /* 36px, 1.375 */
   font-weight: bold;
   @media (min-width: 650px) {
-    font-size: 2.25rem; /* 36px */
-    line-height: 2.5rem; /* 40px */
+    font-size: 2.5rem; /* 36px */
+    line-height: 3.5rem; /* 40px */
     text-align: left;
   }
   @media (min-width: 960px) {
-    font-size: 4.5rem; /* 72px */
-    line-height: 1;/* 1.25 */
+    font-size: 4.2rem; /* 72px */
+    line-height: 1.25;/* 1.25 */
   }
 `
 const HeaderSectionTextTSubtitle = styled.h2`
@@ -198,15 +198,15 @@ const HeaderSectionTextTSubtitle = styled.h2`
   margin-bottom: 1.5rem;
   color: rgb(113, 113, 122);
   font-size: 1.125rem; /* 18px */
-  line-height: 1.75rem; /* 28px ,2*/
+  line-height: 2rem; /* 28px ,2*/
   @media (min-width: 650px) {
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
+    font-size: 1.250rem; /* 18px */
+    line-height: 2.5rem; /* 28px */
     text-align: left;
   }
   @media (min-width: 960px) {
     font-size: 1.25rem; /* 20px */
-    line-height: 1.75rem; /* 28px 2.5*/
+    line-height: 2.5rem; /* 28px 2.5*/
   }
   `
 const HeaderSectionButtonRegister = styled(MainMenuLinkRegister)`
@@ -220,11 +220,123 @@ const HeaderSectionButtonRegister = styled(MainMenuLinkRegister)`
   }
 `
 
-const HeaderSectionPhoto = styled.div`
-
+const HeaderSectionBoxPhotos = styled.div`
+  padding: 2.5rem 1.5rem;
+  @media (min-width: 650px) {
+    width: 40%;
+    margin-top: 5rem;
+    padding-bottom: 0;
+  }
 `
-export {Nav,BoxMain, NavCollapse, NavLogo, MainMenu, MenuButtonLogin, MenuButtonRegister,MainMenuLinkRegister, MainSection,
-  HeaderSectionText, HeaderSectionTextTitle, HeaderSectionTextTSubtitle, HeaderSectionButtonRegister }
+const PhotoBox = styled.img`
+  max-height: 32rem;
+  @media (min-width: 960px) {
+    max-height: 36rem;
+  }
+`
+export interface SectionProps {
+  primary: boolean
+}
+const Section = styled.div<SectionProps>`
+  width: 100%;
+  box-shadow: ${props => props.primary ? "0 0 3em #E7E5E4" : "none"};
+`
+export interface SectionBoxProps {
+  size: boolean
+}
+const SectionBox = styled.div<SectionBoxProps>`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding-top: ${props=>props.size ? "5.5rem" : "1rem"};
+  font-family: "Noto Sans", sans-serif;
+  @media (min-width: 650px) {
+    flex-direction: row;
+  }
+  @media (min-width: 960px) {
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+`
+const SectionBoxPhotos = styled.div`
+  padding-bottom: 2.5rem;
+  display: flex;
+  justify-content: center;
+  @media (min-width: 650px) {
+    padding: 0 1.5rem 0;
+    width: 40%;
+  }
+`
+// export interface SectionBoxTextProps {
+//   primary: boolean
+// }
+const SectionBoxText = styled.div`
+  padding: 0 3rem; //3
+  display:  none;
+  @media (min-width: 650px) {
+    width: 60%;
+    text-align: left;
+    max-width: 42rem;
+    display: block;
+    
+  }
+`
+const SectionTextTitle = styled.h2`
+  text-align: center;
+  margin-bottom: 2rem;
+  color: rgb(65, 82, 97);
+  font-size: 1.75rem;/*1.875rem; /* 30px */
+  line-height: 2.5rem;/*2.25rem; /* 36px, 1.375 */
+  font-weight: bold;
+  @media (min-width: 650px) {
+    font-size: 2rem; /* 36px */
+    line-height: 3rem; /* 40px */
+    text-align: left;
+  }
+  @media (min-width: 960px) {
+    font-size: 2.8rem; /* 72px */
+    line-height: 1.35;/* 1.25 */
+  }
+`
+const SectionTextSubtitle = styled.h4`
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: rgb(141, 141, 153);
+  font-size: 1.125rem; /* 18px */
+  line-height: 2rem; /* 28px ,2*/
+  @media (min-width: 650px) {
+    font-size: 1.125rem; /* 18px */
+    line-height: 2rem; /* 28px */
+    text-align: left;
+  }
+  @media (min-width: 960px) {
+    font-size: 1.25rem; /* 20px */
+    line-height: 2.5rem; /* 28px 2.5*/
+  }
+`
+export {
+  Nav,
+  BoxMain,
+  NavCollapse,
+  NavLogo,
+  MainMenu,
+  MenuButtonLogin,
+  MainMenuLinkLogin,
+  MenuButtonRegister,
+  MainMenuLinkRegister,
+  MainSection,
+  HeaderSectionBoxText,
+  HeaderSectionTextTitle,
+  HeaderSectionTextTSubtitle,
+  HeaderSectionButtonRegister,
+  HeaderSectionBoxPhotos,
+  PhotoBox,
+  Section,SectionBox, SectionBoxPhotos, SectionBoxText, SectionTextTitle, SectionTextSubtitle,
+
+}
 // interface NazwaZmiennejProps {
 //   color: string | boolean |"block" |"invisible"
 // }
