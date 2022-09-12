@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import PropTypes from "prop-types";
+
 
 const BoxMain= styled.div`
   width: 100%;
