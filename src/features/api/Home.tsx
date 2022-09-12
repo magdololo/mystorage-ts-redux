@@ -47,24 +47,13 @@ const Home = () => {
     };
     //const getLanguage = () => i18n.language || window.localStorage.i18nextLng
 
-    // function langSwitch(isEnglish: boolean) {
-    //     console.log(`switch to ${isEnglish}`);
-    //     if (isEnglish) {
-    //         i18n.changeLanguage("en");
-    //     } else {
-    //         i18n.changeLanguage("pl");
-    //     }
-    // }
-    // if(isEnglish){
-    //     i18n.changeLanguage("gb")
-    // }else {
-    //     i18n.changeLanguage("pl")
-    // }
   useEffect(()=>{
         if(isEnglish){
             i18n.changeLanguage("en");
+        } else {
+            i18n.changeLanguage("pl");
         }
-    },[])
+    },[isEnglish])
     return (
         <>
             <header>
