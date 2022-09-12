@@ -253,8 +253,17 @@ const SectionBox = styled.div<SectionBoxProps>`
   margin: 0 auto;
   padding-top: ${props=>props.size ? "5.5rem" : "1rem"};
   font-family: "Noto Sans", sans-serif;
+  .noVisibilityOnMobile{
+    display: none;
+  }
   @media (min-width: 650px) {
     flex-direction: row;
+    .noVisibilityOnMobile{
+      display: block;
+    }
+    .visibilityOnMobile {
+      display: none;
+    }
   }
   @media (min-width: 960px) {
     max-width: 72rem;
@@ -275,12 +284,13 @@ const SectionBoxPhotos = styled.div`
 // }
 const SectionBoxText = styled.div`
   padding: 0 3rem; //3
-  display:  none;
+  
   @media (min-width: 650px) {
     width: 60%;
     text-align: left;
     max-width: 42rem;
-    display: block;
+    
+    
     
   }
 `
@@ -317,6 +327,50 @@ const SectionTextSubtitle = styled.h4`
     line-height: 2.5rem; /* 28px 2.5*/
   }
 `
+const FooterAuthor = styled.div`
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  .footer-header{
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem; /* 16px */
+    color: rgb(163, 163, 163);
+    font-family: "Noto Sans",sans-serif;
+  }
+  .icons {
+    padding-right: 0.25rem;
+  }
+  @media (min-width: 650px) {
+    padding-bottom: 2.5rem;
+  }
+  @media (min-width: 960px) {
+    .footer-header{
+      font-size: 0.85rem; /* 12px */
+      line-height: 1.1rem; /* 16px */
+    }
+  }
+`
+const FooterRegulations = styled.div`
+  padding-top: 0.25rem;
+  padding-bottom: 2rem;
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem; /* 16px */
+  color: rgb(163, 163, 163);
+  font-family: "Noto Sans",sans-serif;
+  .footerRegulationsLink {
+    margin: 0 0.5rem;
+    color: rgb(107, 33, 168);
+  }
+  .footerRegulationsSpan {
+    @media (min-width: 650px) {
+     margin-left: 3rem;
+    }
+  }
+  @media (min-width: 960px) {
+    font-size: 0.85rem; /* 12px */
+    line-height: 1.1rem; /* 16px */
+  }
+`
+
 export {
   Nav,
   BoxMain,
@@ -335,12 +389,6 @@ export {
   HeaderSectionBoxPhotos,
   PhotoBox,
   Section,SectionBox, SectionBoxPhotos, SectionBoxText, SectionTextTitle, SectionTextSubtitle,
+  FooterAuthor, FooterRegulations
 
 }
-// interface NazwaZmiennejProps {
-//   color: string | boolean |"block" |"invisible"
-// }
-// const NazwaZmiennej = styled.div<NazwaZmiennejProps>`{
-//   color: ${props=>props.color};
-// } //nazwa zmiennej jest okreslona w dokumentacji nie przez nas
-// `

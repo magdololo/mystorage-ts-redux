@@ -22,10 +22,10 @@ import {
     HeaderSectionButtonRegister,
     HeaderSectionBoxPhotos,
     PhotoBox,
-    Section,SectionBox, SectionBoxPhotos, SectionBoxText, SectionTextTitle, SectionTextSubtitle,
-
+    Section, SectionBox, SectionBoxPhotos, SectionBoxText, SectionTextTitle, SectionTextSubtitle,
+    FooterAuthor, FooterRegulations
 } from "./Home.components";
-import {notify} from "../../helpers";
+
 
 const Home = () => {
     const { t, i18n } = useTranslation();
@@ -91,7 +91,7 @@ const Home = () => {
             <Section primary={false}>
                 <SectionBox size={true}>
 
-                    <SectionBoxText >
+                    <SectionBoxText className={"noVisibilityOnMobile"}>
                         <SectionTextTitle>{t("home_section2_heading")}</SectionTextTitle>
                         <SectionTextSubtitle>{t("home_section2_subheading")}</SectionTextSubtitle>
                     </SectionBoxText>
@@ -102,7 +102,7 @@ const Home = () => {
                             <PhotoBox src="../images/edit_screen_en.png"
                                  alt={"screen with product list and menu for quick editing"}/>}
                     </SectionBoxPhotos>
-                    <SectionBoxText>
+                    <SectionBoxText className={"visibilityOnMobile"}>
                         <SectionTextTitle>{t("home_section2_heading")}</SectionTextTitle>
                         <SectionTextSubtitle>{t("home_section2_subheading")}</SectionTextSubtitle>
                     </SectionBoxText>
@@ -129,16 +129,17 @@ const Home = () => {
 
             <Section primary={false}>
                 <SectionBox size={false}>
-                    <div className="py-2 pb-1 md:py-3 md:pb-10">
-                        <h5 className="text-sm text-footerLight sm:text-font-home">
-                            <FontAwesomeIcon className="text-footerLight pr-2" icon={faCopyright} />
+                    <FooterAuthor>
+                        <h5 className="footer-header">
+                            <FontAwesomeIcon className="icons" icon={faCopyright} />
                             <span>by Magdalena Jarzyna 2022</span>
                         </h5>
-                    </div>
-                    <div className="py-2 pb-6  md:py-3 md:pb-10 text-md text-footerLight sm:text-font-home">
-                        <span className="md:ml-12">{t("home_footer_word1")}<Link to="/#" className="mx-2 text-purple">{t("home_footer_link")}</Link>{t("home_footer_word2")}</span>
-                    </div>
-
+                    </FooterAuthor>
+                    <FooterRegulations>
+                        <span className="footerRegulationsSpan">{t("home_footer_word1")}
+                            <Link to="/#" className="footerRegulationsLink ">{t("home_footer_link")}</Link>
+                            {t("home_footer_word2")}</span>
+                    </FooterRegulations>
                 </SectionBox>
             </Section>
         </>
