@@ -136,7 +136,7 @@
     "logOut": "Sign Out",
     "register": "Sign Up",
     "remindPassword" : "Next",
-    "confirm": "confirm"
+    "confirm": "Confirm"
   },
   "component": {
     "SearchOwnPictureCategory": {
