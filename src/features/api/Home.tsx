@@ -53,7 +53,7 @@ const Home = () => {
         } else {
             i18n.changeLanguage("pl");
         }
-    },[isEnglish])
+    },[isEnglish, i18n])
     return (
         <>
             <header>

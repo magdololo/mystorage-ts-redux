@@ -42,7 +42,7 @@ const BottomHamburgerMenu = () => {
         } else {
             i18n.changeLanguage("pl");
         }
-    },[isEnglish])
+    },[isEnglish, i18n])
     const refreshPage = ()=>{
         window.location.reload();  }
     const logoutOfApp = () => {
