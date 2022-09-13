@@ -53,7 +53,7 @@ const Home = () => {
         } else {
             i18n.changeLanguage("pl");
         }
-    },[isEnglish, i18n.language])
+    },[isEnglish])// eslint-disable-line react-hooks/exhaustive-deps
     return (
         <>
             <header>

@@ -42,9 +42,9 @@ const BottomHamburgerMenu = () => {
         } else {
             i18n.changeLanguage("pl");
         }
-    },[isEnglish, i18n])
+    },[isEnglish])// eslint-disable-line react-hooks/exhaustive-deps
     const refreshPage = ()=>{
-        window.location.reload();  }
+        window.location.reload(); }
     const logoutOfApp = () => {
         signOut(auth);
         navigate('/')
