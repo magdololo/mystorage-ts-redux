@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {
     faCopyright,
@@ -7,10 +7,13 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 import {
     Nav,
+
     BoxMain,
     NavCollapse,
     NavLogo,
     MainMenu,
+    MenuFlag,
+    MainMenuSpan,
     MenuButtonLogin,
     MainMenuLinkLogin,
     MenuButtonRegister,
@@ -25,29 +28,56 @@ import {
     Section, SectionBox, SectionBoxPhotos, SectionBoxText, SectionTextTitle, SectionTextSubtitle,
     FooterAuthor, FooterRegulations
 } from "./Home.components";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 
 const Home = () => {
     const { t, i18n } = useTranslation();
+    const [isEnglish, setIsEnglish]= useState<boolean>(false);
+    useEffect(()=> {
+        if (i18n.language === "pl" || window.localStorage.i18nextLng === "pl") {
+            setIsEnglish(false)
+        } else {
+            setIsEnglish(true)
+        }
+    },[])
 
+    const handleToggle = () => {
+        setIsEnglish(!isEnglish);
+    };
+    //const getLanguage = () => i18n.language || window.localStorage.i18nextLng
+
+  useEffect(()=>{
+        if(isEnglish){
+            i18n.changeLanguage("en");
+        } else {
+            i18n.changeLanguage("pl");
+        }
+    },[isEnglish, i18n])
     return (
         <>
             <header>
+
                 <BoxMain>
                     <Nav>
                         <NavCollapse>
                             <NavLogo>{t('app_title')}</NavLogo>
                         </NavCollapse>
 
-                       <MainMenu>
+                        <MainMenu>
+
                             <MenuButtonLogin>
-                            <MainMenuLinkLogin  as={Link} to="/login">{t("buttons.logIn")}</MainMenuLinkLogin >
+                                <MainMenuLinkLogin as={Link} to="/login">{t("buttons.logIn")}</MainMenuLinkLogin>
                             </MenuButtonLogin>
                             <MenuButtonRegister>
                                 <MainMenuLinkRegister as={Link} to="/register">
                                     {t("buttons.register")}</MainMenuLinkRegister>
                             </MenuButtonRegister>
-                       </MainMenu>
+                            <MenuFlag>
+                                <MainMenuSpan onClick={handleToggle}
+                                              className={isEnglish ? " fi fi-pl span" : "fi fi-gb span"}/>
+                            </MenuFlag>
+                        </MainMenu>
                     </Nav>
                 </BoxMain>
 

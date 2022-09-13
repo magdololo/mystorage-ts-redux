@@ -38,7 +38,7 @@ const Nav = styled.nav`
 
 const NavCollapse= styled.div`
   padding-left: 1.5rem;//24px
-  width: 66.6%;
+  width: 55%;
   flex-grow: 1;
   display: flex;
   align-items: center;
@@ -73,7 +73,7 @@ const NavLogo = styled.span`
   `
 const MainMenu = styled.div`
   display: flex;
-  width: 33.4%;
+  width: 45%;
   justify-content: end;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -85,10 +85,11 @@ const MainMenu = styled.div`
    width: 50%;
   }
 `
+
 const MenuButtonLogin = styled.button`
   display: inline-block;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  //padding-top: 1.5rem;
+  //padding-bottom: 1.5rem;
   color: gray;
   font-family: "Noto Sans", sans-serif;
   font-size: 15px;
@@ -118,6 +119,29 @@ const MainMenuLinkLogin = styled.link`
   &:focus {
     outline: none;
   }
+`
+const MenuFlag = styled(MenuButtonLogin)`
+  display: inline-block;
+  margin-left: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  @media (min-width: 650px) {
+    font-size: 1.75rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
+  }
+  
+`
+
+const MainMenuSpan = styled(MainMenuLinkLogin)`
+  padding: 0;
+  border: 1px solid rgb(230,230,230);
+  background-size: cover;
+  border-radius: 0.2rem; /* 16px */
+  &:hover {
+    border-bottom: none;
+  }
+  
 `
 const MenuButtonRegister = styled.button`
   display: none;
@@ -377,6 +401,8 @@ export {
   NavCollapse,
   NavLogo,
   MainMenu,
+  MenuFlag,
+  MainMenuSpan,
   MenuButtonLogin,
   MainMenuLinkLogin,
   MenuButtonRegister,
