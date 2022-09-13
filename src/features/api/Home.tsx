@@ -40,7 +40,7 @@ const Home = () => {
         } else {
             setIsEnglish(true)
         }
-    },[])
+    },[i18n.language])
 
     const handleToggle = () => {
         setIsEnglish(!isEnglish);
@@ -49,11 +49,17 @@ const Home = () => {
 
   useEffect(()=>{
         if(isEnglish){
-            i18n.changeLanguage("en");
+            i18n.changeLanguage("en")
+            .then(()=>{
+                console.log("english")
+            })
         } else {
-            i18n.changeLanguage("pl");
+            i18n.changeLanguage("pl")
+        .then(()=>{
+                console.log("polish")
+            })
         }
-    },[isEnglish])// eslint-disable-line react-hooks/exhaustive-deps
+    },[isEnglish, i18n])
     return (
         <>
             <header>

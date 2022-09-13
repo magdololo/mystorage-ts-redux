@@ -91,14 +91,14 @@ const CategoryPage = () => {
 
     return (
         <>
-            <div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
+            <div className="pb-6 xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
                 <AppTitle/>
                 <div className="text-center text-gray-dark pt-2 pb-2px-6">
                     <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">{categoryFromPath?.title}</h1>
                 </div>
                 <ReturnToCategoryList/>
 
-                <div className="flex mt-2">
+                <div className="flex mt-2 mb-8">
                     <ul className="pb-16 w-full relative">
                         {productsOfCategory.map((product:UserProduct) =>
 
