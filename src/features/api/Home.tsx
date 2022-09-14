@@ -108,7 +108,7 @@ const Home = () => {
 
 
             <Section primary={true}>
-                <SectionBox size={true}>
+                <SectionBox size={"5.5rem"}>
                     <SectionBoxPhotos>
                         {i18n.language === "pl" ?
                             <PhotoBox src="../images/addProduct_screen.png"
@@ -125,7 +125,7 @@ const Home = () => {
             </Section>
 
             <Section primary={false}>
-                <SectionBox size={true}>
+                <SectionBox size={"5.5rem"}>
 
                     <SectionBoxText className={"noVisibilityOnMobile"}>
                         <SectionTextTitle>{t("home_section2_heading")}</SectionTextTitle>
@@ -146,7 +146,7 @@ const Home = () => {
             </Section>
 
             <Section primary={true}>
-                <SectionBox size={true}>
+                <SectionBox size={"5.5rem"}>
                     <SectionBoxPhotos>
                         {i18n.language === "pl" ?
                             <PhotoBox src="../images/search_screen.png"
@@ -164,7 +164,7 @@ const Home = () => {
 
 
             <Section primary={false}>
-                <SectionBox size={false}>
+                <SectionBox size={"1rem"}>
                     <FooterAuthor>
                         <h5 className="footer-header">
                             <FontAwesomeIcon className="icons" icon={faCopyright} />

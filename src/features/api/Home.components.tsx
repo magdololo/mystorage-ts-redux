@@ -88,8 +88,6 @@ const MainMenu = styled.div`
 
 const MenuButtonLogin = styled.button`
   display: inline-block;
-  //padding-top: 1.5rem;
-  //padding-bottom: 1.5rem;
   color: gray;
   font-family: "Noto Sans", sans-serif;
   font-size: 15px;
@@ -266,7 +264,7 @@ const Section = styled.div<SectionProps>`
   box-shadow: ${props => props.primary ? "0 0 3em #E7E5E4" : "none"};
 `
 export interface SectionBoxProps {
-  size: boolean
+  size: string
 }
 const SectionBox = styled.div<SectionBoxProps>`
   width: 100%;
@@ -275,7 +273,8 @@ const SectionBox = styled.div<SectionBoxProps>`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  padding-top: ${props=>props.size ? "5.5rem" : "1rem"};
+  padding-top: ${props=>props.size};
+  //? "5.5rem" : "1rem"
   font-family: "Noto Sans", sans-serif;
   .noVisibilityOnMobile{
     display: none;
