@@ -1,4 +1,4 @@
-import React, {FocusEvent, useState, useEffect} from "react";
+import React, { useState, useEffect} from "react";//FocusEvent,
 import {useSelector} from "react-redux";
 import {useAppSelector, useAppDispatch} from "../../app/store";
 import {Modal} from "../../component/Modal/Modal";
@@ -38,13 +38,13 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
     // });
 
     const imagesOptions = images?.map(image=>(
-        <div key={image.id} onClick={(event: React.MouseEvent<HTMLElement>) => {
+        <div key={image.id} onClick={() => {
             setNewPickedImage(image.url)
             handleClose()}}>
             <img alt="gallery" src={image.url}/>
         </div>
     ))
-
+//event: React.MouseEvent<HTMLElement>
     useEffect(()=>{
         setNewCategoryTitle(categoryBeingEdited?.title);
     }, [categoryBeingEdited]);
@@ -52,9 +52,10 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
             setNewPickedImage(categoryBeingEdited.url);
     }, [categoryBeingEdited]);
 
-    const handleFocusEvent = (e: FocusEvent<HTMLInputElement>) => {
+    const handleFocusEvent = () => {
     setNewCategoryTitle("")
     }
+    // e: FocusEvent<HTMLInputElement>
     const closeModal = () => {
         setNewCategoryTitle("");
         setNewPickedImage("")
