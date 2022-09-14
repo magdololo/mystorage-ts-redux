@@ -44,16 +44,16 @@ const CategoryPage = () => {
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = t("categories.CategoryPage.editProduct")
-    const notify = () => toast.success('🦄 t("categories.CategoryPage.toastSuccessfully!")', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-
-    });
+    // const notify = () => toast.success('🦄 t("categories.CategoryPage.toastSuccessfully!")', {
+    //     position: "top-center",
+    //     autoClose: 2000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //
+    // });
 
     useEffect(()=> {
         dispatch(currentCategoryChange(categoryFromPath as Category))
@@ -85,7 +85,7 @@ const CategoryPage = () => {
     }
     const deleteUserOneProduct =  (userProduct: UserProduct)  => {
          dispatch(deleteUserProduct(userProduct))
-        notify()
+
     }
 
 
@@ -110,7 +110,7 @@ const CategoryPage = () => {
                                             className= "text-md capitalize align-baseline text-gray  font-bold text-lg md:text-xl">{product.name}
                                         </div>
                                         <div
-                                            className= {"text-base md:text-lg" + (product.expireDate !== null && product?.expireDate > todayDate ) ? "text-gray-light" : "text-red font-bold"} >
+                                            className= {"text-base md:text-lg " + ((product.expireDate !== null && product?.expireDate > todayDate ) ? "text-gray-light" : "text-red font-bold")} >
                                             {product.expireDate ? product.expireDate.toISOString().substring(0,10) : ""}
                                         </div>
                                         <div
@@ -121,9 +121,9 @@ const CategoryPage = () => {
                                     <div className="flex flex-auto flex-nowrap  relative  sm:w-8/12 md:w-6/12 ">
                                         <div className="flex-row absolute right-0 self-center">
 
-                                            <FontAwesomeIcon className="text-md text-blue-500 px-4 sm:text-lg" icon={faPlus} onClick={()=>increment(product)}/>
+                                            <FontAwesomeIcon className="text-md text-blue-500  px-4 sm:text-lg" icon={faMinus} onClick={() => decrement(product)}/>
                                             <span className="text-md text-blue-800 px-2 sm:text-lg">{product.quantity}</span>
-                                            <FontAwesomeIcon className="text-md text-blue-500 border-blue-400 border-solid border-r px-4 sm:text-lg" icon={faMinus} onClick={() => decrement(product)}/>
+                                            <FontAwesomeIcon className="text-md text-blue-500 border-blue-400 border-solid border-r px-4 sm:text-lg" icon={faPlus} onClick={()=>increment(product)}/>
                                             <FontAwesomeIcon className="text-md text-blue-800 border-blue-400 border-solid border-r px-4 sm:text-xl" icon={faTrash} onClick={()=>deleteUserOneProduct(product)}/>
                                             <FontAwesomeIcon className="text-md text-blue-800 px-4 sm:text-lg" icon={faPen}  onClick={()=>chooseEditProduct(product) }/>
 

@@ -7,7 +7,7 @@ const ReturnToCategoryList = () => {
     return(
         <>
         <Link to={"/categories"}>
-            <div className ="flex flex-row flex-nowrap  w-full ml-4 sm:w-1/2">
+            <div className ="flex flex-row flex-wrap  ml-4 sm:w-1/2">
 
                <div className="flex-none "><BsArrowLeft className="inline-flex text-gray-light"/></div>
 

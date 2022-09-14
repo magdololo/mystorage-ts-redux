@@ -22,7 +22,8 @@ import {selectAllCategories} from "../categories/categoriesSlice";
 import {useMediaQuery} from "@mui/material";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {toast} from "react-toastify";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import {useTranslation} from "react-i18next";
 
 const SearchUserProductPage= ()=>{
@@ -37,16 +38,16 @@ const SearchUserProductPage= ()=>{
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = t("products.SearchUserProductPage.editProduct")
-    const notify = () => toast.success(t('🦄 Products.SearchUserProductPage.toastSuccess!'), {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-
-    });
+    // const notify = () => toast.success(t('🦄 Products.SearchUserProductPage.toastSuccess!'), {
+    //     position: "top-center",
+    //     autoClose: 2000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //
+    // });
     let searchProducts: Array<UserProduct>=[]
 
     if(searchInputValue ){
@@ -79,7 +80,7 @@ const SearchUserProductPage= ()=>{
     }
     const deleteUserOneProduct =  (userProduct: UserProduct)  => {
         dispatch(deleteUserProduct(userProduct))
-        notify()
+        // notify()
     }
 
     let content;
@@ -181,7 +182,7 @@ const SearchUserProductPage= ()=>{
                 </div>
 
                 <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
-
+                <ToastContainer />
             </div>
             <BottomMenu />
         </>

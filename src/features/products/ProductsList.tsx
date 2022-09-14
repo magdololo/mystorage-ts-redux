@@ -34,16 +34,16 @@ const ProductsList = () => {
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
     const maxWidth440 = useMediaQuery('(max-width:440px)');
-    const notify = () => toast.success('🦄 Produkt usunięty!', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-
-    });
+    // const notify = () => toast.success('🦄 Produkt usunięty!', {
+    //     position: "top-center",
+    //     autoClose: 3000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //
+    // });
     const chooseEditProduct = (userProduct: UserProduct) => {
         handleShown()
         dispatch(editProduct(userProduct))
@@ -68,7 +68,7 @@ const ProductsList = () => {
 
     const deleteUserOneProduct = (userProduct: UserProduct) => {
         dispatch(deleteUserProduct(userProduct))
-        notify()
+        // notify()
 
     }
     const userProductsWithCategory = userProducts.map(userProduct => {
@@ -116,14 +116,15 @@ const ProductsList = () => {
                                                 <div
                                                     className="flex flex-col items-center justify-between max-h-20 absolute right-0">
                                                     <div className="h-1/2 pb-1">
-                                                        <FontAwesomeIcon className="text-xl text-blue-500 px-2"
-                                                                         icon={faPlus}
-                                                                         onClick={() => increment(product)}/>
+                                                        <FontAwesomeIcon
+                                                            className="text-xl text-blue-500   px-2"
+                                                            icon={faMinus} onClick={() => decrement(product)}/>
                                                         <span
                                                             className="text-xl text-blue-800 px-2 ">{product.quantity}</span>
-                                                        <FontAwesomeIcon
-                                                            className="text-xl text-blue-500 border-blue-400  px-2"
-                                                            icon={faMinus} onClick={() => decrement(product)}/>
+                                                        <FontAwesomeIcon className="text-xl text-blue-500 border-blue-400 px-2"
+                                                                         icon={faPlus}
+                                                                         onClick={() => increment(product)}/>
+
                                                     </div>
                                                     <div className="h-1/2 pt-1">
                                                         <FontAwesomeIcon
@@ -142,13 +143,14 @@ const ProductsList = () => {
                                             :
                                             <>
                                                 <div className="flex flex-row flex-nowrap absolute right-0 items-center">
-                                                    <FontAwesomeIcon className="text-xl text-blue-500 px-4"
-                                                                     icon={faPlus} onClick={() => increment(product)}/>
+                                                    <FontAwesomeIcon
+                                                        className="text-xl text-blue-500  px-4 "
+                                                        icon={faMinus} onClick={() => decrement(product)}/>
                                                     <span
                                                         className="text-xl text-blue-800 px-2 ">{product.quantity}</span>
-                                                    <FontAwesomeIcon
-                                                        className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4 "
-                                                        icon={faMinus} onClick={() => decrement(product)}/>
+                                                    <FontAwesomeIcon className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4"
+                                                                     icon={faPlus} onClick={() => increment(product)}/>
+
                                                     <FontAwesomeIcon
                                                         className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4 "
                                                         icon={faTrash} onClick={() => {
