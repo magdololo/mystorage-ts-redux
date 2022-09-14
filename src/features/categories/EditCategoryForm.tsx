@@ -6,7 +6,6 @@ import {useModal} from "../../component/Modal/UseModal";
 import slugify from "slugify";
 import {editCategory, Category} from "./categoriesSlice";
 import {selectUser} from "../users/usersSlice";
-import {toast} from "react-toastify";
 import {selectAllImages} from "../images/imagesSlice";
 import {useTranslation} from "react-i18next";
 

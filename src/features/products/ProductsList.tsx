@@ -20,7 +20,7 @@ import {selectAllCategories} from "../categories/categoriesSlice";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {ToastContainer, toast} from "react-toastify";
+import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useMediaQuery} from "@mui/material";
 import {useTranslation} from "react-i18next";

@@ -27,7 +27,7 @@ import {
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {ToastContainer, toast} from "react-toastify";
+import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useTranslation} from "react-i18next";
 
