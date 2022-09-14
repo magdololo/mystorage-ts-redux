@@ -113,7 +113,7 @@ export const CategoryList = () => {
         content = <Spinner text="Loading..."/>;
     } else if (categoriesStatus === "succeeded") {
         const renderedCategories = categories?.map(category => {
-                if ((category?.required === "true" && !toggleSwitch) ||  category?.required === "false"){
+                if ((category?.required === "true" && !toggleSwitch) || category?.required === "false") {
                     return (
                         <li className={"h-auto flex flex-col relative" + (toggleSwitch ? " bg-black bg-opacity-90 " : "")}
                             key={category?.id}>
@@ -143,7 +143,8 @@ export const CategoryList = () => {
                                     icon={faXmark} onClick={() => deletingCategory(category as Category)}/>
                             }
                         </li>
-                    )}
+                    )
+                }
             }
         )
         content =
