@@ -66,8 +66,8 @@ function App() {
                 //             Give it a click if you like.
                 //         </div>
                 //     </>
-                navigate("/register")
-
+                // navigate("/register")
+                console.log("info")
             }
             else {
                 dispatch(
