@@ -15,6 +15,7 @@ import {db} from "../../firebase";
 import {BsArrowLeft} from "react-icons/bs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
+
 interface User{
     uid: string;
     email: string;
@@ -30,8 +31,8 @@ const LoginPage = () => {
     const dispatch = useDispatch()
     const provider = new GoogleAuthProvider();
     const [errorMessage,setErrorMessage] = useState("");
-
-    const [content, setContent] = useState(false)
+    const [content, setContent] = useState(false);
+    const[message, setMessage] = useState<boolean>(false);
     let navigate = useNavigate()
     const [checkboxState, setCheckboxState] =useState(false);
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>)=>{
@@ -87,7 +88,7 @@ const LoginPage = () => {
 
     });
 
-    let message;
+
 
 
     const socialSignIn= async()=> {
@@ -103,11 +104,12 @@ const LoginPage = () => {
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
             const userExist = docSnap.exists()
-
-           if(!userExist){
-
+            console.log(userExist)
+                if(!userExist){
+                console.log("nie ma usera w usersach")
                 setContent(true);
                 setUser(user as User)
+                setMessage(true)
 
             } else {
                 console.log("else")
@@ -124,12 +126,7 @@ const LoginPage = () => {
             }
 
         } catch (error: any){
-            // Handle Errors here.
-            // const errorCode = error.code;
             console.log(error.code)
-            // const errorMessage = error.message;
-            // const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
         }
     }
     const signUserIfCheckboxStateIsTrue=(user: User)=> {
@@ -159,7 +156,8 @@ const LoginPage = () => {
         }
 
     }
-
+    console.log(content)
+    console.log(message)
     return(
         <>
 
@@ -251,7 +249,6 @@ const LoginPage = () => {
                                     className=" w-1/2
                                           px-6
                                           py-3
-
                                           text-purple
                                           font-bold
                                           text-xs
@@ -301,34 +298,37 @@ const LoginPage = () => {
                     </form>
                 }
 
-            {message && {message}}
-            {content &&
-                <>
-                    <div className="bg-white rounded-lg py-5 px-6 mt-4 text-md text-purple-600 mb-3 max-w-sm mx-auto form-check" >
-                        <p className=" text-gray-light mt-8 ">{t("users.LoginPage.content.p1")}</p>
-                        <p className=" text-gray-light pt-2 ">{t("users.LoginPage.content.p2")}</p>
-                        <p className=" text-gray-light pt-2 ">{t("users.LoginPage.content.p3")}</p>
-                    </div>
-                    <div className="mx-auto max-w-sm px-6">
-                        <input
-                            className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                            type="checkbox" onChange={handleInputChange} checked={checkboxState} id="flexCheckDefault">
-                        </input>
-                        <label className="form-check-label inline-block text-gray-800 " htmlFor="flexCheckDefault">
-                            {t("users.LoginPage.content.acceptRegulations")}
-                        </label>
-                    </div>
-                    <div className="mx-auto text-lg text-purple text-center max-w-sm  ">
-                         <button type="button"
-                            className="mt-4 inline-block px-6 py-2 border-2 border-purple-600 text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-                            onClick={()=>signUserIfCheckboxStateIsTrue(user)}>{t("buttons.register")}
-                         </button>
-                    </div>
-                    <div className="text-lg" >
-                        <button onClick={(event) => {setContent(false)}}><BsArrowLeft className="inline-flex text-gray-light"/></button>
-                    </div>
-                </>
-            }
+                {(message && content) &&
+                    <>
+                        <div
+                            className="bg-white rounded-lg py-5 px-6 mt-4 text-md text-purple-600 mb-3 max-w-sm mx-auto form-check">
+                            <p className=" text-gray-light mt-8 ">{t("users.LoginPage.content.p1")}</p>
+                            <p className=" text-gray-light pt-2 ">{t("users.LoginPage.content.p2")}</p>
+                            <p className=" text-gray-light pt-2 ">{t("users.LoginPage.content.p3")}</p>
+                        </div>
+                        <div className="mx-auto max-w-sm px-6">
+                            <input
+                                className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                type="checkbox" onChange={handleInputChange} checked={checkboxState}
+                                id="flexCheckDefault">
+                            </input>
+                            <label className="form-check-label inline-block text-gray-800 " htmlFor="flexCheckDefault">
+                                {t("acceptRegulations")}
+                            </label>
+                        </div>
+                        <div className="mx-auto text-lg text-purple text-center max-w-sm  ">
+                            <button type="button"
+                                    className="mt-4 inline-block px-6 py-2 border-2 border-purple-600 text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                                    onClick={() => signUserIfCheckboxStateIsTrue(user)}>{t("buttons.register")}
+                            </button>
+                        </div>
+                        <div className="text-lg">
+                            <button onClick={(event) => {
+                                setContent(false)
+                            }}><BsArrowLeft className="inline-flex text-gray-light"/></button>
+                        </div>
+                    </>
+                }
             </div>
         </>
     )
