@@ -9,7 +9,7 @@ import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
 import AddCategoryForm from "./AddCategoryForm";
 import EditCategoryForm from "./EditCategoryForm";
-import {Spinner} from '../../component/Spinner'
+
 import {changeSeeGreetingToTrue, selectUser, User} from "../users/usersSlice";
 
 
@@ -43,7 +43,7 @@ export const CategoryList = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const handleCloseGreeting = () => setIsOpen(false);
     const dispatch = useAppDispatch()
-    const categoriesStatus = useAppSelector(((state) => state.categories.status))
+    // const categoriesStatus = useAppSelector(((state) => state.categories.status))
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
     const [toggleSwitch, setToggleSwitch] = useState(false);
     const closeModalWithGreeting = () => {
@@ -108,10 +108,10 @@ export const CategoryList = () => {
         dispatch(deleteCategory(category))
     }
 
-    let content;
-    if (categoriesStatus === "loading") {
-        content = <Spinner text="Loading..."/>;
-    } else if (categoriesStatus === "succeeded") {
+     let content;
+    // if (categoriesStatus === "loading") {
+    //     content = <Spinner text="Loading..."/>;
+    // } else if (categoriesStatus === "succeeded") {
         const renderedCategories = categories?.filter(category=>(category?.required === "true" && !toggleSwitch) || category?.required === "false").map(category =>
                 (
                    <li className={"h-auto flex flex-col relative" + (toggleSwitch ? " bg-black bg-opacity-90 " : "")}
@@ -186,9 +186,9 @@ export const CategoryList = () => {
 
             </>
 
-    } else if (categoriesStatus === "failed") {
-        content = <div><span> {t("categories.CategoryList.categoriesStatusFailed")}</span></div>;
-    }
+    // } else if (categoriesStatus === "failed") {
+    //     content = <div><span> {t("categories.CategoryList.categoriesStatusFailed")}</span></div>;
+    //  }
 
     return (
         <>

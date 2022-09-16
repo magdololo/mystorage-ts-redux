@@ -3,9 +3,10 @@ import {
     createAsyncThunk,
     createEntityAdapter,
     EntityState,
-    PayloadAction
+    PayloadAction,
+    createSelector
 } from '@reduxjs/toolkit'
-import {RootState, AppDispatch} from "../../app/store";
+import {RootState, AppDispatch, useAppSelector} from "../../app/store";
 import {
     doc,
     startAt,
@@ -25,6 +26,7 @@ import {db} from "../../firebase";
 import {fetchProductFromDictionaryId} from "./allProductsSlice";
 
 import {notify} from "../../helpers";
+import {Category, selectAllCategories} from "../categories/categoriesSlice";
 
 
 export interface UserProduct{
@@ -249,5 +251,12 @@ export const {
     // Pass in a selector that returns the posts slice of state
 } = userProductsAdapter.getSelectors<RootState>((state) => state.userProducts);
 
+export const selectProductsOfCategory =(categoryId: string)=> createSelector(
+    [(state: RootState) => selectUserProducts(state)],
+    (userProducts) => userProducts.filter(product => product.categoryId === categoryId)
+)
+
 export const {editProduct, searchProduct, searchByString} = userProductsSlice.actions
 export default userProductsSlice.reducer
+
+// const productsOfCategory = useAppSelector((state) => userProducts.filter(product => product.categoryId === categoryId))

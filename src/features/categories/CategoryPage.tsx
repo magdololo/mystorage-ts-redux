@@ -8,13 +8,12 @@ import {useModal} from "../../component/Modal/UseModal";
 import EditProductForm from "../products/EditProductForm";
 import BottomMenu from "../../app/BottomMenu/BottomMenu";
 
-import {selectAllCategories, currentCategoryChange, Category} from "./categoriesSlice";
+import { currentCategoryChange,selectCategoryByPath, Category,} from "./categoriesSlice";//
 
 import {
     ChangeQuantity,
     deleteUserProduct,
-    editProduct,
-    selectUserProducts,
+    editProduct, selectProductsOfCategory,
     UserProduct
 } from "../products/userProductsSlice";
 import {changeProductQuantity} from "../products/userProductsSlice";
@@ -32,15 +31,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import {useTranslation} from "react-i18next";
 
 
+
 const CategoryPage = () => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch();
     const {categoryPath} = useParams();
-    const userProducts = useAppSelector(selectUserProducts)
-    const categories = useAppSelector(selectAllCategories)
-    const categoryFromPath = useAppSelector((state) => categories.find(category => category.path === categoryPath))
-    const categoryId = categoryFromPath?.id
-    const productsOfCategory = useAppSelector((state) => userProducts.filter(product => product.categoryId === categoryId))
+    const categoryFromPath = useAppSelector(selectCategoryByPath(categoryPath??"")) as Category
+    console.log(categoryFromPath)
+   const categoryId = categoryFromPath?.id
+    const productsOfCategory = useAppSelector(selectProductsOfCategory(categoryId??"")) as UserProduct[]
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = t("categories.CategoryPage.editProduct")
@@ -56,7 +55,7 @@ const CategoryPage = () => {
     // });
 
     useEffect(()=> {
-        dispatch(currentCategoryChange(categoryFromPath as Category))
+        dispatch(currentCategoryChange(categoryFromPath))
     }, [dispatch, categoryFromPath])
 
 
