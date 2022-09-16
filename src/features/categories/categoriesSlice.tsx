@@ -7,7 +7,7 @@ import {
     EntityState
 } from '@reduxjs/toolkit'
 
-import {AppDispatch, createAppSelector, RootState} from "../../app/store";
+import {AppDispatch, RootState} from "../../app/store";
 import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 import {notify} from "../../helpers";
@@ -124,9 +124,9 @@ const categoriesSlice = createSlice({
     },
     extraReducers(builder){
         builder
-            .addCase(fetchCategories.pending, (state, action) => {
-                state.status = 'loading'
-            })
+            // .addCase(fetchCategories.pending, (state, action) => {
+            //     state.status = 'loading'
+            // })
             .addCase(fetchCategories.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 categoriesAdapter.upsertMany(state, action.payload as Category[])
