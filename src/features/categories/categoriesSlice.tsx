@@ -7,7 +7,7 @@ import {
     EntityState
 } from '@reduxjs/toolkit'
 
-import {AppDispatch, RootState} from "../../app/store";
+import {AppDispatch, createAppSelector, RootState} from "../../app/store";
 import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 import {notify} from "../../helpers";
@@ -157,9 +157,9 @@ export const {
     selectIds: selectCategoryIds
 
 } = categoriesAdapter.getSelectors<RootState>((state) => state.categories);
-export const selectCategoryByPath = createSelector(
-    [selectAllCategories, (state:RootState, categoryPath) => categoryPath],
-    (categories, categoryPath) => categories.filter((category) => category.path === categoryPath)
+export const selectCategoryByPath = (categoryPath: string) => createSelector(
+    [(state: RootState) => selectAllCategories(state)],
+    (categories) => categories.find((category: Category) => category.path === categoryPath)
 );
 export const selectAllCategoriesSortedByRequired = createSelector(
     selectAllCategories, categories => {

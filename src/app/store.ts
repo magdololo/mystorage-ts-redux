@@ -37,6 +37,10 @@ export const useAppDispatch = () => useDispatch<AppDispatch>()
 export type RootState = ReturnType<typeof store.getState>
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
+// create a generic type called AppSelector
+export type AppSelector<Return> = (state: RootState) => Return
+// create a custom `createSelector` that uses the type above
+export const createAppSelector = <R>(selector: AppSelector<R>): AppSelector<R> => selector
 
 
 export default store

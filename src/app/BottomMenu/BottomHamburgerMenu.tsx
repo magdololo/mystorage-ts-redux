@@ -10,7 +10,7 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Divider from "@mui/material/Divider";
 import {Link, useNavigate} from "react-router-dom";
-import {selectUser} from "../../features/users/usersSlice";
+import {logout, selectUser} from "../../features/users/usersSlice";
 
 import {auth, signOut} from "../../firebase";
 import {Accordion} from "react-accordion-ts";
@@ -19,8 +19,10 @@ import {useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
+import {useAppDispatch} from "../store";
 
 const BottomHamburgerMenu = () => {
+    const dispatch = useAppDispatch();
     const {t, i18n} = useTranslation()
     const navigate = useNavigate()
     let user = useSelector(selectUser);
@@ -47,6 +49,7 @@ const BottomHamburgerMenu = () => {
         window.location.reload(); }
     const logoutOfApp = () => {
         signOut(auth);
+        dispatch(logout())
         navigate('/')
         refreshPage()
 

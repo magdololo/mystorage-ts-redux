@@ -1,8 +1,8 @@
 import React, {useEffect, Suspense} from "react";
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {auth, onAuthStateChanged, db} from './firebase';
 
-import { login, logout, User} from "./features/users/usersSlice";
+import {login, selectUser, User} from "./features/users/usersSlice";
 import {
     Routes,
     Route,
@@ -29,6 +29,7 @@ import SearchUserProductPage from "./features/products/SearchUserProductPage";
 import {doc, getDoc} from "firebase/firestore";
 
 
+
 library.add(fas)
 
 function App() {
@@ -43,9 +44,6 @@ function App() {
         onAuthStateChanged(auth,async (user) => {
 
             if(user === null) {
-                console.log("logout")
-                dispatch(logout())
-                navigate("/")
                 return
             }
 
@@ -83,11 +81,12 @@ function App() {
         })
         }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
+    const user = useSelector(selectUser);
+console.log(user)
     return (
         <>
         <Suspense fallback={<Loading />}>
             <div className="App">
-                {/*{content}*/}
                 <Routes>
 
                     !user ?
@@ -100,9 +99,12 @@ function App() {
                     <Route path="/categories/:categoryPath" element={<CategoryPage/>}/>
                     <Route path="/products" element={<ProductsList/>}/>
                     <Route path="/search" element={<SearchUserProductPage/>}/>
+
                 </Routes>
             </div>
+
             </Suspense>
+
         </>
     );
 }
