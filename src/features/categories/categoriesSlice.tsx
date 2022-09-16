@@ -167,7 +167,6 @@ export const selectAllCategoriesSortedByRequired = createSelector(
         const filteredCategories = categories.filter(category => category.required !== "true")
         return [requiredCategory, ...filteredCategories]
     }
-
 )
 
 export const {currentCategoryChange} = categoriesSlice.actions
