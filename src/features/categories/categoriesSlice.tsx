@@ -6,7 +6,6 @@ import {
     createEntityAdapter,
     EntityState
 } from '@reduxjs/toolkit'
-
 import {AppDispatch, RootState} from "../../app/store";
 import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "firebase/firestore";
 import {db} from "../../firebase";
