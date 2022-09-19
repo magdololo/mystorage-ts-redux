@@ -30,6 +30,7 @@ import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
 
 
+
 export const CategoryList = () => {
 
     const {t} = useTranslation();
@@ -195,6 +196,7 @@ export const CategoryList = () => {
 
             <AppTitle/>
             <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
+
             {content}
             <Modal className={"addCategory-modal"} isShown={isShown} hide={handleClose}
                    modalHeaderText={!toggleSwitch ? modalAddHeader : modalEditHeader}

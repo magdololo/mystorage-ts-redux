@@ -26,6 +26,7 @@ module.exports = {
       'gray': '#52525B',
       'gray-light': '#71717A',
       'gray-extraLight' : '#D4D4D8',
+      'gray-mediumLight': '#aeaeb5',
       'white': '#ffffff',
       'black': '#000000',
       'labelColor': '#6B7280',
@@ -104,8 +105,7 @@ module.exports = {
       },
       inset:{
          'bottom-1/10': "bottom: 10rem",
-
-
+         'left-9/10' : "left: 90%"
       }
     },
   },

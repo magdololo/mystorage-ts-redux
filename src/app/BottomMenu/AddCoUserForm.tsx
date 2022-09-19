@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {useForm} from "react-hook-form";
 
@@ -8,7 +8,7 @@ type AddCoUserFormProps = {
 }
 
 const AddCoUserForm=({handleClose, isShown}: AddCoUserFormProps)=>{
-    const {t, i18n} = useTranslation()
+    const {t} = useTranslation()
     const {
         reset,
         register,
@@ -18,12 +18,19 @@ const AddCoUserForm=({handleClose, isShown}: AddCoUserFormProps)=>{
         email: string,
         password: string
     }>();
+    const [messageAfterSendPassword, setMessageAfterSendPassword] = useState(false)
+    //const [errorMessage, setErrorMessage] = useState("")
+    const onSubmit = handleSubmit((data:{email:string})=>{
+        setMessageAfterSendPassword(true)
+        reset({email: ""})
+        // handleClose()
 
+    });
     return(
         <>
             <div className="block p-6  bg-white max-w-sm mx-auto">
                 <h2 className="text-gray-light my-8 text-xl">{t("BottomHamburgerMenu.headerFormAddCoUser")}</h2>
-                <form onSubmit={()=>console.log("addCoUser")}>
+                <form onSubmit={onSubmit}>
                     <div className="form-group mb-6">
                         <input {...register("email",{ required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, })}
                                placeholder="email"
@@ -71,10 +78,14 @@ const AddCoUserForm=({handleClose, isShown}: AddCoUserFormProps)=>{
 
 
                 </form>
-                {/*{messageAfterSendPassword ?*/}
-                {/*    <div className="bg-purple-100 rounded-lg py-5 px-6 mb-4 text-purple-700 mb-3 text-gray-700 my-6 text-2xl" role="alert">*/}
-                {/*        Na twój adres email wysłaliśmy hasło do restu konta!</div> : ""*/}
-                {/*}*/}
+                {messageAfterSendPassword ?
+                    <>
+                    <div className="text-gray-light my-8 text-xl" role="alert">
+                        Na ten adres email wysłalismy zaroszenie do twojej spiżarni!</div>
+                    <button className=" w-2/5 px-1 py-3 text-white font-bold bg-purple top-0 text-sm leading-tight uppercase rounded shadow-md hover:shadow-lg" onClick={handleClose}>{t("buttons.close")}</button>
+                    </>
+                    : ""
+                }
             </div>
 
         </>

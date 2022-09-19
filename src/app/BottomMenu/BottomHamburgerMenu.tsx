@@ -34,6 +34,7 @@ const BottomHamburgerMenu = () => {
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = ""
+
     const toggleDrawer = () => {
         setIsOpen((prevState) => !prevState)
     }
@@ -69,6 +70,8 @@ const BottomHamburgerMenu = () => {
         {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />{t("BottomHamburgerMenu.myAccount")}</span>,
         content: <span className="text-sm font-bold">{user?.email}</span>}
     ]
+
+
     return (
         <>
 
