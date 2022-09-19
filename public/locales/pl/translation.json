@@ -151,7 +151,9 @@
     "categoryList": "Lista kategorii",
     "productList": "Lista produktów",
     "myAccount": "Moje konto",
-    "signOut": "Wyloguj się"
+    "signOut": "Wyloguj się",
+    "addCoUser": "Dodaj współużytkownika",
+    "headerFormAddCoUser" :"Wpisz email współużytkownika"
   }
 }
 
