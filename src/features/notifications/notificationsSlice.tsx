@@ -16,7 +16,9 @@ export interface Notification{
     isRead: boolean;
     text: string;
     date: Date;
-    id:string
+    id:string;
+    cta: string;
+    type: "invite" | "info"
 }
 const notificationsAdapter = createEntityAdapter<Notification>()
 const initialState: EntityState<Notification> & {  error: null | string | undefined;  } = notificationsAdapter.getInitialState({
@@ -28,10 +30,10 @@ export const fetchNotifications = createAsyncThunk('notifications/fetchNotificat
 
         try {
             const notifications: Array<Notification> = [
-                {id: "123",isRead: false, date: new Date("2022-09-22 12:24:16"), text: "Otrzymałes zaproszenie od {email1}" },
-                {id: "124",isRead: false, date: new Date("2022-08-29 18:24:16"), text: "{email} dodal cukier" },
-                {id: "125",isRead: true, date: new Date("2022-06-22 19:24:16"), text: "{email} usunąl makaron" },
-                {id: "126",isRead: false, date: new Date("2022-11-22 09:24:16"), text: "Otrzymałes zaproszenie od {email4}" }
+                {id: "123",isRead: false, date: new Date("2022-09-22 12:24:16"), text: "Otrzymałes zaproszenie od {email1}", cta:"d.jarzyna@gmail.com", type: "invite" },
+                {id: "124",isRead: false, date: new Date("2022-08-29 18:24:16"), text: "{email} dodal cukier" ,cta:"", type: "info"},
+                {id: "125",isRead: true, date: new Date("2022-06-22 19:24:16"), text: "{email} usunąl makaron",cta:"", type: "info" },
+                {id: "126",isRead: false, date: new Date("2022-11-22 09:24:16"), text: "Otrzymałes zaproszenie od {email4}",cta:"zosiajarzyna@gmail.com", type: "invite" }
             ]
             return notifications
         } catch (error) {
