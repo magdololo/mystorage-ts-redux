@@ -30,6 +30,7 @@ import {doc, getDoc} from "firebase/firestore";
 
 
 
+
 library.add(fas)
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
                         didSeeGreeting: result.didSeeGreeting
                     })
                 );
+
                 navigate("/categories")
             }
         })

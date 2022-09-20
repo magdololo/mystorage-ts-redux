@@ -12,7 +12,7 @@ import EditCategoryForm from "./EditCategoryForm";
 
 import {changeSeeGreetingToTrue, selectUser, User} from "../users/usersSlice";
 
-
+import {fetchNotifications, selectUnReadNotifications} from "../notifications/notificationsSlice";
 import {
     currentCategoryChange,
     deleteCategory,
@@ -46,7 +46,9 @@ export const CategoryList = () => {
     const dispatch = useAppDispatch()
     // const categoriesStatus = useAppSelector(((state) => state.categories.status))
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
+    const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const [toggleSwitch, setToggleSwitch] = useState(false);
+
     const closeModalWithGreeting = () => {
         console.log("close modal")
         handleCloseGreeting();
@@ -85,6 +87,7 @@ export const CategoryList = () => {
     </>;
 
     useEffect(() => {
+        dispatch(fetchNotifications(user?.uid!!))
         dispatch(fetchCategories(user?.uid!!))
         dispatch(fetchImages(user?.uid!!))
         dispatch(fetchUserProducts(user?.uid!!))
@@ -108,7 +111,15 @@ export const CategoryList = () => {
     const deletingCategory = (category: Category) => {
         dispatch(deleteCategory(category))
     }
+    console.log(unReadNotifications.length)
 
+    let color = "";
+    if(unReadNotifications.length > 0){
+        color = "red";
+
+    }else{
+
+    }
      let content;
     // if (categoriesStatus === "loading") {
     //     content = <Spinner text="Loading..."/>;

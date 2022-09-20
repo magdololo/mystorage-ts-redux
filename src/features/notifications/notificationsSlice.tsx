@@ -11,28 +11,27 @@ import {RootState} from "../../app/store";
 
 
 
+
 export interface Notification{
     isRead: boolean;
     text: string;
-    date: Date
+    date: Date;
+    id:string
 }
 const notificationsAdapter = createEntityAdapter<Notification>()
-const initialState: EntityState<Notification> & {  error: null | string | undefined; isRead: boolean; text : string; date: Date | null } = notificationsAdapter.getInitialState({
-    error: null,
-    isRead: false,
-    text: "",
-    date: null
+const initialState: EntityState<Notification> & {  error: null | string | undefined;  } = notificationsAdapter.getInitialState({
+    error: null
 })
 
-const fetchNotifications = createAsyncThunk('notifications/fetchNotifications', async () => {
+export const fetchNotifications = createAsyncThunk('notifications/fetchNotifications', async (userId: string) => {
 
 
         try {
             const notifications: Array<Notification> = [
-                {isRead: false, date: new Date("2022-09-22 12:24:16"), text: "Otrzymałes zaproszenie od {email1}" },
-                {isRead: false, date: new Date("2022-08-29 18:24:16"), text: "Otrzymałes zaproszenie od {email2}" },
-                {isRead: true, date: new Date("2022-06-22 19:24:16"), text: "Otrzymałes zaproszenie od {email3}" },
-                {isRead: false, date: new Date("2022-11-22 09:24:16"), text: "Otrzymałes zaproszenie od {email4}" }
+                {id: "123",isRead: false, date: new Date("2022-09-22 12:24:16"), text: "Otrzymałes zaproszenie od {email1}" },
+                {id: "124",isRead: false, date: new Date("2022-08-29 18:24:16"), text: "{email} dodal cukier" },
+                {id: "125",isRead: true, date: new Date("2022-06-22 19:24:16"), text: "{email} usunąl makaron" },
+                {id: "126",isRead: false, date: new Date("2022-11-22 09:24:16"), text: "Otrzymałes zaproszenie od {email4}" }
             ]
             return notifications
         } catch (error) {
@@ -58,4 +57,8 @@ const  notificationsSlice = createSlice({
 export const {
     selectAll: selectAllNotifications,
 } = notificationsAdapter.getSelectors<RootState>((state) => state.notifications);
+export const selectUnReadNotifications = createSelector(
+    [(state: RootState) => selectAllNotifications(state)],
+    (notifications) => notifications.filter((notification: Notification) => notification.isRead === false)
+);
 export default notificationsSlice.reducer
