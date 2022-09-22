@@ -113,13 +113,6 @@ export const CategoryList = () => {
     }
     console.log(unReadNotifications.length)
 
-    let color = "";
-    if(unReadNotifications.length > 0){
-        color = "red";
-
-    }else{
-
-    }
      let content;
     // if (categoriesStatus === "loading") {
     //     content = <Spinner text="Loading..."/>;

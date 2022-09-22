@@ -112,3 +112,16 @@ slider {
 .addCategoryModal{
     max-width: 28rem!important;
 }
+div::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px #f8fbff;
+  border-radius: 5px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background-color: purple ;/*#9fa9bd*/
+  border-radius: 5px;
+}
+div::-webkit-scrollbar {
+  width: 0.5em;
+  border-radius: 5px;
+}
