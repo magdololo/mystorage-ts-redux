@@ -32,7 +32,7 @@ export const Backdrop = styled.div`
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.3);
-  
+ 
   z-index: 500;
 `;
 
@@ -42,10 +42,11 @@ export const StyledModal = styled.div`
   position: relative;
   margin: 0 auto;
   border-radius: 8px;
-  padding: 2em;
+  padding: 0;
   overflow-y: scroll;
+  scroll-behavior: smooth;
   scrollbar-color: #5B21B6 #60A5FA;
-  scrollbar-width: auto;
+  scrollbar-width: 5px;
   max-height: 80vh;
   @media (min-width: 60em) {
     margin: 0 auto;

@@ -45,17 +45,15 @@ const NotificationsList = ()=>{
                           <Message>
                               <MessageIcon>
                                   {notification.type === "invite" ?
-                                          <FontAwesomeIcon icon={regular('envelope')} className={"w-6 h-6 text-purple-400"}/> :
-                                          <FontAwesomeIcon icon={regular('comment')} className={"w-6 h-6 text-blue-400"}/>}
+                                          <FontAwesomeIcon icon={regular('envelope')} className={"w-6 h-6 text-purple-400 justify-center items-center"}/> :
+                                          <FontAwesomeIcon icon={regular('comment')} className={"w-6 h-6 text-blue-400 justify-center items-center"}/>}
                               </MessageIcon>
                               <MessageBody>
                                   <MessageBodyText>{notification.text}</MessageBodyText>
                                   <MessageBodyDate>{notification.date.toLocaleString()}</MessageBodyDate>
-                                  <MessageCloseButton/>
+                                  {/*<MessageCloseButton/>*/}
                               </MessageBody>
-                              <MessageIcon>
-                                  <FontAwesomeIcon icon={regular('comment')} />
-                              </MessageIcon>
+
                           </Message>
                            </li>))}
 
