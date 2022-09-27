@@ -1,20 +1,26 @@
 import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBell} from "@fortawesome/free-solid-svg-icons";
-
 import React from "react";
-import {useAppSelector} from "../store";
-import {selectUnReadNotifications} from "../../features/notifications/notificationsSlice";
+import {useAppDispatch, useAppSelector} from "../store";
+import {
+    changeUnreadNotificationsToRead,
+    selectUnReadNotifications
+} from "../../features/notifications/notificationsSlice";
 import {useModal} from "../../component/Modal/UseModal";
 import {Modal} from "../../component/Modal/Modal";
 import NotificationsList from "../../features/notifications/NotificationsList";
-import { solid, regular, brands} from '@fortawesome/fontawesome-svg-core/import.macro'
+import { regular} from '@fortawesome/fontawesome-svg-core/import.macro'
 const AppTitle = () => {
+    const dispatch = useAppDispatch()
     const { t, i18n } = useTranslation();
     console.log(i18n.language)
     const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const {isShown, handleShown, handleClose} = useModal()
-
+    const onCloseModalWithNotifications = ()=>{
+        handleClose()
+        const readNotifications = dispatch(changeUnreadNotificationsToRead(null))
+        console.log(readNotifications)
+    }
 
     return(
         <>
@@ -26,7 +32,7 @@ const AppTitle = () => {
                 : null}
             </div>
 
-            <Modal isShown={isShown} hide={handleClose} modalHeaderText={""}  modalContent={<NotificationsList/>}/>
+            <Modal isShown={isShown} hide={onCloseModalWithNotifications} modalHeaderText={""}  modalContent={<NotificationsList/>}/>
 
         </>
     )

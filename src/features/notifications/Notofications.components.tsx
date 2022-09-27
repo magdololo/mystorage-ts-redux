@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 
+
 const Message= styled.div`
   width: 95%;
   margin: 0 auto;
@@ -114,7 +115,38 @@ const MessageCloseButton = styled.button`
     background-color: rgba(black, 0.5);
   }
 `
+const MenuInviteList = styled.ul`
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.175);
+  border: 1px solid #ccc;
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 0 55%;
+  width: 25%;
+  display: block;
+  height: auto;
+  overflow: visible;
+  position: absolute;
+  top: 2rem;
+  right: 2.5rem;
+  z-index: 100;
+  ;
+`
+
+const MenuInviteItem = styled.li`
+  text-align: center;
+  padding: 4px;
+  cursor: pointer;
+  background-color: white;
+  color: #6D28D9;
+  &:hover &:active {
+    background-color: #f3f3f3;
+  }
+  &.borderBottom {
+    border-bottom: 1px solid lightgray;
+  }
+`
 
 export {
-    Message, MessageBody,MessageTitle,MessageBodyText,MessageButton,MessageCloseButton,MessageIcon,MessageBodyDate
+    Message, MessageBody,MessageTitle,MessageBodyText,MessageButton,MessageCloseButton,MessageIcon,MessageBodyDate,
+    MenuInviteList, MenuInviteItem
 }

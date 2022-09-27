@@ -143,21 +143,3 @@ div::-webkit-scrollbar {
   width: 140px;
 }
 
-.list {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  border: 1px solid #ccc;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  width: auto;
-  display: inline-block;
-}
-.list-item {
-  padding: 8px;
-  cursor: pointer;
-  background-color: white;
-}
-.list-item:hover,
-.list-item:active {
-  background-color: #f3f3f3;
-}
