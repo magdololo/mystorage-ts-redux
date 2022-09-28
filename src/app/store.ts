@@ -5,6 +5,7 @@ import usersReducer from '../features/users/usersSlice'
 import userProductsReducer from '../features/products/userProductsSlice'
 import imagesReducer from '../features/images/imagesSlice'
 import notificationsReducer from "../features/notifications/notificationsSlice";
+import sharesReducer from "../features/shares/sharesSlice";
 import {useDispatch,TypedUseSelectorHook, useSelector} from "react-redux";
 
 
@@ -20,8 +21,8 @@ const store = configureStore({
         allProducts: allProductsReducer,
         userProducts: userProductsReducer,
         images: imagesReducer,
-        notifications: notificationsReducer
-
+        notifications: notificationsReducer,
+        shares: sharesReducer
     },
 
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({

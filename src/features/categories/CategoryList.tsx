@@ -23,6 +23,7 @@ import {
 import {fetchImages} from "../images/imagesSlice";
 import {fetchAllProducts} from "../products/allProductsSlice";
 import {fetchUserProducts} from "../products/userProductsSlice";
+import {fetchShares} from "../shares/sharesSlice";
 
 import {ToastContainer} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -92,6 +93,7 @@ export const CategoryList = () => {
         dispatch(fetchImages(user?.uid!!))
         dispatch(fetchUserProducts(user?.uid!!))
         dispatch(fetchAllProducts())
+        dispatch(fetchShares(user?.uid!!))
     }, [user, dispatch])
 
 

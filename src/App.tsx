@@ -21,7 +21,7 @@ import Home from "./features/api/Home";
 import './App.css';
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
-
+import SharesPage from "./features/shares/SharesPage";
 import CategoryPage from "./features/categories/CategoryPage";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
@@ -101,6 +101,7 @@ console.log(user)
                     <Route path="/categories/:categoryPath" element={<CategoryPage/>}/>
                     <Route path="/products" element={<ProductsList/>}/>
                     <Route path="/search" element={<SearchUserProductPage/>}/>
+                    <Route path="/shares" element={<SharesPage/>}/>
 
                 </Routes>
             </div>

@@ -3,15 +3,10 @@ import {
     createAsyncThunk,
     createEntityAdapter,
     EntityState,
-    PayloadAction,
     createSelector
 } from '@reduxjs/toolkit'
 import {AppDispatch, RootState} from "../../app/store";
-import {UserProduct} from "../products/userProductsSlice";
-import {addDoc, collection} from "firebase/firestore";
-import {db} from "../../firebase";
-import {ProductFromDictionary, selectAllProducts} from "../products/allProductsSlice";
-import {Category} from "../categories/categoriesSlice";
+
 
 
 

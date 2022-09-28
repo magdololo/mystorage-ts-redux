@@ -1,5 +1,5 @@
 import {useAppSelector} from "../../app/store";
-import {selectUnReadNotifications} from "./notificationsSlice";
+import {selectAllNotifications, selectUnReadNotifications} from "./notificationsSlice";
 import React, {useState, useEffect, useRef} from "react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,7 @@ import {
 
 
 const NotificationsList = ()=>{
+    const allNotifications = useAppSelector(selectAllNotifications)
     const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const ref = useRef<HTMLUListElement>(null);
     const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -40,36 +41,74 @@ const NotificationsList = ()=>{
        <>
            <div className="flex justify-center flex-nowrap">
                <ul className="bg-white rounded-lg w-full">
-                   {unReadNotifications.map(notification => (
-                       <li className={"h-32 relative border-b border-gray-extraLight w-full rounded-t-lg py-2"} key={notification?.id}>
-                          <Message>
-                              <MessageIcon>
-                                  {notification.type === "invite" ?
-                                          <FontAwesomeIcon icon={regular('envelope')} className={"w-6 h-6 text-purple2 justify-center items-center"}/> :
-                                          <FontAwesomeIcon icon={regular('comment')} className={"w-6 h-6 text-blue-400 justify-center items-center"}/>}
-                              </MessageIcon>
-                              <MessageBody>
-                                  <MessageTitle>{notification.type === "invite" ? "Zaproszenie!" : "Informacja!"}</MessageTitle>
-                                  {notification.type === "invite" ?
-                                        <>
-                                        {/*<div className="dropdown" >*/}
-                                            <button  onClick={() => {
-                                                setDropdownOpen(prevState => !prevState)
-                                                console.log(dropdownOpen)
-                                            }}>
-                                                <FontAwesomeIcon icon={solid('ellipsis')}  className={(dropdownOpen ? "text-white bg-purple-800 w-5 h-5 absolute top-5 right-8" : " w-5 h-5 text-purple-800 absolute top-5 right-8")} />{/*+}*/}
-                                            </button>
-                                            {dropdownOpen && (dropdownContent)}
-                                        {/*</div>*/}
-                                        </>
-                                      : null}
-                                  <MessageBodyText>{notification.text}</MessageBodyText>
-                                  <MessageBodyDate>{notification.date.toLocaleString()}</MessageBodyDate>
-                              </MessageBody>
+                   {unReadNotifications.length > 0 ?
+                       unReadNotifications.map(notification => (
+                           <li className={"h-32 relative border-b border-gray-extraLight w-full rounded-t-lg py-2"}
+                               key={notification?.id}>
+                               <Message>
+                                   <MessageIcon>
+                                       {notification.type === "invite" ?
+                                           <FontAwesomeIcon icon={regular('envelope')}
+                                                            className={"w-6 h-6 text-purple2 justify-center items-center"}/> :
+                                           <FontAwesomeIcon icon={regular('comment')}
+                                                            className={"w-6 h-6 text-blue-400 justify-center items-center"}/>}
+                                   </MessageIcon>
+                                   <MessageBody>
+                                       <MessageTitle>{notification.type === "invite" ? "Zaproszenie!" : "Informacja!"}</MessageTitle>
+                                       {notification.type === "invite" ?
+                                           <>
+                                               {/*<div className="dropdown" >*/}
+                                               <button onClick={() => {
+                                                   setDropdownOpen(prevState => !prevState)
+                                                   console.log(dropdownOpen)
+                                               }}>
+                                                   <FontAwesomeIcon icon={solid('ellipsis')}
+                                                                    className={(dropdownOpen ? "text-white bg-purple-800 w-5 h-5 absolute top-5 right-8" : " w-5 h-5 text-purple-800 absolute top-5 right-8")}/>{/*+}*/}
+                                               </button>
+                                               {dropdownOpen && (dropdownContent)}
+                                               {/*</div>*/}
+                                           </>
+                                           : null}
+                                       <MessageBodyText>{notification.text}</MessageBodyText>
+                                       <MessageBodyDate>{notification.date.toLocaleString()}</MessageBodyDate>
+                                   </MessageBody>
 
-                          </Message>
-                           </li>))}
+                               </Message>
+                           </li>))
+                       : allNotifications.map(notification => (
+                           <li className={"h-32 relative border-b border-gray-extraLight w-full rounded-t-lg py-2"}
+                               key={notification?.id}>
+                               <Message>
+                                   <MessageIcon>
+                                       {notification.type === "invite" ?
+                                           <FontAwesomeIcon icon={regular('envelope')}
+                                                            className={"w-6 h-6 text-purple2 justify-center items-center"}/> :
+                                           <FontAwesomeIcon icon={regular('comment')}
+                                                            className={"w-6 h-6 text-blue-400 justify-center items-center"}/>}
+                                   </MessageIcon>
+                                   <MessageBody>
+                                       <MessageTitle>{notification.type === "invite" ? "Zaproszenie!" : "Informacja!"}</MessageTitle>
+                                       {notification.type === "invite" ?
+                                           <>
+                                               {/*<div className="dropdown" >*/}
+                                               <button onClick={() => {
+                                                   setDropdownOpen(prevState => !prevState)
+                                                   console.log(dropdownOpen)
+                                               }}>
+                                                   <FontAwesomeIcon icon={solid('ellipsis')}
+                                                                    className={(dropdownOpen ? "text-white bg-purple-800 w-5 h-5 absolute top-5 right-8" : " w-5 h-5 text-purple-800 absolute top-5 right-8")}/>{/*+}*/}
+                                               </button>
+                                               {dropdownOpen && (dropdownContent)}
+                                               {/*</div>*/}
+                                           </>
+                                           : null}
+                                       <MessageBodyText>{notification.text}</MessageBodyText>
+                                       <MessageBodyDate>{notification.date.toLocaleString()}</MessageBodyDate>
+                                   </MessageBody>
 
+                               </Message>
+                           </li>))
+                   }
                </ul>
            </div>
 

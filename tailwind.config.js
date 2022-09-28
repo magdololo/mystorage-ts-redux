@@ -54,7 +54,8 @@ module.exports = {
       'poppins' : ['"Poppins"'],
       'noto-sans' : ['"Noto Sans"'],
       'sonsie-one' : ['"Sonsie One"'],
-      'courgette': ['"Courgette"']
+      'courgette': ['"Courgette"'],
+      'varela' : ['"Varela Round"']
     },
     minHeight: {
       '4/10': '40%',

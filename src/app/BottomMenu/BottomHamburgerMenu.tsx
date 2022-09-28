@@ -93,7 +93,7 @@ const BottomHamburgerMenu = () => {
                             <Accordion items={myAccordion} duration={300} multiple={false}/>
                         </li>
                         <li key='4' className="px-6 py-2  w-full cursor-pointer" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />{t("BottomHamburgerMenu.signOut")}</li>
-                        <li key='6' className="px-6 py-2  w-full cursor-pointer" onClick={handleShowModal}><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faBell} />{t("BottomHamburgerMenu.addCoUser")}</li>
+                        <li key='6' className="px-6 py-2  w-full cursor-pointer"><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faBell} /><Link to={'/shares/'}>{t("BottomHamburgerMenu.coUsers")}</Link></li>
                     </ul>
                     <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleClose, isShown})}/>
                 </div>
@@ -103,3 +103,4 @@ const BottomHamburgerMenu = () => {
     );
 };
 export default BottomHamburgerMenu;
+// onClick={handleShowModal}
