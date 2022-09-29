@@ -8,10 +8,11 @@ module.exports = {
 
       xs: '0',
       sm: '390px',//'550px',
+      xmd: '580px',
       md:  '650px',//'650px',
       //md: '768px',
       lg: '960px',
-      xl: '1440px',
+      xl: '1400px',
     },
     colors: {
       'purple2' : "#bfa1f7",
@@ -19,7 +20,7 @@ module.exports = {
       'purple': '#5B21B6',
       'pink': '#ff49db',
       'orange': '#ff7849',
-      'green': '#13ce66',
+      'green': '#228b22',
       'yellow': '#ffc82c',
       'red': "#DC2626",
       'dark-red': "#750b0b",
