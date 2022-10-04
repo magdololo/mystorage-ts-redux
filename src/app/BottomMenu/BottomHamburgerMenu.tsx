@@ -6,6 +6,7 @@ import {
     faHandPointRight, // the clock icon
     faUser,
     faArrowRightFromBracket,
+    faBell
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Divider from "@mui/material/Divider";
@@ -20,6 +21,9 @@ import {useTranslation} from "react-i18next";
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import {useAppDispatch} from "../store";
+import {useModal} from "../../component/Modal/UseModal";
+import {Modal} from "../../component/Modal/Modal";
+import AddCoUserForm from "./AddCoUserForm";
 
 const BottomHamburgerMenu = () => {
     const dispatch = useAppDispatch();
@@ -28,6 +32,9 @@ const BottomHamburgerMenu = () => {
     let user = useSelector(selectUser);
     const [isOpen, setIsOpen] =useState(false);
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
+    const {isShown, handleShown, handleClose} = useModal()
+    const modalHeader = ""
+
     const toggleDrawer = () => {
         setIsOpen((prevState) => !prevState)
     }
@@ -54,10 +61,17 @@ const BottomHamburgerMenu = () => {
         refreshPage()
 
     };
+    const handleShowModal = (e:any)=>{
+        e.stopPropagation();
+        handleShown()
+
+    }
     const myAccordion = [
         {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />{t("BottomHamburgerMenu.myAccount")}</span>,
         content: <span className="text-sm font-bold">{user?.email}</span>}
     ]
+
+
     return (
         <>
 
@@ -66,6 +80,7 @@ const BottomHamburgerMenu = () => {
                 open={isOpen}
                 onClose={toggleDrawer}
                 direction='left'
+                size={295}
             >
                 <div className="flex justify-center">
                     <ul className="bg-white rounded-lg w-96 text-gray text-lg pt-10 relative">
@@ -78,9 +93,9 @@ const BottomHamburgerMenu = () => {
                             <Accordion items={myAccordion} duration={300} multiple={false}/>
                         </li>
                         <li key='4' className="px-6 py-2  w-full cursor-pointer" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />{t("BottomHamburgerMenu.signOut")}</li>
-
+                        <li key='6' className="px-6 py-2  w-full cursor-pointer"><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faBell} /><Link to={'/shares/'}>{t("BottomHamburgerMenu.coUsers")}</Link></li>
                     </ul>
-
+                    <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleClose, isShown})}/>
                 </div>
             </Drawer>
 
@@ -88,3 +103,4 @@ const BottomHamburgerMenu = () => {
     );
 };
 export default BottomHamburgerMenu;
+// onClick={handleShowModal}

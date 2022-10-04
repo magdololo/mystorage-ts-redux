@@ -152,7 +152,10 @@
     "categoryList": "Category list",
     "productList": "Product list",
     "myAccount": "My account",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "coUsers": "Co-users",
+    "addCoUser": "Add co-user",
+    "headerFormAddCoUser" :"Enter the co-user email"
 
   }
 }

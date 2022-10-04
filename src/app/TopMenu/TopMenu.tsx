@@ -15,9 +15,9 @@ const TopMenu = ({toggleEdit, toggleValue}: TopMenuProps) => {
     return(
         <>
             <div className="w-screen mx-auto">
-            <div className="max-w-xs text-center text-gray pt-2 pb-4 px-6 mx-auto">
+            <div className="max-w-xs text-center text-gray pt-2 pb-6 px-6 mx-auto">
                 <button type="button"
-                        className="inline-block px-6 py-2.5 border-2 border-purple text-purple font-bold text-md leading-tight rounded hover:scale-110 transition duration-300 ease-in-out focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                        className=" px-4 py-2.5 w-36 border-2 border-purple text-purple-800 font-bold text-sm leading-tight uppercase  shadow-xs rounded hover:scale-110 transition duration-300 ease-in-out focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                         data-mdb-ripple="true" data-mdb-ripple-color="light" onClick={()=>toggleEdit()}>{toggleValue ? t("buttons.categoryListButton") : t("buttons.editCategoriesButton")}
 
                 </button>
@@ -28,3 +28,4 @@ const TopMenu = ({toggleEdit, toggleValue}: TopMenuProps) => {
 
 }
 export default TopMenu;
+//uppercase font-bold py-2 px-4 rounded shadow-xs

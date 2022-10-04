@@ -161,7 +161,7 @@ const MainMenuLinkRegister = styled.link`
   font-weight: bold;
   line-height: 1.25;
   border-radius: 1rem; /* 16px */
-  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  //filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
   &:hover {
     background-color:  rgb(88, 28, 135);
     filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
