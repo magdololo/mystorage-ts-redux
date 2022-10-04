@@ -107,6 +107,9 @@ module.exports = {
         'pr-2/5' : 'padding-right: -0.175rem',
 
       },
+      margin: {
+        'ml-8' : 'margin-left: 10%',
+      },
       inset:{
          'bottom-1/10': "bottom: 10rem",
          'left-9/10' : "left: 90%"

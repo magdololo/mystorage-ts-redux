@@ -15,13 +15,13 @@ const BottomMenu = () => {
     return(
         <>
                 <div className='w-screen fixed top-auto bottom-0 bg-white z-100 '>
-                    <div className="w-11/12 flex flex-1 max-w-lg py-8 mx-auto ">
+                    <div className="w-11/12 flex flex-row flex-1 max-w-lg py-8 mx-auto ">
                         <Hamburger/>
                         {<SearchInput2/>}
                         {/*<SearchInput/>*/}
                         {/*variant="secondary"*/}
                         <button
-                            className="text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 px-4 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                            className="text-sm bg-purple text-white uppercase font-bold py-2 px-4 rounded shadow-xs hover:shadow-lg  hover:bg-purple-500 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                             onClick={handleShown}>{t("buttons.addProduct")}
                         </button>
 

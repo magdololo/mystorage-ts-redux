@@ -42,7 +42,7 @@ export const StyledModal = styled.div`
   position: relative;
   margin: 0 auto;
   border-radius: 8px;
-  padding: 0;
+  padding: 12px;
   overflow-y: scroll;
   scroll-behavior: smooth;
   scrollbar-color: #5B21B6 #60A5FA;
@@ -65,6 +65,7 @@ export const HeaderText = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
   padding-bottom: 0.8rem;
+  padding-left: 2rem;
   align-self: center;
   color: rgb(55 65 81);
   

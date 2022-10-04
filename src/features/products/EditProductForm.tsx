@@ -210,7 +210,8 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
 
     </Box>
     {errors.newQuantity && (<p className="text-xs text-red ml-10">{t("products.EditProductForm.validationQuantity")}</p>)}
-    <Button sx={{ marginLeft: "10%", marginTop: "5%"}} type="submit" variant="contained" color="primary" >{t("buttons.editProduct")}</Button>
+    {/*<Button sx={{ marginLeft: "10%", marginTop: "5%"}} type="submit" variant="contained" color="primary" >{t("buttons.editProduct")}</Button>*/}
+    <Box sx={{marginLeft: "10%"}}><button className="mt-4 text-sm bg-purple  text-white uppercase font-bold py-4 px-4 border-purple rounded shadow-xs leading-6" type={"submit"}>{t("buttons.editProduct")}</button></Box>
 </Box>
             </form>
         </>

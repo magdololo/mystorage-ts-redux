@@ -23,7 +23,7 @@ const AppTitle = () => {
 
     return(
         <>
-            <div className="w-screen-xs mx-auto max-w-screen-lg relative text-center bg-gray-50 text-gray pt-10 pb-4 px-6 ">
+            <div className="mx-auto max-w-screen-lg relative text-left  bg-gray-50 text-gray pt-10 pb-4 px-6 sm:text-center">
                 <h1 className="text-2xl font-bold mt-0 mb-6 sm:text-3xl md:text-4xl">{t("app_title")}</h1>
 
                 <div className={"absolute top-8 right-4 md:right-12" } onClick={handleShown}><FontAwesomeIcon className={(unReadNotifications.length > 0 ? "text-2xl md:text-3xl text-red px-4 pt-4" : "text-2xl md:text-3xl text-gray-extraLight px-4 pt-4")} icon={regular('bell')} />
