@@ -18,9 +18,7 @@ const SharesPage = ()=>{
         <>
             <div className="pb-6 xs:max-w-xl md:max-w-2xl lg:max-w-screen-lg mx-auto">
             <AppTitle/>
-            {/*<div className="max-w-screen-xl mx-auto mb-4">*/}
                 <ReturnToCategoryList/>
-            {/*</div>*/}
 
                   <MainContent>
 
@@ -126,7 +124,7 @@ const SharesPage = ()=>{
                                               <>
                                                   <div className={"max-w-screen-sm mx-auto"}>
                                                       <div className=" pb-2 flex flex-row justify-start xmd:mb-0">
-                                                          <Button className={"marginLeft"}>Anuluj</Button>
+                                                          <ButtonSingle>Anuluj</ButtonSingle>
 
                                                       </div>
                                                   </div>
@@ -145,9 +143,9 @@ const SharesPage = ()=>{
 
 
                   </MainContent>
-            {/*</div>*/}
-            <BottomMenu/>
             </div>
+            <BottomMenu/>
+
         </>
     )
 }
