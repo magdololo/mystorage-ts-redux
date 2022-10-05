@@ -7,7 +7,7 @@ import {Category, selectAllCategories} from "../categories/categoriesSlice"
 
 import 'react-toastify/dist/ReactToastify.css';
 import plLocale from "date-fns/locale/pl";
-import {Button, TextField, MenuItem} from "@mui/material";
+import {TextField, MenuItem} from "@mui/material";
 import Box from "@mui/material/Box";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
@@ -107,7 +107,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             control={control}
             rules={{required: true}}
             defaultValue={editProductCategory}
-            render={({field: {onChange, value}, fieldState: {error}}) => (
+            render={({field: {onChange, value}, fieldState: {}}) => (
                 <AutocompleteWithCategoriesTitle
                     onChange= {onChange}
                     value={value}
@@ -186,7 +186,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
                         value={value}
                         onChange={onChange}
                         renderInput={(params) => <TextField {...params}  sx={{width: "80%", marginLeft: "10%", marginTop: "5%"}}/>}
-                    />
+                     />
                 </LocalizationProvider>
             )}
         />

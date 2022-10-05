@@ -61,11 +61,11 @@ const BottomHamburgerMenu = () => {
         refreshPage()
 
     };
-    const handleShowModal = (e:any)=>{
-        e.stopPropagation();
-        handleShown()
-
-    }
+    // const handleShowModal = (e:any)=>{
+    //     e.stopPropagation();
+    //     handleShown()
+    //
+    // }
     const myAccordion = [
         {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />{t("BottomHamburgerMenu.myAccount")}</span>,
         content: <span className="text-sm font-bold">{user?.email}</span>}
