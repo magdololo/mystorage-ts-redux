@@ -18,7 +18,6 @@ type CropImagesProps = {
     newImageName: string
     uid: string
 }
-
 // const customStyles = {
 //     content: {
 //         top: '50%',
