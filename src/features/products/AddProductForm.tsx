@@ -10,7 +10,7 @@ import {selectUser} from "../users/usersSlice";
 import {addUserProduct, UserProduct} from "./userProductsSlice";
 import {Category} from "../categories/categoriesSlice";
 
-import {Alert, Button, TextField} from "@mui/material";
+import {Alert, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';

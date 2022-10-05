@@ -32,7 +32,7 @@ const BottomHamburgerMenu = () => {
     let user = useSelector(selectUser);
     const [isOpen, setIsOpen] =useState(false);
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
-    const {isShown, handleShown, handleClose} = useModal()
+    const {isShown, handleClose} = useModal()
     const modalHeader = ""
 
     const toggleDrawer = () => {
@@ -61,11 +61,11 @@ const BottomHamburgerMenu = () => {
         refreshPage()
 
     };
-    const handleShowModal = (e:any)=>{
-        e.stopPropagation();
-        handleShown()
-
-    }
+    // const handleShowModal = (e:any)=>{
+    //     e.stopPropagation();
+    //     handleShown()
+    //
+    // }
     const myAccordion = [
         {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />{t("BottomHamburgerMenu.myAccount")}</span>,
         content: <span className="text-sm font-bold">{user?.email}</span>}

@@ -13,7 +13,7 @@ const AddCoUserForm=({handleClose, isShown}: AddCoUserFormProps)=>{
         reset,
         register,
         handleSubmit,
-        formState: { errors }
+        // formState: {}
     } = useForm<{
         email: string,
         password: string
@@ -23,7 +23,6 @@ const AddCoUserForm=({handleClose, isShown}: AddCoUserFormProps)=>{
     const onSubmit = handleSubmit((data:{email:string})=>{
         setMessageAfterSendPassword(true)
         reset({email: ""})
-        // handleClose()
 
     });
     return(
