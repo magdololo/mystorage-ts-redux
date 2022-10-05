@@ -13,7 +13,7 @@ const AddCoUserForm=({handleClose, isShown}: AddCoUserFormProps)=>{
         reset,
         register,
         handleSubmit,
-        formState: {}
+        // formState: {}
     } = useForm<{
         email: string,
         password: string

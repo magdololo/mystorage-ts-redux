@@ -32,7 +32,7 @@ const BottomHamburgerMenu = () => {
     let user = useSelector(selectUser);
     const [isOpen, setIsOpen] =useState(false);
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
-    const {isShown, handleShown, handleClose} = useModal()
+    const {isShown, handleClose} = useModal()
     const modalHeader = ""
 
     const toggleDrawer = () => {

@@ -107,7 +107,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             control={control}
             rules={{required: true}}
             defaultValue={editProductCategory}
-            render={({field: {onChange, value}, fieldState: {}}) => (
+            render={({field: {onChange, value}}) => (
                 <AutocompleteWithCategoriesTitle
                     onChange= {onChange}
                     value={value}
@@ -124,7 +124,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             control={control}
             rules={{required: true}}
             defaultValue={editProduct ? editProduct.name : ''}
-            render={({field: {onChange, value}, fieldState: {error}}) => (
+            render={({field: {onChange, value}}) => (
                 <TextField sx={{width: "80%", marginLeft: "10%"}}
                            id="standard-basic"
                            label={t("products.EditProductForm.labelProductName")}
@@ -142,7 +142,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             control={control}
             rules={{required: true, min: 1}}
             defaultValue={editProduct ? editProduct.capacity : null}
-            render={({field: {onChange, value}, fieldState: {error}}) => (
+            render={({field: {onChange, value}}) => (
                 <TextField sx={{width: "35%", marginLeft: "10%"}}
                            id="standard-basic"
                            label={t("products.EditProductForm.labelCapacity")}
@@ -155,7 +155,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             name="newUnit"
             control={control}
             defaultValue={editProduct ? editProduct.unit: ""}
-            render={({field: {onChange, value}, fieldState: {error}}) => (
+            render={({field: {onChange, value}}) => (
                 <TextField sx={{width: "35%", marginRight: "10%", marginLeft: "5%"}}
                            id="standard-select-currency"
                            select
@@ -178,7 +178,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             name="newExpireDate"
             control={control}
             defaultValue={editProduct ? editProduct.expireDate : null}
-            render={({field: {onChange, value}, fieldState: {error}}) => (
+            render={({field: {onChange, value}}) => (
                 <LocalizationProvider dateAdapter={AdapterDateFns} locale={plLocale}>
                     <DatePicker
                         mask={'__.__.____'}
@@ -197,7 +197,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             control={control}
             rules={{required: true, min: 1}}
             defaultValue={editProduct ? editProduct.quantity : null}
-            render={({field: {onChange, value}, fieldState: {error}}) => (
+            render={({field: {onChange, value}}) => (
                 <TextField sx={{width: "80%", marginLeft: "10%"}}
                            id="outlined-number"
                            label={t("products.EditProductForm.labelQuantity")}
