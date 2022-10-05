@@ -93,7 +93,7 @@ const CategoryPage = () => {
             <div className="pb-6 xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
                 <AppTitle/>
                 <div className="text-center text-gray-dark pt-2 pb-2px-6">
-                    <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">{categoryFromPath?.title}</h1>
+                    <h1 className="text-xl font-bold text-gray-light mt-0 mb-6 capitalize sm:text-2xl">{categoryFromPath?.title}</h1>
                 </div>
                 <ReturnToCategoryList/>
 
@@ -109,12 +109,13 @@ const CategoryPage = () => {
                                             className= "text-md capitalize align-baseline text-gray  font-bold text-lg md:text-xl">{product.name}
                                         </div>
                                         <div
+                                            className="text-gray-light text-md md:text-base">{product.capacity}{product.unit}
+                                        </div>
+                                        <div
                                             className= {"text-base md:text-lg " + ((product.expireDate !== null && product?.expireDate > todayDate ) ? "text-gray-light" : "text-red font-bold")} >
                                             {product.expireDate ? product.expireDate.toISOString().substring(0,10) : ""}
                                         </div>
-                                        <div
-                                            className="text-gray-light text-md md:text-base">{product.capacity}{product.unit}
-                                        </div>
+
                                     </div>
 
                                     <div className="flex flex-auto flex-nowrap  relative  sm:w-8/12 md:w-6/12 ">

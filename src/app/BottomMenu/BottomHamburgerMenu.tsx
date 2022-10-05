@@ -34,6 +34,7 @@ const BottomHamburgerMenu = () => {
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = ""
+
     const toggleDrawer = () => {
         setIsOpen((prevState) => !prevState)
     }
@@ -69,6 +70,8 @@ const BottomHamburgerMenu = () => {
         {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />{t("BottomHamburgerMenu.myAccount")}</span>,
         content: <span className="text-sm font-bold">{user?.email}</span>}
     ]
+
+
     return (
         <>
 
@@ -90,7 +93,7 @@ const BottomHamburgerMenu = () => {
                             <Accordion items={myAccordion} duration={300} multiple={false}/>
                         </li>
                         <li key='4' className="px-6 py-2  w-full cursor-pointer" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />{t("BottomHamburgerMenu.signOut")}</li>
-                        <li key='6' className="px-6 py-2  w-full cursor-pointer" onClick={handleShowModal}><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faBell} />{t("BottomHamburgerMenu.addCoUser")}</li>
+                        <li key='6' className="px-6 py-2  w-full cursor-pointer"><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faBell} /><Link to={'/shares/'}>{t("BottomHamburgerMenu.coUsers")}</Link></li>
                     </ul>
                     <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleClose, isShown})}/>
                 </div>
@@ -100,3 +103,4 @@ const BottomHamburgerMenu = () => {
     );
 };
 export default BottomHamburgerMenu;
+// onClick={handleShowModal}

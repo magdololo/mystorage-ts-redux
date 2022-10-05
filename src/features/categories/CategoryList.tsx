@@ -12,7 +12,7 @@ import EditCategoryForm from "./EditCategoryForm";
 
 import {changeSeeGreetingToTrue, selectUser, User} from "../users/usersSlice";
 
-
+import {fetchNotifications, selectUnReadNotifications} from "../notifications/notificationsSlice";
 import {
     currentCategoryChange,
     deleteCategory,
@@ -23,11 +23,13 @@ import {
 import {fetchImages} from "../images/imagesSlice";
 import {fetchAllProducts} from "../products/allProductsSlice";
 import {fetchUserProducts} from "../products/userProductsSlice";
+import {fetchShares} from "../shares/sharesSlice";
 
 import {ToastContainer} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
+
 
 
 export const CategoryList = () => {
@@ -45,7 +47,9 @@ export const CategoryList = () => {
     const dispatch = useAppDispatch()
     // const categoriesStatus = useAppSelector(((state) => state.categories.status))
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
+    const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const [toggleSwitch, setToggleSwitch] = useState(false);
+
     const closeModalWithGreeting = () => {
         console.log("close modal")
         handleCloseGreeting();
@@ -84,10 +88,12 @@ export const CategoryList = () => {
     </>;
 
     useEffect(() => {
+        dispatch(fetchNotifications(user?.uid!!))
         dispatch(fetchCategories(user?.uid!!))
         dispatch(fetchImages(user?.uid!!))
         dispatch(fetchUserProducts(user?.uid!!))
         dispatch(fetchAllProducts())
+        dispatch(fetchShares(user?.uid!!))
     }, [user, dispatch])
 
 
@@ -107,6 +113,7 @@ export const CategoryList = () => {
     const deletingCategory = (category: Category) => {
         dispatch(deleteCategory(category))
     }
+    console.log(unReadNotifications.length)
 
      let content;
     // if (categoriesStatus === "loading") {
@@ -114,7 +121,7 @@ export const CategoryList = () => {
     // } else if (categoriesStatus === "succeeded") {
         const renderedCategories = categories?.filter(category=>(category?.required === "true" && !toggleSwitch) || category?.required === "false").map(category =>
                 (
-                   <li className={"h-auto flex flex-col relative" + (toggleSwitch ? " bg-black bg-opacity-90 " : "")}
+                   <div className={"h-auto flex flex-col relative" + (toggleSwitch ? " bg-black bg-opacity-90 " : "")}
                             key={category?.id}>
 
                             <Link to={`/categories/${category?.path}`}
@@ -141,16 +148,16 @@ export const CategoryList = () => {
                                     className="absolute align-middle top-8 right-8 inline-flex items-center justify-center text-red text-lg font-bold cursor-pointer"
                                     icon={faXmark} onClick={() => deletingCategory(category as Category)}/>
                             }
-                        </li>
+                        </div>
                     )
 
         )
         content =
             <>
 
-                <div className="w-screen-xs mx-auto max-w-screen-xl mb-32">
-                    <div className="flex flex-nowrap w-full min-h-min items-center">
-                        <div className="flex flex-wrap min-w-fit w-10/12 mx-4 pb-36">
+                <div className="mx-auto max-w-screen-xl mb-32">
+                    <div className="flex flex-nowrap items-center">
+                        <div className="flex mx-4 pb-36">
                             <div className="grid grid-cols-2 gap-1 overflow-y-auto lg:grid-cols-3 lg:gap-2 ">
                                 {renderedCategories}
                                 {!toggleSwitch &&
@@ -159,7 +166,7 @@ export const CategoryList = () => {
                                         onClick={handleShown}>
                                         <img src="http://placehold.jp/ffffff/ffffff/1280x900.png" alt={"placeholder"}
                                              className="bg-cover"/>
-                                        <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed">
+                                        <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed ">
                                             <div
                                                 className="relative mx-auto top-1/3 text-purple font-bold text-2xl h-5 w-5 ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
@@ -195,6 +202,7 @@ export const CategoryList = () => {
 
             <AppTitle/>
             <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
+
             {content}
             <Modal className={"addCategory-modal"} isShown={isShown} hide={handleClose}
                    modalHeaderText={!toggleSwitch ? modalAddHeader : modalEditHeader}

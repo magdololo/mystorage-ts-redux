@@ -27,7 +27,7 @@ const allProductsAdapter = createEntityAdapter<ProductFromDictionary>({
 export const fetchProductFromDictionaryId = createAsyncThunk<ProductFromDictionary, UserProduct,{ //pierwsze to typ tego co zwracamy, drugie to typ tego co przyjmujemy jako parametr
     dispatch: AppDispatch
     state: RootState
-}>('userProducts/fetchProductFromDictionaryId', async(userProduct, thunkApi)=> {
+}>('allProducts/fetchProductFromDictionaryId', async(userProduct, thunkApi)=> {
     console.log("halo z fetch product id thunk")
     console.log(userProduct)
     let allProducts = selectAllProducts(thunkApi.getState())

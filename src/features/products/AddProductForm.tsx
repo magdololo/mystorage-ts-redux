@@ -250,7 +250,8 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                     {errors.quantity && (<p className="text-xs text-red ml-10">{t("products.AddProductForm.validationQuantity")}</p>)}
 
                     {errorMessage !== '' ? <Alert severity="error">{errorMessage}</Alert> : null}
-                    <Button sx={{marginLeft: "10%", marginTop: "10%"}} type="submit" variant="contained" color="primary">{t("buttons.addProduct")}</Button>
+                    {/*<Button sx={{marginLeft: "10%", marginTop: "10%"}} type="submit" variant="contained" color="primary">{t("buttons.addProduct")}</Button>*/}
+                    <Box sx={{marginLeft: "10%"}}><button className="mt-4 text-sm bg-purple  text-white uppercase font-bold py-4 px-4 border-purple rounded shadow-xs leading-6" type={"submit"}>{t("buttons.addProduct")}</button></Box>
                 </Box>
             </form>
         </>

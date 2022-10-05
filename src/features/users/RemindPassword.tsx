@@ -101,7 +101,7 @@ const RemindPassword=()=>{
             </form>
                 {messageAfterSendPassword ?
                     <div className="bg-purple-100 rounded-lg py-5 px-6 mb-4 text-purple-700 mb-3 text-gray-700 my-6 text-2xl" role="alert">
-                        Na twój adres email wysłaliśmy hasło do restu konta!</div> : ""
+                        {t("users.RemindPassword.messageAfterSendPassword")}</div> : ""
                 }
             </div>
 

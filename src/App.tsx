@@ -21,12 +21,14 @@ import Home from "./features/api/Home";
 import './App.css';
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
+import SharesPage from "./features/shares/SharesPage";
+import CategoryPageSecond from "./features/categories/CategoryPageSecond";
 
-import CategoryPage from "./features/categories/CategoryPage";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 import SearchUserProductPage from "./features/products/SearchUserProductPage";
 import {doc, getDoc} from "firebase/firestore";
+
 
 
 
@@ -76,6 +78,7 @@ function App() {
                         didSeeGreeting: result.didSeeGreeting
                     })
                 );
+
                 navigate("/categories")
             }
         })
@@ -96,9 +99,10 @@ console.log(user)
                     <Route path="/remindPassword" element={<RemindPassword/>}/>
                     :
                     <Route path="/categories" element={<CategoryList/>}/>
-                    <Route path="/categories/:categoryPath" element={<CategoryPage/>}/>
+                    <Route path="/categories/:categoryPath" element={<CategoryPageSecond/>}/>
                     <Route path="/products" element={<ProductsList/>}/>
                     <Route path="/search" element={<SearchUserProductPage/>}/>
+                    <Route path="/shares" element={<SharesPage/>}/>
 
                 </Routes>
             </div>

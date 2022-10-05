@@ -152,6 +152,7 @@
     "productList": "Lista produktów",
     "myAccount": "Moje konto",
     "signOut": "Wyloguj się",
+    "coUsers": "Współużytkownicy",
     "addCoUser": "Dodaj współużytkownika",
     "headerFormAddCoUser" :"Wpisz email współużytkownika"
   }

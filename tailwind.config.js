@@ -8,24 +8,28 @@ module.exports = {
 
       xs: '0',
       sm: '390px',//'550px',
+      xmd: '580px',
       md:  '650px',//'650px',
       //md: '768px',
       lg: '960px',
-      xl: '1440px',
+      xl: '1400px',
     },
     colors: {
+      'purple2' : "#bfa1f7",
       'blue': '#1fb6ff',
       'purple': '#5B21B6',
       'pink': '#ff49db',
       'orange': '#ff7849',
-      'green': '#13ce66',
+      'green': '#228b22',
       'yellow': '#ffc82c',
       'red': "#DC2626",
+      'dark-red': "#750b0b",
       'gray-extraDark': "#1F2937",
       'gray-dark': '#3F3F46',
       'gray': '#52525B',
       'gray-light': '#71717A',
       'gray-extraLight' : '#D4D4D8',
+      'gray-mediumLight': '#aeaeb5',
       'white': '#ffffff',
       'black': '#000000',
       'labelColor': '#6B7280',
@@ -51,7 +55,8 @@ module.exports = {
       'poppins' : ['"Poppins"'],
       'noto-sans' : ['"Noto Sans"'],
       'sonsie-one' : ['"Sonsie One"'],
-      'courgette': ['"Courgette"']
+      'courgette': ['"Courgette"'],
+      'varela' : ['"Varela Round"']
     },
     minHeight: {
       '4/10': '40%',
@@ -102,10 +107,12 @@ module.exports = {
         'pr-2/5' : 'padding-right: -0.175rem',
 
       },
+      margin: {
+        'ml-8' : 'margin-left: 10%',
+      },
       inset:{
          'bottom-1/10': "bottom: 10rem",
-
-
+         'left-9/10' : "left: 90%"
       }
     },
   },
