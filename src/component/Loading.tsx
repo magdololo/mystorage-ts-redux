@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Spinner } from "./Spinner";
 
 function Loading () {
