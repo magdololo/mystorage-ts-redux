@@ -22,7 +22,7 @@ const Nav = styled.nav`
   justify-items: center;
   top: 0;
   left: 0;
-  font-family: "Courgette", serif;
+  
   color: rgb(107,33,168);
   @media (min-width: 390px) {
     justify-content: space-between;
@@ -51,23 +51,23 @@ const NavCollapse= styled.div`
   `
 
 const NavLogo = styled.span`
-  
+  font-family: "Courgette", serif;
   display: inline-block;
   color: rgb(107, 33, 168);
   font-size: 1.5rem; /* 24px */
-  line-height: 2rem; /* 32px */
+  line-height: 1.8rem; /* 32px */
   
   @media (min-width: 390px) {
-    font-size: 1.875rem; /* 30px */
-    line-height: 2.25rem; /* 36px */
+    font-size: 1.5rem; /* 30px */
+    line-height: 2rem; /* 36px */
     padding: 0.5rem;
   }
   @media (min-width: 650px) {
-    font-size: 2.25rem; /* 36px */
-    line-height: 2.5rem; /* 40px */
+    font-size: 1.8rem; /* 36px */
+    line-height: 2.2rem; /* 40px */
   }
   @media (min-width: 960px) {
-    font-size: 3rem; /* 48px */
+    font-size: 2rem; /* 48px */
     line-height: 1;
   }
   `

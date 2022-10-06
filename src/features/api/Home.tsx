@@ -67,6 +67,8 @@ const Home = () => {
                 <BoxMain>
                     <Nav>
                         <NavCollapse>
+                            <div className={"w-14"}><img src={"./images/logoNav.png"} alt={"home"} className={"h-auto"}/></div>
+
                             <NavLogo>{t('app_title')}</NavLogo>
                         </NavCollapse>
 
