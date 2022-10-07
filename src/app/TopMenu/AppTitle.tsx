@@ -12,23 +12,26 @@ import NotificationsList from "../../features/notifications/NotificationsList";
 import { regular} from '@fortawesome/fontawesome-svg-core/import.macro';
 import {
     Nav,
-
-    BoxMain,
     NavCollapse,
     NavLogo,
     MainMenu,
-    MenuFlag, MenuButtonLogin, MainMenuLinkLogin, MenuButtonRegister, MainMenuLinkRegister, MainMenuSpan,
+    MenuFlag, MainMenuSpan,
 } from "../../features/api/Home.components";
 import {MenuNotifications} from "./AppTitle.components";
-import {Link} from "react-router-dom";
+
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {Accordion} from "react-accordion-ts";
 import {useSelector} from "react-redux";
 import {selectUser} from "../../features/users/usersSlice";
+import SearchInput2 from "../BottomMenu/SearchInput2";
+import { useMediaQuery } from 'usehooks-ts'
 const AppTitle = () => {
     const dispatch = useAppDispatch()
     const { t, i18n } = useTranslation();
     let user = useSelector(selectUser);
+    const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
+
+    console.log(isLargerThan1280)
     const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const {isShown, handleShown, handleClose} = useModal()
     const onCloseModalWithNotifications = ()=>{
@@ -84,20 +87,21 @@ const AppTitle = () => {
                     </NavCollapse>
 
                     <MainMenu>
+                        {isLargerThan1280 ? <SearchInput2/> : null }
 
-                        <MenuButtonLogin>
-                            <Accordion items={myAccordion} duration={300} multiple={false}/>
-                        </MenuButtonLogin>
+                        {/*<MenuButtonLogin>*/}
+                        {/*    <Accordion items={myAccordion} duration={300} multiple={false}/>*/}
+                        {/*</MenuButtonLogin>*/}
                         <div className={"relative flex items-center"}>
                         <MenuNotifications onClick={handleShown}>
                             <FontAwesomeIcon className={(unReadNotifications.length > 0 ? "text-2xl text-red " : "text-2xl text-gray-extraLight")} icon={regular('bell')} />
                                 {unReadNotifications.length > 0 ? <span className={"absolute top-0 left-3 bg-red rounded-full text-md text-white font-bold px-2 py-0.5"}>{unReadNotifications.length}</span> : null}
                         </MenuNotifications>
                         </div>
-                        <MenuFlag>
-                            <MainMenuSpan onClick={handleToggle}
-                                          className={isEnglish ? " fi fi-pl span" : "fi fi-gb span"}/>
-                        </MenuFlag>
+                        {/*<MenuFlag>*/}
+                        {/*    <MainMenuSpan onClick={handleToggle}*/}
+                        {/*                  className={isEnglish ? " fi fi-pl span" : "fi fi-gb span"}/>*/}
+                        {/*</MenuFlag>*/}
 
                     </MainMenu>
                 </Nav>

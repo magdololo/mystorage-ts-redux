@@ -3,6 +3,8 @@ import React, { useState} from "react";
 import {useAppDispatch,useAppSelector} from "../store";
 import {searchByString, searchProduct, selectUserProducts} from "../../features/products/userProductsSlice";
 import {useNavigate} from "react-router-dom";
+
+
 const SearchInput2 =()=>{
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -35,7 +37,8 @@ const SearchInput2 =()=>{
 
     return(
         <>
-            <div className="flex flex-1 pr-1">
+
+            <div className="flex flex-1 pr-1 mr-6">
                 <Select options={options} menuPlacement={"top"}
                         isClearable
                         className="react-select-container"
@@ -46,6 +49,7 @@ const SearchInput2 =()=>{
                     />
                 {/*styles={singleSelectStyle(variant)}*/}
             </div>
+
         </>
     )
 }

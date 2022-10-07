@@ -32,7 +32,7 @@ i {
   right: 10%;
 }
 i:hover {
-  color: rebeccapurple;
+  color: rgb(107,33,168);
   cursor: pointer;
 }
 li {
@@ -60,11 +60,12 @@ li {
 .react-select__control {
   width: 100%;
   height: 100%;
+  border: 1px solid rgb(107,33,168) !important;
 }
 /**/
 .react-select__control:hover, .react-select__control:focus,.react-select__control:focus-within   {
-  border: 2px solid purple !important;
-  box-shadow: 0 0 0 1px purple !important;
+  border: 2px solid rgb(107,33,168) !important;
+  box-shadow: 0 0 0 1px rgb(107,33,168) !important;
 }
 .toastify__progress-bar--success {
   color: rebeccapurple;

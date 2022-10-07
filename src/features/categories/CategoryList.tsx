@@ -29,6 +29,8 @@ import {ToastContainer} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
+import {MainComponent} from "../../app/TopMenu/TopMenu.components";
+import {useMediaQuery} from "usehooks-ts";
 
 
 
@@ -49,7 +51,7 @@ export const CategoryList = () => {
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
     const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const [toggleSwitch, setToggleSwitch] = useState(false);
-
+    const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
     const closeModalWithGreeting = () => {
         console.log("close modal")
         handleCloseGreeting();
@@ -115,7 +117,7 @@ export const CategoryList = () => {
     }
     console.log(unReadNotifications.length)
 
-     let content;
+      let content;
     // if (categoriesStatus === "loading") {
     //     content = <Spinner text="Loading..."/>;
     // } else if (categoriesStatus === "succeeded") {
@@ -155,7 +157,7 @@ export const CategoryList = () => {
         content =
             <>
 
-                <div className="mx-auto max-w-screen-xl mb-32">
+                <MainComponent className={"marginBottom"}>
                     <div className="flex flex-nowrap items-center">
                         <div className="flex mx-4 pb-36">
                             <div className="grid grid-cols-2 gap-1 overflow-y-auto lg:grid-cols-3 lg:gap-2 ">
@@ -189,7 +191,7 @@ export const CategoryList = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </MainComponent>
 
             </>
 
@@ -199,17 +201,19 @@ export const CategoryList = () => {
 
     return (
         <>
-
-            <AppTitle/>
-            <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
-
+            {isSmallerThan1280 ?
+                <>
+                    <AppTitle/>
+                    <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
+                </> :null}
             {content}
             <Modal className={"addCategory-modal"} isShown={isShown} hide={handleClose}
                    modalHeaderText={!toggleSwitch ? modalAddHeader : modalEditHeader}
                    modalContent={!toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleClose}/> :
                        <EditCategoryForm closeAddCategoryModal={handleClose}/>}/>
             {didSee === false && greeting}
-            <BottomMenu/>
+            {isSmallerThan1280 ? <BottomMenu/> : null}
+
             <ToastContainer/>
         </>
     )

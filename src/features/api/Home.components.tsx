@@ -12,7 +12,7 @@ const BoxMain= styled.div`
 const Nav = styled.nav`
   max-width: 1280px;
   width: 100%;
-  height: 112px;
+  //height: 112px;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -28,7 +28,7 @@ const Nav = styled.nav`
     justify-content: space-between;
   }
   @media (min-width: 650px) {
-    height: 160px;
+    //height: 160px;
   }
   @media (min-width: 960px) {
     padding-left: 12px;
@@ -37,13 +37,13 @@ const Nav = styled.nav`
 `
 
 const NavCollapse= styled.div`
-  padding-left: 1.5rem;//24px
+  //padding-left: 1.5rem;//24px
   width: 55%;
   flex-grow: 1;
   display: flex;
   align-items: center;
   @media (min-width: 390px) {
-    padding-left: 2rem;//32px
+    //padding-left: 2rem;//32px
   }
   @media (min-width: 650px) {
     width: 50%
@@ -77,7 +77,8 @@ const MainMenu = styled.div`
   justify-content: end;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  
+  flex-grow: 1;
+  align-items: center;
   @media (min-width: 390px) {
     padding-right: 2rem;
   }
@@ -125,8 +126,8 @@ const MenuFlag = styled(MenuButtonLogin)`
   align-items: center;
   text-align: center;
   @media (min-width: 650px) {
-    font-size: 1.75rem; /* 20px */
-    line-height: 1.75rem; /* 28px */
+    font-size: 1.5rem; /* 20px */
+    line-height: 1.5rem; /* 28px */
   }
   
 `
