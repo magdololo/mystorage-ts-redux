@@ -158,6 +158,7 @@ export const CategoryList = () => {
             <>
 
                 <MainComponent className={"marginBottom"}>
+
                     <div className="flex flex-nowrap items-center">
                         <div className="flex mx-4 pb-36">
                             <div className="grid grid-cols-2 gap-1 overflow-y-auto lg:grid-cols-3 lg:gap-2 ">
@@ -201,11 +202,12 @@ export const CategoryList = () => {
 
     return (
         <>
-            {isSmallerThan1280 ?
-                <>
-                    <AppTitle/>
-                    <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
-                </> :null}
+            {/*{isSmallerThan1280 ?*/}
+            {/*    <>*/}
+            {/*        <AppTitle/>*/}
+            {/*        <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>*/}
+            {/*    </> :null}*/}
+            <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
             {content}
             <Modal className={"addCategory-modal"} isShown={isShown} hide={handleClose}
                    modalHeaderText={!toggleSwitch ? modalAddHeader : modalEditHeader}

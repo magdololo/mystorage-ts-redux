@@ -29,6 +29,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useTranslation} from "react-i18next";
+import {useMediaQuery} from "usehooks-ts";
 
 
 const CategoryPageSecond = () => {
@@ -42,6 +43,7 @@ const CategoryPageSecond = () => {
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = t("categories.CategoryPage.editProduct")
+    const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
     // const notify = () => toast.success('🦄 t("categories.CategoryPage.toastSuccessfully!")', {
     //     position: "top-center",
     //     autoClose: 2000,
@@ -91,11 +93,11 @@ const CategoryPageSecond = () => {
 
         <>
 
-            <AppTitle/>
-            <div className="text-center text-gray-dark pt-2 pb-2 px-6">
-                <h1 className="text-xl font-bold text-gray-light mt-0 mb-6 capitalize sm:text-2xl">{categoryFromPath?.title}</h1>
-            </div>
-            <ReturnToCategoryList/>
+            {/*<AppTitle/>*/}
+            {/*<div className="text-center text-gray-dark pt-2 pb-2 px-6">*/}
+            {/*    <h1 className="text-xl font-bold text-gray-light mt-0 mb-6 capitalize sm:text-2xl">{categoryFromPath?.title}</h1>*/}
+            {/*</div>*/}
+            {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
 
             <div className=" mx-auto max-w-screen-xl mb-32 mt-2 px-4">
                         <div className="grid  gap-1.5 sm:grid-cols-2 sm:gap-1 lg:grid-cols-3 lg:gap-2 ">

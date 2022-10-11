@@ -51,7 +51,9 @@ li {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 80%;
+  margin-left: 30%;
+  z-index: 100;
   /*border: 1px solid purple !important;!*do screena*!*/
   /*border-radius: 4px;!*do screena*!*/
   /*box-shadow: 0 0 0 1px purple !important;!*do screena*!*/

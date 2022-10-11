@@ -34,6 +34,7 @@ const ProductsList = () => {
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
     const maxWidth440 = useMediaQuery('(max-width:440px)');
+    const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
     // const notify = () => toast.success('🦄 Produkt usunięty!', {
     //     position: "top-center",
     //     autoClose: 3000,
@@ -78,14 +79,10 @@ const ProductsList = () => {
 
     return (
         <>
-            <div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
-                <AppTitle/>
-                <div className="text-center text-gray-dark pt-2 pb-2px-6">
-                    <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">{t("products.ProductsList.title")}</h1>
-                </div>
-                <ReturnToCategoryList/>
+            {/*<div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">*/}
+            {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
 
-                <div className="flex mt-2">
+                <div className="flex mt-2 mx-4">
                     <ul className="pb-16 w-full relative">
                         {userProductsWithCategory.map((product) =>
                             <li key={product.id}
@@ -176,8 +173,8 @@ const ProductsList = () => {
                 <ToastContainer/>
 
 
-            </div>
-            <BottomMenu/>
+            {/*</div>*/}
+            {isSmallerThan1280 ? <BottomMenu/> : null}
         </>
     )
 }

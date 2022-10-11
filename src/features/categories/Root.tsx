@@ -3,6 +3,7 @@ import AppTitle from "../../app/TopMenu/AppTitle";
 
 
 import React, {useEffect, useState} from "react";
+import {Outlet} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {useModal} from "../../component/Modal/UseModal";
 import {useAppDispatch, useAppSelector} from "../../app/store";
@@ -16,7 +17,7 @@ import AddCategoryForm from "./AddCategoryForm";
 import EditCategoryForm from "./EditCategoryForm";
 import {Modal} from "../../component/Modal/Modal";
 
-const CategoriesPage = ()=>{
+const Root = ()=>{
     const {t} = useTranslation();
     let user = useSelector(selectUser);
     let didSee = user?.didSeeGreeting;
@@ -56,10 +57,14 @@ const CategoriesPage = ()=>{
         <>
         <MainPageLayout>
                 <NavBar><AppTitle/></NavBar>
-                <Main><CategoryList/><Modal className={"addCategory-modal"} isShown={isShown} hide={handleClose}
-                                            modalHeaderText={!toggleSwitch ? modalAddHeader : modalEditHeader}
-                                            modalContent={!toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleClose}/> :
-                                                <EditCategoryForm closeAddCategoryModal={handleClose}/>}/></Main>
+                <Main>
+                {/*<CategoryList/>*/}
+                {/*    <Modal className={"addCategory-modal"} isShown={isShown} hide={handleClose}*/}
+                {/*           modalHeaderText={!toggleSwitch ? modalAddHeader : modalEditHeader}*/}
+                {/*           modalContent={!toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleClose}/> : <EditCategoryForm closeAddCategoryModal={handleClose}/>}/>*/}
+
+            <Outlet/>
+                </Main>
                 <SideBar><Sidebar/></SideBar>
                 <FooterBar>footer</FooterBar>
             </MainPageLayout>
@@ -67,4 +72,4 @@ const CategoriesPage = ()=>{
     )
 }
 
-export default CategoriesPage;
+export default Root;

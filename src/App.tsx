@@ -11,13 +11,13 @@ import {
 } from "react-router-dom";
 
 import Loading from "./component/Loading";
-import CategoriesPage from "./features/categories/CategoriesPage";
+import CategoryList from "./features/categories/CategoryList";
 import LoginPage from "./features/users/LoginPage";
 import RemindPassword from "./features/users/RemindPassword";
 import ProductsList from "./features/products/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
 import Home from "./features/api/Home";
-
+import Root from "./features/categories/Root";
 import './App.css';
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
@@ -98,12 +98,13 @@ console.log(user)
                     <Route path="/register" element={<RegisterPage/>}/>
                     <Route path="/remindPassword" element={<RemindPassword/>}/>
                     :
-                    <Route path="/categories" element={<CategoriesPage/>}/>
-                    <Route path="/categories/:categoryPath" element={<CategoryPageSecond/>}/>
-                    <Route path="/products" element={<ProductsList/>}/>
-                    <Route path="/search" element={<SearchUserProductPage/>}/>
-                    <Route path="/shares" element={<SharesPage/>}/>
-
+                    <Route path="/" element={<Root/>}>
+                        <Route path="/categories" element={<CategoryList/>}/>
+                        <Route path="/categories/:categoryPath" element={<CategoryPageSecond/>}/>
+                        <Route path="/products" element={<ProductsList/>}/>
+                        <Route path="/search" element={<SearchUserProductPage/>}/>
+                        <Route path="/shares" element={<SharesPage/>}/>
+                    </Route>
                 </Routes>
             </div>
 

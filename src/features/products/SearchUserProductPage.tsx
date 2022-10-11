@@ -25,6 +25,7 @@ import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useTranslation} from "react-i18next";
+import {MainContent} from "../shares/Shares.components";
 
 const SearchUserProductPage= ()=>{
     const { t } = useTranslation();
@@ -38,6 +39,7 @@ const SearchUserProductPage= ()=>{
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = t("products.SearchUserProductPage.editProduct")
+    const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
     // const notify = () => toast.success(t('🦄 Products.SearchUserProductPage.toastSuccess!'), {
     //     position: "top-center",
     //     autoClose: 2000,
@@ -171,22 +173,35 @@ const SearchUserProductPage= ()=>{
     }
     return(
         <>
-            <div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
-                <AppTitle/>
+            {/*<div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">*/}
+            {/*    <AppTitle/>*/}
                 <div className="text-center text-gray-dark pt-2 pb-2px-6">
                     <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">{t("products.SearchUserProductPage.searchResult")}</h1>
                 </div>
-                <ReturnToCategoryList/>
-                <div className="flex mt-2">
+                {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
+
+                <div className="flex flex-row mt-2 w-full">
                     {content}
                 </div>
 
                 <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
                 <ToastContainer />
-            </div>
-            <BottomMenu />
+            {/*</div>*/}
+            {isSmallerThan1280 ? <BottomMenu/> : null}
         </>
     )
 }
 
-export default SearchUserProductPage;
+ export default SearchUserProductPage;
+// max-width: 1400px;
+// margin: 0 auto 8rem auto;
+// display: flex;
+// flex-wrap: nowrap;
+// flex-direction: column;
+// background-color: white;
+// z-index: 50;
+// @media (min-width: 960px) {
+//     flex-direction: row;
+// }
+// @media (min-width: 1440px) {
+//     margin: 0 4rem;
