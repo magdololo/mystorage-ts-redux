@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Link} from 'react-router-dom';
-import AppTitle from "../../app/TopMenu/AppTitle";
 import TopMenu from "../../app/TopMenu/TopMenu";
 import BottomMenu from "../../app/BottomMenu/BottomMenu";
 import {Modal} from "../../component/Modal/Modal";

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {useParams} from 'react-router-dom';
+import React, {useEffect, useState, } from "react";
+import {useParams,useLocation, Route} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import AppTitle from "../../app/TopMenu/AppTitle";
 import ReturnToCategoryList from "../../component/ReturnToCategoryList";
@@ -44,6 +44,10 @@ const CategoryPageSecond = () => {
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = t("categories.CategoryPage.editProduct")
     const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
+    const location = useLocation();
+    console.log(location)
+
+
     // const notify = () => toast.success('🦄 t("categories.CategoryPage.toastSuccessfully!")', {
     //     position: "top-center",
     //     autoClose: 2000,
@@ -89,10 +93,10 @@ const CategoryPageSecond = () => {
     }
 
 
+
     return (
 
         <>
-
             {/*<AppTitle/>*/}
             {/*<div className="text-center text-gray-dark pt-2 pb-2 px-6">*/}
             {/*    <h1 className="text-xl font-bold text-gray-light mt-0 mb-6 capitalize sm:text-2xl">{categoryFromPath?.title}</h1>*/}
