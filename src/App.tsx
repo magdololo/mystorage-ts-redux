@@ -23,7 +23,7 @@ import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
 import SharesPage from "./features/shares/SharesPage";
 import CategoryPageSecond from "./features/categories/CategoryPageSecond";
-
+import SingleCategoryPage from "./features/categories/SingleCategoryPage";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 import SearchUserProductPage from "./features/products/SearchUserProductPage";
@@ -100,7 +100,8 @@ console.log(user)
                     :
                     <Route path="/" element={<Root/>}>
                         <Route path="/categories" element={<CategoryList/>}/>
-                        <Route path="/categories/:categoryPath" element={<CategoryPageSecond/>}/>
+                        {/*<Route path="/categories/:categoryPath" element={<CategoryPageSecond/>}/>*/}
+                        <Route path="/categories/:categoryPath" element={<SingleCategoryPage/>}/>
                         <Route path="/products" element={<ProductsList/>}/>
                         <Route path="/search" element={<SearchUserProductPage/>}/>
                         <Route path="/shares" element={<SharesPage/>}/>

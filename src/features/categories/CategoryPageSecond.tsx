@@ -30,6 +30,7 @@ import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useTranslation} from "react-i18next";
 import {useMediaQuery} from "usehooks-ts";
+import {ProductsListContent, SingleProductBox} from "./SingleCategoruPage.components";
 
 
 const CategoryPageSecond = () => {
@@ -103,11 +104,12 @@ const CategoryPageSecond = () => {
             {/*</div>*/}
             {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
 
-            <div className=" mx-auto max-w-screen-xl mb-32 mt-2 px-4">
-                        <div className="grid  gap-1.5 sm:grid-cols-2 sm:gap-1 lg:grid-cols-3 lg:gap-2 ">
+            {/*<div className=" mx-auto max-w-screen-xl mb-32 mt-2 px-4">*/}
+            {/*            <div className="grid  gap-1.5 sm:grid-cols-2 sm:gap-1 lg:grid-cols-3 lg:gap-2 ">*/}
+            <ProductsListContent>
                             {productsOfCategory.map((product: UserProduct) =>
-
-                                <div key={product.id} className="flex flex-col relative px-2 pt-2 pb-2 border border-gray-extraLight rounded-sm cursor-pointer md:pb-4">
+                                <SingleProductBox>
+                                <div key={product.id} >
                                     <div className={"h-1/3 "}>
                                         <div className="text-lg  text-gray font-bold capitalize align-baseline pb-4 sm:text-md md:pb-2 md:text-lg md:text-xl">
                                             {product.name}
@@ -123,9 +125,9 @@ const CategoryPageSecond = () => {
                                             </div>
                                         </div>
                                     </div>
-                                        <div className={"h-1/3 md:flex md:pt-4 md:justify-end"}>
+                                        <div className={"h-1/3 md:flex md:pb-4 md:justify-end"}>
                                             <div className={"md:flex md:pt-4 md:justify-end"}>
-                                                <div className="flex flex-row flex-nowrap  relative items-center pt-4 justify-end">
+                                                <div className=" flex flex-row flex-nowrap  relative items-center pt-4 justify-end">
 
                                                     <FontAwesomeIcon
                                                         className="text-lg text-blue-500 px-4  sm:px-2.5  md:text-lg md:px-4"
@@ -147,17 +149,18 @@ const CategoryPageSecond = () => {
                                             </div>
                                         </div>
                                 </div>
+                                </SingleProductBox>
                             )}
 
-                        </div>
-                    </div>
-
+                        {/*</div>*/}
+                    {/*</div>*/}
+        </ProductsListContent>
             <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}
                    modalContent={<EditProductForm handleClose={handleClose} isShown={isShown}/>}/>
 
             <ToastContainer/>
 
-            <BottomMenu/>
+            {isSmallerThan1280 ? <BottomMenu/> : null}
         </>
     )
 }

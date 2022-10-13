@@ -30,6 +30,7 @@ import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
 import {MainComponent} from "../../app/TopMenu/TopMenu.components";
 import {useMediaQuery} from "usehooks-ts";
+import {MainBox} from "./CategoryListPage.components";
 
 
 
@@ -158,39 +159,39 @@ export const CategoryList = () => {
 
                 <MainComponent className={"marginBottom"}>
 
-                    <div className="flex flex-nowrap items-center">
-                        <div className="flex mx-4 pb-36">
-                            <div className="grid grid-cols-2 gap-1 overflow-y-auto lg:grid-cols-3 lg:gap-2 ">
+                    {/*<div className="flex flex-nowrap items-center">*/}
+                    {/*    <div className="flex mx-4 pb-36">*/}
+                            <MainBox>
                                 {renderedCategories}
-                                {!toggleSwitch &&
-                                    <div
-                                        className=" relative overflow-hidden bg-no-repeat bg-cover border-solid border-purple border-2 border-opacity-25"
-                                        onClick={handleShown}>
-                                        <img src="http://placehold.jp/ffffff/ffffff/1280x900.png" alt={"placeholder"}
-                                             className="bg-cover"/>
-                                        <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed ">
-                                            <div
-                                                className="relative mx-auto top-1/3 text-purple font-bold text-2xl h-5 w-5 ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
-                                                     viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                                          d="M12 4v16m8-8H4"/>
-                                                </svg>
-                                            </div>
-                                            <div
-                                                className="relative text-center top-1/3  text-gray font-bold pt-2 px-6 md:px-12 ">
-                                                <button
-                                                    className="font-bold text-md leading-tight uppercase text-center">
-                                                    <span
-                                                        className="text-center block justify-center align-middle uppercase text-gray-500 z-100 text-sm sm:text-md">{t("buttons.addCategory")}</span>
-                                                </button>
-                                            </div>
-                                        </div>
+                                {/*{!toggleSwitch &&*/}
+                                {/*    <div*/}
+                                {/*        className=" relative overflow-hidden bg-no-repeat bg-cover border-solid border-purple border-2 border-opacity-25"*/}
+                                {/*        onClick={handleShown}>*/}
+                                {/*        <img src="http://placehold.jp/ffffff/ffffff/1280x900.png" alt={"placeholder"}*/}
+                                {/*             className="bg-cover"/>*/}
+                                {/*        <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed ">*/}
+                                {/*            <div*/}
+                                {/*                className="relative mx-auto top-1/3 text-purple font-bold text-2xl h-5 w-5 ">*/}
+                                {/*                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"*/}
+                                {/*                     viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">*/}
+                                {/*                    <path strokeLinecap="round" strokeLinejoin="round"*/}
+                                {/*                          d="M12 4v16m8-8H4"/>*/}
+                                {/*                </svg>*/}
+                                {/*            </div>*/}
+                                {/*            <div*/}
+                                {/*                className="relative text-center top-1/3  text-gray font-bold pt-2 px-6 md:px-12 ">*/}
+                                {/*                <button*/}
+                                {/*                    className="font-bold text-md leading-tight uppercase text-center">*/}
+                                {/*                    <span*/}
+                                {/*                        className="text-center block justify-center align-middle uppercase text-gray-500 z-100 text-sm sm:text-md">{t("buttons.addCategory")}</span>*/}
+                                {/*                </button>*/}
+                                {/*            </div>*/}
+                                {/*        </div>*/}
 
-                                    </div>}
-                            </div>
-                        </div>
-                    </div>
+                                {/*    </div>}*/}
+                            </MainBox>
+                        {/*</div>*/}
+                    {/*</div>*/}
                 </MainComponent>
 
             </>

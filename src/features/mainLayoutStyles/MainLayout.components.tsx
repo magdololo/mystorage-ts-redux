@@ -38,3 +38,4 @@ export const FooterBar = styled.footer`
   background-color: antiquewhite;
   align-self: center;
 `
+
