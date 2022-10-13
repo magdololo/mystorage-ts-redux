@@ -15,7 +15,6 @@ import {useMediaQuery} from "usehooks-ts";
 import {
     MainContent,
     ProductsListBox,
-    ContentGrid,
     ProductsBox,
     SingleCategoryBox,
     ProductsListContent, CategoriesSideBar
