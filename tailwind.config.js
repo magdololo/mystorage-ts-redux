@@ -89,7 +89,8 @@ module.exports = {
 
       },
       height: {
-        'h-240' : '240px'
+        'h-240' : '240px',
+        'h-90' : '90px'
       },
       leading: {
         '5': '1.25'

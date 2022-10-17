@@ -17,11 +17,14 @@ import {
     ProductsListBox,
     ProductsBox,
     SingleCategoryBox,
-    ProductsListContent, CategoriesSideBar
+    ProductsListContent, CategoriesSideBar, SingleProductBox
 } from "./SingleCategoruPage.components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash, faXmark} from "@fortawesome/free-solid-svg-icons";
 import CategoryPageSecond from "./CategoryPageSecond";
+import {Modal} from "../../component/Modal/Modal";
+import EditProductForm from "../products/EditProductForm";
+import {ToastContainer} from "react-toastify";
 
 const SingleCategoryPage = () => {
     const {t} = useTranslation()
@@ -108,15 +111,15 @@ const SingleCategoryPage = () => {
                     </CategoriesSideBar>
                     <ProductsBox>
                         <div className="text-center text-gray-dark pt-2 pb-2px-6">
-                            <h1 className="text-xl font-bold text-gray-light mt-0 mb-6 capitalize sm:text-2xl">{categoryFromPath?.title}</h1>
+                            <h1 className="text-xl font-bold text-gray-light mt-0 mb-3 capitalize sm:text-2xl">{categoryFromPath?.title}</h1>
                         </div>
 
                     {/*</Wrapper>*/}
                     {/*</CategoriesSideBar>*/}
-                    {/*<ProductsListBox>*/}
+                    <ProductsListBox>
                     {productsOfCategory.map((product: UserProduct) =>
-                        <div>
-                            <div key={product.id} className=" flex flex-col relative px-2 pt-2 pb-2 border border-gray-extraLight rounded-sm cursor-pointer md:pb-4">
+                        <SingleProductBox width={"47%"}>
+                            <div key={product.id} className=" flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4">
                                 <div className={"h-1/3 "}>
                                     <div className="text-lg  text-gray font-bold capitalize align-baseline pb-4 sm:text-md md:pb-2 md:text-lg md:text-xl">
                                         {product.name}
@@ -128,12 +131,12 @@ const SingleCategoryPage = () => {
                                             {product.capacity}{product.unit}
                                         </div>
                                         <div className={"text-sm md:text-md " + ((product.expireDate !== null && product?.expireDate > todayDate) ? "text-gray-light" : "text-red font-bold")}>
-                                            {product.expireDate ? product.expireDate.toISOString().substring(0, 10) : ""}
+                                            {product.expireDate ? product.expireDate.toISOString().substring(0, 10) : ""} &nbsp;
                                         </div>
                                     </div>
                                 </div>
-                                <div className={"h-1/3 md:flex md:pt-4 md:justify-end"}>
-                                    <div className={"md:flex md:pt-4 md:justify-end"}>
+                                <div className={"h-1/3 md:flex md:justify-end"}>
+                                    <div className={"md:flex md:justify-end"}>
                                         <div className="flex flex-row flex-nowrap  relative items-center pt-4 justify-end">
                                             <FontAwesomeIcon className="text-md text-blue-500  px-4 sm:text-lg" icon={faMinus} onClick={() => decrement(product)}/>
                                             <span className="text-md text-blue-800 px-2 sm:text-lg">{product.quantity}</span>
@@ -144,12 +147,16 @@ const SingleCategoryPage = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </SingleProductBox>
                     )}
+                    </ProductsListBox>
                     </ProductsBox>
                     {/*    <CategoryPageSecond/>*/}
                     {/*</ProductsListBox>*/}
                 </MainContent>
+                <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
+
+                <ToastContainer />
             </div>
         </>
     );

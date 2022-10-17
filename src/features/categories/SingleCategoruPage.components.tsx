@@ -1,4 +1,5 @@
 import styled, {keyframes} from "styled-components";
+import {SectionBoxProps} from "../api/Home.components";
 
 export const MainContent = styled.div`
   display: grid;
@@ -40,20 +41,28 @@ export const ProductsListContent = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+ 
 `
 export const ProductsListBox = styled.div`
-  grid-area: productsOfCategory;
-  //padding: 0.25rem;
-  position: relative;
-  display: block;
+  display: flex;
+  flex-direction: row;
+  padding: 0.25rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 2rem;
+ 
   //@keyframes mymove {
   //  from {right: -300px;}
   //  to {right: 800px;}
   //}
   
 `
-export const SingleProductBox = styled.div`
-    width: 50%;
+export interface SingleProductBoxProps{
+    width: string;
+}
+export const SingleProductBox = styled.div<SingleProductBoxProps>`
+    width: ${props=>props.width};
+  height: 240px;
     margin: 0.3rem;
     display: flex;
     flex-direction: column;
@@ -76,3 +85,23 @@ export const SingleCategoryBox = styled.div`
     
   }
 `
+export const ProductNameBox = styled.div`
+  margin-bottom: 1rem;
+  height: 90px;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75rem; /* 28px */
+  color: #6b7280;
+  font-weight: bold;
+  text-transform: capitalize;
+  padding-bottom: 1rem;
+  @media (min-width: 390px) {
+    font-size: 15px;
+  }
+  @media (min-width: 650px) {
+    padding-bottom: 0.5rem;
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
+  }
+  
+  
+    `
