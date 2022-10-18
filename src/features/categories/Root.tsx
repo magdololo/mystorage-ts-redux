@@ -16,7 +16,11 @@ import CategoryList from "./CategoryList";
 import AddCategoryForm from "./AddCategoryForm";
 import EditCategoryForm from "./EditCategoryForm";
 import {Modal} from "../../component/Modal/Modal";
-
+import FooterBox from "../../component/FooterBox";
+import SearchInput2 from "../../app/BottomMenu/SearchInput2";
+import BottomMenu from "../../app/BottomMenu/BottomMenu";
+import {useMediaQuery} from "usehooks-ts";
+import ReturnToCategoryList from "../../component/ReturnToCategoryList";
 const Root = ()=>{
     const {t} = useTranslation();
     let user = useSelector(selectUser);
@@ -28,8 +32,8 @@ const Root = ()=>{
     const dispatch = useAppDispatch()
     const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const [toggleSwitch, setToggleSwitch] = useState(false);
-
-
+    const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
+    const isLargerThan800 = useMediaQuery('(min-width: 800px)')
     useEffect(() => {
         if (didSee === false) {
             setIsOpen(true)
@@ -57,6 +61,7 @@ const Root = ()=>{
         <>
         <MainPageLayout>
                 <NavBar><AppTitle/></NavBar>
+
                 <Main>
                 {/*<CategoryList/>*/}
                 {/*    <Modal className={"addCategory-modal"} isShown={isShown} hide={handleClose}*/}
@@ -65,8 +70,15 @@ const Root = ()=>{
 
             <Outlet/>
                 </Main>
-                <SideBar><Sidebar/></SideBar>
-                <FooterBar>footer</FooterBar>
+            {/*{isLargerThan800 ?  : null}*/}
+            {isLargerThan1280 ?
+                <>
+                <SideBar><Sidebar toggleDrawer={null}/></SideBar>
+                <FooterBar><FooterBox/></FooterBar>
+                </>
+                : <BottomMenu/> }
+
+
             </MainPageLayout>
         </>
     )

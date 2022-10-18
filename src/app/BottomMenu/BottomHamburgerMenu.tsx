@@ -81,7 +81,7 @@ const BottomHamburgerMenu = () => {
                 direction='left'
                 size={295}
             >
-                <Sidebar/>
+                <Sidebar toggleDrawer={toggleDrawer}/>
             </Drawer>
 
         </>

@@ -2,15 +2,15 @@ import styled, {keyframes} from "styled-components";
 import {SectionBoxProps} from "../api/Home.components";
 
 export const MainContent = styled.div`
-  display: grid;
-  margin: 0 auto;
-  grid-template-columns: [categories] 1fr [productsOfCategory] 2fr;
-  grid-template-areas:
+  @media(min-width : 1200px){
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: [categories] 1fr [productsOfCategory] 2fr;
+    grid-template-areas:
     "categories productsOfCategory ";
-  grid-column-gap: 10px;
-  justify-content: space-around;
-
-
+    grid-column-gap: 10px;
+    justify-content: space-around;
+  }
 `
 
 //
@@ -43,12 +43,15 @@ export const ProductsListContent = styled.div`
   justify-content: space-between;
  
 `
-export const ProductsListBox = styled.div`
+export interface ProductsListBoxProps {
+    justifyContent: string;
+}
+export const ProductsListBox = styled.div<ProductsListBoxProps>`
   display: flex;
   flex-direction: row;
   padding: 0.25rem;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: ${props => props.justifyContent || "space-between"};
   margin: 0 2rem;
  
   //@keyframes mymove {
@@ -59,10 +62,11 @@ export const ProductsListBox = styled.div`
 `
 export interface SingleProductBoxProps{
     width: string;
+    height: string;
 }
 export const SingleProductBox = styled.div<SingleProductBoxProps>`
-    width: ${props=>props.width};
-  height: 240px;
+    width: 100%;
+    height: auto;
     margin: 0.3rem;
     display: flex;
     flex-direction: column;
@@ -71,6 +75,11 @@ export const SingleProductBox = styled.div<SingleProductBoxProps>`
     border: 1px solid lightgray;
     border-radius: 0.125rem;
     cursor: pointer;
+  @media(min-width: 700px){
+    width: 47%;
+    height: auto;
+  }
+ 
 
 
 `
@@ -86,8 +95,7 @@ export const SingleCategoryBox = styled.div`
   }
 `
 export const ProductNameBox = styled.div`
-  margin-bottom: 1rem;
-  height: 90px;
+  height: 40px;
   font-size: 1.125rem; /* 18px */
   line-height: 1.75rem; /* 28px */
   color: #6b7280;
@@ -99,9 +107,37 @@ export const ProductNameBox = styled.div`
   }
   @media (min-width: 650px) {
     padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
     font-size: 1.25rem; /* 20px */
     line-height: 1.75rem; /* 28px */
   }
-  
+  @media (min-width: 1280px) {
+    height: 90px;
+  }
   
     `
+ export const SinglePageTitle = styled.h1`
+   font-size: 1.125rem; /* 24px */
+   line-height: 1.175rem; /* 32px */
+   padding: 0.5rem 1.5rem;
+   text-align: center;
+   color: #737373;
+   font-weight: bold;
+   margin-bottom: 1rem;
+   text-transform: capitalize;
+   @media (min-width: 450px) {
+     font-size: 1.25rem; /* 30px */
+     line-height: 1.75rem; /* 36px */
+
+   }
+   @media (min-width: 650px) {
+     font-size: 1.5rem; /* 36px */
+     line-height: 2rem; /* 40px */
+   }
+   @media (min-width: 960px) {
+     font-size: 1.5rem; /* 48px */
+     line-height: 2rem;
+   }      
+  ;
+    
+`

@@ -21,10 +21,9 @@ const BottomMenu = () => {
                         {/*<SearchInput/>*/}
                         {/*variant="secondary"*/}
                         <button
-                            className="text-sm bg-purple text-white uppercase font-bold py-2 px-4 rounded shadow-xs hover:shadow-lg  hover:bg-purple-500 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                            className="text-sm bg-purple text-white uppercase font-bold py-2 px-2 rounded shadow-xs hover:shadow-lg  hover:bg-purple-500 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                             onClick={handleShown}>{t("buttons.addProduct")}
                         </button>
-
 
                         <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={AddProductForm({handleClose, isShown})}/>
                     </div>

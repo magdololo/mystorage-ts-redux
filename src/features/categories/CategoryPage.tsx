@@ -29,6 +29,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useTranslation} from "react-i18next";
+import {SinglePageTitle} from "./SingleCategoruPage.components";
 
 
 
@@ -92,7 +93,7 @@ const CategoryPage = () => {
         <>
             <div className="pb-6 xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">
                 <div className="text-center text-gray-dark pt-2 pb-2px-6">
-                    <h1 className="text-xl font-bold text-gray-light mt-0 mb-6 capitalize sm:text-2xl">{categoryFromPath?.title}</h1>
+                    <SinglePageTitle>{categoryFromPath?.title}</SinglePageTitle>
                 </div>
                 <ReturnToCategoryList/>
 

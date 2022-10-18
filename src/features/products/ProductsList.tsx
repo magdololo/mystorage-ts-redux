@@ -27,7 +27,7 @@ import {useTranslation} from "react-i18next";
 import {
     ProductNameBox,
     ProductsBox,
-    ProductsListBox,
+    ProductsListBox, SinglePageTitle,
     SingleProductBox
 } from "../categories/SingleCategoruPage.components";
 
@@ -91,15 +91,13 @@ const ProductsList = () => {
                 {/*<div className="flex mt-2 mx-4">*/}
                 {/*    <ul className="pb-16 w-full relative">*/}
                         <ProductsBox>
-                            <div className="text-center text-gray-dark pt-2 pb-2px-6">
-                                <h1 className="text-xl font-bold text-gray-light mt-0 mb-3 capitalize sm:text-2xl">{t('products.ProductsList.title')}</h1>
-                            </div>
+                                <SinglePageTitle>{t('products.ProductsList.title')}</SinglePageTitle>
 
                             {/*</Wrapper>*/}
                             {/*</CategoriesSideBar>*/}
-                            <ProductsListBox>
+                            <ProductsListBox justifyContent = "space-between">
                         {userProductsWithCategory.map((product) =>
-                            <SingleProductBox width={"32%"}>
+                            <SingleProductBox  width={isSmallerThan1280? "100%" : "32%"} height={isSmallerThan1280? "auto" :"240px"}>
                                     <div key={product.id} className="flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4 h-full">
 
                                         {/*<div className={""}>*/}

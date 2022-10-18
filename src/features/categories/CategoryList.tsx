@@ -214,7 +214,7 @@ export const CategoryList = () => {
                    modalContent={!toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleClose}/> :
                        <EditCategoryForm closeAddCategoryModal={handleClose}/>}/>
             {didSee === false && greeting}
-            {isSmallerThan1280 ? <BottomMenu/> : null}
+            {/*{isSmallerThan1280 ? <BottomMenu/> : null}*/}
 
             <ToastContainer/>
         </>

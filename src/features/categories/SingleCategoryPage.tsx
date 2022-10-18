@@ -17,7 +17,7 @@ import {
     ProductsListBox,
     ProductsBox,
     SingleCategoryBox,
-    ProductsListContent, CategoriesSideBar, SingleProductBox
+    ProductsListContent, CategoriesSideBar, SingleProductBox, SinglePageTitle
 } from "./SingleCategoruPage.components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash, faXmark} from "@fortawesome/free-solid-svg-icons";
@@ -25,6 +25,8 @@ import CategoryPageSecond from "./CategoryPageSecond";
 import {Modal} from "../../component/Modal/Modal";
 import EditProductForm from "../products/EditProductForm";
 import {ToastContainer} from "react-toastify";
+import SearchInput2 from "../../app/BottomMenu/SearchInput2";
+import ReturnToCategoryList from "../../component/ReturnToCategoryList";
 
 const SingleCategoryPage = () => {
     const {t} = useTranslation()
@@ -39,7 +41,7 @@ const SingleCategoryPage = () => {
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = t("categories.CategoryPage.editProduct")
-    const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
+    const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
     const location = useLocation();
     console.log(location)
     const categoriesWithoutCurrentCategory = categories?.filter(category => category !== currentCategory)
@@ -73,11 +75,12 @@ const SingleCategoryPage = () => {
     }
     return (
         <>
+            {isLargerThan1280 ? null : <ReturnToCategoryList/>}
             <div className=" mx-auto max-w-screen-xl mb-32 mt-2 px-4">
                 <MainContent>
                     {/*<Wrapper>*/}
+                    {isLargerThan1280 ?
                     <CategoriesSideBar>
-                        {/*<CategoriesSideBar>*/}
                         <SingleCategoryBox className={"mainCategory"} key={categoryId}> <Link to={`/categories/${categoryId}`}>
                             <img src={currentCategory?.url}
                                  className={"w-full h-auto object-cover flex-1 flex-grow"}
@@ -108,17 +111,16 @@ const SingleCategoryPage = () => {
 
                             ))}
                         </ProductsListContent>
-                    </CategoriesSideBar>
+                    </CategoriesSideBar> : null}
                     <ProductsBox>
-                        <div className="text-center text-gray-dark pt-2 pb-2px-6">
-                            <h1 className="text-xl font-bold text-gray-light mt-0 mb-3 capitalize sm:text-2xl">{categoryFromPath?.title}</h1>
-                        </div>
+
+                        <SinglePageTitle>{categoryFromPath?.title}</SinglePageTitle>
+
 
                     {/*</Wrapper>*/}
-                    {/*</CategoriesSideBar>*/}
-                    <ProductsListBox>
+                    <ProductsListBox justifyContent={"space-between"}>
                     {productsOfCategory.map((product: UserProduct) =>
-                        <SingleProductBox width={"47%"}>
+                        <SingleProductBox  width={isLargerThan1280? "32%" : "100%"} height={isLargerThan1280? "240px" :"auto"}>
                             <div key={product.id} className=" flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4">
                                 <div className={"h-1/3 "}>
                                     <div className="text-lg  text-gray font-bold capitalize align-baseline pb-4 sm:text-md md:pb-2 md:text-lg md:text-xl">

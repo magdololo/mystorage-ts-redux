@@ -8,7 +8,12 @@ import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
 import AppTitle from "../../app/TopMenu/AppTitle";
 import ReturnToCategoryList from "../../component/ReturnToCategoryList";
-
+import {
+    ProductNameBox,
+    ProductsBox,
+    ProductsListBox,
+    SingleProductBox
+} from "../categories/SingleCategoruPage.components";
 import {
     changeProductQuantity,
     ChangeQuantity,
@@ -94,32 +99,40 @@ const SearchUserProductPage= ()=>{
 
     if(searchProductsWithCategory.length > 0){
        content =
-           <ul className="pb-16 w-full relative">
+           <ProductsListBox justifyContent={"none"}>
            {searchProductsWithCategory.map((product:SearchProduct) =>
-               <li key={product.id}
-                   className="flex flex-col relative px-6 py-6 border-b border-gray-extraLight w-full rounded-t-lg cursor-pointer">
-                   <div className="flex flex-row  w-full items-stretch">
+               <SingleProductBox width={isSmallerThan1280? "100%" : "32%"} height={isSmallerThan1280? "auto" :"240px"}>
+                   <div key={product.id} className="flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4 h-full">
 
-                       <div className="flex-auto flex-row relative w-6/12 sm:flex-col  md:w-8/12">
-                           <div
-                               className="text-md capitalize align-baseline text-gray  font-bold sm:text-xl">{product.name}
+                       {/*<div className={""}>*/}
+                       <ProductNameBox>
+                           {product.name}
+                       </ProductNameBox>
+                       <div className={'h-auto mt-auto flex flex-col'}>
+                           {/*<div className=" flex flex-col">*/}
+                           {/*<div className={"w-1/3"}>*/}
+                           <div className="text-md text-gray-light  pb-1.5 sm:text-sm md:text-base">
+                               {product.capacity}{product.unit}
                            </div>
-                           <div
-                               className={ (product.expireDate !== null && product?.expireDate > todayDate ) ? "text-gray-light" : "text-red font-bold"}>
-                               {product.expireDate ? product.expireDate.toISOString().substring(0,10) : ""}
+                           {product.expireDate === null && <span></span>}
+                           <div className={"text-sm md:text-md " + ((product.expireDate !== null && product?.expireDate > todayDate) ? "text-gray-light" : "text-red font-bold")}>
+                               {product.expireDate ? product.expireDate.toISOString().substring(0, 10) : ""} &nbsp;
                            </div>
-                           <div
-                               className="text-gray-light">{product.capacity}{product.unit}
+
+                           {/*    <div className={""}>*/}
+                           <div className="text-gray-light text-md">{t("products.ProductsList.productCategory")}:
+                               <Link to={"/categories/" + product.categoryPath}>
+                                   <span className="capitalize text-md align-baseline text-gray font-bold ml-1">{product.categoryTitle}</span>
+                               </Link>
                            </div>
-                           <div className="text-gray-light text-md">{t("products.SearchUserProductPage.category")}: <Link to={"/categories/"+product.categoryPath}>
-                               <span className="capitalize text-md align-baseline text-gray font-bold">{product.categoryTitle}</span></Link>
-                           </div>
+                           {/*</div>*/}
                        </div>
 
 
-                       <div className="flex flex-auto flex-row relative w-6/12 sm:flex-col md:w-4/12 items-center justify-center">
+
                            {maxWidth440 ?
                                <>
+                               <div className="flex flex-auto flex-row relative w-6/12 sm:flex-col md:w-4/12 items-center justify-center">
                                    <div
                                        className="flex flex-col items-center justify-between max-h-20 absolute right-0">
                                        <div className="h-1/2 pb-1">
@@ -142,32 +155,29 @@ const SearchUserProductPage= ()=>{
                                                             onClick={() => chooseEditProduct(product)}/>
                                        </div>
                                    </div>
+                               </div>
                                </>
                                :
                                <>
-                                   <div className="flex flex-row flex-nowrap absolute right-0 items-center">
-                                       <FontAwesomeIcon className="text-xl text-blue-500 px-4"
-                                                        icon={faPlus} onClick={() => increment(product)}/>
-                                       <span
-                                           className="text-xl text-blue-800 px-2 ">{product.quantity}</span>
-                                       <FontAwesomeIcon
-                                           className="text-xl text-blue-500 border-blue-400 border-solid border-r px-4 "
-                                           icon={faMinus} onClick={() => decrement(product)}/>
-                                       <FontAwesomeIcon
-                                           className="text-xl text-blue-800 border-blue-400 border-solid border-r px-4 "
-                                           icon={faTrash} onClick={() => deleteUserOneProduct(product)}/>
-                                       <FontAwesomeIcon className="text-xl text-blue-800 px-4 "
-                                                        icon={faPen}
-                                                        onClick={() => chooseEditProduct(product)}/>
+                                   <div className={"h-1/3 md:flex md:justify-end md:items-end"}>
+                                       <div className={"md:flex md:justify-end"}>
+                                           <div className="flex flex-row flex-nowrap  relative items-center pt-4 justify-end items-end">
+                                               <FontAwesomeIcon className="text-md text-blue-500  px-4 sm:text-lg" icon={faMinus} onClick={() => decrement(product)}/>
+                                               <span className="text-md text-blue-800 px-2 sm:text-lg">{product.quantity}</span>
+                                               <FontAwesomeIcon className="text-md text-blue-500 border-blue-400 border-solid border-r px-4 sm:text-lg" icon={faPlus} onClick={()=>increment(product)}/>
+                                               <FontAwesomeIcon className="text-md text-blue-800 border-blue-400 border-solid border-r px-4 sm:text-xl" icon={faTrash} onClick={()=>deleteUserOneProduct(product)}/>
+                                               <FontAwesomeIcon className="text-md text-blue-800 px-4 sm:text-lg" icon={faPen}  onClick={()=>chooseEditProduct(product) }/>
+                                           </div>
+                                       </div>
                                    </div>
                                </>
+
                            }
 
                        </div>
-                   </div>
-               </li>
+               </SingleProductBox>
            )}
-           </ul>
+           </ProductsListBox>
     } else {
         content = <h2>{t("products.SearchUserProductPage.noSearchResult")}.</h2>
     }
@@ -175,15 +185,17 @@ const SearchUserProductPage= ()=>{
         <>
             {/*<div className="xs:max-w-xl md:max-w-2xl lg:max-w-screen-md mx-auto">*/}
             {/*    <AppTitle/>*/}
+            {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
+            <ProductsBox>
                 <div className="text-center text-gray-dark pt-2 pb-2px-6">
                     <h1 className="text-2xl font-bold text-gray-light mt-0 mb-6 capitalize">{t("products.SearchUserProductPage.searchResult")}</h1>
                 </div>
-                {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
 
-                <div className="flex flex-row mt-2 w-full">
+
+                {/*<div className="flex flex-row mt-2 w-full">*/}
                     {content}
-                </div>
-
+                {/*</div>*/}
+            </ProductsBox>
                 <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
                 <ToastContainer />
             {/*</div>*/}

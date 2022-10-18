@@ -108,7 +108,7 @@ const CategoryPageSecond = () => {
             {/*            <div className="grid  gap-1.5 sm:grid-cols-2 sm:gap-1 lg:grid-cols-3 lg:gap-2 ">*/}
             <ProductsListContent>
                             {productsOfCategory.map((product: UserProduct) =>
-                                <SingleProductBox width={"47%"}>
+                                <SingleProductBox width={"47%"} height={"240px"}>
                                 <div key={product.id} >
                                     <div className={"h-1/3 "}>
                                         <div className="text-lg  text-gray font-bold capitalize align-baseline pb-4 sm:text-md md:pb-2 md:text-lg md:text-xl">

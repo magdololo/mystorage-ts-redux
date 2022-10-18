@@ -60,7 +60,7 @@ const NotificationsList = ()=>{
                                                {/*<div className="dropdown" >*/}
                                                <button onClick={() => {
                                                    setDropdownOpen(prevState => !prevState)
-                                                   console.log(dropdownOpen)
+                                                   console.log(notification.id)
                                                }}>
                                                    <FontAwesomeIcon icon={solid('ellipsis')}
                                                                     className={(dropdownOpen ? "text-white bg-purple-800 w-5 h-5 absolute top-5 right-8" : " w-5 h-5 text-purple-800 absolute top-5 right-8")}/>{/*+}*/}

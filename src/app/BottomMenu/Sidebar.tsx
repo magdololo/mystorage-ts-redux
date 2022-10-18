@@ -12,19 +12,23 @@ import {useSelector} from "react-redux";
 import {useModal} from "../../component/Modal/UseModal";
 import {Modal} from "../../component/Modal/Modal";
 import AddCoUserForm from "./AddCoUserForm";
-
-const Sidebar =()=>{
+interface SidebarProps{
+    toggleDrawer: null | (()=> void);
+}
+const Sidebar =({toggleDrawer}:SidebarProps)=>{
     const dispatch = useAppDispatch();
     const {t, i18n} = useTranslation()
     const navigate = useNavigate()
     let user = useSelector(selectUser);
     const [isOpen, setIsOpen] =useState(false);
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
-    const {isShown, handleClose} = useModal()
+    const {isShown, handleClose, handleShown} = useModal()
     const modalHeader = ""
     const handleClick = (e: any) => {
         e.stopPropagation();
-        setIsOpen(!isOpen);
+        if(toggleDrawer !== null){
+            toggleDrawer()
+        }
     };
     const handleToggle = () => {
         setIsEnglish(!isEnglish);
@@ -62,7 +66,8 @@ const Sidebar =()=>{
                         <Accordion items={myAccordion} duration={300} multiple={false}/>
                     </li>
                     <li key='4' className="px-6 py-2  w-full cursor-pointer" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />{t("BottomHamburgerMenu.signOut")}</li>
-                    <li key='6' className="px-6 py-2  w-full cursor-pointer"><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faBell} /><Link to={'/shares/'}>{t("BottomHamburgerMenu.coUsers")}</Link></li>
+                    <li key='6' className="px-6 py-2  w-full cursor-pointer" onClick={handleClick}><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faBell} /><Link to={'/shares/'}>{t("BottomHamburgerMenu.coUsers")}</Link></li>
+                    {/*<li key='7' className="px-6 py-2  w-full cursor-pointer"><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faBell} onClick={handleShown}/>{t("BottomHamburgerMenu.addCoUser")}</li>*/}
                 </ul>
                 <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleClose, isShown})}/>
             </div>

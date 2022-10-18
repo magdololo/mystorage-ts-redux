@@ -3,6 +3,7 @@ import React, { useState} from "react";
 import {useAppDispatch,useAppSelector} from "../store";
 import {searchByString, searchProduct, selectUserProducts} from "../../features/products/userProductsSlice";
 import {useNavigate} from "react-router-dom";
+import {useMediaQuery} from "usehooks-ts";
 
 
 const SearchInput2 =()=>{
@@ -10,7 +11,7 @@ const SearchInput2 =()=>{
     const navigate = useNavigate()
     let userProducts = useAppSelector(selectUserProducts)
     const [textFromInput, setTextFromInput] = useState("")
-
+    const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
     const options =userProducts.map(userProduct => {
         return{label: userProduct.name + " " +userProduct.capacity + userProduct.unit, value: userProduct.id}})
 
@@ -38,10 +39,10 @@ const SearchInput2 =()=>{
     return(
         <>
 
-            <div className="flex flex-1 pr-1 mr-6">
+            <div className={isSmallerThan1280 ? "flex flex-1 pr-1" : "flex flex-1 pr-1 mr-6"}>
                 <Select options={options} menuPlacement={"top"}
                         isClearable
-                        className="react-select-container"
+                        className={isSmallerThan1280 ? "react-select-container-onMobile" : "react-select-container"}
                         classNamePrefix="react-select"
                         onChange={onChange}
                         onInputChange={onInputChange}

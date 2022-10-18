@@ -38,7 +38,7 @@ const Nav = styled.nav`
 
 const NavCollapse= styled.div`
   //padding-left: 1.5rem;//24px
-  width: 55%;
+  width: 80%;
   flex-grow: 1;
   display: flex;
   align-items: center;
@@ -55,12 +55,12 @@ const NavLogo = styled.span`
   display: inline-block;
   color: rgb(107, 33, 168);
   font-size: 1.5rem; /* 24px */
-  line-height: 1.8rem; /* 32px */
+  line-height: 2rem; /* 32px */
   
-  @media (min-width: 390px) {
-    font-size: 1.5rem; /* 30px */
-    line-height: 2rem; /* 36px */
-    padding: 0.5rem;
+  @media (min-width: 450px) {
+    font-size: 1.75rem; /* 30px */
+    line-height: 2.25rem; /* 36px */
+   
   }
   @media (min-width: 650px) {
     font-size: 1.8rem; /* 36px */
@@ -72,18 +72,16 @@ const NavLogo = styled.span`
   }
   `
 const MainMenu = styled.div`
+  
   display: flex;
-  width: 45%;
   justify-content: end;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   flex-grow: 1;
   align-items: center;
-  @media (min-width: 390px) {
-    padding-right: 2rem;
-  }
-  @media (min-width: 650px) {
-   width: 50%;
+  @media (min-width: 800px) {
+    width: 50%;
+   
   }
 `
 
