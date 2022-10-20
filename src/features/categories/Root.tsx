@@ -4,7 +4,7 @@ import {Outlet} from "react-router-dom";
 
 import AppHeader from "../../app/TopMenu/AppHeader";
 import Sidebar from "../../app/BottomMenu/Sidebar";
-import FooterBox from "../../component/FooterBox";
+import FooterAuthorBox from "../../component/FooterAuthorBox";
 import BottomMenu from "../../app/BottomMenu/BottomMenu";
 import {useMediaQuery} from "usehooks-ts";
 
@@ -24,7 +24,7 @@ const Root = ()=>{
                 {isLargerThan1280 ?
                 <>
                 <SideBar><Sidebar toggleDrawer={null}/></SideBar>
-                <FooterBar><FooterBox/></FooterBar>
+                <FooterBar><FooterAuthorBox/></FooterBar>
                 </>
                 : <BottomMenu/> }
         </MainPageLayout>

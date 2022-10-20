@@ -6,7 +6,7 @@ type TopMenuProps ={
     toggleEdit: ()=>void
     toggleValue: boolean
 }
-const TopMenu = ({toggleEdit, toggleValue}: TopMenuProps) => {
+const EditCategoriesButton = ({toggleEdit, toggleValue}: TopMenuProps) => {
     const { t } = useTranslation();
 
     return(
@@ -24,4 +24,4 @@ const TopMenu = ({toggleEdit, toggleValue}: TopMenuProps) => {
     )
 
 }
-export default TopMenu;
+export default EditCategoriesButton;

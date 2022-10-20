@@ -26,7 +26,7 @@ import { useMediaQuery } from 'usehooks-ts';
 
 import {MenuNotifications} from "./AppTitle.components";
 
-const AppTitle = () => {
+const AppHeader = () => {
     const dispatch = useAppDispatch()
     const { t, i18n } = useTranslation();
     let user = useSelector(selectUser);
@@ -91,5 +91,5 @@ const AppTitle = () => {
     )
 
 }
-export default AppTitle;
+export default AppHeader;
 //

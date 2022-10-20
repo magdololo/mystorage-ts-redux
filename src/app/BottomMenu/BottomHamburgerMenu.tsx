@@ -27,7 +27,6 @@ const BottomHamburgerMenu = () => {
 
     return (
         <>
-
             <AiOutlineMenu className='text-gray-light text-center mx-auto text-3xl' onClick={toggleDrawer} />
             <Drawer
                 open={isOpen}

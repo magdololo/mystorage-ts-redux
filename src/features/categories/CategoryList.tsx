@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Link} from 'react-router-dom';
-import TopMenu from "../../app/TopMenu/TopMenu";
+import EditCategoriesButton from "../../app/TopMenu/EditCategoriesButton";
 import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
 import AddCategoryForm from "./AddCategoryForm";
@@ -168,7 +168,7 @@ export const CategoryList = () => {
 
     return (
         <>
-            <TopMenu toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
+            <EditCategoriesButton toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
                 {content}
                 <Modal className={"addCategory-modal"}
                        isShown={isShown}
