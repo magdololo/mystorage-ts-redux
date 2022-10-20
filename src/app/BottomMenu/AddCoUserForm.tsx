@@ -7,19 +7,17 @@ type AddCoUserFormProps = {
     isShown: boolean
 }
 
-const AddCoUserForm=({handleClose, isShown}: AddCoUserFormProps)=>{
+const AddCoUserForm=({handleClose}: AddCoUserFormProps)=>{
     const {t} = useTranslation()
     const {
         reset,
         register,
         handleSubmit,
-        // formState: {}
     } = useForm<{
         email: string,
         password: string
     }>();
     const [messageAfterSendPassword, setMessageAfterSendPassword] = useState(false)
-    //const [errorMessage, setErrorMessage] = useState("")
     const onSubmit = handleSubmit((data:{email:string})=>{
         setMessageAfterSendPassword(true)
         reset({email: ""})

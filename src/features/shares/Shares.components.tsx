@@ -26,9 +26,6 @@ export const SectionIncoming = styled.div`
     margin-left : 5%;
   }
 `
-
-
-
 export const SectionOutgoing = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -52,9 +49,6 @@ export const Button = styled.button`
   margin: 0 2px;
   &.marginLeft {
     margin-left: 5%;
-   
-    
-    
   }
 `
 export const ButtonSingle = styled(Button)`

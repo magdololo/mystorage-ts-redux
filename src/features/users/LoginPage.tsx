@@ -23,7 +23,6 @@ interface User{
 
 }
 
-
 const LoginPage = () => {
     const { t, i18n } = useTranslation();
     console.log(i18n.language)

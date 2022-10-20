@@ -1,5 +1,5 @@
-import styled, {keyframes} from "styled-components";
-import {SectionBoxProps} from "../api/Home.components";
+import styled from "styled-components";
+
 
 export const MainContent = styled.div`
   @media(min-width : 1200px){
@@ -13,9 +13,7 @@ export const MainContent = styled.div`
   }
 `
 
-//
 export const CategoriesSideBar = styled.div`
- //background: #1f2128;
   color: red;
   grid-area: categories;
   padding: 0.25rem;
@@ -41,7 +39,6 @@ export const ProductsListContent = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
- 
 `
 export interface ProductsListBoxProps {
     justifyContent: string;
@@ -52,13 +49,9 @@ export const ProductsListBox = styled.div<ProductsListBoxProps>`
   padding: 0.25rem;
   flex-wrap: wrap;
   justify-content: ${props => props.justifyContent || "space-between"};
-  margin: 0 2rem;
- 
-  //@keyframes mymove {
-  //  from {right: -300px;}
-  //  to {right: 800px;}
-  //}
-  
+  @media(min-width: 750px){
+    margin: 0 2rem;
+  }
 `
 export interface SingleProductBoxProps{
     width: string;
@@ -79,9 +72,6 @@ export const SingleProductBox = styled.div<SingleProductBoxProps>`
     width: 47%;
     height: auto;
   }
- 
-
-
 `
 export const SingleCategoryBox = styled.div`
   height: auto;
@@ -91,7 +81,6 @@ export const SingleCategoryBox = styled.div`
   margin: 0.3rem;
   &.singleOtherCategory {
     width: 46%;
-    
   }
 `
 export const ProductNameBox = styled.div`

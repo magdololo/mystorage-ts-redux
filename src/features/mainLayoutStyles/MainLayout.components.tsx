@@ -3,13 +3,6 @@ import styled from "styled-components";
 export const MainPageLayout = styled.div`
   display: flex;
   flex-direction: column;
-  @media (min-width: 390px) {
-    //font-size: 18px;
-  }
-  @media (min-width: 650px) {
-    //font-size: 1.125rem; /* 18px */
-    //line-height: 1.75rem; /* 28px */
-  }
   @media (min-width: 1280px) {
     display: grid;
     height:100vh;
@@ -28,7 +21,7 @@ export const MainPageLayout = styled.div`
   
   
 `
-export const NavBar = styled.header`
+export const Header = styled.header`
   grid-area: header;
   padding: 1.5rem;
   align-self: center;
@@ -36,11 +29,14 @@ export const NavBar = styled.header`
   width: 100%;
 `;
 export const Main = styled.main`
- //background: #1f2128;
   color: white;
   grid-area: main;
   padding: 0.25rem;
-  margin-bottom: 8rem;
+  margin-bottom: 12rem;
+  @media(min-width:1280px){
+    margin-bottom: 8rem;
+  }
+  
 `;
 export const SideBar = styled.menu`
   grid-area: sidebar;

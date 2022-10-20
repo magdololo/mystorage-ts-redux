@@ -8,43 +8,37 @@ const BoxMain= styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  padding: 2rem 0;
 `
 const Nav = styled.nav`
   max-width: 1280px;
-  width: 100%;
-  //height: 112px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   position: relative;
   background-color: white;
   display: flex;
   flex-direction: row;
   justify-items: center;
-  top: 0;
-  left: 0;
-  
   color: rgb(107,33,168);
   @media (min-width: 390px) {
     justify-content: space-between;
   }
-  @media (min-width: 650px) {
-    //height: 160px;
+  @media (min-width: 450px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
   @media (min-width: 960px) {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 `
 
 const NavCollapse= styled.div`
-  //padding-left: 1.5rem;//24px
   width: 80%;
   flex-grow: 1;
   display: flex;
   align-items: center;
-  @media (min-width: 390px) {
-    //padding-left: 2rem;//32px
-  }
   @media (min-width: 650px) {
     width: 50%
   }
@@ -54,12 +48,12 @@ const NavLogo = styled.span`
   font-family: "Courgette", serif;
   display: inline-block;
   color: rgb(107, 33, 168);
-  font-size: 1.5rem; /* 24px */
-  line-height: 2rem; /* 32px */
+  font-size: 1.25rem; /* 24px */
+  line-height: 1.75rem; /* 32px */
   
   @media (min-width: 450px) {
-    font-size: 1.75rem; /* 30px */
-    line-height: 2.25rem; /* 36px */
+    font-size: 1.5rem; /* 30px */
+    line-height: 2rem; /* 36px */
    
   }
   @media (min-width: 650px) {
@@ -81,7 +75,6 @@ const MainMenu = styled.div`
   align-items: center;
   @media (min-width: 800px) {
     width: 50%;
-   
   }
 `
 
@@ -89,19 +82,19 @@ const MenuButtonLogin = styled.button`
   display: inline-block;
   color: gray;
   font-family: "Noto Sans", sans-serif;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: capitalize;
  
   @media (min-width: 390px) {
-    font-size: 18px;
+    font-size: 15px;
   }
   @media (min-width: 650px) {
     margin-right: 1rem;
   }
   @media (min-width: 960px) {
-    font-size: 1.25rem; /* 20px */
-    line-height: 1.75rem; /* 28px */
+    font-size: 1rem; /* 20px */
+    line-height: 1.5rem; /* 28px */
   }
 `
 const MainMenuLinkLogin = styled.link`
@@ -156,11 +149,10 @@ const MainMenuLinkRegister = styled.link`
   background-color: rgb(107, 33, 168);
   color: white;
   font-family: "Noto Sans", sans-serif;
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: bold;
-  line-height: 1.25;
-  border-radius: 1rem; /* 16px */
-  //filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  line-height: 1.5rem;
+  border-radius: 0.5rem; /* 16px */
   &:hover {
     background-color:  rgb(88, 28, 135);
     filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
@@ -177,7 +169,7 @@ const MainSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 9rem auto 0;
+  margin: 11rem auto 0;
   font-family: "Noto Sans", sans-serif;
   @media (min-width: 650px) {
     flex-direction: row;
@@ -188,7 +180,7 @@ const MainSection = styled.div`
   }
 `
 const HeaderSectionBoxText = styled.div`
-  padding: 0 2rem;
+  padding: 0 1.5rem;
   @media (min-width: 650px) {
     text-align: left;
     width: 60%;
@@ -205,11 +197,15 @@ const HeaderSectionTextTitle = styled.h2`
   line-height: 3rem;/*2.25rem; /* 36px, 1.375 */
   font-weight: bold;
   @media (min-width: 650px) {
-    font-size: 2.5rem; /* 36px */
-    line-height: 3.5rem; /* 40px */
+    font-size: 2.25rem; /* 36px */
+    line-height: 3.25rem; /* 40px */
     text-align: left;
   }
   @media (min-width: 960px) {
+    font-size: 3rem; /* 72px */
+    line-height: 1.5;/* 1.25 */
+  }
+  @media (min-width: 1280px) {
     font-size: 4.2rem; /* 72px */
     line-height: 1.25;/* 1.25 */
   }
@@ -219,25 +215,30 @@ const HeaderSectionTextTSubtitle = styled.h2`
   margin-bottom: 1.5rem;
   color: rgb(113, 113, 122);
   font-size: 1.125rem; /* 18px */
-  line-height: 2rem; /* 28px ,2*/
+  line-height: 2.25rem; /* 28px ,2*/
   @media (min-width: 650px) {
-    font-size: 1.250rem; /* 18px */
-    line-height: 2.5rem; /* 28px */
+    font-size: 1.125rem; /* 18px */
+    line-height: 2.25rem; /* 28px */
     text-align: left;
   }
   @media (min-width: 960px) {
     font-size: 1.25rem; /* 20px */
-    line-height: 2.5rem; /* 28px 2.5*/
+    line-height: 2.75rem; /* 28px 2.5*/
   }
   `
 const HeaderSectionButtonRegister = styled(MainMenuLinkRegister)`
   display: block;
   margin: 0 auto;
-  font-size: 1.125rem; /* 18px */
-  line-height: 1.75rem; /* 28px 1.25*/
+  font-size: 1rem; /* 18px */
+  line-height: 1.5rem; /* 28px 1.25*/
   @media (min-width: 650px) {
+    font-size: 15px;
     display: inline-block;
-    padding: 0.875rem 1.5rem;
+    padding: 0.825rem 1rem;
+  }
+  @media (min-width: 960px) {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.5rem; /* 28px 1.25*/
   }
 `
 
@@ -273,7 +274,6 @@ const SectionBox = styled.div<SectionBoxProps>`
   justify-content: center;
   margin: 0 auto;
   padding-top: ${props=>props.size};
-  //? "5.5rem" : "1rem"
   font-family: "Noto Sans", sans-serif;
   .noVisibilityOnMobile{
     display: none;
@@ -301,19 +301,13 @@ const SectionBoxPhotos = styled.div`
     width: 40%;
   }
 `
-// export interface SectionBoxTextProps {
-//   primary: boolean
-// }
+
 const SectionBoxText = styled.div`
   padding: 0 3rem; //3
-  
   @media (min-width: 650px) {
     width: 60%;
     text-align: left;
     max-width: 42rem;
-    
-    
-    
   }
 `
 const SectionTextTitle = styled.h2`

@@ -1,16 +1,13 @@
-// import Switch from "react-switch";
-// import {useState} from "react";
+
 import {useTranslation} from "react-i18next";
 import {MainComponent} from "./TopMenu.components"
+
 type TopMenuProps ={
     toggleEdit: ()=>void
     toggleValue: boolean
 }
-
 const TopMenu = ({toggleEdit, toggleValue}: TopMenuProps) => {
-
-    const { t, i18n } = useTranslation();
-    console.log(i18n.language)
+    const { t } = useTranslation();
 
     return(
         <>
@@ -28,4 +25,3 @@ const TopMenu = ({toggleEdit, toggleValue}: TopMenuProps) => {
 
 }
 export default TopMenu;
-//uppercase font-bold py-2 px-4 rounded shadow-xs

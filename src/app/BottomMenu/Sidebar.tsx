@@ -1,17 +1,19 @@
-import Divider from "@mui/material/Divider";
-import {Link, useNavigate} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faBell, faHandPointRight, faUser} from "@fortawesome/free-solid-svg-icons";
-import {Accordion} from "react-accordion-ts";
 import React, {useEffect, useState} from "react";
-import {auth, signOut} from "../../firebase";
-import {logout, selectUser} from "../../features/users/usersSlice";
+import {useSelector} from "react-redux";
 import {useAppDispatch} from "../store";
 import {useTranslation} from "react-i18next";
-import {useSelector} from "react-redux";
-import {useModal} from "../../component/Modal/UseModal";
+import {Link, useNavigate} from "react-router-dom";
+import {auth, signOut} from "../../firebase";
+import {logout, selectUser} from "../../features/users/usersSlice";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRightFromBracket, faBell, faHandPointRight, faUser} from "@fortawesome/free-solid-svg-icons";
+import Divider from "@mui/material/Divider";
+import {Accordion} from "react-accordion-ts";
 import {Modal} from "../../component/Modal/Modal";
+import {useModal} from "../../component/Modal/UseModal";
+
 import AddCoUserForm from "./AddCoUserForm";
+
 interface SidebarProps{
     toggleDrawer: null | (()=> void);
 }
@@ -20,7 +22,6 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     const {t, i18n} = useTranslation()
     const navigate = useNavigate()
     let user = useSelector(selectUser);
-    const [isOpen, setIsOpen] =useState(false);
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
     const {isShown, handleClose, handleShown} = useModal()
     const modalHeader = ""
