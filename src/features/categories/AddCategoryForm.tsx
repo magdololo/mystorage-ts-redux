@@ -4,14 +4,14 @@ import {useAppDispatch, useAppSelector} from "../../app/store";
 
 import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
-import {selectUser} from "../users/usersSlice";
-import {addNewCategory, AddNewCategoryParams, Category} from "../categories/categoriesSlice"
+import {selectUser} from "../../slices/usersSlice";
+import {addNewCategory, AddNewCategoryParams, Category} from "../../slices/categoriesSlice"
 
 import slugify from "slugify";
 import 'react-toastify/dist/ReactToastify.css';
 
 import SearchOwnPictureCategory from "../../component/SearchOwnPictureCategory";
-import {selectAllImages} from "../images/imagesSlice";
+import {selectAllImages} from "../../slices/imagesSlice";
 import {useTranslation} from "react-i18next";
 
 

@@ -2,8 +2,8 @@ import React, {useEffect} from 'react'
 import {useSelector} from "react-redux";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {useForm, Controller, SubmitHandler} from "react-hook-form";
-import {selectUser} from "../users/usersSlice";
-import {Category, selectAllCategories} from "../categories/categoriesSlice"
+import {selectUser} from "../../slices/usersSlice";
+import {Category, selectAllCategories} from "../../slices/categoriesSlice"
 
 import 'react-toastify/dist/ReactToastify.css';
 import plLocale from "date-fns/locale/pl";
@@ -14,7 +14,7 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
-import {editUserProduct, UserProduct} from "./userProductsSlice";
+import {editUserProduct, UserProduct} from "../../slices/userProductsSlice";
 import {useTranslation} from "react-i18next";
 
 

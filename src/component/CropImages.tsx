@@ -4,7 +4,7 @@ import {useAppDispatch} from "../app/store";
 import {useTranslation} from "react-i18next";
 import {Modal} from "./Modal/Modal";
 
-import {addCategoryImage, ImageFromUser} from "../features/images/imagesSlice";
+import {addCategoryImage, ImageFromUser} from "../slices/imagesSlice";
 
 import Slider from "@material-ui/core/Slider";
 import Cropper from "react-easy-crop";

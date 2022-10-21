@@ -2,7 +2,7 @@ import React, {useEffect, Suspense} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {auth, onAuthStateChanged, db} from './firebase';
 
-import {login, selectUser, User} from "./features/users/usersSlice";
+import {login, selectUser, User} from "./slices/usersSlice";
 import {
     Routes,
     Route,
@@ -11,21 +11,21 @@ import {
 } from "react-router-dom";
 
 import Loading from "./component/Loading";
-import CategoryList from "./features/categories/CategoryList";
+import CategoryList from "./outlets/CategoryList";
 import LoginPage from "./features/users/LoginPage";
 import RemindPassword from "./features/users/RemindPassword";
-import ProductsList from "./features/products/ProductsList";
+import ProductsList from "./outlets/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
-import Home from "./features/api/Home";
-import Root from "./features/categories/Root";
+import Home from "./layouts/Home";
+import Root from "./layouts/Root";
 import './App.css';
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
-import SharesPage from "./features/shares/SharesPage";
-import SingleCategoryPage from "./features/categories/SingleCategoryPage";
+import SharesPage from "./outlets/SharesPage";
+import SingleCategoryPage from "./outlets/SingleCategoryPage";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
-import SearchUserProductPage from "./features/products/SearchUserProductPage";
+import SearchUserProductPage from "./outlets/SearchUserProductPage";
 import {doc, getDoc} from "firebase/firestore";
 
 

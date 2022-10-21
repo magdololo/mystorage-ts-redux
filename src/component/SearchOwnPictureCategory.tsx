@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {useSelector} from "react-redux";
-import {selectUser} from "../features/users/usersSlice";
+import {selectUser} from "../slices/usersSlice";
 import CropImages from "./CropImages";
 import {useModal} from "./Modal/UseModal";
 import {ModalWithCrop} from "./Modal/ModalWithCrop";

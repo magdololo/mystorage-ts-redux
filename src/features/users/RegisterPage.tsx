@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import { useTranslation } from "react-i18next";
 import {useForm, SubmitHandler} from "react-hook-form";
 
-import {addNewUserToUsersCollection, login, addDefaultCategoriesToNewUser,AddDefaultCategoriesToNewUserProps} from "./usersSlice";
+import {addNewUserToUsersCollection, login, addDefaultCategoriesToNewUser,AddDefaultCategoriesToNewUserProps} from "../../slices/usersSlice";
 import {
     auth,
     createUserWithEmailAndPassword,
@@ -94,7 +94,7 @@ const RegisterPage = () => {
                 })
         } else {
             setMessage((t("users.RegisterPage.message.acceptRegulations")))
-            console.log("hejjjjj")
+            console.log("hej")
         }
         }
 

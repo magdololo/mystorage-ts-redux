@@ -6,9 +6,9 @@ import {useForm, SubmitHandler, Controller} from 'react-hook-form';
 import {AutocompleteWithUserProducts} from "./AutocompleteWithUserProducts";
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 
-import {selectUser} from "../users/usersSlice";
-import {addUserProduct, UserProduct} from "./userProductsSlice";
-import {Category} from "../categories/categoriesSlice";
+import {selectUser} from "../../slices/usersSlice";
+import {addUserProduct, UserProduct} from "../../slices/userProductsSlice";
+import {Category} from "../../slices/categoriesSlice";
 
 import {Alert, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
@@ -31,8 +31,8 @@ export type FormValues = {
 };
 
 type AddProductFormProps = {
-    handleClose: () => void
-    isShown: boolean
+    handleCloseAddProduct: () => void
+    isShownAddProductModal: boolean
 }
 export type AutocompleteWithUserProductsProps = {
     onChange: (data: any) => void
@@ -47,7 +47,7 @@ export type AutocompleteWithCategoriesTitleProps = {
 
 
 }
-const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
+const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProductFormProps) => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
@@ -65,11 +65,11 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
     } = useForm<FormValues>();
     const [errorMessage, setErrorMessage] = useState('');
     useEffect(() => {
-        if (!isShown) {
+        if (!isShownAddProductModal) {
             reset()
             setSelectedProductFromAutocomplete(null)
         }
-    }, [isShown, reset])
+    }, [isShownAddProductModal, reset])
     useEffect(() => {
         if (selectedProductFromAutocomplete) {
             setValue('capacity', selectedProductFromAutocomplete.capacity);
@@ -80,7 +80,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
         setErrorMessage('');
         setSelectedProductFromAutocomplete(null)
         reset();
-        handleClose();
+        handleCloseAddProduct();
     }
     const onSubmit: SubmitHandler<FormValues> = data => {
             console.log(data)

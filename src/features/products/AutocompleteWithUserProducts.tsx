@@ -3,8 +3,8 @@ import {useAppSelector} from "../../app/store";
 
 import {AutocompleteWithUserProductsProps} from "./AddProductForm";
 
-import { UserProduct} from "./userProductsSlice";
-import {ProductFromDictionary, selectAllProducts} from "./allProductsSlice";
+import { UserProduct} from "../../slices/userProductsSlice";
+import {ProductFromDictionary, selectAllProducts} from "../../slices/allProductsSlice";
 
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import {TextField} from "@mui/material";

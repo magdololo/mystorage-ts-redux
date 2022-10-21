@@ -3,7 +3,7 @@ import {useAppSelector} from "../../app/store";
 import {useTranslation} from "react-i18next";
 import {AutocompleteWithCategoriesTitleProps} from "../products/AddProductForm";
 
-import {Category, selectAllCategoriesSortedByRequired} from "./categoriesSlice";
+import {Category, selectAllCategoriesSortedByRequired} from "../../slices/categoriesSlice";
 
 import TextField from '@mui/material/TextField';
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';

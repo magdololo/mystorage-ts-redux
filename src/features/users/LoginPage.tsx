@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import {auth, signInWithEmailAndPassword,signInWithPopup, GoogleAuthProvider} from '../../firebase';
 
-import {addDefaultCategoriesToNewUser, addNewUserToUsersCollection, login, AddDefaultCategoriesToNewUserProps} from "./usersSlice";
+import {addDefaultCategoriesToNewUser, addNewUserToUsersCollection, login, AddDefaultCategoriesToNewUserProps} from "../../slices/usersSlice";
 import {
     doc,
     getDoc,

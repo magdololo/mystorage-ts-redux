@@ -4,9 +4,9 @@ import {useAppSelector, useAppDispatch} from "../../app/store";
 import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
 import slugify from "slugify";
-import {editCategory, Category} from "./categoriesSlice";
-import {selectUser} from "../users/usersSlice";
-import {selectAllImages} from "../images/imagesSlice";
+import {editCategory, Category} from "../../slices/categoriesSlice";
+import {selectUser} from "../../slices/usersSlice";
+import {selectAllImages} from "../../slices/imagesSlice";
 import {useTranslation} from "react-i18next";
 
 type EditCategoryFormProps = {
