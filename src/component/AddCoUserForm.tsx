@@ -1,6 +1,10 @@
 import React, {useState} from "react";
+import {useAppDispatch} from "../app/store";
 import {useTranslation} from "react-i18next";
 import {useForm} from "react-hook-form";
+import {addOutgoingToShares} from "../slices/sharesSlice";
+import {useSelector} from "react-redux";
+import {selectUser} from "../slices/usersSlice";
 
 type AddCoUserFormProps = {
     handleCloseAddCoUser: () => void
@@ -9,6 +13,9 @@ type AddCoUserFormProps = {
 
 const AddCoUserForm=({handleCloseAddCoUser}: AddCoUserFormProps)=>{
     const {t} = useTranslation()
+    const dispatch = useAppDispatch();
+    let user = useSelector(selectUser);
+    const userId = user?.uid;
     const {
         reset,
         register,
@@ -19,8 +26,10 @@ const AddCoUserForm=({handleCloseAddCoUser}: AddCoUserFormProps)=>{
     }>();
     const [messageAfterSendPassword, setMessageAfterSendPassword] = useState(false)
     const onSubmit = handleSubmit((data:{email:string})=>{
+        dispatch(addOutgoingToShares({userId: userId!!, outgoingEmail: data.email}))
         setMessageAfterSendPassword(true)
         reset({email: ""})
+        console.log(data)
 
     });
     const handleCloseButtonAfterMessage = ()=>{

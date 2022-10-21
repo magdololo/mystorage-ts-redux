@@ -39,7 +39,6 @@ const ProductsList = () => {
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
-    const maxWidth440 = useMediaQuery('(max-width:440px)');
     const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
     // const notify = () => toast.success('🦄 Produkt usunięty!', {
     //     position: "top-center",

@@ -32,7 +32,7 @@ const SharesPage = ()=>{
                                             <h3 className="text-md xmd:text-md text-gray-light pb-3 xl:pb-2.5">
                                                 <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && "Przyjete"}</span>
                                                 <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && "Odrzucone"}</span>
-                                                <span className="font-bold font-varela ml-1">{(invite.status === "") && "Oczekuje na decyzję"}</span>
+                                                <span className="font-bold font-varela ml-1">{(invite.status === "pending") && "Oczekuje na decyzję"}</span>
                                             </h3>
                                             <div className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
                                                 <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{invite.date.toLocaleString()}</span>
@@ -48,7 +48,7 @@ const SharesPage = ()=>{
                                                 </div>
                                                 : null
                                             }
-                                            {(invite.status === "") ?
+                                            {(invite.status === "pending") ?
                                                 <div className={"max-w-screen-sm mx-auto"}>
                                                    <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
                                                        <Button>Akceptuj</Button>
@@ -75,7 +75,7 @@ const SharesPage = ()=>{
                                             <h3 className="text-md xmd:text-md text-gray-light pb-3 xl:pb-2.5">
                                                 <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && "Przyjete"}</span>
                                                 <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && "Odrzucone"}</span>
-                                                <span className="font-bold font-varela ml-1">{(invite.status === "") && "Oczekuje na decyzję"}</span>
+                                                <span className="font-bold font-varela ml-1">{(invite.status === "pending") && "Oczekuje na decyzję"}</span>
                                             </h3>
                                             <div className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
                                                 <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{invite.date.toLocaleString()}</span>
