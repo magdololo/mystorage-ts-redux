@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
-import {AddProductButton} from "./ButtonMenu.components";
+import {AddProductButton} from "../../styles/Products.components";
 
 interface ButtonAddProductProps{
     handleOpen: ()=>void;
@@ -12,7 +12,6 @@ const ButtonAddProduct = ({handleOpen}: ButtonAddProductProps)  => {
     return(
         <>
             <AddProductButton onClick={handleOpen}>{t("buttons.addProduct")}</AddProductButton>
-
         </>
     )
 }

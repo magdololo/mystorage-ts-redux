@@ -12,9 +12,9 @@ import {Accordion} from "react-accordion-ts";
 import {Modal} from "../component/Modal/Modal";
 import {useModal} from "../component/Modal/UseModal";
 
-import AddCoUserForm from "../component/BottomMenu/AddCoUserForm";
+import AddCoUserForm from "../component/AddCoUserForm";
 import AddProductForm from "../features/products/AddProductForm";
-import {AddProductButton} from "../component/BottomMenu/ButtonMenu.components";
+import {AddProductButton} from "../styles/Products.components";
 
 interface SidebarProps{
     toggleDrawer: null | (()=> void);

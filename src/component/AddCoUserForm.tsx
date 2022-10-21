@@ -91,16 +91,6 @@ const AddCoUserForm=({handleCloseAddCoUser}: AddCoUserFormProps)=>{
                 <button className=" w-2/5 px-1 py-3 text-white font-bold bg-purple top-0 text-sm leading-tight uppercase rounded shadow-md hover:shadow-lg" onClick={handleCloseButtonAfterMessage}>{t("buttons.close")}</button>
                 </>
                }
-            {/*    {messageAfterSendPassword ?*/}
-            {/*        <>*/}
-            {/*        <div className="text-gray-light my-8 text-xl" role="alert">*/}
-            {/*            Na ten adres email wysłalismy zaroszenie do twojej spiżarni!</div>*/}
-            {/*        <button className=" w-2/5 px-1 py-3 text-white font-bold bg-purple top-0 text-sm leading-tight uppercase rounded shadow-md hover:shadow-lg" onClick={handleCloseAddCoUser}>{t("buttons.close")}</button>*/}
-            {/*        </>*/}
-            {/*        : ""*/}
-            {/*   */}
-
-            {/*}*/}
         </>
     )
 }
