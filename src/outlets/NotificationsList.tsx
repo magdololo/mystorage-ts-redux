@@ -69,7 +69,7 @@ const NotificationsList = ()=>{
                                                {/*</div>*/}
                                            </>
                                            : null}
-                                       <MessageBodyText>{notification.text}</MessageBodyText>
+                                       {/*<MessageBodyText>{notification.text}</MessageBodyText>*/}
                                        <MessageBodyDate>{notification.date.toLocaleString()}</MessageBodyDate>
                                    </MessageBody>
 
@@ -102,7 +102,7 @@ const NotificationsList = ()=>{
                                                {/*</div>*/}
                                            </>
                                            : null}
-                                       <MessageBodyText>{notification.text}</MessageBodyText>
+                                       {/*<MessageBodyText>{notification.text}</MessageBodyText>*/}
                                        <MessageBodyDate>{notification.date.toLocaleString()}</MessageBodyDate>
                                    </MessageBody>
 

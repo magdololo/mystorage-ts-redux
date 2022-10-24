@@ -1,6 +1,6 @@
 import React from "react";
-import {useAppSelector} from "../app/store";
-import {selectAllShares, selectIncomingInvites, selectOutgoingInvites} from "../slices/sharesSlice";
+import {useAppSelector, useAppDispatch} from "../app/store";
+import {selectAllShares, selectIncomingInvites, selectOutgoingInvites, acceptIncomingShares} from "../slices/sharesSlice";
 import {Invite} from "../slices/sharesSlice";
 
 import BottomMenu from "../layouts/BottomMenu";
@@ -8,15 +8,24 @@ import ReturnToCategoryList from "../component/ReturnToCategoryList";
 import {useMediaQuery} from "usehooks-ts";
 
 import {MainContent, SectionIncoming, SectionOutgoing, Button, SingleInvite} from "../styles/Shares.components";
+import {useSelector} from "react-redux";
+import {selectUser} from "../slices/usersSlice";
 
 const SharesPage = ()=>{
+    const dispatch = useAppDispatch();
     const all = useAppSelector(selectAllShares)
+    let user = useSelector(selectUser);
+    const userId = user?.uid;
     console.log(all)
     const outgoingInvites = useAppSelector(selectOutgoingInvites)
     console.log(outgoingInvites)
     const incomingInvites = useAppSelector(selectIncomingInvites)
     console.log(incomingInvites)
     const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
+
+    const handleAcceptedInvite=(invite: Invite)=>{
+        dispatch(acceptIncomingShares({userId: userId!!, shareId: invite.id}))
+    }
     return (
         <>
             {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
@@ -51,7 +60,7 @@ const SharesPage = ()=>{
                                             {(invite.status === "pending") ?
                                                 <div className={"max-w-screen-sm mx-auto"}>
                                                    <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
-                                                       <Button>Akceptuj</Button>
+                                                       <Button onClick={()=>handleAcceptedInvite(invite)}>Akceptuj</Button>
                                                        <Button>Odrzuć</Button>
                                                    </div>
                                                 </div>
