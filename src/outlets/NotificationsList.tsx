@@ -37,6 +37,7 @@ const NotificationsList = ()=>{
                 <MenuInviteItem className="list-item">Nie teraz</MenuInviteItem>
             </MenuInviteList>
         </>
+    console.log(allNotifications)
     return(
        <>
            <div className="flex justify-center flex-nowrap">
@@ -69,7 +70,7 @@ const NotificationsList = ()=>{
                                                {/*</div>*/}
                                            </>
                                            : null}
-                                       {/*<MessageBodyText>{notification.text}</MessageBodyText>*/}
+                                       <MessageBodyText>Otrzymałeś/aś zaproszenie od {notification.cta}</MessageBodyText>
                                        <MessageBodyDate>{notification.date.toLocaleString()}</MessageBodyDate>
                                    </MessageBody>
 

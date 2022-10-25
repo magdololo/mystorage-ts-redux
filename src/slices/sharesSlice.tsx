@@ -10,6 +10,7 @@ import {addDoc, collection, collectionGroup, doc, getDoc, getDocs, query, update
 import {db} from "../firebase";
 import {ProductFromDictionary} from "./allProductsSlice";
 import {Category} from "./categoriesSlice";
+import {UserProduct} from "./userProductsSlice";
 
 
 
@@ -88,18 +89,18 @@ export type AcceptIncomingSharesParams = {
     userId: string
     shareId: string
 }
-export const acceptIncomingShares = createAsyncThunk<boolean, AcceptIncomingSharesParams>('shares/acceptIncomingShares', async (acceptIncomingSharesParams: AcceptIncomingSharesParams)=>{
+export const acceptIncomingShares = createAsyncThunk<string, AcceptIncomingSharesParams>('shares/acceptIncomingShares', async (acceptIncomingSharesParams: AcceptIncomingSharesParams)=>{
    try{
        const docRef = doc(db, "users/" + acceptIncomingSharesParams.userId + "/shares/" + acceptIncomingSharesParams.shareId);
        await getDoc(docRef);
        await updateDoc(docRef, "status", "accepted");
 
    }catch (error){
-
+        console.log(error)
    }
 
 
-   return true
+   return acceptIncomingSharesParams.shareId
 })
 
 const  sharesSlice = createSlice({
@@ -116,7 +117,10 @@ const  sharesSlice = createSlice({
             .addCase(addOutgoingToShares.fulfilled, (state,action) =>{
                 sharesAdapter.addOne(state, action.payload as Invite)
             })
-
+            .addCase(acceptIncomingShares.fulfilled,(state, action)=>{
+                console.log(action.payload)
+                sharesAdapter.updateOne(state, {id:action.payload, changes: {status: "accepted"}})
+            })
     }
 })
 export const {

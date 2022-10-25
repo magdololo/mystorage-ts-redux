@@ -38,7 +38,7 @@ const AppHeader = () => {
     const {isShown, handleShown, handleClose} = useModal()
     const onCloseModalWithNotifications = ()=>{
         handleClose()
-        dispatch(changeUnreadNotificationsToRead(null))
+        dispatch(changeUnreadNotificationsToRead(user!.uid))
     }
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
     useEffect(()=> {
