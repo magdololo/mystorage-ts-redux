@@ -3,22 +3,17 @@ import {
     createAsyncThunk,
     createEntityAdapter,
     EntityState,
-    createSelector
+    createSelector, PayloadAction
 } from '@reduxjs/toolkit'
 import {RootState} from "../app/store";
-import {addDoc, collection, collectionGroup, doc, getDoc, getDocs, query, updateDoc} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, query, updateDoc, deleteDoc, Timestamp} from "firebase/firestore";
 import {db} from "../firebase";
-import {ProductFromDictionary} from "./allProductsSlice";
-import {Category} from "./categoriesSlice";
-import {UserProduct} from "./userProductsSlice";
-
-
-
+import {Notification} from "./notificationsSlice";
 
 export interface Invite{
     user_id: string;
     user_email: string;
-    date: Date;
+    date:  { seconds:number, nanoseconds: number}|null;
     id:string;
     direction: "outgoing" | "incoming";
     status: "accepted" | "rejected" | "pending"
@@ -41,8 +36,16 @@ export const fetchShares = createAsyncThunk('shares/fetchShares', async (userId:
 
             let shareDoc = result.data() as Invite;
             shareDoc.id = result.id;
-            shareDoc.date = new Date();
-            shares.push(shareDoc);
+            let shareDate: Date | null = null;
+
+            if( shareDoc.date !== null){
+                let notificationTimestamp = Timestamp.fromMillis(shareDoc.date.seconds*1000);
+                //
+                shareDate = notificationTimestamp.toDate();
+            }
+            let share = {...shareDoc, date: shareDate} as Invite
+
+            shares.push(share);
         })
         return shares
         // try {
@@ -71,9 +74,10 @@ export type AddOutgoingToSharesParams = {
 
          const newInvite = {
              user_email: addOutgoingToSharesParams.outgoingEmail,
-             date: new Date(),
+             date: Timestamp.now(),
              direction: "outgoing",
-             status: "pending"
+             status: "pending",
+             user_id: ""
          }
          try {
              let result = await addDoc(collection(db, "users/" + addOutgoingToSharesParams.userId + "/shares"), newInvite);
@@ -85,13 +89,13 @@ export type AddOutgoingToSharesParams = {
 
      }
  )
-export type AcceptIncomingSharesParams = {
+export type IncomingSharesParams = {
     userId: string
     shareId: string
 }
-export const acceptIncomingShares = createAsyncThunk<string, AcceptIncomingSharesParams>('shares/acceptIncomingShares', async (acceptIncomingSharesParams: AcceptIncomingSharesParams)=>{
+export const acceptIncomingShares = createAsyncThunk<string, IncomingSharesParams>('shares/acceptIncomingShares', async (incomingSharesParams: IncomingSharesParams)=>{
    try{
-       const docRef = doc(db, "users/" + acceptIncomingSharesParams.userId + "/shares/" + acceptIncomingSharesParams.shareId);
+       const docRef = doc(db, "users/" + incomingSharesParams.userId + "/shares/" + incomingSharesParams.shareId);
        await getDoc(docRef);
        await updateDoc(docRef, "status", "accepted");
 
@@ -100,14 +104,44 @@ export const acceptIncomingShares = createAsyncThunk<string, AcceptIncomingShare
    }
 
 
-   return acceptIncomingSharesParams.shareId
+   return incomingSharesParams.shareId
 })
+ export const cancelAcceptedShare = createAsyncThunk<string, IncomingSharesParams> ('shares/cancelAcceptedShare', async (incomingSharesParams: IncomingSharesParams)=> {
+     try{
+         const docRef = doc(db, "users/" + incomingSharesParams.userId + "/shares/" + incomingSharesParams.shareId);
+         await getDoc(docRef);
+         await updateDoc(docRef, "status", "rejected");
 
+
+     }catch (error){
+         console.log(error)
+     }
+
+     return incomingSharesParams.shareId
+ })
+export const restorationAccount = createAsyncThunk<string, IncomingSharesParams> ('shares/restorationAccount', async (incomingSharesParams: IncomingSharesParams)=> {
+    try{
+        const docRef = doc(db, "users/" + incomingSharesParams.userId + "/shares/" + incomingSharesParams.shareId);
+        await getDoc(docRef);
+        await updateDoc(docRef, "status", "accepted");
+
+
+    }catch (error){
+        console.log(error)
+    }
+
+    return incomingSharesParams.shareId
+})
 const  sharesSlice = createSlice({
     name: 'shares',
     initialState,
     reducers: {
-
+        addShare: (state, action: PayloadAction<Invite>)=>{
+            sharesAdapter.addOne(state, action.payload)
+        },
+        modifyShare: (state, action:PayloadAction<Invite>)=>{
+            sharesAdapter.setOne(state, action.payload)
+        }
     },
     extraReducers(builder) {
         builder
@@ -119,6 +153,12 @@ const  sharesSlice = createSlice({
             })
             .addCase(acceptIncomingShares.fulfilled,(state, action)=>{
                 console.log(action.payload)
+                sharesAdapter.updateOne(state, {id:action.payload, changes: {status: "accepted"}})
+            })
+            .addCase(cancelAcceptedShare.fulfilled,(state, action)=>{
+                sharesAdapter.updateOne(state, {id:action.payload, changes: {status: "rejected"}})
+            })
+            .addCase(restorationAccount.fulfilled,(state, action)=>{
                 sharesAdapter.updateOne(state, {id:action.payload, changes: {status: "accepted"}})
             })
     }
@@ -134,4 +174,5 @@ export const selectIncomingInvites = createSelector(
     [(state: RootState) => selectAllShares(state)],
     (shares)=> shares.filter((invite: Invite) => invite.direction === "incoming")
 )
+export const {addShare, modifyShare} = sharesSlice.actions
 export default sharesSlice.reducer

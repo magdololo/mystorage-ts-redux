@@ -124,6 +124,11 @@
       "passwordTypeRequired": "Password required!"
     }
   },
+  "notifications" : {
+    "acceptedInvite": "accepted Your invitation!",
+    "rejectedInvite": "declined Your invitation!",
+    "canceledInvite": "canceled Your invitation!"
+  },
   "buttons": {
     "editCategoriesButton": "Edit categories",
     "categoryListButton": "Category list",

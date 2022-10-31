@@ -33,7 +33,6 @@ const AppHeader = () => {
     let user = useSelector(selectUser);
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
 
-    console.log(isLargerThan1280)
     const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const {isShown, handleShown, handleClose} = useModal()
     const onCloseModalWithNotifications = ()=>{

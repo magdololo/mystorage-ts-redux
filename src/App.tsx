@@ -26,7 +26,7 @@ import SingleCategoryPage from "./outlets/SingleCategoryPage";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 import SearchUserProductPage from "./outlets/SearchUserProductPage";
-import {doc, getDoc} from "firebase/firestore";
+import {collection, doc, getDoc, query, onSnapshot} from "firebase/firestore";
 
 
 
@@ -82,6 +82,9 @@ function App() {
             }
         })
         }, [])// eslint-disable-line react-hooks/exhaustive-deps
+
+
+
 
     const user = useSelector(selectUser);
 console.log(user)

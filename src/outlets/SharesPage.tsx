@@ -1,6 +1,13 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useAppSelector, useAppDispatch} from "../app/store";
-import {selectAllShares, selectIncomingInvites, selectOutgoingInvites, acceptIncomingShares} from "../slices/sharesSlice";
+import {
+    selectAllShares,
+    selectIncomingInvites,
+    selectOutgoingInvites,
+    acceptIncomingShares,
+    cancelAcceptedShare,
+    restorationAccount, addShare, modifyShare
+} from "../slices/sharesSlice";
 import {Invite} from "../slices/sharesSlice";
 
 import BottomMenu from "../layouts/BottomMenu";
@@ -10,6 +17,8 @@ import {useMediaQuery} from "usehooks-ts";
 import {MainContent, SectionIncoming, SectionOutgoing, Button, SingleInvite} from "../styles/Shares.components";
 import {useSelector} from "react-redux";
 import {selectUser} from "../slices/usersSlice";
+import {collection, onSnapshot, query, Timestamp} from "firebase/firestore";
+import {db} from "../firebase";
 
 const SharesPage = ()=>{
     const dispatch = useAppDispatch();
@@ -26,6 +35,50 @@ const SharesPage = ()=>{
     const handleAcceptedInvite=(invite: Invite)=>{
         dispatch(acceptIncomingShares({userId: userId!!, shareId: invite.id}))
     }
+    const handleCancelShare=(invite: Invite)=>{
+        dispatch(cancelAcceptedShare({userId: userId!!, shareId: invite.id}))
+    }
+    const handleRestoration= (invite: Invite)=>{
+        dispatch(restorationAccount({userId: userId!!, shareId: invite.id}))
+    }
+    useEffect(()=>{
+        const q = query(collection(db, "users/" + userId +"/shares"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        console.log("New city: ", change.doc.data());
+                        dispatch(addShare({...change.doc.data(), id: change.doc.id} as Invite))
+                    }
+                    if (change.type === "modified") {
+                        console.log("Modified share: ", change.doc.data());
+                        dispatch(modifyShare({...change.doc.data(), id: change.doc.id} as Invite))
+                    }
+                    if (change.type === "removed") {
+                        console.log("Removed share" +
+                            ": ", change.doc.data());
+                    }
+                });
+            },
+            (error) => {
+                console.log(error)
+            });
+
+        return ()=>{
+            unsubscribe()
+        }
+
+    },[])
+    const [date, setDate] = useState( new Date())
+    useEffect(()=>{
+
+        all.forEach((invite)=> {
+            let inviteDateFromFirebase = invite.date
+            let invitesTimestamp = Timestamp.fromMillis(inviteDateFromFirebase!!.seconds * 1000);
+            //
+            setDate(invitesTimestamp.toDate())
+
+        })
+    }, [all])
     return (
         <>
             {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
@@ -44,7 +97,7 @@ const SharesPage = ()=>{
                                                 <span className="font-bold font-varela ml-1">{(invite.status === "pending") && "Oczekuje na decyzję"}</span>
                                             </h3>
                                             <div className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
-                                                <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{invite.date.toLocaleString()}</span>
+                                                <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{date.toLocaleString()}</span>
                                             </div>
                                         </div>
 
@@ -52,7 +105,7 @@ const SharesPage = ()=>{
                                             {(invite.status === "accepted") ?
                                                 <div className={"max-w-screen-sm mx-auto"}>
                                                     <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
-                                                       <Button className={"marginLeft"}>Anuluj</Button>
+                                                       <Button className={"marginLeft"} onClick={()=>handleCancelShare(invite)}>Anuluj</Button>
                                                     </div>
                                                 </div>
                                                 : null
@@ -61,8 +114,16 @@ const SharesPage = ()=>{
                                                 <div className={"max-w-screen-sm mx-auto"}>
                                                    <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
                                                        <Button onClick={()=>handleAcceptedInvite(invite)}>Akceptuj</Button>
-                                                       <Button>Odrzuć</Button>
+                                                       <Button onClick={()=>handleCancelShare(invite)}>Odrzuć</Button>
                                                    </div>
+                                                </div>
+                                                : null
+                                            }
+                                            {(invite.status === "rejected") ?
+                                                <div className={"max-w-screen-sm mx-auto"}>
+                                                    <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
+                                                        <Button onClick={()=>handleRestoration(invite)}>Przywróć</Button>
+                                                    </div>
                                                 </div>
                                                 : null
                                             }
@@ -87,19 +148,34 @@ const SharesPage = ()=>{
                                                 <span className="font-bold font-varela ml-1">{(invite.status === "pending") && "Oczekuje na decyzję"}</span>
                                             </h3>
                                             <div className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
-                                                <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{invite.date.toLocaleString()}</span>
+                                                <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{date.toLocaleString()}</span>
                                             </div>
 
                                             <div className={"h-1/3"}>
                                                 {(invite.status === "accepted") ?
-                                                    <>
-                                                        <div className={"max-w-screen-sm mx-auto"}>
-                                                            <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
-                                                                <Button className={"marginLeft"}>Anuluj</Button>
-                                                            </div>
+                                                    <div className={"max-w-screen-sm mx-auto"}>
+                                                        <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
+                                                            <Button className={"marginLeft"} onClick={()=>handleCancelShare(invite)}>Anuluj</Button>
                                                         </div>
-                                                    </>
-                                                : null
+                                                    </div>
+                                                    : null
+                                                }
+                                                {(invite.status === "pending") ?
+                                                    <div className={"max-w-screen-sm mx-auto"}>
+                                                        <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
+                                                            {/*<Button onClick={()=>handleAcceptedInvite(invite)}>Akceptuj</Button>*/}
+                                                            {/*<Button onClick={()=>handleCancelShare(invite)}>Odrzuć</Button>*/}
+                                                        </div>
+                                                    </div>
+                                                    : null
+                                                }
+                                                {(invite.status === "rejected") ?
+                                                    <div className={"max-w-screen-sm mx-auto"}>
+                                                        <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
+                                                            {/*<Button onClick={()=>handleRestoration(invite)}>Przywróć</Button>*/}
+                                                        </div>
+                                                    </div>
+                                                    : null
                                                 }
                                             </div>
                                         </div>

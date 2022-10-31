@@ -123,6 +123,11 @@
       "passwordTypeRequired": "Hasło wymagane"
     }
   },
+  "notifications" : {
+    "acceptedInvite": "zaakceptował/a Twoje zaproszenie!",
+    "rejectedInvite": "odrzucił/a Twoje zaproszenie!",
+    "canceledInvite": "anulował/a dzielenie z Tobą spiżarni!"
+  },
   "buttons": {
     "editCategoriesButton": "Edytuj kategorie",
     "categoryListButton": "Lista kategorii",

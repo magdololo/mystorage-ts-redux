@@ -3,12 +3,13 @@ import {
     createAsyncThunk,
     createEntityAdapter,
     EntityState,
-    createSelector
+    createSelector, PayloadAction
 } from '@reduxjs/toolkit'
 import {AppDispatch, RootState} from "../app/store";
-import {collection, getDocs, query, where} from "firebase/firestore";
+import {collection, getDocs, query, Timestamp, updateDoc, where} from "firebase/firestore";
 import {db} from "../firebase";
 import {Invite} from "./sharesSlice";
+import {UserProduct} from "./userProductsSlice";
 
 
 
@@ -16,10 +17,11 @@ import {Invite} from "./sharesSlice";
 
 export interface Notification{
     isRead: boolean;
-    date: Date;
+    date:  { seconds:number, nanoseconds: number}|null;
     id:string;
     cta: string;
     type: "invite" | "info"
+    change: string
 }
 const notificationsAdapter = createEntityAdapter<Notification>()
 const initialState: EntityState<Notification> & {  error: null | string | undefined;  } = notificationsAdapter.getInitialState({
@@ -38,8 +40,17 @@ export const fetchNotifications = createAsyncThunk('notifications/fetchNotificat
 
         let notificationDoc = result.data() as Notification;
         notificationDoc.id = result.id;
-        notificationDoc.date = new Date();
-        notifications.push(notificationDoc);
+
+        let notificationDate: Date | null = null;
+
+        if( notificationDoc.date !== null){
+            let notificationTimestamp = Timestamp.fromMillis(notificationDoc.date.seconds*1000);
+            //
+            notificationDate = notificationTimestamp.toDate();
+        }
+        let notification = {...notificationDoc, date: notificationDate} as Notification
+
+        notifications.push(notification);
     })
     return notifications
         // try {
@@ -66,28 +77,22 @@ export const changeUnreadNotificationsToRead = createAsyncThunk<Notification[], 
     dispatch: AppDispatch
     state: RootState
 }>('notifications/changeUnreadNotificationsToRead', async(userId, thunkApi)=> {
-    console.log("halo z fetch product id thunk")
 
     let unReadNotifications = selectUnReadNotifications(thunkApi.getState())
-    console.log(unReadNotifications)
+    console.log(unReadNotifications, "hej z changeto read")
 
     const newNotifications: Notification[] = [];
      unReadNotifications.forEach((notification) => {
         const newNotification = {...notification, isRead:true}
         newNotifications.push(newNotification)
     })
-    // let notificationsRef = db.collection( "users/" + userId + "/notifications");
-    // const snapshot = await notificationsRef.where('isRead', '==', false).get();
-    // snapshot.forEach(doc=>{
-    //     doc.
-    // })
 
     let q = await query(collection(db, "users/" + userId + "/notifications"), where("isRead", "==", false));
-
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((result) => {
-        let notificationDoc = result.data() as Notification;
-        notificationDoc.isRead = true;
+        let notificationDoc = result.data() as Notification ;
+        console.log(notificationDoc)
+        updateDoc (result.ref, {isRead: true})
     })
 
     return newNotifications
@@ -99,7 +104,12 @@ const  notificationsSlice = createSlice({
     name: 'notifications',
     initialState,
     reducers: {
-
+            addNotification: (state, action: PayloadAction<Notification>)=>{
+                notificationsAdapter.addOne(state, action.payload)
+            },
+           modifyNotification: (state, action:PayloadAction<Notification>)=>{
+                notificationsAdapter.setOne(state, action.payload)
+           }
         },
     extraReducers(builder) {
         builder
@@ -118,5 +128,9 @@ export const selectUnReadNotifications = createSelector(
     [(state: RootState) => selectAllNotifications(state)],
     (notifications) => notifications.filter((notification: Notification) => notification.isRead === false)
 );
-
+export const selectInfoNotifications = createSelector(
+    [(state: RootState) => selectAllNotifications(state)],
+    (notifications) => notifications.filter((notification: Notification) => notification.type === "info")
+)
+export const {addNotification, modifyNotification} = notificationsSlice.actions
 export default notificationsSlice.reducer

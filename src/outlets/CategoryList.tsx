@@ -87,7 +87,7 @@ export const CategoryList = () => {
     </>;
 
     useEffect(() => {
-        dispatch(fetchNotifications(user?.uid!!))
+        // dispatch(fetchNotifications(user?.uid!!))
         dispatch(fetchCategories(user?.uid!!))
         dispatch(fetchImages(user?.uid!!))
         dispatch(fetchUserProducts(user?.uid!!))

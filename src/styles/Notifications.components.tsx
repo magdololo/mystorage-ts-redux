@@ -26,7 +26,7 @@ const MessageTitle = styled.p`
   font-size: 1.125rem; /* 18px */
   line-height: 1.75rem; /* 28px */
   font-weight: bolder;
-  margin-top: 4px;
+  margin-top: -14px;
   @media (min-width: 650px) {
     font-size: 1.125rem; /* 18px */
     line-height: 1.75rem; /* 28px */
@@ -36,6 +36,8 @@ const MessageBodyText = styled.p`
   font-size: 1rem; /* 18px */
   line-height: 1.25rem; /* 28px */
   padding-top: 1rem;
+  margin-bottom: 1rem;
+  
   
   @media (min-width: 650px) {
     font-size: 1.125rem; /* 18px */
