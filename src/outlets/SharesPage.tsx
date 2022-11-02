@@ -6,7 +6,6 @@ import {
     selectOutgoingInvites,
     acceptIncomingShares,
     cancelAcceptedShare,
-    restorationAccount,
 } from "../slices/sharesSlice";
 import {Invite} from "../slices/sharesSlice";
 
@@ -41,9 +40,7 @@ const SharesPage = ()=>{
         dispatch(cancelAcceptedShare({userId: userId!!, shareId: invite.id}))
 
     }
-    const handleRestoration= (invite: Invite)=>{
-        dispatch(restorationAccount({userId: userId!!, shareId: invite.id}))
-    }
+
 
     const [date, setDate] = useState( new Date())
     useEffect(()=>{

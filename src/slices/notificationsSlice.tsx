@@ -8,8 +8,6 @@ import {
 import {AppDispatch, RootState} from "../app/store";
 import {collection, getDocs, query, Timestamp, updateDoc, where} from "firebase/firestore";
 import {db} from "../firebase";
-import {Invite} from "./sharesSlice";
-import {UserProduct} from "./userProductsSlice";
 
 
 
@@ -53,18 +51,6 @@ export const fetchNotifications = createAsyncThunk('notifications/fetchNotificat
         notifications.push(notification);
     })
     return notifications
-        // try {
-        //     const notifications: Array<Notification> = [
-        //         {id: "123",isRead: false, date: new Date("2022-09-22 12:24:16"), cta:"d.jarzyna@gmail.com", type: "invite" },
-        //         {id: "124",isRead: false, date: new Date("2022-08-29 18:24:16"),cta:"", type: "info"},
-        //         {id: "125",isRead: true, date: new Date("2022-06-22 19:24:16"),cta:"", type: "info" },
-        //         {id: "126",isRead: false, date: new Date("2022-11-22 09:24:16"),cta:"zosiajarzyna@gmail.com", type: "invite" },
-        //         {id: "127",isRead: false, date: new Date("2022-09-22 12:24:16"), cta:"d.jarzyna@gmail.com", type: "invite" },
-        //         {id: "128",isRead: false, date: new Date("2022-08-29 18:24:16"), cta:"", type: "info"},
-        //         {id: "129",isRead: true, date: new Date("2022-06-22 19:24:16"),cta:"", type: "info" },
-        //         {id: "131 ",isRead: false, date: new Date("2022-11-22 09:24:16"),cta:"zosiajarzyna@gmail.com", type: "invite" },
-        //     ]
-        //     return notifications
         } catch (error) {
             console.log(error)
             return {error: error}
@@ -126,7 +112,7 @@ export const {
 } = notificationsAdapter.getSelectors<RootState>((state) => state.notifications);
 export const selectUnReadNotifications = createSelector(
     [(state: RootState) => selectAllNotifications(state)],
-    (notifications) => notifications.filter((notification: Notification) => notification.isRead === false)
+    (notifications) => notifications.filter((notification: Notification) => !notification.isRead )
 );
 // export const selectInfoNotifications = createSelector(
 //     [(state: RootState) => selectAllNotifications(state)],
