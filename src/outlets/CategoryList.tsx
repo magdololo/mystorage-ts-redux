@@ -92,7 +92,7 @@ export const CategoryList = () => {
         dispatch(fetchImages(user?.uid!!))
         dispatch(fetchUserProducts(user?.uid!!))
         dispatch(fetchAllProducts())
-        dispatch(fetchShares(user?.uid!!))
+        // dispatch(fetchShares(user?.uid!!))
     }, [user, dispatch])
 
 

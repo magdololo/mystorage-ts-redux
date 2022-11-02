@@ -125,9 +125,20 @@
     }
   },
   "notifications" : {
-    "acceptedInvite": "accepted Your invitation!",
-    "rejectedInvite": "declined Your invitation!",
-    "canceledInvite": "canceled Your invitation!"
+    "new pending" : "invites you to share account!",
+    "pending to accepted": "accepted Your invitation!",
+    "pending to rejected": "declined Your invitation!",
+    "accepted to rejected": "canceled Your invitation!",
+    "noNotifications" : "You have no new notifications!",
+    "notificationTypeInvite" : "Invite!",
+    "notificationTypeInfo" : "Information!"
+  },
+  "shares": {
+    "outgoing": "Outgoing invitations!",
+    "incoming": "Incoming invitations!",
+    "statusAccepted": "Accepted",
+    "statusRejected": "Rejected",
+    "statusPending": "Waiting for decisions"
   },
   "buttons": {
     "editCategoriesButton": "Edit categories",
@@ -141,7 +152,10 @@
     "logOut": "Sign Out",
     "register": "Sign Up",
     "remindPassword" : "Next",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "accept": "Accept",
+    "reject": "Reject",
+    "cancel": "Cancel"
   },
   "component": {
     "SearchOwnPictureCategory": {
@@ -160,7 +174,7 @@
     "signOut": "Sign out",
     "coUsers": "Co-users",
     "addCoUser": "Add co-user",
-    "headerFormAddCoUser" :"Enter the co-user email"
-
+    "headerFormAddCoUser" :"Enter the co-user email",
+    "messageAfterInvite": "We have sent an invitation to your home storage to this e-mail address!"
   }
 }

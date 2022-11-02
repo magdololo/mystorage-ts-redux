@@ -128,9 +128,9 @@ export const selectUnReadNotifications = createSelector(
     [(state: RootState) => selectAllNotifications(state)],
     (notifications) => notifications.filter((notification: Notification) => notification.isRead === false)
 );
-export const selectInfoNotifications = createSelector(
-    [(state: RootState) => selectAllNotifications(state)],
-    (notifications) => notifications.filter((notification: Notification) => notification.type === "info")
-)
+// export const selectInfoNotifications = createSelector(
+//     [(state: RootState) => selectAllNotifications(state)],
+//     (notifications) => notifications.filter((notification: Notification) => notification.type === "info")
+// )
 export const {addNotification, modifyNotification} = notificationsSlice.actions
 export default notificationsSlice.reducer

@@ -6,7 +6,7 @@ import {
     selectOutgoingInvites,
     acceptIncomingShares,
     cancelAcceptedShare,
-    restorationAccount, addShare, modifyShare
+    restorationAccount,
 } from "../slices/sharesSlice";
 import {Invite} from "../slices/sharesSlice";
 
@@ -17,14 +17,16 @@ import {useMediaQuery} from "usehooks-ts";
 import {MainContent, SectionIncoming, SectionOutgoing, Button, SingleInvite} from "../styles/Shares.components";
 import {useSelector} from "react-redux";
 import {selectUser} from "../slices/usersSlice";
-import {collection, onSnapshot, query, Timestamp} from "firebase/firestore";
-import {db} from "../firebase";
+import {Timestamp} from "firebase/firestore";
+
+import {useTranslation} from "react-i18next";
 
 const SharesPage = ()=>{
     const dispatch = useAppDispatch();
     const all = useAppSelector(selectAllShares)
     let user = useSelector(selectUser);
     const userId = user?.uid;
+    const {t} = useTranslation();
     console.log(all)
     const outgoingInvites = useAppSelector(selectOutgoingInvites)
     console.log(outgoingInvites)
@@ -37,37 +39,12 @@ const SharesPage = ()=>{
     }
     const handleCancelShare=(invite: Invite)=>{
         dispatch(cancelAcceptedShare({userId: userId!!, shareId: invite.id}))
+
     }
     const handleRestoration= (invite: Invite)=>{
         dispatch(restorationAccount({userId: userId!!, shareId: invite.id}))
     }
-    useEffect(()=>{
-        const q = query(collection(db, "users/" + userId +"/shares"));
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === "added") {
-                        console.log("New city: ", change.doc.data());
-                        dispatch(addShare({...change.doc.data(), id: change.doc.id} as Invite))
-                    }
-                    if (change.type === "modified") {
-                        console.log("Modified share: ", change.doc.data());
-                        dispatch(modifyShare({...change.doc.data(), id: change.doc.id} as Invite))
-                    }
-                    if (change.type === "removed") {
-                        console.log("Removed share" +
-                            ": ", change.doc.data());
-                    }
-                });
-            },
-            (error) => {
-                console.log(error)
-            });
 
-        return ()=>{
-            unsubscribe()
-        }
-
-    },[])
     const [date, setDate] = useState( new Date())
     useEffect(()=>{
 
@@ -79,12 +56,14 @@ const SharesPage = ()=>{
 
         })
     }, [all])
+
+
     return (
         <>
             {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
                 <MainContent>
                     <SectionIncoming>
-                        <h2 className="text-xl font-bold my-6 text-center text-gray-light  xl:text-2xl">Zaproszenia przychodzące!</h2>
+                        <h2 className="text-xl font-bold my-6 text-center text-gray-light  xl:text-2xl">{t("shares.incoming")}</h2>
                         <div className="p-2 mx-6 ">
                             <div className="w-full flex flex-col divide-y divide-gray-extraLight">
                                 {incomingInvites.map((invite: Invite) =>
@@ -92,9 +71,9 @@ const SharesPage = ()=>{
                                         <div className={"h-2/3 "}>
                                             <h2 className="text-md xmd:text-lg text-gray-light pb-3 md:text-lg">Od <span className="font-bold">{invite.user_email}</span></h2>
                                             <h3 className="text-md xmd:text-md text-gray-light pb-3 xl:pb-2.5">
-                                                <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && "Przyjete"}</span>
-                                                <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && "Odrzucone"}</span>
-                                                <span className="font-bold font-varela ml-1">{(invite.status === "pending") && "Oczekuje na decyzję"}</span>
+                                                <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && t("shares.statusAccepted")}</span>
+                                                <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && t("shares.statusRejected")}</span>
+                                                <span className="font-bold font-varela ml-1">{(invite.status === "pending") && t("shares.statusPending")}</span>
                                             </h3>
                                             <div className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
                                                 <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{date.toLocaleString()}</span>
@@ -104,8 +83,11 @@ const SharesPage = ()=>{
                                         <div className={"h-1/3"}>
                                             {(invite.status === "accepted") ?
                                                 <div className={"max-w-screen-sm mx-auto"}>
-                                                    <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
-                                                       <Button className={"marginLeft"} onClick={()=>handleCancelShare(invite)}>Anuluj</Button>
+                                                    <div className={ "visible pb-5 flex flex-row justify-start xmd:mb-0"}>
+
+                                                            <Button className={"marginLeft"}
+                                                                    onClick={() => handleCancelShare(invite)}>{t("buttons.cancel")}</Button>
+
                                                     </div>
                                                 </div>
                                                 : null
@@ -113,17 +95,9 @@ const SharesPage = ()=>{
                                             {(invite.status === "pending") ?
                                                 <div className={"max-w-screen-sm mx-auto"}>
                                                    <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
-                                                       <Button onClick={()=>handleAcceptedInvite(invite)}>Akceptuj</Button>
-                                                       <Button onClick={()=>handleCancelShare(invite)}>Odrzuć</Button>
+                                                       <Button onClick={()=>handleAcceptedInvite(invite)}>{t("buttons.accept")}</Button>
+                                                       <Button onClick={()=>handleCancelShare(invite)}>{t("buttons.reject")}</Button>
                                                    </div>
-                                                </div>
-                                                : null
-                                            }
-                                            {(invite.status === "rejected") ?
-                                                <div className={"max-w-screen-sm mx-auto"}>
-                                                    <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
-                                                        <Button onClick={()=>handleRestoration(invite)}>Przywróć</Button>
-                                                    </div>
                                                 </div>
                                                 : null
                                             }
@@ -135,7 +109,7 @@ const SharesPage = ()=>{
                     </SectionIncoming>
 
                     <SectionOutgoing>
-                        <h2 className="text-xl font-bold my-6 text-center text-gray-light xl:text-2xl ">Zaproszenia wychodzące!</h2>
+                        <h2 className="text-xl font-bold my-6 text-center text-gray-light xl:text-2xl ">{t("shares.outgoing")}</h2>
                         <div className="p-2 mx-6">
                             <div className="w-full flex flex-col divide-y divide-gray-extraLight">
                                 {outgoingInvites.map((invite: Invite) =>
@@ -143,9 +117,9 @@ const SharesPage = ()=>{
                                         <div className={"h-2/3 "}>
                                             <h2 className="text-md text-gray-light pb-3 md:text-lg">Do <span className="font-bold">{invite.user_email}</span></h2>
                                             <h3 className="text-md xmd:text-md text-gray-light pb-3 xl:pb-2.5">
-                                                <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && "Przyjete"}</span>
-                                                <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && "Odrzucone"}</span>
-                                                <span className="font-bold font-varela ml-1">{(invite.status === "pending") && "Oczekuje na decyzję"}</span>
+                                                <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && t("shares.statusAccepted")}</span>
+                                                <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && t("shares.statusRejected")}</span>
+                                                <span className="font-bold font-varela ml-1">{(invite.status === "pending") && t("shares.statusPending")}</span>
                                             </h3>
                                             <div className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
                                                 <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{date.toLocaleString()}</span>
@@ -155,7 +129,7 @@ const SharesPage = ()=>{
                                                 {(invite.status === "accepted") ?
                                                     <div className={"max-w-screen-sm mx-auto"}>
                                                         <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
-                                                            <Button className={"marginLeft"} onClick={()=>handleCancelShare(invite)}>Anuluj</Button>
+                                                            <Button className={"marginLeft"} onClick={()=>handleCancelShare(invite)}>{t("buttons.cancel")}</Button>
                                                         </div>
                                                     </div>
                                                     : null
@@ -165,14 +139,6 @@ const SharesPage = ()=>{
                                                         <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
                                                             {/*<Button onClick={()=>handleAcceptedInvite(invite)}>Akceptuj</Button>*/}
                                                             {/*<Button onClick={()=>handleCancelShare(invite)}>Odrzuć</Button>*/}
-                                                        </div>
-                                                    </div>
-                                                    : null
-                                                }
-                                                {(invite.status === "rejected") ?
-                                                    <div className={"max-w-screen-sm mx-auto"}>
-                                                        <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
-                                                            {/*<Button onClick={()=>handleRestoration(invite)}>Przywróć</Button>*/}
                                                         </div>
                                                     </div>
                                                     : null

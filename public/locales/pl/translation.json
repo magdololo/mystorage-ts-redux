@@ -124,9 +124,20 @@
     }
   },
   "notifications" : {
-    "acceptedInvite": "zaakceptował/a Twoje zaproszenie!",
-    "rejectedInvite": "odrzucił/a Twoje zaproszenie!",
-    "canceledInvite": "anulował/a dzielenie z Tobą spiżarni!"
+    "new pending": "zaprasza Cię do współdzielenia konta!",
+    "pending to accepted": "zaakceptował/a Twoje zaproszenie!",
+    "pending to rejected": "odrzucił/a Twoje zaproszenie!",
+    "accepted to rejected": "anulował/a dzielenie z Tobą spiżarni!",
+    "noNotifications" : "Nie masz żadnych nowych wiadomości!",
+    "notificationTypeInvite" : "Zaproszenie!",
+    "notificationTypeInfo" : "Informacja!"
+  },
+  "shares": {
+    "outgoing": "Zaproszenia wychodzące!",
+    "incoming": "Zaproszenia przychodzące!",
+    "statusAccepted": "Przyjęte",
+    "statusRejected": "Odrzucone",
+    "statusPending": "Oczekuje na decyzję"
   },
   "buttons": {
     "editCategoriesButton": "Edytuj kategorie",
@@ -140,7 +151,10 @@
     "logOut": "Wyloguj się",
     "register": "Zarejestruj się",
     "remindPassword": "Dalej",
-    "confirm": "Zatwierdź"
+    "confirm": "Zatwierdź",
+    "accept": "Akceptuj",
+    "reject": "Odrzuć",
+    "cancel": "Anuluj"
   },
   "component": {
     "SearchOwnPictureCategory": {
@@ -159,7 +173,8 @@
     "signOut": "Wyloguj się",
     "coUsers": "Współużytkownicy",
     "addCoUser": "Dodaj współużytkownika",
-    "headerFormAddCoUser" :"Wpisz email współużytkownika"
+    "headerFormAddCoUser" :"Wpisz email współużytkownika",
+    "messageAfterInvite": "Na ten adres email wysłalismy zaproszenie do Twojej spiżarni!"
   }
 }
 

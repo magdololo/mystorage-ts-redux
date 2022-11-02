@@ -32,7 +32,7 @@ const Root = ()=>{
                     }
                     if (change.type === "modified") {
                         console.log("Modified city: ", change.doc.data());
-                        // dispatch(modifyNotification({...change.doc.data(), id: change.doc.id} as Notification))
+                        dispatch(modifyNotification({...change.doc.data(), id: change.doc.id} as Notification))
                     }
                     if (change.type === "removed") {
                         console.log("Removed city: ", change.doc.data());
@@ -49,6 +49,33 @@ const Root = ()=>{
 
     },[])
 
+    useEffect(()=>{
+        const q = query(collection(db, "users/" + userId +"/shares"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        console.log("New city: ", change.doc.data());
+                        dispatch(addShare({...change.doc.data(), id: change.doc.id} as Invite))
+                    }
+                    if (change.type === "modified") {
+                        console.log("Modified share: ", change.doc.data());
+                        dispatch(modifyShare({...change.doc.data(), id: change.doc.id} as Invite))
+                    }
+                    if (change.type === "removed") {
+                        console.log("Removed share" +
+                            ": ", change.doc.data());
+                    }
+                });
+            },
+            (error) => {
+                console.log(error)
+            });
+
+        return ()=>{
+            unsubscribe()
+        }
+
+    },[])
 
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
 
