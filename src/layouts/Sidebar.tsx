@@ -15,6 +15,9 @@ import AddCoUserForm from "../component/AddCoUserForm";
 import AddProductForm from "../features/products/AddProductForm";
 import {AddProductButton} from "../styles/Products.components";
 import {selectAcceptedIncomingInvites, Invite} from "../slices/sharesSlice";
+import {fetchUserProducts, removeProducts} from "../slices/userProductsSlice";
+import {fetchCategories, removeCategories} from "../slices/categoriesSlice"
+import {fetchImages} from "../slices/imagesSlice";
 // import {MenuShares} from "../styles/Shares.components";
 
 interface SidebarProps{
@@ -25,6 +28,7 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     const {t, i18n} = useTranslation()
     const navigate = useNavigate()
     let user = useAppSelector(selectUser);
+    const userId = user?.uid;
     const allAcceptedIncomingInvites = useAppSelector(selectAcceptedIncomingInvites)
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
     const {isShown: isShownAddProductModal, handleClose: handleCloseAddProduct, handleShown: handleShownAddProductModal } = useModal()
@@ -66,15 +70,28 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
 
 
 
+    const [active, setActive] = useState(false)
+    if(!active){
+        console.log("user oryginal")
+        dispatch(removeProducts())
+        dispatch(removeCategories())
+        dispatch(fetchCategories(userId!!))
+        dispatch(fetchImages(userId!!))
+        dispatch(fetchUserProducts(userId!!))
 
+    }
     const myAccordionWithShares = [
-        {title: <span><FontAwesomeIcon className="text-2xl text-purple px-4" icon={faShareFromSquare}/></span>,
+        {
+            title: <span><FontAwesomeIcon className="text-2.5xl text-purple px-4" icon={faShareFromSquare} onClick={()=> setActive((prevState) => !prevState)}/></span>,
             content:
-                <span className="text-sm font-bold px-2">
+                <>
                     <ul>
-                        {allAcceptedIncomingInvites.map(invite => { return <li>{invite.user_email}</li>})}
+                        {allAcceptedIncomingInvites.map(invite => {
+                            return <li onClick={() => changeStorage(invite.user_id)}>{invite.user_email}</li>
+                        })}
                     </ul>
-               </span>}
+                </>
+        }
     ]
     const handleOpenAddProductModal = ()=>{
         handleShownAddProductModal()
@@ -93,6 +110,18 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
         handleCloseAddCoUser()
     }
     console.log(allAcceptedIncomingInvites)
+
+    const changeStorage =(inviteUserId: string)=> {
+        console.log("changeStorage")
+        dispatch(removeProducts())
+        dispatch(removeCategories())
+        dispatch(fetchCategories(inviteUserId))
+        dispatch(fetchImages(inviteUserId))
+        dispatch(fetchUserProducts(inviteUserId))
+
+
+    }
+
     return(
         <>
             <div className="flex justify-center">

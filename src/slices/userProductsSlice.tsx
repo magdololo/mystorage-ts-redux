@@ -215,7 +215,9 @@ const userProductsSlice = createSlice({
           state.searchProductByString = action.payload
 
         },
-
+        removeProducts: (state)=>{
+            userProductsAdapter.removeAll(state)
+        }
     },
     extraReducers(builder) {
         builder
@@ -247,7 +249,8 @@ const userProductsSlice = createSlice({
 export const {
     selectAll: selectUserProducts,
     selectById: selectUserProductById,
-    selectIds: selectUserProductIds
+    selectIds: selectUserProductIds,
+
     // Pass in a selector that returns the posts slice of state
 } = userProductsAdapter.getSelectors<RootState>((state) => state.userProducts);
 
@@ -256,6 +259,6 @@ export const selectProductsOfCategory =(categoryId: string)=> createSelector(
     (userProducts) => userProducts.filter(product => product.categoryId === categoryId)
 )
 
-export const {editProduct, searchProduct, searchByString} = userProductsSlice.actions
+export const {editProduct, searchProduct, searchByString, removeProducts} = userProductsSlice.actions
 export default userProductsSlice.reducer
 

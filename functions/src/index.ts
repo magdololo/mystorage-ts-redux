@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
+
 admin.initializeApp();
 
 const db = admin.firestore();
@@ -61,6 +62,7 @@ exports.onNewShare = functions.firestore
 
          const newValue = change.after.data();
          const previousValue = change.before.data();
+         const incomingUserId = context.params.userId
          if(previousValue.direction == "incoming" && previousValue.status != newValue.status && previousValue.status != "accepted"){
              const newStatus = newValue.status; //accepted
 
@@ -68,6 +70,8 @@ exports.onNewShare = functions.firestore
              const shareId = previousValue.shareIdInOut
              const shareDoc = await db.doc("users/" + outgoingUserId + "/shares/" + shareId).set({
                  status: newStatus }, {merge: true});
+             await db.doc("users/" + outgoingUserId + "/acceptedShares/" + incomingUserId ).set({});
+
              console.log(shareDoc)
              const incomingShareUserId = context.params.userId
              const usersRef = db.collection("users")
@@ -139,6 +143,7 @@ exports.changeStatusAcceptedShareToRejected = functions.firestore
             console.log("previousValue.shareIdInOut" + previousValue.shareIdInOut)
             await db.doc("users/" + outgoingUserId + "/shares/" + previousValue.shareIdInOut).set({
                 status: newValue.status }, {merge: true});
+
             const userRef = await db.doc("users/" + context.params.userId).get()
             let incomingUserEmail
             if(userRef.exists) {

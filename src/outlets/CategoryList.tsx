@@ -88,7 +88,7 @@ export const CategoryList = () => {
 
     useEffect(() => {
         // dispatch(fetchNotifications(user?.uid!!))
-        dispatch(fetchCategories(user?.uid!!))
+       // dispatch(fetchCategories(user?.uid!!))
         dispatch(fetchImages(user?.uid!!))
         dispatch(fetchUserProducts(user?.uid!!))
         dispatch(fetchAllProducts())
@@ -113,7 +113,7 @@ export const CategoryList = () => {
         dispatch(deleteCategory(category))
     }
     console.log(unReadNotifications.length)
-
+    console.log(categories)
       let content;
     // if (categoriesStatus === "loading") {
     //     content = <Spinner text="Loading..."/>;

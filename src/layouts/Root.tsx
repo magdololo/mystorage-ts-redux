@@ -15,8 +15,9 @@ import {db} from "../firebase";
 import {useSelector} from "react-redux";
 import {selectUser} from "../slices/usersSlice";
 import {addNotification,modifyNotification, Notification} from "../slices/notificationsSlice";
-import {addOutgoingToShares} from "../slices/sharesSlice";
 import {addShare,modifyShare, Invite} from"../slices/sharesSlice";
+import {addCategory, modifyCategory, Category} from "../slices/categoriesSlice";
+
 const Root = ()=>{
     const user = useSelector(selectUser);
     const userId = user?.uid;
@@ -76,7 +77,33 @@ const Root = ()=>{
         }
 
     },[])
+    useEffect(()=>{
+        const q = query(collection(db, "users/" + userId +"/categories"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        console.log("New category: ", change.doc.data());
+                        dispatch(addCategory({...change.doc.data(), id: change.doc.id} as Category))
+                    }
+                    if (change.type === "modified") {
+                        console.log("Modified category: ", change.doc.data());
+                        dispatch(modifyCategory({...change.doc.data(), id: change.doc.id} as Category))
+                    }
+                    if (change.type === "removed") {
+                        console.log("Removed category" +
+                            ": ", change.doc.data());
+                    }
+                });
+            },
+            (error) => {
+                console.log(error)
+            });
 
+        return ()=>{
+            unsubscribe()
+        }
+
+    },[])
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
 
     return (

@@ -11,6 +11,7 @@ import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "fireba
 import {db} from "../firebase";
 import {notify} from "../helpers";
 import i18next from "i18next";
+import {Invite} from "./sharesSlice";
 
 
 
@@ -115,8 +116,17 @@ const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
     reducers: {
+        addCategory:  (state, action: PayloadAction<Category>) => {
+            categoriesAdapter.addOne(state, action.payload);
+        },
         currentCategoryChange: (state, action: PayloadAction<Category | null>) => {
             state.currentCategory = action.payload;
+        },
+        modifyCategory: (state, action:PayloadAction<Category>)=>{
+            categoriesAdapter.setOne(state, action.payload)
+        },
+        removeCategories: (state)=>{
+            categoriesAdapter.removeAll(state)
         }
 
 
@@ -168,5 +178,5 @@ export const selectAllCategoriesSortedByRequired = createSelector(
     }
 )
 
-export const {currentCategoryChange} = categoriesSlice.actions
+export const {currentCategoryChange, removeCategories, addCategory, modifyCategory} = categoriesSlice.actions
 export default categoriesSlice.reducer
