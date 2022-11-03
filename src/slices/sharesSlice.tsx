@@ -174,5 +174,9 @@ export const selectIncomingInvites = createSelector(
     [(state: RootState) => selectAllShares(state)],
     (shares)=> shares.filter((invite: Invite) => invite.direction === "incoming")
 )
+export const selectAcceptedIncomingInvites = createSelector(
+    [(state: RootState) => selectAllShares(state)],
+    (shares)=> shares.filter((invite: Invite) => invite.direction === "incoming" && invite.status === "accepted")
+)
 export const {addShare, modifyShare} = sharesSlice.actions
 export default sharesSlice.reducer

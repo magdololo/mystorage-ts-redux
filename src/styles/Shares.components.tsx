@@ -60,3 +60,13 @@ export const SingleInvite = styled.div`
     height: 200px;
     padding: 0.875rem;
 `
+// export const MenuShares = styled.span`
+//   //padding: 0.825rem 1rem;
+//   padding-left: 1rem;
+//   font-size: 1.2rem;
+//   line-height: 1.25rem;
+//   color: #5B21B6;
+//   //display: inline-block;
+//   font-family: "Noto Sans", sans-serif;
+//  // position: relative;
+// `

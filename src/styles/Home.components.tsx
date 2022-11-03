@@ -24,7 +24,7 @@ const Nav = styled.nav`
   @media (min-width: 390px) {
     justify-content: space-between;
   }
-  @media (min-width: 450px) {
+  @media (min-width: 600px) {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }

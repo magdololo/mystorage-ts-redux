@@ -20,7 +20,8 @@ export interface User{
     uid: Required<string>;
     email: string;
     provider: string;
-    didSeeGreeting: boolean
+    didSeeGreeting: boolean;
+
 }
 
 interface UserState {
@@ -90,6 +91,8 @@ export const changeSeeGreetingToTrue = createAsyncThunk<boolean,User,{
     console.log("after firebase update")
    return true
 })
+
+
 const usersSlice = createSlice({
     name: 'users',
     initialState,

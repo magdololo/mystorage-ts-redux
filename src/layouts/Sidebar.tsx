@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
-import {useAppDispatch} from "../app/store";
+import {useAppDispatch, useAppSelector} from "../app/store";
 import {useTranslation} from "react-i18next";
 import {Link, useNavigate} from "react-router-dom";
 import {auth, signOut} from "../firebase";
 import {logout, selectUser} from "../slices/usersSlice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faUser, faHandPointRight, faUserGroup, faUserPlus} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRightFromBracket, faUser, faHandPointRight, faUserGroup, faUserPlus, faShareFromSquare} from "@fortawesome/free-solid-svg-icons";
 import Divider from "@mui/material/Divider";
 import {Accordion} from "react-accordion-ts";
 import {Modal} from "../component/Modal/Modal";
@@ -15,6 +14,8 @@ import {useModal} from "../component/Modal/UseModal";
 import AddCoUserForm from "../component/AddCoUserForm";
 import AddProductForm from "../features/products/AddProductForm";
 import {AddProductButton} from "../styles/Products.components";
+import {selectAcceptedIncomingInvites, Invite} from "../slices/sharesSlice";
+// import {MenuShares} from "../styles/Shares.components";
 
 interface SidebarProps{
     toggleDrawer: null | (()=> void);
@@ -23,7 +24,8 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     const dispatch = useAppDispatch();
     const {t, i18n} = useTranslation()
     const navigate = useNavigate()
-    let user = useSelector(selectUser);
+    let user = useAppSelector(selectUser);
+    const allAcceptedIncomingInvites = useAppSelector(selectAcceptedIncomingInvites)
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
     const {isShown: isShownAddProductModal, handleClose: handleCloseAddProduct, handleShown: handleShownAddProductModal } = useModal()
     const {isShown: isShownAddCoUserModal, handleClose: handleCloseAddCoUser, handleShown: handleShownAddCoUserModal} = useModal()
@@ -60,6 +62,20 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
             content: <span className="text-sm font-bold">{user?.email}</span>}
     ]
 
+
+
+
+
+
+    const myAccordionWithShares = [
+        {title: <span><FontAwesomeIcon className="text-2xl text-purple px-4" icon={faShareFromSquare}/></span>,
+            content:
+                <span className="text-sm font-bold px-2">
+                    <ul>
+                        {allAcceptedIncomingInvites.map(invite => { return <li>{invite.user_email}</li>})}
+                    </ul>
+               </span>}
+    ]
     const handleOpenAddProductModal = ()=>{
         handleShownAddProductModal()
     }
@@ -76,11 +92,20 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
 
         handleCloseAddCoUser()
     }
+    console.log(allAcceptedIncomingInvites)
     return(
         <>
             <div className="flex justify-center">
                 <ul className="bg-white rounded-lg w-96 text-gray text-lg pt-10 relative">
-                    <li key='5' className="absolute w-1/5 top-2 right-0 cursor-pointer " onClick={handleToggle}><span className={isEnglish ? " fi fi-pl" : "fi fi-gb"}/></li>
+
+                    <li key='5' className="flex flex-row justify-end cursor-pointer ">
+                        <span className={ isEnglish ? "fi fi-pl p-4" : "fi fi-gb p-4"} onClick={handleToggle}/>
+                        {/*<MenuShares>*/}
+                        <span className={"p-2"}>
+                            <Accordion items={myAccordionWithShares} duration={300} multiple={false}/>
+                            </span>
+                        {/*</MenuShares>*/}
+                    </li>
                     <Divider />
                     <li key='1' className="px-6 py-2  w-full rounded-t-lg" onClick={handleClick}><Link to={'/categories'}> <FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />{t("BottomHamburgerMenu.categoryList")}</Link></li>
                     <li key='2' className="px-6 py-2  w-full" onClick={handleClick}><Link to={'/products'}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />{t("BottomHamburgerMenu.productList")}</Link></li>

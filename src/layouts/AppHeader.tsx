@@ -22,10 +22,11 @@ import {
 } from "../styles/Home.components";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {faUser, faShareFromSquare} from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from 'usehooks-ts';
 
 import {MenuNotifications} from "../styles/Notifications.components";
+//import {MenuShares} from "../styles/Shares.components";
 
 const AppHeader = () => {
     const dispatch = useAppDispatch()
@@ -81,6 +82,9 @@ const AppHeader = () => {
                             <FontAwesomeIcon className={(unReadNotifications.length > 0 ? "text-2xl text-red " : "text-2xl text-gray-extraLight")} icon={regular('bell')} />
                                 {unReadNotifications.length > 0 ? <span className={"absolute top-0 left-3 bg-red rounded-full text-md text-white font-bold px-2 py-0.5"}>{unReadNotifications.length}</span> : null}
                         </MenuNotifications>
+                        {/*<MenuShares>*/}
+                        {/*    <FontAwesomeIcon icon={faShareFromSquare}/>*/}
+                        {/*</MenuShares>*/}
                         </div>
                     </MainMenu>
                 </Nav>
