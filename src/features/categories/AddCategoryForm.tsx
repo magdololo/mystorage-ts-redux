@@ -4,7 +4,7 @@ import {useAppDispatch, useAppSelector} from "../../app/store";
 
 import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
-import {selectUser} from "../../slices/usersSlice";
+import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
 import {addNewCategory, AddNewCategoryParams, Category} from "../../slices/categoriesSlice"
 
 import slugify from "slugify";
@@ -23,6 +23,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const { t } = useTranslation();
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
+    const currentStorageId = useAppSelector(selectCurrentStorage)
     const dispatch = useAppDispatch()
     const [title, setTitle] = useState('')
     const [pickedImage, setPickedImage] = useState('')
@@ -48,7 +49,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                 title: title,
                 url: pickedImage,
                 path: slugify(title, "_"),
-                user: uid,
+                user: currentStorageId!!,
                 required: "false"
             }
             setAddRequestStatus('pending')

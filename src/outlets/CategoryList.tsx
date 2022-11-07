@@ -13,7 +13,7 @@ import {fetchAllProducts} from "../slices/allProductsSlice";
 import {fetchUserProducts} from "../slices/userProductsSlice";
 import {fetchShares} from "../slices/sharesSlice";
 import {fetchNotifications, selectUnReadNotifications} from "../slices/notificationsSlice";
-import {changeSeeGreetingToTrue, selectUser, User} from "../slices/usersSlice";
+import {changeSeeGreetingToTrue, selectCurrentStorage, selectUser, User} from "../slices/usersSlice";
 
 import {
     currentCategoryChange,
@@ -37,7 +37,7 @@ export const CategoryList = () => {
     const {t} = useTranslation();
     let user = useSelector(selectUser);
     let didSee = user?.didSeeGreeting;
-
+    const currentStorageId = useAppSelector(selectCurrentStorage)
     const {isShown, handleShown, handleClose} = useModal()
     const modalAddHeader = t("categories.CategoryList.modalAddHeader")
     const modalEditHeader = t("categories.CategoryList.modalEditHeader")
@@ -89,8 +89,8 @@ export const CategoryList = () => {
     useEffect(() => {
         // dispatch(fetchNotifications(user?.uid!!))
        // dispatch(fetchCategories(user?.uid!!))
-        dispatch(fetchImages(user?.uid!!))
-        dispatch(fetchUserProducts(user?.uid!!))
+        dispatch(fetchImages(currentStorageId!!))
+        //dispatch(fetchUserProducts(currentStorageId!!))
         dispatch(fetchAllProducts())
         // dispatch(fetchShares(user?.uid!!))
     }, [user, dispatch])
@@ -112,8 +112,9 @@ export const CategoryList = () => {
     const deletingCategory = (category: Category) => {
         dispatch(deleteCategory(category))
     }
-    console.log(unReadNotifications.length)
-    console.log(categories)
+    console.log(currentStorageId)
+    const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
+    console.log(currentCategory)
       let content;
     // if (categoriesStatus === "loading") {
     //     content = <Spinner text="Loading..."/>;

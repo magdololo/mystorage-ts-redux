@@ -6,9 +6,14 @@ import {useForm, SubmitHandler, Controller} from 'react-hook-form';
 import {AutocompleteWithUserProducts} from "./AutocompleteWithUserProducts";
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 
-import {selectUser} from "../../slices/usersSlice";
+import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
 import {addUserProduct, UserProduct} from "../../slices/userProductsSlice";
-import {Category} from "../../slices/categoriesSlice";
+import {
+    Category,
+    selectAllCategoriesSortedByRequired,
+    selectCategoryByPath,
+    selectDefaultCategory
+} from "../../slices/categoriesSlice";
 
 import {Alert, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
@@ -20,6 +25,8 @@ import {MenuItem} from "@mui/material";
 import 'react-datepicker/dist/react-datepicker.css';
 
 import {useTranslation} from "react-i18next";
+import addCategoryForm from "../categories/AddCategoryForm";
+import {useParams} from "react-router-dom";
 
 export type FormValues = {
     expireDate: Date | null
@@ -33,6 +40,7 @@ export type FormValues = {
 type AddProductFormProps = {
     handleCloseAddProduct: () => void
     isShownAddProductModal: boolean
+
 }
 export type AutocompleteWithUserProductsProps = {
     onChange: (data: any) => void
@@ -47,15 +55,15 @@ export type AutocompleteWithCategoriesTitleProps = {
 
 
 }
-const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProductFormProps) => {
+const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddProductFormProps,) => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
-
+    const currentStorageId = useAppSelector(selectCurrentStorage)
     const user = useSelector(selectUser)
     const uid = user ? user.uid : ""
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
-
+    console.log(currentCategory)
     const {
         handleSubmit,
         control,
@@ -92,7 +100,7 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
                 unit: data.unit,
                 quantity: data.quantity ?? 0,
                 expireDate: data.expireDate,
-                userId: uid,
+                userId: currentStorageId!!,
                 id: ""
 
 
@@ -120,7 +128,9 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
         }
 
     ];
-
+    const {categoryPath} = useParams();
+    const categoryFromPath = useAppSelector(selectCategoryByPath(categoryPath ?? "")) as Category
+    const requiredCategory = useAppSelector(selectDefaultCategory) as Category
 
     return (
         <>
@@ -132,7 +142,7 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
                             name="category"
                             control={control}
                             rules={{required: true}}
-                            defaultValue={currentCategory ? currentCategory : null}
+                             defaultValue={categoryFromPath ? categoryFromPath : requiredCategory}
                             render={({field: {onChange, value}}) => (
                                 <AutocompleteWithCategoriesTitle
                                     value={value}

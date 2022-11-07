@@ -11,7 +11,7 @@ import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "fireba
 import {db} from "../firebase";
 import {notify} from "../helpers";
 import i18next from "i18next";
-import {Invite} from "./sharesSlice";
+
 
 
 
@@ -177,6 +177,11 @@ export const selectAllCategoriesSortedByRequired = createSelector(
         return [requiredCategory, ...filteredCategories]
     }
 )
-
+export const selectDefaultCategory = createSelector(
+    selectAllCategories, categories => {
+        const requiredCategory = categories.find(category => category.required === "true")
+        return requiredCategory
+    }
+)
 export const {currentCategoryChange, removeCategories, addCategory, modifyCategory} = categoriesSlice.actions
 export default categoriesSlice.reducer

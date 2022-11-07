@@ -26,12 +26,13 @@ export interface User{
 
 interface UserState {
     user: User | null
+    currentStorageId: string | null
 
 }
 
 const initialState: UserState = {
     user: null,
-
+    currentStorageId: null
 }
 
 
@@ -99,6 +100,8 @@ const usersSlice = createSlice({
     reducers: {
         login: (state, action:PayloadAction<User>) => {
             state.user = action.payload;
+            state.currentStorageId = action.payload.uid;
+
         },
         logout: (state) => {
             state.user = null;
@@ -106,6 +109,9 @@ const usersSlice = createSlice({
         saveUser: (state, action) => {
             state.user = action.payload;
         },
+        setCurrentStorage: (state, action:PayloadAction<string>)=> {
+            state.currentStorageId = action.payload
+        }
     },
     extraReducers(builder) {
         builder
@@ -137,7 +143,8 @@ const usersSlice = createSlice({
 
     }
 });
-export const { login, logout, saveUser} = usersSlice.actions;
+export const { login, logout, saveUser, setCurrentStorage} = usersSlice.actions;
 export const selectUser = (state: RootState) => state.users.user;
+export const selectCurrentStorage = (state: RootState)=> state.users.currentStorageId
 
 export default usersSlice.reducer

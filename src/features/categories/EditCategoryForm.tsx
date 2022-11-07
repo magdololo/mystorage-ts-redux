@@ -5,7 +5,7 @@ import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
 import slugify from "slugify";
 import {editCategory, Category} from "../../slices/categoriesSlice";
-import {selectUser} from "../../slices/usersSlice";
+import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
 import {selectAllImages} from "../../slices/imagesSlice";
 import {useTranslation} from "react-i18next";
 
@@ -18,10 +18,11 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
        const categoryBeingEdited = useAppSelector((state=>state.categories.currentCategory)) as Category
     const [newCategoryTitle, setNewCategoryTitle] = useState("")
     const [newPickedImage, setNewPickedImage] = useState("")
-
+    const currentStorageId = useAppSelector(selectCurrentStorage)
 
     const user = useSelector(selectUser)
     const uid = user? user.uid: ""
+
     const {isShown, handleShown, handleClose} = useModal()
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewCategoryTitle(e.target.value);
     const modalHeader = "Wybierz zdjęcie"
@@ -69,7 +70,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
                 title: newCategoryTitle,
                 url: newPickedImage,
                 path: slugify(newCategoryTitle, "_"),
-                user: uid,
+                user: currentStorageId!!,
                 required: "false"
             }
             //setAddRequestStatus('pending')

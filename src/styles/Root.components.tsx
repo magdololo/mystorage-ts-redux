@@ -8,10 +8,11 @@ export const MainPageLayout = styled.div`
     height:100vh;
     max-width: 1440px;
     margin: 0 auto;
-    grid-template-rows: [header-start] 145px  [content-start] 1fr [footer-start] 60px;
+    grid-template-rows: [header-start] 145px [section-start] 100px  [content-start] 1fr [footer-start] 60px;
     grid-template-columns: [menu] 300px [main] 1fr;
     grid-template-areas:
     "header header"
+    "section section"
     "sidebar main"
     "footer footer";
     grid-row-gap: 10px;
@@ -25,6 +26,16 @@ export const Header = styled.header`
   align-self: center;
   //max-width: 1280px;
   width: 100%;
+`;
+export const Section = styled.section`
+  grid-area: section;
+  margin: 0 auto;
+  padding: 1.5rem;
+  position: relative;
+  display: block;
+  width: 100%;
+  align-self: center;
+
 `;
 export const Main = styled.main`
   color: white;

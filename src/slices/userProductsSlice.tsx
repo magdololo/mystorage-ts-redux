@@ -26,6 +26,7 @@ import {db} from "../firebase";
 import {fetchProductFromDictionaryId} from "./allProductsSlice";
 
 import {notify} from "../helpers";
+import {Category} from "./categoriesSlice";
 
 
 
@@ -201,8 +202,14 @@ const userProductsSlice = createSlice({
     name: 'userProducts',
     initialState,
     reducers: {
-        editProduct: (state, action: PayloadAction<UserProduct | null>) => {
-            state.editProduct = action.payload;
+        addProduct: (state, action: PayloadAction<UserProduct>) => {
+            userProductsAdapter.addOne(state, action.payload);
+        },
+        modifyProduct: (state, action: PayloadAction<UserProduct>) => {
+            userProductsAdapter.setOne(state, action.payload);
+        },
+        editProduct: (state, action:PayloadAction<UserProduct>) =>{
+            state.editProduct = action.payload
         },
         searchProduct: (state, action: PayloadAction<string | null>) => {
            const searchProductId = action.payload??""
@@ -259,6 +266,6 @@ export const selectProductsOfCategory =(categoryId: string)=> createSelector(
     (userProducts) => userProducts.filter(product => product.categoryId === categoryId)
 )
 
-export const {editProduct, searchProduct, searchByString, removeProducts} = userProductsSlice.actions
+export const { editProduct, searchProduct, searchByString, removeProducts, addProduct, modifyProduct} = userProductsSlice.actions //editProduct
 export default userProductsSlice.reducer
 

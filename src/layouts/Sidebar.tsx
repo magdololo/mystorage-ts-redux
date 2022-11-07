@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../app/store";
 import {useTranslation} from "react-i18next";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {auth, signOut} from "../firebase";
 import {logout, selectUser} from "../slices/usersSlice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -14,11 +14,13 @@ import {useModal} from "../component/Modal/UseModal";
 import AddCoUserForm from "../component/AddCoUserForm";
 import AddProductForm from "../features/products/AddProductForm";
 import {AddProductButton} from "../styles/Products.components";
-import {selectAcceptedIncomingInvites, Invite} from "../slices/sharesSlice";
-import {fetchUserProducts, removeProducts} from "../slices/userProductsSlice";
-import {fetchCategories, removeCategories} from "../slices/categoriesSlice"
-import {fetchImages} from "../slices/imagesSlice";
-// import {MenuShares} from "../styles/Shares.components";
+import {
+    Category,
+    selectAllCategoriesSortedByRequired,
+    selectCategoryByPath,
+    selectDefaultCategory
+} from "../slices/categoriesSlice";
+
 
 interface SidebarProps{
     toggleDrawer: null | (()=> void);
@@ -28,14 +30,12 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     const {t, i18n} = useTranslation()
     const navigate = useNavigate()
     let user = useAppSelector(selectUser);
-    const userId = user?.uid;
-    const allAcceptedIncomingInvites = useAppSelector(selectAcceptedIncomingInvites)
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
     const {isShown: isShownAddProductModal, handleClose: handleCloseAddProduct, handleShown: handleShownAddProductModal } = useModal()
     const {isShown: isShownAddCoUserModal, handleClose: handleCloseAddCoUser, handleShown: handleShownAddCoUserModal} = useModal()
-    // const { handleClose, handleShown} = useModal()
     const modalHeader = ""
     const addProductModalHeader = t("products.AddProductForm.formAddProductTitle")
+
     const handleClick = (e: any) => {
         e.stopPropagation();
         if(toggleDrawer !== null){
@@ -70,29 +70,30 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
 
 
 
-    const [active, setActive] = useState(false)
-    if(!active){
-        console.log("user oryginal")
-        dispatch(removeProducts())
-        dispatch(removeCategories())
-        dispatch(fetchCategories(userId!!))
-        dispatch(fetchImages(userId!!))
-        dispatch(fetchUserProducts(userId!!))
-
-    }
-    const myAccordionWithShares = [
-        {
-            title: <span><FontAwesomeIcon className="text-2.5xl text-purple px-4" icon={faShareFromSquare} onClick={()=> setActive((prevState) => !prevState)}/></span>,
-            content:
-                <>
-                    <ul>
-                        {allAcceptedIncomingInvites.map(invite => {
-                            return <li onClick={() => changeStorage(invite.user_id)}>{invite.user_email}</li>
-                        })}
-                    </ul>
-                </>
-        }
-    ]
+    // const [active, setActive] = useState(false)
+    // if(!active){
+    //
+    //     // console.log("user oryginal")
+    //     dispatch(removeProducts())
+    //     dispatch(removeCategories())
+    //     dispatch(fetchCategories(userId!!))
+    //     dispatch(fetchImages(userId!!))
+    //     dispatch(fetchUserProducts(userId!!))
+    //
+    // }
+    // const myAccordionWithShares = [
+    //     {
+    //         title: <span><FontAwesomeIcon className="text-2.5xl text-purple px-4" icon={faShareFromSquare} onClick={()=> setActive((prevState) => !prevState)}/></span>,
+    //         content:
+    //             <>
+    //                 <ul>
+    //                     {allAcceptedIncomingInvites.map(invite => {
+    //                         return <li onClick={() => changeStorage(invite.user_id)}>{invite.user_email}</li>
+    //                     })}
+    //                 </ul>
+    //             </>
+    //     }
+    // ]
     const handleOpenAddProductModal = ()=>{
         handleShownAddProductModal()
     }
@@ -102,26 +103,30 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     }
     const handleOpenAddCoUserModal = ()=>{
         handleShownAddCoUserModal()
-        console.log("open modal co user")
-        console.log(isShownAddCoUserModal)
+        // console.log("open modal co user")
+        // console.log(isShownAddCoUserModal)
     }
     const handleCloseAddCoUserModal =()=>{
 
         handleCloseAddCoUser()
     }
-    console.log(allAcceptedIncomingInvites)
+    // console.log(allAcceptedIncomingInvites)
 
-    const changeStorage =(inviteUserId: string)=> {
-        console.log("changeStorage")
-        dispatch(removeProducts())
-        dispatch(removeCategories())
-        dispatch(fetchCategories(inviteUserId))
-        dispatch(fetchImages(inviteUserId))
-        dispatch(fetchUserProducts(inviteUserId))
-
-
-    }
-
+    // const changeStorage =(inviteUserId: string)=> {
+    //     console.log("changeStorage")
+    //     dispatch(removeProducts())
+    //     dispatch(removeCategories())
+    //     dispatch(fetchCategories(inviteUserId))
+    //     dispatch(fetchImages(inviteUserId))
+    //     dispatch(fetchUserProducts(inviteUserId))
+    //
+    //
+    // }
+    const {categoryPath} = useParams();
+    console.log(categoryPath)
+    const categoryFromPath = useAppSelector(selectCategoryByPath(categoryPath ?? "")) as Category
+    const requiredCategory = useAppSelector(selectDefaultCategory) as Category
+    console.log(requiredCategory)
     return(
         <>
             <div className="flex justify-center">
@@ -130,9 +135,9 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
                     <li key='5' className="flex flex-row justify-end cursor-pointer ">
                         <span className={ isEnglish ? "fi fi-pl p-4" : "fi fi-gb p-4"} onClick={handleToggle}/>
                         {/*<MenuShares>*/}
-                        <span className={"p-2"}>
-                            <Accordion items={myAccordionWithShares} duration={300} multiple={false}/>
-                            </span>
+                        {/*<span className={"p-2"}>*/}
+                        {/*    <Accordion items={myAccordionWithShares} duration={300} multiple={false}/>*/}
+                        {/*    </span>*/}
                         {/*</MenuShares>*/}
                     </li>
                     <Divider />
@@ -151,7 +156,7 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
                 <AddProductButton onClick={handleOpenAddProductModal}>{t("buttons.addProduct")}</AddProductButton>
             </div>
             <Modal isShown={isShownAddCoUserModal} hide={handleCloseAddCoUserModal} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleCloseAddCoUser, isShownAddCoUserModal})}/>
-            <Modal isShown={isShownAddProductModal} hide={handleCloseAddProductModal} modalHeaderText={addProductModalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal})}/>
+            <Modal isShown={isShownAddProductModal} hide={handleCloseAddProductModal} modalHeaderText={addProductModalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal} )}/>
         </>
     )
 }

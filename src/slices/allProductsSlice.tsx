@@ -1,8 +1,9 @@
-import {createSlice, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk, createEntityAdapter, EntityState, PayloadAction} from '@reduxjs/toolkit'
 import {AppDispatch, RootState} from "../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../firebase";
 import {UserProduct} from "./userProductsSlice";
+import {Category} from "./categoriesSlice";
 
 export interface ProductFromDictionary{
     id: Required<string>;
@@ -70,7 +71,8 @@ export const fetchAllProducts = createAsyncThunk('allProducts/fetchAllProducts',
 const allProductsSlice = createSlice({
     name: 'allProducts',
     initialState,
-    reducers: {},
+    reducers: {
+    },
     extraReducers(builder) {
         builder
             .addCase(fetchAllProducts.fulfilled, (state, action) => {
