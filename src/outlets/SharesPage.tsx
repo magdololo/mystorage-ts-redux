@@ -26,11 +26,11 @@ const SharesPage = ()=>{
     let user = useSelector(selectUser);
     const userId = user?.uid;
     const {t} = useTranslation();
-    console.log(all)
+
     const outgoingInvites = useAppSelector(selectOutgoingInvites)
-    console.log(outgoingInvites)
+
     const incomingInvites = useAppSelector(selectIncomingInvites)
-    console.log(incomingInvites)
+
     const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
 
     const handleAcceptedInvite=(invite: Invite)=>{
@@ -133,10 +133,7 @@ const SharesPage = ()=>{
                                                 }
                                                 {(invite.status === "pending") ?
                                                     <div className={"max-w-screen-sm mx-auto"}>
-                                                        <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
-                                                            {/*<Button onClick={()=>handleAcceptedInvite(invite)}>Akceptuj</Button>*/}
-                                                            {/*<Button onClick={()=>handleCancelShare(invite)}>Odrzuć</Button>*/}
-                                                        </div>
+                                                        <div className=" pb-5 flex flex-row justify-start xmd:mb-0"/>
                                                     </div>
                                                     : null
                                                 }

@@ -157,3 +157,57 @@ div::-webkit-scrollbar {
 /*.bgSharePage {*/
 /*  background-image: url("");*/
 /*}*/
+/*select {*/
+
+/*!*appearance: none;*!*/
+
+/*background-color: transparent;*/
+/*  border: none;*/
+/*  padding: 0 1em 0 0;*/
+/*  margin: 0;*/
+/*  width: 60%;*/
+/*  font-family: inherit;*/
+/*  font-size: inherit;*/
+/*  cursor: inherit;*/
+/*  line-height: inherit;*/
+/*}*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*.select {*/
+
+/*  font-family: "Noto Sans", sans-serif;*/
+/*  width: max-content;*/
+/*  min-width: 15ch;*/
+/*  max-width: 30ch;*/
+/*  margin: 0 auto;*/
+/*  line-height: 1.1;*/
+/*  background-color: #fff;*/
+
+
+/*}*/
+/*#standard-select {*/
+
+/*  width: 100%;*/
+/*  font-size: 1.1rem;*/
+/*  cursor: pointer;*/
+/*  line-height: 1.1;*/
+/*  background-color: #fff;*/
+/*  color: #52525B;*/
+/*}*/
+/*.single_option {*/
+/*  font-size: 1rem;*/
+/*  color: rebeccapurple;*/
+/*  background-color: white!important;*/
+/*}*/
+/*option:hover {*/
+/*  color: #581C87!important;*/
+/*  background-color: white!important;*/
+/*}*/
+/*.selected{*/
+/*  background-color: white!important;*/
+/*  color: #581C87!important;*/
+/*}*/

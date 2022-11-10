@@ -25,7 +25,6 @@ interface User{
 
 const LoginPage = () => {
     const { t, i18n } = useTranslation();
-    console.log(i18n.language)
     const userLanguage = i18n.language;
     const dispatch = useDispatch()
     const provider = new GoogleAuthProvider();
@@ -38,7 +37,7 @@ const LoginPage = () => {
        setCheckboxState(!checkboxState)
     }
     const [user,setUser] = useState({} as User)
-    console.log(user)
+
 
 
     const eye = <FontAwesomeIcon icon={faEye}/>;
@@ -98,14 +97,13 @@ const LoginPage = () => {
            let user = result.user
 
             console.log("log with google" + user)
-            console.log(user)
+
 
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
             const userExist = docSnap.exists()
             console.log(userExist)
                 if(!userExist){
-                console.log("nie ma usera w usersach")
                 setContent(true);
                 setUser(user as User)
                 setMessage(true)
@@ -155,8 +153,6 @@ const LoginPage = () => {
         }
 
     }
-    console.log(content)
-    console.log(message)
     return(
         <>
 

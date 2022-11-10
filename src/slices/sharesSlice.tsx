@@ -6,9 +6,9 @@ import {
     createSelector, PayloadAction
 } from '@reduxjs/toolkit'
 import {RootState} from "../app/store";
-import {addDoc, collection, doc, getDoc, getDocs, query, updateDoc, deleteDoc, Timestamp} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, query, updateDoc, Timestamp} from "firebase/firestore";
 import {db} from "../firebase";
-import {Notification} from "./notificationsSlice";
+
 
 export interface Invite{
     user_id: string;
@@ -48,18 +48,6 @@ export const fetchShares = createAsyncThunk('shares/fetchShares', async (userId:
             shares.push(share);
         })
         return shares
-        // try {
-        //     const shares: Array<Invite> = [
-        //         {id: "154",direction: "outgoing", date: new Date("2022-09-22 12:24:16"),  user_email:"d.jarzyna@gmail.com", user_id: "12",status: "accepted" },
-        //         {id: "155",direction: "incoming", date: new Date("2022-08-29 18:24:16")  ,user_email:"d.jarzyna@gmail.com", user_id: "13", status: "pending"},
-        //         {id: "165",direction: "outgoing", date: new Date("2022-06-22 19:24:16") ,user_email:"d.jarzyna@gmail.com", user_id: "14" , status: "rejected"},
-        //         {id: "167",direction: "incoming", date: new Date("2022-11-22 09:24:16"), user_email:"zosiajarzyna@gmail.com", user_id: "15", status: "accepted" },
-        //         {id: "168",direction: "outgoing", date: new Date("2022-09-22 12:24:16"), user_email:"d.jarzyna@gmail.com", user_id: "16", status: "rejected" },
-        //         {id: "178",direction: "incoming", date: new Date("2022-08-29 18:24:16") ,user_email:"koteczek@gmail.com", user_id: "17", status: "pending"},
-        //         {id: "189",direction: "outgoing", date: new Date("2022-06-22 19:24:16"),user_email:"gabijarzyna@gmail.com", user_id: "18", status: "accepted" },
-        //         {id: "156 ",direction: "incoming", date: new Date("2022-11-22 09:24:16") ,user_email:"zosiajarzyna@gmail.com", user_id: "19", status: "rejected"},
-        //     ]
-        //     return shares
         } catch (error) {
             console.log(error)
             return {error: error}

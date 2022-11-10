@@ -29,14 +29,13 @@ const AddCoUserForm=({handleCloseAddCoUser}: AddCoUserFormProps)=>{
         dispatch(addOutgoingToShares({userId: userId!!, outgoingEmail: data.email}))
         setMessageAfterSendPassword(true)
         reset({email: ""})
-        console.log(data)
 
     });
     const handleCloseButtonAfterMessage = ()=>{
         handleCloseAddCoUser();
         setMessageAfterSendPassword(false)
     }
-    console.log(messageAfterSendPassword)
+
     return(
         <>
             {!messageAfterSendPassword ?

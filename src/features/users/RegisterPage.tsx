@@ -40,10 +40,9 @@ const RegisterPage = () => {
    const [message, setMessage] = useState("");
 
     const onSubmit: SubmitHandler<Inputs> = (data, e) => {
-        console.log(data);
+
         e?.preventDefault()
         if(checkboxState){
-            console.log("checboxTreue")
             createUserWithEmailAndPassword(auth, data.email, data.password)
                 .then((userCredential) => {
 
@@ -94,13 +93,12 @@ const RegisterPage = () => {
                 })
         } else {
             setMessage((t("users.RegisterPage.message.acceptRegulations")))
-            console.log("hej")
         }
         }
 
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisibility = () => {
-        setPasswordShown(passwordShown ? false : true);
+        setPasswordShown(!passwordShown);
     };
 
 

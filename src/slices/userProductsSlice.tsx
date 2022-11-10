@@ -26,7 +26,7 @@ import {db} from "../firebase";
 import {fetchProductFromDictionaryId} from "./allProductsSlice";
 
 import {notify} from "../helpers";
-import {Category} from "./categoriesSlice";
+
 
 
 
@@ -113,15 +113,15 @@ export const changeProductQuantity = createAsyncThunk('userProducts/changeProduc
             const userProduct = changeQuantity.userProduct;
             const productRef = doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products/", userProduct.id);
             const productDoc = await getDoc(productRef);
-            console.log(productDoc)
+
             const userProductFromFirebase = productDoc.data() as UserProduct;
             userProductFromFirebase.id = productDoc.id
-            console.log(userProductFromFirebase)
+
             if (userProductFromFirebase ) {
                 let newQuantity = userProduct.quantity??1
                 changeQuantity.changeQuantity === "increment" ? newQuantity++ : newQuantity--
                 userProductFromFirebase.quantity = newQuantity;
-                console.log(userProductFromFirebase)
+
                 await setDoc(productRef, userProductFromFirebase);
 
             }
@@ -224,7 +224,10 @@ const userProductsSlice = createSlice({
         },
         removeProducts: (state)=>{
             userProductsAdapter.removeAll(state)
-        }
+        },
+        removeProduct: (state, action: PayloadAction<string>) => {
+            userProductsAdapter.removeOne(state, action.payload);
+        },
     },
     extraReducers(builder) {
         builder
@@ -266,6 +269,6 @@ export const selectProductsOfCategory =(categoryId: string)=> createSelector(
     (userProducts) => userProducts.filter(product => product.categoryId === categoryId)
 )
 
-export const { editProduct, searchProduct, searchByString, removeProducts, addProduct, modifyProduct} = userProductsSlice.actions //editProduct
+export const { editProduct, searchProduct, searchByString, removeProducts, addProduct, modifyProduct, removeProduct} = userProductsSlice.actions //editProduct
 export default userProductsSlice.reducer
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../app/store";
 import {useTranslation} from "react-i18next";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {auth, signOut} from "../firebase";
 import {logout, selectUser} from "../slices/usersSlice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -14,12 +14,7 @@ import {useModal} from "../component/Modal/UseModal";
 import AddCoUserForm from "../component/AddCoUserForm";
 import AddProductForm from "../features/products/AddProductForm";
 import {AddProductButton} from "../styles/Products.components";
-import {
-    Category,
-    selectAllCategoriesSortedByRequired,
-    selectCategoryByPath,
-    selectDefaultCategory
-} from "../slices/categoriesSlice";
+
 
 
 interface SidebarProps{
@@ -66,34 +61,6 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
             content: <span className="text-sm font-bold">{user?.email}</span>}
     ]
 
-
-
-
-
-    // const [active, setActive] = useState(false)
-    // if(!active){
-    //
-    //     // console.log("user oryginal")
-    //     dispatch(removeProducts())
-    //     dispatch(removeCategories())
-    //     dispatch(fetchCategories(userId!!))
-    //     dispatch(fetchImages(userId!!))
-    //     dispatch(fetchUserProducts(userId!!))
-    //
-    // }
-    // const myAccordionWithShares = [
-    //     {
-    //         title: <span><FontAwesomeIcon className="text-2.5xl text-purple px-4" icon={faShareFromSquare} onClick={()=> setActive((prevState) => !prevState)}/></span>,
-    //         content:
-    //             <>
-    //                 <ul>
-    //                     {allAcceptedIncomingInvites.map(invite => {
-    //                         return <li onClick={() => changeStorage(invite.user_id)}>{invite.user_email}</li>
-    //                     })}
-    //                 </ul>
-    //             </>
-    //     }
-    // ]
     const handleOpenAddProductModal = ()=>{
         handleShownAddProductModal()
     }
@@ -103,30 +70,12 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     }
     const handleOpenAddCoUserModal = ()=>{
         handleShownAddCoUserModal()
-        // console.log("open modal co user")
-        // console.log(isShownAddCoUserModal)
     }
     const handleCloseAddCoUserModal =()=>{
 
         handleCloseAddCoUser()
     }
-    // console.log(allAcceptedIncomingInvites)
 
-    // const changeStorage =(inviteUserId: string)=> {
-    //     console.log("changeStorage")
-    //     dispatch(removeProducts())
-    //     dispatch(removeCategories())
-    //     dispatch(fetchCategories(inviteUserId))
-    //     dispatch(fetchImages(inviteUserId))
-    //     dispatch(fetchUserProducts(inviteUserId))
-    //
-    //
-    // }
-    const {categoryPath} = useParams();
-    console.log(categoryPath)
-    const categoryFromPath = useAppSelector(selectCategoryByPath(categoryPath ?? "")) as Category
-    const requiredCategory = useAppSelector(selectDefaultCategory) as Category
-    console.log(requiredCategory)
     return(
         <>
             <div className="flex justify-center">
@@ -134,11 +83,6 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
 
                     <li key='5' className="flex flex-row justify-end cursor-pointer ">
                         <span className={ isEnglish ? "fi fi-pl p-4" : "fi fi-gb p-4"} onClick={handleToggle}/>
-                        {/*<MenuShares>*/}
-                        {/*<span className={"p-2"}>*/}
-                        {/*    <Accordion items={myAccordionWithShares} duration={300} multiple={false}/>*/}
-                        {/*    </span>*/}
-                        {/*</MenuShares>*/}
                     </li>
                     <Divider />
                     <li key='1' className="px-6 py-2  w-full rounded-t-lg" onClick={handleClick}><Link to={'/categories'}> <FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />{t("BottomHamburgerMenu.categoryList")}</Link></li>

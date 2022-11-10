@@ -6,8 +6,8 @@ interface ButtonAddProductProps{
     handleOpen: ()=>void;
 }
 const ButtonAddProduct = ({handleOpen}: ButtonAddProductProps)  => {
-    const { t, i18n } = useTranslation();
-    console.log(i18n.language)
+    const { t } = useTranslation();
+
 
     return(
         <>

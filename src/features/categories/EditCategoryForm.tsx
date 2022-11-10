@@ -73,12 +73,11 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
                 user: currentStorageId!!,
                 required: "false"
             }
-            //setAddRequestStatus('pending')
             dispatch(editCategory(afterEditingCategory))
             closeModal()
 
         }
-        //setAddRequestStatus('idle')
+
 
     }
     return(
@@ -87,7 +86,6 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
                 <form>
                     <div className="form-group mb-6 ">
                         <input type="text"
-                               // ref={inputRef}
                                className=" form-control
                                             block
                                             w-5/6

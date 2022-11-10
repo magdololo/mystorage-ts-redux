@@ -81,7 +81,6 @@ const ProductsList = () => {
         const searchProductCategory = categories.find(category => category.id === userProduct.categoryId)
         return {...userProduct, categoryPath: searchProductCategory?.path, categoryTitle: searchProductCategory?.title}
     })
-    console.log(userProductsWithCategory )
     return (
         <>
             {isSmallerThan1280 ? <ReturnToCategoryList/>: null}

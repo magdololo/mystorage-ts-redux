@@ -87,9 +87,9 @@ export const editCategory = createAsyncThunk<Category, Category,{ //pierwsze to 
      dispatch: AppDispatch
     state: RootState
 }>('categories/editCategory', async (category ,thunkApi)=> {
-    console.log(category)//zmieniony
+
     let editingCategory = await thunkApi.getState().categories.currentCategory??{} as Category
-    console.log(editingCategory)//niezmieniony
+
     if ((category.title !== editingCategory.title || category.url !== editingCategory.url) && category.title !== "produkty bez kategorii"){
         const docRef = doc(db, "users/" + category.user + "/categories", category.id!);
         await setDoc(docRef, category);
@@ -127,6 +127,9 @@ const categoriesSlice = createSlice({
         },
         removeCategories: (state)=>{
             categoriesAdapter.removeAll(state)
+        },
+        removeCategory: (state, action:PayloadAction<string> )=> {
+            categoriesAdapter.removeOne(state, action.payload);
         }
 
 
@@ -183,5 +186,5 @@ export const selectDefaultCategory = createSelector(
         return requiredCategory
     }
 )
-export const {currentCategoryChange, removeCategories, addCategory, modifyCategory} = categoriesSlice.actions
+export const {currentCategoryChange, removeCategories, addCategory, modifyCategory, removeCategory} = categoriesSlice.actions
 export default categoriesSlice.reducer

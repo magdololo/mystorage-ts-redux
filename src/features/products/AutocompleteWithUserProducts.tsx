@@ -20,7 +20,6 @@ export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProduc
     const { t } = useTranslation();
     const allProducts = useAppSelector(selectAllProducts)
     const [newProductName, setNewProductName] = useState<string | null>(null);
-    console.log(newProductName)
     return (
 
         <Autocomplete

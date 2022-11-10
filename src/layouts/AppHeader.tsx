@@ -22,11 +22,10 @@ import {
 } from "../styles/Home.components";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUser, faShareFromSquare} from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from 'usehooks-ts';
 
 import {MenuNotifications} from "../styles/Notifications.components";
-//import {MenuShares} from "../styles/Shares.components";
+
 
 const AppHeader = () => {
     const dispatch = useAppDispatch()
@@ -63,18 +62,15 @@ const AppHeader = () => {
                 })
         }
     },[isEnglish, i18n])
-    const myAccordion = [
-        {title: <span><FontAwesomeIcon className="text-2xl text-purple" icon={faUser} /></span>,
-            content: <span className="text-md font-bold">{user?.email}</span>}
-    ]
+
     return(
         <>
                 <Nav>
+
                     <NavCollapse>
                         <NavLogo><img src={"./images/logoNav.png"} alt={"home"} className={"h-auto"}/></NavLogo>
                         <NavTitle>{t('app_title')}</NavTitle>
                     </NavCollapse>
-
                     <MainMenu>
                         {isLargerThan1280 ? <SearchInput/> : null }
                         <div className={"relative flex items-center"}>

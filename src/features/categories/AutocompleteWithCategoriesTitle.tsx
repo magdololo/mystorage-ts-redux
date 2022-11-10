@@ -18,7 +18,6 @@ export default function AutocompleteWithCategoriesTitle({ value, onChange, disab
         <Autocomplete
             value={value}
             onChange={(_, data) => {
-                console.log(data)
                 onChange(data);}
             }
             filterOptions={(options, params) => {

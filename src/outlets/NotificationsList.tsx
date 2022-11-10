@@ -3,7 +3,7 @@ import {selectAllNotifications, selectUnReadNotifications} from "../slices/notif
 import React, {useState, useEffect, useRef} from "react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { solid, regular} from '@fortawesome/fontawesome-svg-core/import.macro'
+import { regular} from '@fortawesome/fontawesome-svg-core/import.macro'
 import {
     Message, MessageBody, MessageBodyText, MessageIcon, MessageTitle, MenuInviteList, MenuInviteItem, MessageBodyDate
 } from "../styles/Notifications.components";
@@ -39,7 +39,6 @@ const NotificationsList = ()=>{
                 <MenuInviteItem className="list-item">Nie teraz</MenuInviteItem>
             </MenuInviteList>
         </>
-    console.log(allNotifications)
 
     const [date, setDate] = useState( new Date())
     useEffect(()=>{

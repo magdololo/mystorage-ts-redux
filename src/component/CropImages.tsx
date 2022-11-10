@@ -42,7 +42,6 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
                 croppedAreaPixels,
 
             )
-            console.log('donee', { croppedImage })
             const file = await fetch(croppedImage).then(r => r.blob()).then(blobFile =>{
                 return new File([blobFile], newImageName, { type: blobFile.type })
             })

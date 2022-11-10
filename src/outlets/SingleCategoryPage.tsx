@@ -34,7 +34,6 @@ const SingleCategoryPage = () => {
     const {categoryPath} = useParams();
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
     const categoryFromPath = useAppSelector(selectCategoryByPath(categoryPath ?? "")) as Category
-    console.log(categoryFromPath)
     const categoryId = categoryFromPath?.id
     const currentCategory = categories.find(category => category?.id === categoryId)
     const productsOfCategory = useAppSelector(selectProductsOfCategory(categoryId ?? "")) as UserProduct[]
@@ -73,6 +72,7 @@ const SingleCategoryPage = () => {
         dispatch(deleteUserProduct(userProduct))
 
     }
+
     return (
         <>
             {isLargerThan1280 ? null : <ReturnToCategoryList/>}

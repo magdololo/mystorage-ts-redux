@@ -3,7 +3,7 @@ import {AppDispatch, RootState} from "../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../firebase";
 import {UserProduct} from "./userProductsSlice";
-import {Category} from "./categoriesSlice";
+
 
 export interface ProductFromDictionary{
     id: Required<string>;
@@ -29,14 +29,19 @@ export const fetchProductFromDictionaryId = createAsyncThunk<ProductFromDictiona
     dispatch: AppDispatch
     state: RootState
 }>('allProducts/fetchProductFromDictionaryId', async(userProduct, thunkApi)=> {
-    console.log("halo z fetch product id thunk")
-    console.log(userProduct)
+
     let allProducts = selectAllProducts(thunkApi.getState())
     let productFromDictionary = allProducts.find((product) => product.name === userProduct.name && product.capacity === userProduct.capacity && product.unit === userProduct.unit)
     if (productFromDictionary)
         return productFromDictionary as ProductFromDictionary
-    let result = await addDoc(collection(db, "allProducts/" ), userProduct);
-    return {...userProduct,id: result.id} as ProductFromDictionary
+    let dictionaryProduct = {
+        name: userProduct.name,
+        capacity: userProduct.capacity,
+        unit: userProduct.unit,
+        userId: userProduct.userId
+    }
+    let result = await addDoc(collection(db, "allProducts/" ), dictionaryProduct);
+    return {...dictionaryProduct,id: result.id} as ProductFromDictionary
 
 })
 
@@ -68,6 +73,7 @@ export const fetchAllProducts = createAsyncThunk('allProducts/fetchAllProducts',
         }
     }
 )
+
 const allProductsSlice = createSlice({
     name: 'allProducts',
     initialState,

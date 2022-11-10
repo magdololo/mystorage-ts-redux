@@ -65,7 +65,6 @@ export const changeUnreadNotificationsToRead = createAsyncThunk<Notification[], 
 }>('notifications/changeUnreadNotificationsToRead', async(userId, thunkApi)=> {
 
     let unReadNotifications = selectUnReadNotifications(thunkApi.getState())
-    console.log(unReadNotifications, "hej z changeto read")
 
     const newNotifications: Notification[] = [];
      unReadNotifications.forEach((notification) => {
@@ -76,8 +75,6 @@ export const changeUnreadNotificationsToRead = createAsyncThunk<Notification[], 
     let q = await query(collection(db, "users/" + userId + "/notifications"), where("isRead", "==", false));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((result) => {
-        let notificationDoc = result.data() as Notification ;
-        console.log(notificationDoc)
         updateDoc (result.ref, {isRead: true})
     })
 
@@ -114,9 +111,6 @@ export const selectUnReadNotifications = createSelector(
     [(state: RootState) => selectAllNotifications(state)],
     (notifications) => notifications.filter((notification: Notification) => !notification.isRead )
 );
-// export const selectInfoNotifications = createSelector(
-//     [(state: RootState) => selectAllNotifications(state)],
-//     (notifications) => notifications.filter((notification: Notification) => notification.type === "info")
-// )
+
 export const {addNotification, modifyNotification} = notificationsSlice.actions
 export default notificationsSlice.reducer

@@ -9,7 +9,6 @@ import {
     useNavigate, useLocation,
 
 } from "react-router-dom";
-
 import Loading from "./component/Loading";
 import CategoryList from "./outlets/CategoryList";
 import LoginPage from "./features/users/LoginPage";
@@ -26,10 +25,7 @@ import SingleCategoryPage from "./outlets/SingleCategoryPage";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 import SearchUserProductPage from "./outlets/SearchUserProductPage";
-import {collection, doc, getDoc, query, onSnapshot} from "firebase/firestore";
-
-
-
+import { doc, getDoc} from "firebase/firestore";
 
 library.add(fas)
 
@@ -58,14 +54,6 @@ function App() {
 
 
             if (!doExist) {
-                // content =
-                //     <>
-                //         <div className="bg-purple-100 py-5 px-6 mb-4 text-base text-purple-700 mb-3" role="alert">
-                //             A simple secondary alert with <a href="#" className="font-bold text-puclassName800">an example link</a>.
-                //             Give it a click if you like.
-                //         </div>
-                //     </>
-                // navigate("/register")
                 console.log("info")
             }
             else {
@@ -87,7 +75,7 @@ function App() {
 
 
     const user = useSelector(selectUser);
-console.log(user)
+    console.log(user)
     return (
         <>
         <Suspense fallback={<Loading />}>

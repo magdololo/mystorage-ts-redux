@@ -48,3 +48,10 @@ export const ArrowRight = styled.span`
   list-style: none;
   
 `
+export const StorageListOnMobile = styled.div`
+  position: relative;
+  font-family: "Courgette", serif;
+`
+export const StorageListSelect = styled.select`
+  display: none;
+`

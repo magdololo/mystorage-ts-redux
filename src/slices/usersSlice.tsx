@@ -89,7 +89,6 @@ export const changeSeeGreetingToTrue = createAsyncThunk<boolean,User,{
     } catch (e){
         console.log(e)
     }
-    console.log("after firebase update")
    return true
 })
 
@@ -122,14 +121,9 @@ const usersSlice = createSlice({
                 console.log("rejected")
             })
             .addCase(addDefaultCategoriesToNewUser.fulfilled,(state, action)=>{
-                console.log("dodales domyslne kategorie nowemy userowi")
+                console.log("dodales domyslne kategorie nowemu userowi")
             })
             .addCase(changeSeeGreetingToTrue.fulfilled,(state, action)=>{
-                console.log("zmieniłes didSeeGreeting na true")
-                console.log(action.payload)
-                // let user = state.user!!
-                // user.didSeeGreeting = true
-                // state.user = user
                 let user = state.user!!
                 let newUser = {
                     uid: user.uid,
@@ -143,7 +137,7 @@ const usersSlice = createSlice({
 
     }
 });
-export const { login, logout, saveUser, setCurrentStorage} = usersSlice.actions;
+export const { login, logout, setCurrentStorage} = usersSlice.actions;
 export const selectUser = (state: RootState) => state.users.user;
 export const selectCurrentStorage = (state: RootState)=> state.users.currentStorageId
 

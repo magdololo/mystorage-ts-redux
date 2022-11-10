@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {useForm, SubmitHandler, Controller} from 'react-hook-form';
 
 import {AutocompleteWithUserProducts} from "./AutocompleteWithUserProducts";
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 
-import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
+import {selectCurrentStorage} from "../../slices/usersSlice";
 import {addUserProduct, UserProduct} from "../../slices/userProductsSlice";
 import {
     Category,
-    selectAllCategoriesSortedByRequired,
     selectCategoryByPath,
     selectDefaultCategory
 } from "../../slices/categoriesSlice";
@@ -25,7 +23,6 @@ import {MenuItem} from "@mui/material";
 import 'react-datepicker/dist/react-datepicker.css';
 
 import {useTranslation} from "react-i18next";
-import addCategoryForm from "../categories/AddCategoryForm";
 import {useParams} from "react-router-dom";
 
 export type FormValues = {
@@ -60,10 +57,8 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
     const currentStorageId = useAppSelector(selectCurrentStorage)
-    const user = useSelector(selectUser)
-    const uid = user ? user.uid : ""
+
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
-    console.log(currentCategory)
     const {
         handleSubmit,
         control,
@@ -91,7 +86,6 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
         handleCloseAddProduct();
     }
     const onSubmit: SubmitHandler<FormValues> = data => {
-            console.log(data)
             let userProduct: UserProduct = {
                 productId: "",
                 name: data.productName,

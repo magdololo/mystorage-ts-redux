@@ -35,7 +35,9 @@ export const Section = styled.section`
   display: block;
   width: 100%;
   align-self: center;
-
+  //@media (max-width: 955px) {
+  //  width: 70%;
+  //}
 `;
 export const Main = styled.main`
   color: white;

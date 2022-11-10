@@ -22,23 +22,21 @@ import {
     startAt, Timestamp
 } from "firebase/firestore";
 import {db} from "../firebase";
-import {useSelector} from "react-redux";
-import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
+import {selectCurrentStorage} from "../slices/usersSlice";
 import {addNotification,modifyNotification, Notification} from "../slices/notificationsSlice";
 import {addShare,modifyShare, Invite} from"../slices/sharesSlice";
-import {addCategory, modifyCategory, Category, deleteCategory} from "../slices/categoriesSlice";
+import {addCategory, modifyCategory, Category, removeCategory} from "../slices/categoriesSlice";
 import StoragesList from "./StoragesList";
 import {
     UserProduct,
     addProduct,
     modifyProduct,
-    deleteUserProduct,
+    removeProduct,
 
 } from "../slices/userProductsSlice";
 
 const Root = ()=>{
-    const user = useSelector(selectUser);
-    const userId = user?.uid;
+
     const dispatch = useAppDispatch()
     const currentStorageId = useAppSelector(selectCurrentStorage)
 
@@ -112,7 +110,7 @@ const Root = ()=>{
                     if (change.type === "removed") {
                         console.log("Removed category" +
                             ": ", change.doc.data());
-                        dispatch(deleteCategory({...change.doc.data(), id: change.doc.id} as Category))
+                        dispatch(removeCategory(change.doc.id))
                     }
                 });
             },
@@ -134,25 +132,26 @@ const Root = ()=>{
                 snapshot.docChanges().forEach((change) => {
                     let data = change.doc.data()
                     let productExpireDate = null;
-                    if( data.date != null){
-                        let notificationTimestamp = Timestamp.fromMillis(data.date.seconds*1000);
+                    if( data.expireDate != null){
+                        let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds*1000);
                         //
-                        productExpireDate = notificationTimestamp.toDate();
+                        productExpireDate = expireDateTimestamp.toDate();
+
                     }
                     if (change.type === "added") {
                         console.log("New product: ", change.doc.data());
+                        console.log(productExpireDate)
                         dispatch(addProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
                     }
                     if (change.type === "modified") {
                         console.log("Modified product: ", change.doc.data());
                         dispatch(modifyProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
-                        //dispatch(changeProductQuantity{...change.doc.data(), id: change.doc.id} as UserProduct))
                     }
 
                     if (change.type === "removed") {
                         console.log("Removed product" +
                             ": ", change.doc.data());
-                        dispatch(deleteUserProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
+                        dispatch(removeProduct(change.doc.id))
                     }
                 });
             },

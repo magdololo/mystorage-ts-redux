@@ -1,69 +1,90 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {useAppSelector, useAppDispatch} from "../app/store";
 import {selectCurrentStorage, selectUser, setCurrentStorage} from "../slices/usersSlice";
-import {selectAcceptedIncomingInvites} from "../slices/sharesSlice";
+import {selectAcceptedIncomingInvites, Invite} from "../slices/sharesSlice";
 import {fetchUserProducts, removeProducts} from "../slices/userProductsSlice";
 import {fetchCategories, removeCategories} from "../slices/categoriesSlice";
 import {fetchImages} from "../slices/imagesSlice";
-import {StorageList, StorageItem, ArrowRight} from "../styles/StoragesList.components";
+import {StorageList, StorageItem, ArrowRight, StorageListSelect, StorageListOnMobile} from "../styles/StoragesList.components";
 
 import { ChevronRightIcon} from "@heroicons/react/solid";
 import {useMediaQuery} from "@mui/material";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
-import {Accordion} from "react-accordion-ts";
+import {useTranslation} from "react-i18next";
+import Select, {StylesConfig} from "react-select";
 
 const StoragesList = ()=>{
+    const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const allAcceptedIncomingInvites = useAppSelector(selectAcceptedIncomingInvites)
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
+    const userEmail = user?.email
     const currentStorageId = useAppSelector(selectCurrentStorage)
-    // const [activeOwnStorage, setActiveOwnStorage] = useState(false)
-    //const [activeAnotherStorage, setActiveAnotherStorage] = useState(false)
+    console.log(currentStorageId)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
-    const changeStorage =(inviteUserId: string)=> {
-        // setActiveOwnStorage(false)
+    const changeStorage =(userId: string)=> {
         console.log("changeStorage")
-        dispatch(setCurrentStorage(inviteUserId))
-        dispatch(removeProducts())
-        dispatch(removeCategories())
-        dispatch(fetchCategories(inviteUserId))
-        dispatch(fetchImages(inviteUserId))
-        dispatch(fetchUserProducts(inviteUserId))
-    }
-
-    const chooseOwnStorage = (userId: string)=>{
         dispatch(setCurrentStorage(userId))
-        console.log("user oryginal")
         dispatch(removeProducts())
         dispatch(removeCategories())
-        dispatch(fetchCategories(userId!!))
-        dispatch(fetchImages(userId!!))
-        dispatch(fetchUserProducts(userId!!))
+        dispatch(fetchCategories(userId))
+        dispatch(fetchImages(userId))
+        dispatch(fetchUserProducts(userId))
+        dispatch(fetchImages(userId))
+    }
+
+    const options:{value: string, label: string}[] = []
+
+    allAcceptedIncomingInvites.map( (invite) => (
+        options.push({ value: invite.user_id, label: invite.user_email })
+    ))
+    options.push({value: userId!!, label: t("my_storage")})
+
+    const handleChange =(e: any)=>{
+        console.log(e.value)
+        changeStorage(e.value)
+    }
+
+    type Option = {
+        value: string
+        label: string
+    }
+    const customStyles: StylesConfig<Option> = {
+        option: (provided, state) => ({
+
+            borderBottom: '1px dotted pink',
+            color: state.isSelected ? '#4C1D95' : '#7C3AED',
+            padding: 20,
+            "&:hover": {
+                color: '#4C1D95'
+            }
+        }),
+        control: (styles) => ({
+            ...styles,
+            width: 280,
+            border: 'none',
+            margin: '0 auto',
+            "&:active": {
+                border: 'none',
+                boxShadow: "none"
+            },
+            "&:hover":{
+                border: 'none',
+                boxShadow: "none"
+            },
+            "&:focus":{
+                border: 'none',
+                boxShadow: "none"
+            }
+        }),
 
     }
-    //const [active, setActive] = useState(false)
-    const myAccordion = [
-        {
-            title: <span><li onClick={() => chooseOwnStorage(userId!!)}>Moja spiżarnia</li></span>,
-            content:
-                <>
-                    <ul>
-                        {allAcceptedIncomingInvites.map(invite => {
-                            return <li onClick={() => changeStorage(invite.user_id)}>{invite.user_email}</li>
-                        })}
-                    </ul>
-                </>
-        }
-    ]
-   console.log(allAcceptedIncomingInvites)
+
     return (
         <>
             {isBiggerThan960 ?
                 <StorageList>
-                    <StorageItem primary={currentStorageId === userId} onClick={() => chooseOwnStorage(userId!!)}>Moja
-                        spiżarnia</StorageItem>
+                    <StorageItem primary={currentStorageId === userId} onClick={() => changeStorage(userId!!)}>{t("my_storage")}</StorageItem>
                     <ArrowRight><ChevronRightIcon/></ArrowRight>
                     {allAcceptedIncomingInvites.map(invite => {
                         return (
@@ -76,7 +97,18 @@ const StoragesList = ()=>{
 
                     })}
                 </StorageList> :
-                <Accordion items={myAccordion} duration={300} multiple={false}/>
+                // <div className="select">
+                //     <select id="standard-select" value={currentStorageId!!} onChange={handleChange}>
+                //         {options.map((option) => (
+                //             <option className={"single_option"+ (currentStorageId === option.value ? " selected" : "")} value={option.value} selected={currentStorageId === option.value}  >{option.label}</option>
+                //         ))}
+                //     </select>
+                // </div>
+                <Select options={options}
+                        defaultValue={options[options.length-1]}
+                        onChange={handleChange}
+                        styles={customStyles}
+                />
             }
         </>
     )
