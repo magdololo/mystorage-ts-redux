@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {SectionProps} from "./Home.components";
 
 
 export const StorageList = styled.ul`
@@ -47,11 +46,4 @@ export const ArrowRight = styled.span`
   display: inline-block;
   list-style: none;
   
-`
-export const StorageListOnMobile = styled.div`
-  position: relative;
-  font-family: "Courgette", serif;
-`
-export const StorageListSelect = styled.select`
-  display: none;
 `

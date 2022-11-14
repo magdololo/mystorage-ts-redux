@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk, createEntityAdapter, EntityState, PayloadAction} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
 import {AppDispatch, RootState} from "../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../firebase";
@@ -60,7 +60,6 @@ export const fetchAllProducts = createAsyncThunk('allProducts/fetchAllProducts',
             let q = await query(collection(db, "allProducts"));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
-// console.log(doc.data())
                 let productDoc = doc.data() as ProductFromDictionary;
                 productDoc.id = doc.id;
                 allProducts.push(productDoc);
@@ -98,8 +97,8 @@ const allProductsSlice = createSlice({
 })
 export const {
     selectAll: selectAllProducts,
-    selectById: selectProductById,
-    selectIds: selectProductIds,
+    // selectById: selectProductById,
+    // selectIds: selectProductIds,
 
     // Pass in a selector that returns the posts slice of state
 } = allProductsAdapter.getSelectors<RootState>((state) => state.allProducts);

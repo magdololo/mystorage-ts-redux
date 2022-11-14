@@ -66,7 +66,7 @@ const Root = ()=>{
             unsubscribe()
         }
 
-    },[])
+    },[currentStorageId, dispatch])
 
     useEffect(()=>{
         const q = query(collection(db, "users/" + currentStorageId +"/shares"));
@@ -94,7 +94,7 @@ const Root = ()=>{
             unsubscribe()
         }
 
-    },[])
+    },[currentStorageId,dispatch])
     useEffect(()=>{
         const q = query(collection(db, "users/" + currentStorageId +"/categories"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -122,7 +122,7 @@ const Root = ()=>{
             unsubscribe()
         }
 
-    },[])
+    },[currentStorageId, dispatch])
     useEffect(()=>{
 
         const docRef = doc(db, "users", currentStorageId!!);
@@ -163,7 +163,7 @@ const Root = ()=>{
             unsubscribe()
         }
 
-    },[])
+    },[currentStorageId, dispatch])
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
 
     return (

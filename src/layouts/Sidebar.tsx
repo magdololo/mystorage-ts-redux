@@ -5,7 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {auth, signOut} from "../firebase";
 import {logout, selectUser} from "../slices/usersSlice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faUser, faHandPointRight, faUserGroup, faUserPlus, faShareFromSquare} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRightFromBracket, faUser, faHandPointRight, faUserGroup, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import Divider from "@mui/material/Divider";
 import {Accordion} from "react-accordion-ts";
 import {Modal} from "../component/Modal/Modal";

@@ -11,7 +11,7 @@ import Sidebar from "../../layouts/Sidebar";
 const BottomHamburgerMenu = () => {
     const {i18n} = useTranslation()
     const [isOpen, setIsOpen] =useState(false);
-    const [isEnglish, setIsEnglish]= useState<boolean>(false);
+    const [isEnglish]= useState<boolean>(false);
 
     const toggleDrawer = () => {
         setIsOpen((prevState) => !prevState)

@@ -1,11 +1,11 @@
 import React from "react";
 import {useAppSelector, useAppDispatch} from "../app/store";
 import {selectCurrentStorage, selectUser, setCurrentStorage} from "../slices/usersSlice";
-import {selectAcceptedIncomingInvites, Invite} from "../slices/sharesSlice";
+import {selectAcceptedIncomingInvites} from "../slices/sharesSlice";
 import {fetchUserProducts, removeProducts} from "../slices/userProductsSlice";
 import {fetchCategories, removeCategories} from "../slices/categoriesSlice";
 import {fetchImages} from "../slices/imagesSlice";
-import {StorageList, StorageItem, ArrowRight, StorageListSelect, StorageListOnMobile} from "../styles/StoragesList.components";
+import {StorageList, StorageItem, ArrowRight} from "../styles/StoragesList.components";
 
 import { ChevronRightIcon} from "@heroicons/react/solid";
 import {useMediaQuery} from "@mui/material";
@@ -18,7 +18,6 @@ const StoragesList = ()=>{
     const allAcceptedIncomingInvites = useAppSelector(selectAcceptedIncomingInvites)
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
-    const userEmail = user?.email
     const currentStorageId = useAppSelector(selectCurrentStorage)
     console.log(currentStorageId)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')

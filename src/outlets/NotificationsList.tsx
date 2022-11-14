@@ -5,7 +5,7 @@ import React, {useState, useEffect, useRef} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { regular} from '@fortawesome/fontawesome-svg-core/import.macro'
 import {
-    Message, MessageBody, MessageBodyText, MessageIcon, MessageTitle, MenuInviteList, MenuInviteItem, MessageBodyDate
+    Message, MessageBody, MessageBodyText, MessageIcon, MessageTitle, MessageBodyDate
 } from "../styles/Notifications.components";
 import {useTranslation} from "react-i18next";
 import {Timestamp} from "firebase/firestore";
@@ -31,14 +31,6 @@ const NotificationsList = ()=>{
             document.removeEventListener("mousedown", checkIfClickedOutside)
         }
     }, [dropdownOpen])
-    const dropdownContent =
-        <>
-            <MenuInviteList className="list" ref={ref}>
-                <MenuInviteItem className="list-item borderBottom">Akceptuj</MenuInviteItem>
-                <MenuInviteItem className="list-item borderBottom">Odrzuć</MenuInviteItem>
-                <MenuInviteItem className="list-item">Nie teraz</MenuInviteItem>
-            </MenuInviteList>
-        </>
 
     const [date, setDate] = useState( new Date())
     useEffect(()=>{
