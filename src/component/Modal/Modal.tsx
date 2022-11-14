@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 
 import {
     Wrapper,
-    Header,
     StyledModal,
     HeaderText,
     Content,
@@ -37,9 +36,9 @@ className
             }}/>
             <Wrapper tabIndex={-1} className={className??""}>
                 <StyledModal>
-                    <Header>
+                    {/*<Header>*/}
                         <HeaderText>{modalHeaderText}</HeaderText>
-                    </Header>
+                    {/*</Header>*/}
                     <Content>{modalContent}</Content>
                 </StyledModal>
             </Wrapper>
