@@ -157,7 +157,6 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
                                     value={value ?? ""}
                                     onChange={onChange}
                                     setSelectedProductFromAutocomplete={setSelectedProductFromAutocomplete}
-                                    //setNewProductName={setNewProductName}
 
                                 />
                                 </>
