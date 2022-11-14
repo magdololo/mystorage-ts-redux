@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useAppSelector} from "../../app/store";
 
 import {AutocompleteWithUserProductsProps} from "./AddProductForm";
@@ -16,9 +16,7 @@ const filter = createFilterOptions<ProductFromDictionary>();
 export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProductFromAutocomplete}: AutocompleteWithUserProductsProps) => {
     const { t } = useTranslation();
     const allProducts = useAppSelector(selectAllProducts)
-    const [newProductName,setNewProductName] = useState<string | null>(null);
 
-    console.log(newProductName)
     return (
 
         <Autocomplete
@@ -28,9 +26,6 @@ export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProduc
                 onChange(data);
                 if(data && typeof data === "object" ){
                     setSelectedProductFromAutocomplete(data as UserProduct);
-                }
-                if(data && typeof data === "string"){
-                    setNewProductName(data);
                 }
             }
             }
