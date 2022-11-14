@@ -1,5 +1,6 @@
 {
   "app_title": "Domowa spiżarnia",
+  "my_storage": "Moja spiżarnia",
   "home_header_heading": "Twoje produkty zawsze pod ręką",
   "home_heading_subheading": "Zdobądź łatwy dostęp do produktów w swoim domu aby lepiej planować zakupy, posiłki i czas.",
   "home_section1_heading": "Twórz wlasne kategorie i dodawaj produkty",
@@ -123,6 +124,22 @@
       "passwordTypeRequired": "Hasło wymagane"
     }
   },
+  "notifications" : {
+    "new pending": "zaprasza Cię do współdzielenia konta!",
+    "pending to accepted": "zaakceptował/a Twoje zaproszenie!",
+    "pending to rejected": "odrzucił/a Twoje zaproszenie!",
+    "accepted to rejected": "anulował/a dzielenie z Tobą spiżarni!",
+    "noNotifications" : "Nie masz żadnych nowych wiadomości!",
+    "notificationTypeInvite" : "Zaproszenie!",
+    "notificationTypeInfo" : "Informacja!"
+  },
+  "shares": {
+    "outgoing": "Zaproszenia wychodzące!",
+    "incoming": "Zaproszenia przychodzące!",
+    "statusAccepted": "Przyjęte",
+    "statusRejected": "Odrzucone",
+    "statusPending": "Oczekuje na decyzję"
+  },
   "buttons": {
     "editCategoriesButton": "Edytuj kategorie",
     "categoryListButton": "Lista kategorii",
@@ -135,7 +152,10 @@
     "logOut": "Wyloguj się",
     "register": "Zarejestruj się",
     "remindPassword": "Dalej",
-    "confirm": "Zatwierdź"
+    "confirm": "Zatwierdź",
+    "accept": "Akceptuj",
+    "reject": "Odrzuć",
+    "cancel": "Anuluj"
   },
   "component": {
     "SearchOwnPictureCategory": {
@@ -154,7 +174,8 @@
     "signOut": "Wyloguj się",
     "coUsers": "Współużytkownicy",
     "addCoUser": "Dodaj współużytkownika",
-    "headerFormAddCoUser" :"Wpisz email współużytkownika"
+    "headerFormAddCoUser" :"Wpisz email współużytkownika",
+    "messageAfterInvite": "Na ten adres email wysłalismy zaproszenie do Twojej spiżarni!"
   }
 }
 

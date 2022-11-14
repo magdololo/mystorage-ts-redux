@@ -3,8 +3,8 @@ import {useAppSelector} from "../../app/store";
 
 import {AutocompleteWithUserProductsProps} from "./AddProductForm";
 
-import { UserProduct} from "./userProductsSlice";
-import {ProductFromDictionary, selectAllProducts} from "./allProductsSlice";
+import { UserProduct} from "../../slices/userProductsSlice";
+import {ProductFromDictionary, selectAllProducts} from "../../slices/allProductsSlice";
 
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import {TextField} from "@mui/material";
@@ -19,8 +19,7 @@ const filter = createFilterOptions<ProductFromDictionary>();
 export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProductFromAutocomplete}: AutocompleteWithUserProductsProps) => {
     const { t } = useTranslation();
     const allProducts = useAppSelector(selectAllProducts)
-    const [newProductName, setNewProductName] = useState<string | null>(null);
-    console.log(newProductName)
+    const [newProductName,setNewProductName] = useState<string | null>(null);
     return (
 
         <Autocomplete

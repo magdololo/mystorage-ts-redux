@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import { useTranslation } from "react-i18next";
 import {useForm, SubmitHandler} from "react-hook-form";
 
-import {addNewUserToUsersCollection, login, addDefaultCategoriesToNewUser,AddDefaultCategoriesToNewUserProps} from "./usersSlice";
+import {addNewUserToUsersCollection, login, addDefaultCategoriesToNewUser,AddDefaultCategoriesToNewUserProps} from "../../slices/usersSlice";
 import {
     auth,
     createUserWithEmailAndPassword,
@@ -40,10 +40,9 @@ const RegisterPage = () => {
    const [message, setMessage] = useState("");
 
     const onSubmit: SubmitHandler<Inputs> = (data, e) => {
-        console.log(data);
+
         e?.preventDefault()
         if(checkboxState){
-            console.log("checboxTreue")
             createUserWithEmailAndPassword(auth, data.email, data.password)
                 .then((userCredential) => {
 
@@ -94,13 +93,12 @@ const RegisterPage = () => {
                 })
         } else {
             setMessage((t("users.RegisterPage.message.acceptRegulations")))
-            console.log("hejjjjj")
         }
         }
 
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisibility = () => {
-        setPasswordShown(passwordShown ? false : true);
+        setPasswordShown(!passwordShown);
     };
 
 

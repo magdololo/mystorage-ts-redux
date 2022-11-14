@@ -1,14 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {useForm, SubmitHandler, Controller} from 'react-hook-form';
 
 import {AutocompleteWithUserProducts} from "./AutocompleteWithUserProducts";
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 
-import {selectUser} from "../users/usersSlice";
-import {addUserProduct, UserProduct} from "./userProductsSlice";
-import {Category} from "../categories/categoriesSlice";
+import {selectCurrentStorage} from "../../slices/usersSlice";
+import {addUserProduct, UserProduct} from "../../slices/userProductsSlice";
+import {
+    Category,
+    selectCategoryByPath,
+    selectDefaultCategory
+} from "../../slices/categoriesSlice";
 
 import {Alert, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
@@ -20,6 +23,7 @@ import {MenuItem} from "@mui/material";
 import 'react-datepicker/dist/react-datepicker.css';
 
 import {useTranslation} from "react-i18next";
+import {useParams} from "react-router-dom";
 
 export type FormValues = {
     expireDate: Date | null
@@ -31,8 +35,9 @@ export type FormValues = {
 };
 
 type AddProductFormProps = {
-    handleClose: () => void
-    isShown: boolean
+    handleCloseAddProduct: () => void
+    isShownAddProductModal: boolean
+
 }
 export type AutocompleteWithUserProductsProps = {
     onChange: (data: any) => void
@@ -47,15 +52,13 @@ export type AutocompleteWithCategoriesTitleProps = {
 
 
 }
-const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
+const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddProductFormProps,) => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
+    const currentStorageId = useAppSelector(selectCurrentStorage)
 
-    const user = useSelector(selectUser)
-    const uid = user ? user.uid : ""
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
-
     const {
         handleSubmit,
         control,
@@ -65,11 +68,11 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
     } = useForm<FormValues>();
     const [errorMessage, setErrorMessage] = useState('');
     useEffect(() => {
-        if (!isShown) {
+        if (!isShownAddProductModal) {
             reset()
             setSelectedProductFromAutocomplete(null)
         }
-    }, [isShown, reset])
+    }, [isShownAddProductModal, reset])
     useEffect(() => {
         if (selectedProductFromAutocomplete) {
             setValue('capacity', selectedProductFromAutocomplete.capacity);
@@ -80,10 +83,9 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
         setErrorMessage('');
         setSelectedProductFromAutocomplete(null)
         reset();
-        handleClose();
+        handleCloseAddProduct();
     }
     const onSubmit: SubmitHandler<FormValues> = data => {
-            console.log(data)
             let userProduct: UserProduct = {
                 productId: "",
                 name: data.productName,
@@ -92,7 +94,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                 unit: data.unit,
                 quantity: data.quantity ?? 0,
                 expireDate: data.expireDate,
-                userId: uid,
+                userId: currentStorageId!!,
                 id: ""
 
 
@@ -120,7 +122,9 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
         }
 
     ];
-
+    const {categoryPath} = useParams();
+    const categoryFromPath = useAppSelector(selectCategoryByPath(categoryPath ?? "")) as Category
+    const requiredCategory = useAppSelector(selectDefaultCategory) as Category
 
     return (
         <>
@@ -132,7 +136,7 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                             name="category"
                             control={control}
                             rules={{required: true}}
-                            defaultValue={currentCategory ? currentCategory : null}
+                             defaultValue={categoryFromPath ? categoryFromPath : requiredCategory}
                             render={({field: {onChange, value}}) => (
                                 <AutocompleteWithCategoriesTitle
                                     value={value}
@@ -250,7 +254,6 @@ const AddProductForm = ({handleClose, isShown}: AddProductFormProps) => {
                     {errors.quantity && (<p className="text-xs text-red ml-10">{t("products.AddProductForm.validationQuantity")}</p>)}
 
                     {errorMessage !== '' ? <Alert severity="error">{errorMessage}</Alert> : null}
-                    {/*<Button sx={{marginLeft: "10%", marginTop: "10%"}} type="submit" variant="contained" color="primary">{t("buttons.addProduct")}</Button>*/}
                     <Box sx={{marginLeft: "10%"}}><button className="mt-4 text-sm bg-purple  text-white uppercase font-bold py-4 px-4 border-purple rounded shadow-xs leading-6" type={"submit"}>{t("buttons.addProduct")}</button></Box>
                 </Box>
             </form>

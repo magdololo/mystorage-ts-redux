@@ -1,16 +1,15 @@
 // @ts-nocheck
 import React, { useState, useCallback } from "react";
-import Slider from "@material-ui/core/Slider";
- import Cropper from "react-easy-crop";
-import { Area } from "react-easy-crop/types";
-
-import getCroppedImg from './canvasUtils'
-import {addCategoryImage, ImageFromUser} from "../features/images/imagesSlice";
 import {useAppDispatch} from "../app/store";
-
-import {Modal} from "./Modal/Modal"
 import {useTranslation} from "react-i18next";
+import {Modal} from "./Modal/Modal";
 
+import {addCategoryImage, ImageFromUser} from "../slices/imagesSlice";
+
+import Slider from "@material-ui/core/Slider";
+import Cropper from "react-easy-crop";
+import { Area } from "react-easy-crop/types";
+import getCroppedImg from './canvasUtils';
 
 type CropImagesProps = {
     handleClose: () => void
@@ -18,17 +17,6 @@ type CropImagesProps = {
     newImageName: string
     uid: string
 }
-// const customStyles = {
-//     content: {
-//         top: '50%',
-//         left: '50%',
-//         right: 'auto',
-//         bottom: 'auto',
-//         marginRight: '-50%',
-//         transform: 'translate(-50%, -50%)',
-//         zIndex: "1500"
-//     },
-// };
 
 const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => {
     const {t} = useTranslation()
@@ -54,11 +42,9 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
                 croppedAreaPixels,
 
             )
-            console.log('donee', { croppedImage })
             const file = await fetch(croppedImage).then(r => r.blob()).then(blobFile =>{
                 return new File([blobFile], newImageName, { type: blobFile.type })
             })
-            console.log(file)
             let newImageFromUser: ImageFromUser ={
                         newPictureName : newImageName,
                         newPicture : file,
@@ -80,9 +66,6 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
         }
     }, [croppedAreaPixels, dispatch,handleClose,image, newImageName,uid])
 
-    // const onClose = useCallback(() => {
-    //     setCroppedImage(null)
-    // }, [])
 
     return (
         <>

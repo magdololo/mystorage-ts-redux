@@ -1,16 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import allProductsReducer from '../features/products/allProductsSlice'
-import categoriesReducer from '../features/categories/categoriesSlice'
-import usersReducer from '../features/users/usersSlice'
-import userProductsReducer from '../features/products/userProductsSlice'
-import imagesReducer from '../features/images/imagesSlice'
-import notificationsReducer from "../features/notifications/notificationsSlice";
-import sharesReducer from "../features/shares/sharesSlice";
+import allProductsReducer from '../slices/allProductsSlice'
+import categoriesReducer from '../slices/categoriesSlice'
+import usersReducer from '../slices/usersSlice'
+import userProductsReducer from '../slices/userProductsSlice'
+import imagesReducer from '../slices/imagesSlice'
+import notificationsReducer from "../slices/notificationsSlice";
+import sharesReducer from "../slices/sharesSlice";
 import {useDispatch,TypedUseSelectorHook, useSelector} from "react-redux";
-
-
-
-
 
 const store = configureStore({
 

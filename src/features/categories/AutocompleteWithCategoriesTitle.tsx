@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {useAppSelector} from "../../app/store";
-
+import {useTranslation} from "react-i18next";
 import {AutocompleteWithCategoriesTitleProps} from "../products/AddProductForm";
 
-import {Category, selectAllCategoriesSortedByRequired} from "./categoriesSlice";
+import {Category, selectAllCategoriesSortedByRequired} from "../../slices/categoriesSlice";
 
 import TextField from '@mui/material/TextField';
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
-import {useTranslation} from "react-i18next";
+
 const filter = createFilterOptions<Category>();
 
 export default function AutocompleteWithCategoriesTitle({ value, onChange, disabled}:AutocompleteWithCategoriesTitleProps) {
@@ -18,7 +18,6 @@ export default function AutocompleteWithCategoriesTitle({ value, onChange, disab
         <Autocomplete
             value={value}
             onChange={(_, data) => {
-                console.log(data)
                 onChange(data);}
             }
             filterOptions={(options, params) => {

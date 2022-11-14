@@ -2,35 +2,30 @@ import React, {useEffect, Suspense} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {auth, onAuthStateChanged, db} from './firebase';
 
-import {login, selectUser, User} from "./features/users/usersSlice";
+import {login, selectUser, User} from "./slices/usersSlice";
 import {
     Routes,
     Route,
     useNavigate, useLocation,
 
 } from "react-router-dom";
-
 import Loading from "./component/Loading";
-import CategoryList from "./features/categories/CategoryList";
+import CategoryList from "./outlets/CategoryList";
 import LoginPage from "./features/users/LoginPage";
 import RemindPassword from "./features/users/RemindPassword";
-import ProductsList from "./features/products/ProductsList";
+import ProductsList from "./outlets/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
-import Home from "./features/api/Home";
-
+import Home from "./layouts/Home";
+import Root from "./layouts/Root";
 import './App.css';
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
-import SharesPage from "./features/shares/SharesPage";
-import CategoryPageSecond from "./features/categories/CategoryPageSecond";
-
+import SharesPage from "./outlets/SharesPage";
+import SingleCategoryPage from "./outlets/SingleCategoryPage";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
-import SearchUserProductPage from "./features/products/SearchUserProductPage";
-import {doc, getDoc} from "firebase/firestore";
-
-
-
+import SearchUserProductPage from "./outlets/SearchUserProductPage";
+import { doc, getDoc} from "firebase/firestore";
 
 library.add(fas)
 
@@ -59,14 +54,6 @@ function App() {
 
 
             if (!doExist) {
-                // content =
-                //     <>
-                //         <div className="bg-purple-100 py-5 px-6 mb-4 text-base text-purple-700 mb-3" role="alert">
-                //             A simple secondary alert with <a href="#" className="font-bold text-puclassName800">an example link</a>.
-                //             Give it a click if you like.
-                //         </div>
-                //     </>
-                // navigate("/register")
                 console.log("info")
             }
             else {
@@ -84,8 +71,11 @@ function App() {
         })
         }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
+
+
+
     const user = useSelector(selectUser);
-console.log(user)
+    console.log(user)
     return (
         <>
         <Suspense fallback={<Loading />}>
@@ -98,12 +88,13 @@ console.log(user)
                     <Route path="/register" element={<RegisterPage/>}/>
                     <Route path="/remindPassword" element={<RemindPassword/>}/>
                     :
-                    <Route path="/categories" element={<CategoryList/>}/>
-                    <Route path="/categories/:categoryPath" element={<CategoryPageSecond/>}/>
-                    <Route path="/products" element={<ProductsList/>}/>
-                    <Route path="/search" element={<SearchUserProductPage/>}/>
-                    <Route path="/shares" element={<SharesPage/>}/>
-
+                    <Route path="/" element={<Root/>}>
+                        <Route path="/categories" element={<CategoryList/>}/>
+                        <Route path="/categories/:categoryPath" element={<SingleCategoryPage/>}/>
+                        <Route path="/products" element={<ProductsList/>}/>
+                        <Route path="/search" element={<SearchUserProductPage/>}/>
+                        <Route path="/shares" element={<SharesPage/>}/>
+                    </Route>
                 </Routes>
             </div>
 

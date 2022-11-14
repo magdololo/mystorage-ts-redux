@@ -32,7 +32,7 @@ i {
   right: 10%;
 }
 i:hover {
-  color: rebeccapurple;
+  color: rgb(107,33,168);
   cursor: pointer;
 }
 li {
@@ -51,20 +51,31 @@ li {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 80%;
+  margin-left: 30%;
+  z-index: 100;
   /*border: 1px solid purple !important;!*do screena*!*/
   /*border-radius: 4px;!*do screena*!*/
   /*box-shadow: 0 0 0 1px purple !important;!*do screena*!*/
 }
-
+.react-select-container-onMobile{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  /*margin-left: 5%;*/
+  z-index: 100;
+}
 .react-select__control {
   width: 100%;
   height: 100%;
+  border: 1px solid rgb(107,33,168) !important;
 }
 /**/
 .react-select__control:hover, .react-select__control:focus,.react-select__control:focus-within   {
-  border: 2px solid purple !important;
-  box-shadow: 0 0 0 1px purple !important;
+  border: 2px solid rgb(107,33,168) !important;
+  box-shadow: 0 0 0 1px rgb(107,33,168) !important;
 }
 .toastify__progress-bar--success {
   color: rebeccapurple;
@@ -145,4 +156,58 @@ div::-webkit-scrollbar {
 
 /*.bgSharePage {*/
 /*  background-image: url("");*/
+/*}*/
+/*select {*/
+
+/*!*appearance: none;*!*/
+
+/*background-color: transparent;*/
+/*  border: none;*/
+/*  padding: 0 1em 0 0;*/
+/*  margin: 0;*/
+/*  width: 60%;*/
+/*  font-family: inherit;*/
+/*  font-size: inherit;*/
+/*  cursor: inherit;*/
+/*  line-height: inherit;*/
+/*}*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*.select {*/
+
+/*  font-family: "Noto Sans", sans-serif;*/
+/*  width: max-content;*/
+/*  min-width: 15ch;*/
+/*  max-width: 30ch;*/
+/*  margin: 0 auto;*/
+/*  line-height: 1.1;*/
+/*  background-color: #fff;*/
+
+
+/*}*/
+/*#standard-select {*/
+
+/*  width: 100%;*/
+/*  font-size: 1.1rem;*/
+/*  cursor: pointer;*/
+/*  line-height: 1.1;*/
+/*  background-color: #fff;*/
+/*  color: #52525B;*/
+/*}*/
+/*.single_option {*/
+/*  font-size: 1rem;*/
+/*  color: rebeccapurple;*/
+/*  background-color: white!important;*/
+/*}*/
+/*option:hover {*/
+/*  color: #581C87!important;*/
+/*  background-color: white!important;*/
+/*}*/
+/*.selected{*/
+/*  background-color: white!important;*/
+/*  color: #581C87!important;*/
 /*}*/
