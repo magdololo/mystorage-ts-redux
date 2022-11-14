@@ -5,7 +5,7 @@ import React, {useState, useEffect, useRef} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { regular} from '@fortawesome/fontawesome-svg-core/import.macro'
 import {
-    Message, MessageBody, MessageBodyText, MessageIcon, MessageTitle, MessageBodyDate
+    Message, MessageBody, MessageBodyText, MessageIcon, MessageTitle, MessageBodyDate, MenuInviteList, MenuInviteItem
 } from "../styles/Notifications.components";
 import {useTranslation} from "react-i18next";
 import {Timestamp} from "firebase/firestore";
@@ -45,12 +45,14 @@ const NotificationsList = ()=>{
     }, [allNotifications])
     return(
        <>
-           <div className="flex justify-center flex-nowrap">
-               <ul className="bg-white rounded-lg w-full">
+           {/*<div className="flex justify-center flex-nowrap">*/}
+               <MenuInviteList >
+                   {/*//className="bg-white rounded-lg w-full"*/}
                    {unReadNotifications.length > 0 ?
                        unReadNotifications.map(notification => (
-                           <li className={"h-32 relative border-b border-gray-extraLight w-full rounded-t-lg py-2"}
+                           <MenuInviteItem className={"h-32 relative border-b border-gray-extraLight w-full rounded-t-lg py-2"}
                                key={notification?.id}>
+                               <MessageTitle>{notification.type === "invite" ? t("notifications.notificationTypeInvite") : t("notifications.notificationTypeInfo")}</MessageTitle>
                                <Message>
                                    <MessageIcon>
                                        {notification.type === "invite" ?
@@ -61,18 +63,16 @@ const NotificationsList = ()=>{
                                        }
                                    </MessageIcon>
                                    <MessageBody>
-                                       <MessageTitle>{notification.type === "invite" ? t("notifications.notificationTypeInvite") : t("notifications.notificationTypeInfo")}</MessageTitle>
                                        <MessageBodyText>{notification.cta + " " + t("notifications." + notification.change)}</MessageBodyText>
-                                       <MessageBodyDate>{date.toLocaleString()}</MessageBodyDate>
                                        <MessageBodyDate>{date.toLocaleString()}</MessageBodyDate>
                                    </MessageBody>
 
                                </Message>
-                           </li>))
+                           </MenuInviteItem>))
                        : <h3>{t("notifications.noNotifications")}</h3>
                    }
-               </ul>
-           </div>
+               </MenuInviteList>
+           {/*</div>*/}
 
        </>
     )

@@ -7,12 +7,13 @@ import {useTranslation} from "react-i18next";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 import Sidebar from "../../layouts/Sidebar";
+import {useMediaQuery} from "usehooks-ts";
 
 const BottomHamburgerMenu = () => {
     const {i18n} = useTranslation()
     const [isOpen, setIsOpen] =useState(false);
     const [isEnglish]= useState<boolean>(false);
-
+    const isSmallerThan500= useMediaQuery('(max-width: 499px)')
     const toggleDrawer = () => {
         setIsOpen((prevState) => !prevState)
     }
@@ -32,7 +33,7 @@ const BottomHamburgerMenu = () => {
                 open={isOpen}
                 onClose={toggleDrawer}
                 direction='left'
-                size={295}
+                size= {isSmallerThan500 ? 295 : 450}
             >
                 <Sidebar toggleDrawer={toggleDrawer}/>
             </Drawer>

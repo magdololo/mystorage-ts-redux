@@ -6,10 +6,10 @@ export const Wrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 700;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;
   max-width: 1000px;
   @media(max-width: 500px){
-    width: 20rem;
+    width: 21rem;
   }
   @media(min-width: 501px) and (max-width: 800px){
     
@@ -35,13 +35,14 @@ export const Backdrop = styled.div`
   z-index: 500;
 `;
 
+
 export const StyledModal = styled.div`
   z-index: 100;
   background: white;
   position: relative;
   margin: 0 auto;
   border-radius: 8px;
-  padding: 22px;
+  padding: 16px;//22
   overflow-y: scroll;
   scroll-behavior: smooth;
   scrollbar-color: #5B21B6 #60A5FA;
@@ -59,6 +60,7 @@ export const Header = styled.div`
   //justify-content: space-between;
   //padding: 0.3rem;
 `;
+
 
 export const HeaderText = styled.div`
   font-size: 1.3rem;

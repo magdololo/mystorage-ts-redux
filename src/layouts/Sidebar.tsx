@@ -14,6 +14,7 @@ import {useModal} from "../component/Modal/UseModal";
 import AddCoUserForm from "../component/AddCoUserForm";
 import AddProductForm from "../features/products/AddProductForm";
 import {AddProductButton} from "../styles/Products.components";
+import {useMediaQuery} from "usehooks-ts";
 
 
 
@@ -30,7 +31,7 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     const {isShown: isShownAddCoUserModal, handleClose: handleCloseAddCoUser, handleShown: handleShownAddCoUserModal} = useModal()
     const modalHeader = ""
     const addProductModalHeader = t("products.AddProductForm.formAddProductTitle")
-
+    const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
     const handleClick = (e: any) => {
         e.stopPropagation();
         if(toggleDrawer !== null){
@@ -75,19 +76,22 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
 
         handleCloseAddCoUser()
     }
-
+    const dividerStyle = {
+        marginLeft: '1rem',
+        marginRight: '1rem'
+    }
     return(
         <>
             <div className="flex justify-center">
                 <ul className="bg-white rounded-lg w-96 text-gray text-lg pt-10 relative">
 
                     <li key='5' className="flex flex-row justify-end cursor-pointer ">
-                        <span className={ isEnglish ? "fi fi-pl p-4" : "fi fi-gb p-4"} onClick={handleToggle}/>
+                        <span className={ isEnglish ? "fi fi-pl p-4 mr-4" : "fi fi-gb p-4 mr-4" } onClick={handleToggle}/>
                     </li>
-                    <Divider />
+                    <Divider style={isSmallerThan1280 ? dividerStyle : {}} />
                     <li key='1' className="px-6 py-2  w-full rounded-t-lg" onClick={handleClick}><Link to={'/categories'}> <FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />{t("BottomHamburgerMenu.categoryList")}</Link></li>
                     <li key='2' className="px-6 py-2  w-full" onClick={handleClick}><Link to={'/products'}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faHandPointRight} />{t("BottomHamburgerMenu.productList")}</Link></li>
-                    <Divider />
+                    <Divider style={isSmallerThan1280 ? dividerStyle : {}}/>
                     <li key='3' className="px-6 py-2  w-full cursor-pointer -toggle-down" >
                         <Accordion items={myAccordion} duration={300} multiple={false}/>
                     </li>
