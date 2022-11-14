@@ -10,9 +10,6 @@ import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import {TextField} from "@mui/material";
 import {useTranslation} from "react-i18next";
 
-
-
-
 const filter = createFilterOptions<ProductFromDictionary>();
 
 
@@ -20,6 +17,8 @@ export const AutocompleteWithUserProducts = ({onChange, value, setSelectedProduc
     const { t } = useTranslation();
     const allProducts = useAppSelector(selectAllProducts)
     const [newProductName,setNewProductName] = useState<string | null>(null);
+
+    console.log(newProductName)
     return (
 
         <Autocomplete
