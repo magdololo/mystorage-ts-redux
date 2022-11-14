@@ -10,9 +10,6 @@ import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import {TextField} from "@mui/material";
 import {useTranslation} from "react-i18next";
 
-
-
-
 const filter = createFilterOptions<ProductFromDictionary>();
 
 
