@@ -4,7 +4,7 @@ import {selectCurrentStorage, selectUser, setCurrentStorage} from "../slices/use
 import {selectAcceptedIncomingInvites} from "../slices/sharesSlice";
 import {fetchUserProducts, removeProducts} from "../slices/userProductsSlice";
 import {fetchCategories, removeCategories} from "../slices/categoriesSlice";
-import {fetchImages} from "../slices/imagesSlice";
+import {fetchUserImages} from "../slices/imagesSlice";
 import {StorageList, StorageItem, ArrowRight} from "../styles/StoragesList.components";
 
 import { ChevronRightIcon} from "@heroicons/react/solid";
@@ -27,9 +27,8 @@ const StoragesList = ()=>{
         dispatch(removeProducts())
         dispatch(removeCategories())
         dispatch(fetchCategories(userId))
-        dispatch(fetchImages(userId))
         dispatch(fetchUserProducts(userId))
-        dispatch(fetchImages(userId))
+        dispatch(fetchUserImages(userId))
     }
 
     const options:{value: string, label: string}[] = []

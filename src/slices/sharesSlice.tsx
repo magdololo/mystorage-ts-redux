@@ -6,7 +6,7 @@ import {
     createSelector, PayloadAction
 } from '@reduxjs/toolkit'
 import {RootState} from "../app/store";
-import {addDoc, collection, doc, getDoc, getDocs, query, updateDoc, Timestamp} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, query, updateDoc, Timestamp, where} from "firebase/firestore";
 import {db} from "../firebase";
 
 
@@ -16,7 +16,7 @@ export interface Invite{
     date:  { seconds:number, nanoseconds: number}|null;
     id:string;
     direction: "outgoing" | "incoming";
-    status: "accepted" | "rejected" | "pending"
+    status: "accepted" | "rejected" | "pending" | "noUserExist"
 }
 const sharesAdapter = createEntityAdapter<Invite>()
 const initialState: EntityState<Invite>&{  error: null | string | undefined;  } = sharesAdapter.getInitialState({
@@ -166,5 +166,9 @@ export const selectAcceptedIncomingInvites = createSelector(
     [(state: RootState) => selectAllShares(state)],
     (shares)=> shares.filter((invite: Invite) => invite.direction === "incoming" && invite.status === "accepted")
 )
+// export const selectOutgoingSharesByUserEmail= (userEmail: string) => createSelector(
+//     [(state: RootState) => selectAllShares(state)],
+//     (shares)=> shares.filter((invite: Invite) => invite.direction === "outgoing" && invite.user_email === userEmail)
+// )
 export const {addShare, modifyShare} = sharesSlice.actions
 export default sharesSlice.reducer

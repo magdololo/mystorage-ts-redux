@@ -40,13 +40,14 @@ export const Button = styled.button`
   text-transform: uppercase;
   font-weight: bold;
   color: #581C87;
-  border: 2px solid rgb(91, 33, 182);
+  border: 1px solid rgb(91, 33, 182);
   border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   cursor: pointer;
-  width: 30%;
-  padding: 4px 8px;
+  width: 38%;
+  padding: 4px 10px;
   margin: 0 2px;
+  max-width: 130px;
   &.marginLeft {
     margin-left: 5%;
   }

@@ -139,7 +139,8 @@
     "incoming": "Incoming invitations!",
     "statusAccepted": "Accepted",
     "statusRejected": "Rejected",
-    "statusPending": "Waiting for decisions"
+    "statusPending": "Waiting for decisions",
+    "statusNoUser": "The user with the e-mail does not exist"
   },
   "buttons": {
     "editCategoriesButton": "Edit categories",

@@ -22,7 +22,7 @@ import {
     startAt, Timestamp
 } from "firebase/firestore";
 import {db} from "../firebase";
-import {selectCurrentStorage} from "../slices/usersSlice";
+import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
 import {addNotification,modifyNotification, Notification} from "../slices/notificationsSlice";
 import {addShare,modifyShare, Invite} from"../slices/sharesSlice";
 import {addCategory, modifyCategory, Category, removeCategory} from "../slices/categoriesSlice";
@@ -34,14 +34,15 @@ import {
     removeProduct,
 
 } from "../slices/userProductsSlice";
+import {useSelector} from "react-redux";
 
 const Root = ()=>{
-
+    let user = useAppSelector(selectUser);
     const dispatch = useAppDispatch()
     const currentStorageId = useAppSelector(selectCurrentStorage)
 
     useEffect(()=>{
-        const q = query(collection(db, "users/" + currentStorageId +"/notifications"));
+        const q = query(collection(db, "users/" + user?.uid +"/notifications"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     const data = change.doc.data();
@@ -69,7 +70,7 @@ const Root = ()=>{
     },[currentStorageId, dispatch])
 
     useEffect(()=>{
-        const q = query(collection(db, "users/" + currentStorageId +"/shares"));
+        const q = query(collection(db, "users/" + user?.uid +"/shares"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {

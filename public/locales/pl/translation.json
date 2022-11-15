@@ -138,7 +138,8 @@
     "incoming": "Zaproszenia przychodzące!",
     "statusAccepted": "Przyjęte",
     "statusRejected": "Odrzucone",
-    "statusPending": "Oczekuje na decyzję"
+    "statusPending": "Oczekuje na decyzję!",
+    "statusNoUser": "Użytkownik nie istnieje w bazie!"
   },
   "buttons": {
     "editCategoriesButton": "Edytuj kategorie",

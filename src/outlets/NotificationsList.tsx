@@ -1,7 +1,7 @@
 import {useAppSelector} from "../app/store";
 import {selectAllNotifications, selectUnReadNotifications} from "../slices/notificationsSlice";
 import React, {useState, useEffect, useRef} from "react";
-
+import {Link} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { regular} from '@fortawesome/fontawesome-svg-core/import.macro'
 import {
@@ -45,13 +45,12 @@ const NotificationsList = ()=>{
     }, [allNotifications])
     return(
        <>
-           {/*<div className="flex justify-center flex-nowrap">*/}
                <MenuInviteList >
-                   {/*//className="bg-white rounded-lg w-full"*/}
                    {unReadNotifications.length > 0 ?
                        unReadNotifications.map(notification => (
                            <MenuInviteItem className={"h-32 relative border-b border-gray-extraLight w-full rounded-t-lg py-2"}
                                key={notification?.id}>
+                               <Link to={"/shares"}>
                                <MessageTitle>{notification.type === "invite" ? t("notifications.notificationTypeInvite") : t("notifications.notificationTypeInfo")}</MessageTitle>
                                <Message>
                                    <MessageIcon>
@@ -62,17 +61,17 @@ const NotificationsList = ()=>{
                                                             className={"w-6 h-6 text-blue-400 justify-center items-center"}/>
                                        }
                                    </MessageIcon>
-                                   <MessageBody>
+                                   <MessageBody >
                                        <MessageBodyText>{notification.cta + " " + t("notifications." + notification.change)}</MessageBodyText>
                                        <MessageBodyDate>{date.toLocaleString()}</MessageBodyDate>
                                    </MessageBody>
 
                                </Message>
+                               </Link>
                            </MenuInviteItem>))
                        : <h3>{t("notifications.noNotifications")}</h3>
                    }
                </MenuInviteList>
-           {/*</div>*/}
 
        </>
     )

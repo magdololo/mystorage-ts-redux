@@ -22,5 +22,6 @@ service cloud.firestore {
     match /categories/{categoryId} {
       allow read: if request.auth != null;
     }
+
   }
 }

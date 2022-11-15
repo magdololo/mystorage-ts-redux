@@ -1,17 +1,21 @@
 import React, {useState} from "react";
-import {useAppDispatch} from "../app/store";
+import {useAppDispatch, useAppSelector} from "../app/store";
 import {useTranslation} from "react-i18next";
 import {useForm} from "react-hook-form";
-import {addOutgoingToShares} from "../slices/sharesSlice";
+import {
+    addOutgoingToShares, selectOutgoingInvites,
+
+} from "../slices/sharesSlice";
 import {useSelector} from "react-redux";
 import {selectUser} from "../slices/usersSlice";
 
 type AddCoUserFormProps = {
     handleCloseAddCoUser: () => void
     isShownAddCoUserModal: boolean
+    handleClick: (e:React.MouseEvent<HTMLElement>)=> void
 }
 
-const AddCoUserForm=({handleCloseAddCoUser}: AddCoUserFormProps)=>{
+const AddCoUserForm=({handleCloseAddCoUser,handleClick}: AddCoUserFormProps)=>{
     const {t} = useTranslation()
     const dispatch = useAppDispatch();
     let user = useSelector(selectUser);
@@ -24,16 +28,31 @@ const AddCoUserForm=({handleCloseAddCoUser}: AddCoUserFormProps)=>{
         email: string,
         password: string
     }>();
+    const outgoingInvites = useAppSelector(selectOutgoingInvites)
     const [messageAfterSendPassword, setMessageAfterSendPassword] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
     const onSubmit = handleSubmit((data:{email:string})=>{
+        let arrayInvites = outgoingInvites.find(invite=> invite.user_email === data.email)
+        console.log(arrayInvites)
+        if(data.email === user?.email){
+            setMessageAfterSendPassword(true)
+            setErrorMessage("Wpisałeś/aś swój adres email")
+            reset({email: ""})
+        } else if (arrayInvites){
+            setMessageAfterSendPassword(true)
+            setErrorMessage("Na ten adres wysłales juz zaproszenie")
+            reset({email: ""})
+        }  else {
         dispatch(addOutgoingToShares({userId: userId!!, outgoingEmail: data.email}))
         setMessageAfterSendPassword(true)
+         setErrorMessage(t("BottomHamburgerMenu.messageAfterInvite"))
         reset({email: ""})
-
+        }
     });
-    const handleCloseButtonAfterMessage = ()=>{
+    const handleCloseButtonAfterMessage = (e: React.MouseEvent<HTMLElement>)=>{
         handleCloseAddCoUser();
         setMessageAfterSendPassword(false)
+       handleClick(e)
     }
 
     return(
@@ -95,7 +114,9 @@ const AddCoUserForm=({handleCloseAddCoUser}: AddCoUserFormProps)=>{
                 </div> :
                 <>
                 <div className="text-gray-light my-8 text-xl" role="alert">
-                    {t("BottomHamburgerMenu.messageAfterInvite")}</div>
+                    {errorMessage}
+                    {/*{t("BottomHamburgerMenu.messageAfterInvite")}*/}
+                </div>
                 <button className=" w-2/5 px-1 py-3 text-white font-bold bg-purple top-0 text-sm leading-tight uppercase rounded shadow-md hover:shadow-lg" onClick={handleCloseButtonAfterMessage}>{t("buttons.close")}</button>
                 </>
                }

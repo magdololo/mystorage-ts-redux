@@ -117,6 +117,7 @@ const SharesPage = ()=>{
                                                 <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && t("shares.statusAccepted")}</span>
                                                 <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && t("shares.statusRejected")}</span>
                                                 <span className="font-bold font-varela ml-1">{(invite.status === "pending") && t("shares.statusPending")}</span>
+                                                <span className="font-bold font-varela ml-1">{(invite.status === "noUserExist") && t("shares.statusNoUser")}</span>
                                             </h3>
                                             <div className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
                                                 <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{date.toLocaleString()}</span>

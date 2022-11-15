@@ -81,6 +81,7 @@ const ProductsList = () => {
         const searchProductCategory = categories.find(category => category.id === userProduct.categoryId)
         return {...userProduct, categoryPath: searchProductCategory?.path, categoryTitle: searchProductCategory?.title}
     })
+    console.log(userProductsWithCategory)
     return (
         <>
             {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
@@ -101,7 +102,7 @@ const ProductsList = () => {
                                         <div className={"text-sm md:text-md " + ((product.expireDate !== null && product?.expireDate > todayDate) ? "text-gray-light" : "text-red font-bold")}>
                                             {product.expireDate ? product.expireDate.toISOString().substring(0, 10) : ""} &nbsp;
                                         </div>
-                                        <div className="text-gray-light text-md">{t("products.ProductsList.productCategory")}:
+                                        <div className="text-gray-light text-md capitalize">{t("products.ProductsList.productCategory")}:
                                             <Link to={"/categories/" + product.categoryPath}>
                                                 <span className="capitalize text-md align-baseline text-gray font-bold ml-1">{product.categoryTitle}</span>
                                             </Link>

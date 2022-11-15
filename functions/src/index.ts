@@ -12,12 +12,14 @@ exports.onNewShare = functions.firestore
         const share = snap.data();//
         const incomingUserEmail = share.user_email //merry email
         const outgoingShareId = context.params.shareId
+        const shareUserId = context.params.userId
         if (share.direction === "outgoing") {
             const usersRef = db.collection("users");
             const outgoingUserRef = await usersRef.doc(context.params.userId).get();//jonh id
             let outgoingUserEmail =""; //john email
             let outgoingUserId ="";
             if(outgoingUserRef.exists){
+                console.log("user found")
                 outgoingUserEmail = outgoingUserRef.data()!!.email;
                 outgoingUserId = outgoingUserRef.data()!!.uid;
             }
@@ -49,7 +51,11 @@ exports.onNewShare = functions.firestore
                     change: "new pending"
                 })
                 console.log(res, respond)
-            }}
+            }} else {
+                console.log("email not found")
+                await db.doc("users/" + shareUserId + "/shares/" + outgoingShareId).set({
+                    status: "noUserExist" }, {merge: true});
+            }
             console.log(queryRef)
             console.log(context.params.userId)
 
