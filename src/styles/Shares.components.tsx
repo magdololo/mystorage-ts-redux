@@ -52,22 +52,19 @@ export const Button = styled.button`
     margin-left: 5%;
   }
 `
-export const ButtonSingle = styled(Button)`
-    font-size: 10px;
-    line-height: 28px;
-    width: 80%;
-`
+
 export const SingleInvite = styled.div`
     height: 200px;
     padding: 0.875rem;
+    position: relative;
 `
-// export const MenuShares = styled.span`
-//   //padding: 0.825rem 1rem;
-//   padding-left: 1rem;
-//   font-size: 1.2rem;
-//   line-height: 1.25rem;
-//   color: #5B21B6;
-//   //display: inline-block;
-//   font-family: "Noto Sans", sans-serif;
-//  // position: relative;
-// `
+export const ButtonClosed = styled.div`
+    font-size: 20px;
+    line-height: 28px;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: none;
+    color: gray;
+    cursor: pointer;
+`

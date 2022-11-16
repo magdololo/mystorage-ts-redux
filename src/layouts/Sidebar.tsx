@@ -103,7 +103,7 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
                 <AddProductButton onClick={handleOpenAddProductModal}>{t("buttons.addProduct")}</AddProductButton>
             </div>
             <Modal isShown={isShownAddCoUserModal} hide={handleCloseAddCoUserModal} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleCloseAddCoUser, isShownAddCoUserModal, handleClick})}/>
-            <Modal isShown={isShownAddProductModal} hide={handleCloseAddProductModal} modalHeaderText={addProductModalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal} )}/>
+            <Modal isShown={isShownAddProductModal} hide={handleCloseAddProductModal} modalHeaderText={addProductModalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal})}/>
         </>
     )
 }

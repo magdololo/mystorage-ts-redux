@@ -6,8 +6,20 @@ import {
     createSelector, PayloadAction
 } from '@reduxjs/toolkit'
 import {RootState} from "../app/store";
-import {addDoc, collection, doc, getDoc, getDocs, query, updateDoc, Timestamp, where} from "firebase/firestore";
+import {
+    addDoc,
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    query,
+    updateDoc,
+    Timestamp,
+    where,
+    deleteDoc
+} from "firebase/firestore";
 import {db} from "../firebase";
+import {UserProduct} from "./userProductsSlice";
 
 
 export interface Invite{
@@ -120,6 +132,19 @@ export const restorationAccount = createAsyncThunk<string, IncomingSharesParams>
 
     return incomingSharesParams.shareId
 })
+
+export const deleteShareWithStatusNoUserExist = createAsyncThunk<string, IncomingSharesParams> ('shares/deleteShareWithStatusNoUserExist', async (incomingSharesParams: IncomingSharesParams)=> {
+    try {
+        await deleteDoc(doc(db, "users/" + incomingSharesParams.userId + "/shares/", incomingSharesParams.shareId))
+        return incomingSharesParams.shareId
+
+    }    catch(error){
+        console.log(error)
+        return {error: error}
+
+    }
+
+})
 const  sharesSlice = createSlice({
     name: 'shares',
     initialState,
@@ -148,6 +173,9 @@ const  sharesSlice = createSlice({
             })
             .addCase(restorationAccount.fulfilled,(state, action)=>{
                 sharesAdapter.updateOne(state, {id:action.payload, changes: {status: "accepted"}})
+            })
+            .addCase(deleteShareWithStatusNoUserExist.fulfilled,(state, action)=>{
+                sharesAdapter.removeOne(state, action.payload as string)
             })
     }
 })

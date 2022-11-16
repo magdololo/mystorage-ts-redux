@@ -37,10 +37,8 @@ const MessageBodyText = styled.p`
   font-size: 1rem; /* 18px */
   line-height: 1.55rem; /* 28px */
   padding-top: 1rem;
-  margin-bottom: 1rem;
   padding-left: 0.5rem;
-  
-  
+  margin-bottom: 0.6rem;
   @media (min-width: 560px) {
     font-size: 1.125rem; /* 18px */
     line-height: 1.75rem; /* 28px */
