@@ -136,14 +136,12 @@ export const restorationAccount = createAsyncThunk<string, IncomingSharesParams>
 export const deleteShareWithStatusNoUserExist = createAsyncThunk<string, IncomingSharesParams> ('shares/deleteShareWithStatusNoUserExist', async (incomingSharesParams: IncomingSharesParams)=> {
     try {
         await deleteDoc(doc(db, "users/" + incomingSharesParams.userId + "/shares/", incomingSharesParams.shareId))
-        return incomingSharesParams.shareId
+
 
     }    catch(error){
         console.log(error)
-        return {error: error}
-
     }
-
+    return incomingSharesParams.shareId
 })
 const  sharesSlice = createSlice({
     name: 'shares',
