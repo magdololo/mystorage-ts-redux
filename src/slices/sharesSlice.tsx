@@ -15,11 +15,10 @@ import {
     query,
     updateDoc,
     Timestamp,
-    where,
     deleteDoc
 } from "firebase/firestore";
 import {db} from "../firebase";
-import {UserProduct} from "./userProductsSlice";
+
 
 
 export interface Invite{
