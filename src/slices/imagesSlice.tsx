@@ -33,31 +33,42 @@ const initialState: EntityState<Image>& { error: null | string | undefined; stat
 
 })
 
-export const fetchImages = createAsyncThunk('images/fetchImages', async(uid: string)=>{
+export const fetchImages = createAsyncThunk('images/fetchImages', async()=>{
     try{
-        const images: Array<Image> = []
+        const imagesDefault: Array<Image> = []
         let q = await query(collection(db, "images"));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
 
             let productDoc = doc.data() as Image;
             productDoc.id = doc.id;
-            images.push(productDoc);
+            imagesDefault.push(productDoc);
 
 
         })
+        return imagesDefault
+
+    } catch (error) {
+        console.log(error)
+        return {error: error}
+    }
+})
+
+export const fetchUserImages = createAsyncThunk('images/fetchImages', async(uid: string)=> {
+    try {
+        const userImages :Array<Image> = []
         let query_2 = await query(collection(db, "users/" + uid + "/images"));
         const query_Snapshot = await getDocs(query_2);
         query_Snapshot.forEach((doc) => {
 
             let productDoc = doc.data() as Image;
             productDoc.id = doc.id;
-            images.push(productDoc);
+            userImages.push(productDoc);
 
         })
 
-        return images
-    } catch (error) {
+        return userImages
+    }catch (error) {
         console.log(error)
         return {error: error}
     }

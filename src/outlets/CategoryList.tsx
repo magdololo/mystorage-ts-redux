@@ -10,6 +10,7 @@ import EditCategoryForm from "../features/categories/EditCategoryForm";
 import {fetchAllProducts} from "../slices/allProductsSlice";
 import {changeSeeGreetingToTrue, selectUser, User} from "../slices/usersSlice";
 
+
 import {
     currentCategoryChange,
     deleteCategory,
@@ -24,6 +25,8 @@ import {useTranslation} from "react-i18next";
 
 import {EditCategoriesButtonComponent} from "../styles/Categories.components";
 import {MainBox} from "../styles/Categories.components";
+import {fetchImages} from "../slices/imagesSlice";
+import {fetchNotifications} from "../slices/notificationsSlice";
 
 
 export const CategoryList = () => {
@@ -31,7 +34,7 @@ export const CategoryList = () => {
     const {t} = useTranslation();
     let user = useSelector(selectUser);
     let didSee = user?.didSeeGreeting;
-    // const currentStorageId = useAppSelector(selectCurrentStorage)
+
     const {isShown, handleShown, handleClose} = useModal()
     const modalAddHeader = t("categories.CategoryList.modalAddHeader")
     const modalEditHeader = t("categories.CategoryList.modalEditHeader")
@@ -84,6 +87,8 @@ export const CategoryList = () => {
         //dispatch(fetchImages(currentStorageId!!))
         //dispatch(fetchUserProducts(currentStorageId!!))
         dispatch(fetchAllProducts())
+        dispatch(fetchImages())
+        dispatch(fetchNotifications(user?.uid!!))
         // dispatch(fetchShares(user?.uid!!))
     }, [user, dispatch])
 

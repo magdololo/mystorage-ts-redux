@@ -40,33 +40,31 @@ export const Button = styled.button`
   text-transform: uppercase;
   font-weight: bold;
   color: #581C87;
-  border: 2px solid rgb(91, 33, 182);
+  border: 1px solid rgb(91, 33, 182);
   border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   cursor: pointer;
-  width: 30%;
-  padding: 4px 8px;
+  width: 38%;
+  padding: 4px 10px;
   margin: 0 2px;
+  max-width: 130px;
   &.marginLeft {
     margin-left: 5%;
   }
 `
-export const ButtonSingle = styled(Button)`
-    font-size: 10px;
-    line-height: 28px;
-    width: 80%;
-`
+
 export const SingleInvite = styled.div`
     height: 200px;
     padding: 0.875rem;
+    position: relative;
 `
-// export const MenuShares = styled.span`
-//   //padding: 0.825rem 1rem;
-//   padding-left: 1rem;
-//   font-size: 1.2rem;
-//   line-height: 1.25rem;
-//   color: #5B21B6;
-//   //display: inline-block;
-//   font-family: "Noto Sans", sans-serif;
-//  // position: relative;
-// `
+export const ButtonClosed = styled.div`
+    font-size: 20px;
+    line-height: 28px;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: none;
+    color: gray;
+    cursor: pointer;
+`

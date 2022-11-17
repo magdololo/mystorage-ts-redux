@@ -6,8 +6,20 @@ import {
     createSelector, PayloadAction
 } from '@reduxjs/toolkit'
 import {RootState} from "../app/store";
-import {addDoc, collection, doc, getDoc, getDocs, query, updateDoc, Timestamp} from "firebase/firestore";
+import {
+    addDoc,
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    query,
+    updateDoc,
+    Timestamp,
+    where,
+    deleteDoc
+} from "firebase/firestore";
 import {db} from "../firebase";
+import {UserProduct} from "./userProductsSlice";
 
 
 export interface Invite{
@@ -16,7 +28,7 @@ export interface Invite{
     date:  { seconds:number, nanoseconds: number}|null;
     id:string;
     direction: "outgoing" | "incoming";
-    status: "accepted" | "rejected" | "pending"
+    status: "accepted" | "rejected" | "pending" | "noUserExist"
 }
 const sharesAdapter = createEntityAdapter<Invite>()
 const initialState: EntityState<Invite>&{  error: null | string | undefined;  } = sharesAdapter.getInitialState({
@@ -120,6 +132,17 @@ export const restorationAccount = createAsyncThunk<string, IncomingSharesParams>
 
     return incomingSharesParams.shareId
 })
+
+export const deleteShareWithStatusNoUserExist = createAsyncThunk<string, IncomingSharesParams> ('shares/deleteShareWithStatusNoUserExist', async (incomingSharesParams: IncomingSharesParams)=> {
+    try {
+        await deleteDoc(doc(db, "users/" + incomingSharesParams.userId + "/shares/", incomingSharesParams.shareId))
+
+
+    }    catch(error){
+        console.log(error)
+    }
+    return incomingSharesParams.shareId
+})
 const  sharesSlice = createSlice({
     name: 'shares',
     initialState,
@@ -149,6 +172,9 @@ const  sharesSlice = createSlice({
             .addCase(restorationAccount.fulfilled,(state, action)=>{
                 sharesAdapter.updateOne(state, {id:action.payload, changes: {status: "accepted"}})
             })
+            .addCase(deleteShareWithStatusNoUserExist.fulfilled,(state, action)=>{
+                sharesAdapter.removeOne(state, action.payload as string)
+            })
     }
 })
 export const {
@@ -166,5 +192,9 @@ export const selectAcceptedIncomingInvites = createSelector(
     [(state: RootState) => selectAllShares(state)],
     (shares)=> shares.filter((invite: Invite) => invite.direction === "incoming" && invite.status === "accepted")
 )
+// export const selectOutgoingSharesByUserEmail= (userEmail: string) => createSelector(
+//     [(state: RootState) => selectAllShares(state)],
+//     (shares)=> shares.filter((invite: Invite) => invite.direction === "outgoing" && invite.user_email === userEmail)
+// )
 export const {addShare, modifyShare} = sharesSlice.actions
 export default sharesSlice.reducer

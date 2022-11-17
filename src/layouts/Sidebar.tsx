@@ -32,7 +32,7 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     const modalHeader = ""
     const addProductModalHeader = t("products.AddProductForm.formAddProductTitle")
     const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
-    const handleClick = (e: any) => {
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation();
         if(toggleDrawer !== null){
             toggleDrawer()
@@ -73,7 +73,6 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
         handleShownAddCoUserModal()
     }
     const handleCloseAddCoUserModal =()=>{
-
         handleCloseAddCoUser()
     }
     const dividerStyle = {
@@ -103,8 +102,8 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
             <div className="flex justify-center py-10 pl-6">
                 <AddProductButton onClick={handleOpenAddProductModal}>{t("buttons.addProduct")}</AddProductButton>
             </div>
-            <Modal isShown={isShownAddCoUserModal} hide={handleCloseAddCoUserModal} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleCloseAddCoUser, isShownAddCoUserModal})}/>
-            <Modal isShown={isShownAddProductModal} hide={handleCloseAddProductModal} modalHeaderText={addProductModalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal} )}/>
+            <Modal isShown={isShownAddCoUserModal} hide={handleCloseAddCoUserModal} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleCloseAddCoUser, isShownAddCoUserModal, handleClick})}/>
+            <Modal isShown={isShownAddProductModal} hide={handleCloseAddProductModal} modalHeaderText={addProductModalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal})}/>
         </>
     )
 }

@@ -5,7 +5,7 @@ import {
     selectIncomingInvites,
     selectOutgoingInvites,
     acceptIncomingShares,
-    cancelAcceptedShare,
+    cancelAcceptedShare, deleteShareWithStatusNoUserExist,
 } from "../slices/sharesSlice";
 import {Invite} from "../slices/sharesSlice";
 
@@ -13,12 +13,22 @@ import BottomMenu from "../layouts/BottomMenu";
 import ReturnToCategoryList from "../component/ReturnToCategoryList";
 import {useMediaQuery} from "usehooks-ts";
 
-import {MainContent, SectionIncoming, SectionOutgoing, Button, SingleInvite} from "../styles/Shares.components";
+import {
+    MainContent,
+    SectionIncoming,
+    SectionOutgoing,
+    Button,
+    SingleInvite,
+    ButtonClosed
+} from "../styles/Shares.components";
 import {useSelector} from "react-redux";
 import {selectUser} from "../slices/usersSlice";
 import {Timestamp} from "firebase/firestore";
 
 import {useTranslation} from "react-i18next";
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
+
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const SharesPage = ()=>{
     const dispatch = useAppDispatch();
@@ -40,7 +50,9 @@ const SharesPage = ()=>{
         dispatch(cancelAcceptedShare({userId: userId!!, shareId: invite.id}))
 
     }
-
+    const deleteShareToNoExistingUser = (invite: Invite)=>{
+        dispatch(deleteShareWithStatusNoUserExist({userId: userId!!, shareId: invite.id}))
+    }
 
     const [date, setDate] = useState( new Date())
     useEffect(()=>{
@@ -117,6 +129,7 @@ const SharesPage = ()=>{
                                                 <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && t("shares.statusAccepted")}</span>
                                                 <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && t("shares.statusRejected")}</span>
                                                 <span className="font-bold font-varela ml-1">{(invite.status === "pending") && t("shares.statusPending")}</span>
+                                                <span className="font-bold font-varela ml-1">{(invite.status === "noUserExist") && t("shares.statusNoUser")}</span>
                                             </h3>
                                             <div className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
                                                 <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{date.toLocaleString()}</span>
@@ -139,6 +152,13 @@ const SharesPage = ()=>{
                                                 }
                                             </div>
                                         </div>
+                                        {invite.status === "noUserExist"?
+                                        <>
+                                        <ButtonClosed onClick={()=>deleteShareToNoExistingUser(invite)}>
+                                            <FontAwesomeIcon icon={faXmark} />
+                                        </ButtonClosed>
+                                        </> :
+                                        null}
                                     </SingleInvite>
                                 )}
                             </div>
