@@ -1,7 +1,6 @@
 import {useAppDispatch, useAppSelector} from "../app/store";
 import {
     changeUnreadNotificationsToRead,
-    selectAllNotifications,
     selectUnReadNotifications
 } from "../slices/notificationsSlice";
 import React, {useState, useEffect, useRef} from "react";
@@ -12,7 +11,7 @@ import {
     Message, MessageBody, MessageBodyText, MessageIcon, MessageTitle, MessageBodyDate, MenuInviteList, MenuInviteItem
 } from "../styles/Notifications.components";
 import {useTranslation} from "react-i18next";
-import {Timestamp} from "firebase/firestore";
+
 import {selectUser} from "../slices/usersSlice";
 
 export interface NotificationsListProps{
@@ -22,7 +21,6 @@ export interface NotificationsListProps{
 const NotificationsList = ({handleClose}: NotificationsListProps)=>{
     const {t} = useTranslation()
     const user = useAppSelector(selectUser)
-    const allNotifications = useAppSelector(selectAllNotifications)
     const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const dispatch = useAppDispatch()
     const ref = useRef<HTMLUListElement>(null);
@@ -44,17 +42,6 @@ const NotificationsList = ({handleClose}: NotificationsListProps)=>{
         }
     }, [dropdownOpen])
 
-    const [date, setDate] = useState( new Date())
-    // useEffect(()=>{
-    //
-    //     allNotifications.forEach((notification)=> {
-    //         let notificationDateFromFirebase = notification.date
-    //         let notificationTimestamp = Timestamp.fromMillis(notificationDateFromFirebase!!.seconds * 1000);
-    //         //
-    //         setDate(notificationTimestamp.toDate())
-    //
-    //     })
-    // }, [allNotifications])
     const handleClickNotify = () =>{
         navigate("/shares")
         handleClose()
