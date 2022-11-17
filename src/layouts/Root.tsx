@@ -34,8 +34,6 @@ import {
     removeProduct,
 
 } from "../slices/userProductsSlice";
-
-
 const Root = ()=>{
     let user = useAppSelector(selectUser);
     const dispatch = useAppDispatch()

@@ -25,6 +25,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from 'usehooks-ts';
 
 import {MenuNotifications} from "../styles/Notifications.components";
+import AddCoUserForm from "../component/AddCoUserForm";
+import AddProductForm from "../features/products/AddProductForm";
 
 
 
