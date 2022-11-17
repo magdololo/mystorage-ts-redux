@@ -5,7 +5,7 @@ import {
     selectUnReadNotifications
 } from "../slices/notificationsSlice";
 import React, {useState, useEffect, useRef} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { regular} from '@fortawesome/fontawesome-svg-core/import.macro'
 import {

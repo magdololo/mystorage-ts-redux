@@ -34,8 +34,6 @@ import {
     removeProduct,
 
 } from "../slices/userProductsSlice";
-import {useSelector} from "react-redux";
-
 const Root = ()=>{
     let user = useAppSelector(selectUser);
     const dispatch = useAppDispatch()
@@ -67,7 +65,7 @@ const Root = ()=>{
             unsubscribe()
         }
 
-    },[currentStorageId, dispatch])
+    },[currentStorageId, dispatch, user?.uid])
 
     useEffect(()=>{
         const q = query(collection(db, "users/" + user?.uid +"/shares"));
@@ -95,7 +93,7 @@ const Root = ()=>{
             unsubscribe()
         }
 
-    },[currentStorageId,dispatch])
+    },[currentStorageId,dispatch,user?.uid])
     useEffect(()=>{
         const q = query(collection(db, "users/" + currentStorageId +"/categories"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
