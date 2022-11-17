@@ -15,7 +15,7 @@ import {db} from "../firebase";
 
 export interface Notification{
     isRead: boolean;
-    date:  { seconds:number, nanoseconds: number}|null;
+    date:  Date|null;
     id:string;
     cta: string;
     type: "invite" | "info"
@@ -36,7 +36,7 @@ export const fetchNotifications = createAsyncThunk('notifications/fetchNotificat
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((result) => {
 
-        let notificationDoc = result.data() as Notification;
+        let notificationDoc = result.data();
         notificationDoc.id = result.id;
 
         let notificationDate: Date | null = null;

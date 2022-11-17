@@ -45,16 +45,16 @@ const NotificationsList = ({handleClose}: NotificationsListProps)=>{
     }, [dropdownOpen])
 
     const [date, setDate] = useState( new Date())
-    useEffect(()=>{
-
-        allNotifications.forEach((notification)=> {
-            let notificationDateFromFirebase = notification.date
-            let notificationTimestamp = Timestamp.fromMillis(notificationDateFromFirebase!!.seconds * 1000);
-            //
-            setDate(notificationTimestamp.toDate())
-
-        })
-    }, [allNotifications])
+    // useEffect(()=>{
+    //
+    //     allNotifications.forEach((notification)=> {
+    //         let notificationDateFromFirebase = notification.date
+    //         let notificationTimestamp = Timestamp.fromMillis(notificationDateFromFirebase!!.seconds * 1000);
+    //         //
+    //         setDate(notificationTimestamp.toDate())
+    //
+    //     })
+    // }, [allNotifications])
     const handleClickNotify = () =>{
         navigate("/shares")
         handleClose()
@@ -81,7 +81,7 @@ const NotificationsList = ({handleClose}: NotificationsListProps)=>{
                                    </MessageIcon>
                                    <MessageBody >
                                        <MessageBodyText>{notification.cta + " " + t("notifications." + notification.change)}</MessageBodyText>
-                                       <MessageBodyDate>{date.toLocaleString()}</MessageBodyDate>
+                                       <MessageBodyDate>{notification.date?.toLocaleString()}</MessageBodyDate>
                                    </MessageBody>
 
                                </Message>

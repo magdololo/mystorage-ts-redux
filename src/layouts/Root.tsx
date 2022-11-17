@@ -44,13 +44,17 @@ const Root = ()=>{
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     const data = change.doc.data();
+                    let notificationDate = null;
+                    if( data.date != null){
+                        notificationDate = Timestamp.fromMillis(data.date.seconds*1000).toDate();
+                    }
                     if (change.type === "added") {
                         console.log("New notifications: ", data);
-                        dispatch(addNotification({...change.doc.data(), id: change.doc.id} as Notification))
+                        dispatch(addNotification({...data,date: notificationDate, id: change.doc.id} as Notification))
                     }
                     if (change.type === "modified") {
                         console.log("Modified notifications: ", change.doc.data());
-                        dispatch(modifyNotification({...change.doc.data(), id: change.doc.id} as Notification))
+                        dispatch(modifyNotification({...data, date: notificationDate,id: change.doc.id} as Notification))
                     }
                     if (change.type === "removed") {
                         console.log("Removed notifications: ", change.doc.data());
