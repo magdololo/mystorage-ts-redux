@@ -156,8 +156,27 @@ const Home = () => {
                 </SectionBox>
             </Section>
 
-
             <Section primary={false}>
+                <SectionBox size={"5.5rem"}>
+                    <SectionBoxText className={"noVisibilityOnMobile"}>
+                        <SectionTextTitle>{t("home_section4_heading")}</SectionTextTitle>
+                        <SectionTextSubtitle>{t("home_section4_subheading")}</SectionTextSubtitle>
+                    </SectionBoxText>
+                    <SectionBoxPhotos>
+                        {i18n.language === "pl" ?
+                            <PhotoBox src="../images/mobile_share_page.png"
+                                      alt={"ekran z zaproszeniami"}/> :
+                            <PhotoBox src="../images/mobile_share_page_en.png"
+                                      alt={"screen with invitings"}/>}
+                    </SectionBoxPhotos>
+                    <SectionBoxText className={"visibilityOnMobile"}>
+                        <SectionTextTitle>{t("home_section4_heading")}</SectionTextTitle>
+                        <SectionTextSubtitle>{t("home_section4_subheading")}</SectionTextSubtitle>
+                    </SectionBoxText>
+                </SectionBox>
+            </Section>
+
+            <Section primary={true}>
                 <SectionBox size={"1rem"}>
                     <FooterAuthor>
                         <h5 className="footer-header">

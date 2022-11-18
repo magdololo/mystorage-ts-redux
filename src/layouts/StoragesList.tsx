@@ -95,13 +95,6 @@ const StoragesList = ()=>{
 
                     })}
                 </StorageList> :
-                // <div className="select">
-                //     <select id="standard-select" value={currentStorageId!!} onChange={handleChange}>
-                //         {options.map((option) => (
-                //             <option className={"single_option"+ (currentStorageId === option.value ? " selected" : "")} value={option.value} selected={currentStorageId === option.value}  >{option.label}</option>
-                //         ))}
-                //     </select>
-                // </div>
                 <Select options={options}
                         defaultValue={options[options.length-1]}
                         onChange={handleChange}
