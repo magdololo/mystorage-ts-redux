@@ -21,7 +21,7 @@ const StoragesList = ()=>{
     const currentStorageId = useAppSelector(selectCurrentStorage)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
     const changeStorage =(userId: string)=> {
-        //console.log("changeStorage")
+
         dispatch(setCurrentStorage(userId))
         dispatch(removeProducts())
         dispatch(removeCategories())
