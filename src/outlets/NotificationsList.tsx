@@ -17,7 +17,6 @@ import {selectUser} from "../slices/usersSlice";
 export interface NotificationsListProps{
     handleClose:() => void
 }
-
 const NotificationsList = ({handleClose}: NotificationsListProps)=>{
     const {t} = useTranslation()
     const user = useAppSelector(selectUser)
@@ -29,7 +28,6 @@ const NotificationsList = ({handleClose}: NotificationsListProps)=>{
         navigate("/shares")
         handleClose()
         dispatch(changeUnreadNotificationsToRead(user!.uid))
-
     }
     return(
        <>
@@ -60,7 +58,6 @@ const NotificationsList = ({handleClose}: NotificationsListProps)=>{
                        : <h3>{t("notifications.noNotifications")}</h3>
                    }
                </MenuInviteList>
-
        </>
     )
 }
