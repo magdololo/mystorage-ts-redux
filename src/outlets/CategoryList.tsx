@@ -18,7 +18,6 @@ import {
     Category,
 } from "../slices/categoriesSlice";
 
-import {ToastContainer} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";

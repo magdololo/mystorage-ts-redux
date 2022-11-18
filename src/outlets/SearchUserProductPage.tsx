@@ -18,7 +18,7 @@ import {selectAllCategories} from "../slices/categoriesSlice";
 import {useMediaQuery} from "@mui/material";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {ToastContainer} from "react-toastify";
+
 import 'react-toastify/dist/ReactToastify.css';
 import {useTranslation} from "react-i18next";
 import {
