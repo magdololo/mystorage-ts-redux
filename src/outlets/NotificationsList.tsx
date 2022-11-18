@@ -24,22 +24,6 @@ const NotificationsList = ({handleClose}: NotificationsListProps)=>{
     const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const dispatch = useAppDispatch()
     let navigate = useNavigate()
-    // const [dropdownOpen, setDropdownOpen] = useState(false)
-    //
-    // useEffect(() => {
-    //      const checkIfClickedOutside =(e:any) => {
-    //         // If the menu is open and the clicked target is not within the menu,
-    //         // then close the menu
-    //         if (dropdownOpen && !!ref.current && !ref.current?.contains(e.target)) {
-    //             setDropdownOpen(false)
-    //         }
-    //     }
-    //     document.addEventListener("mousedown", checkIfClickedOutside)
-    //     return () => {
-    //         // Cleanup the event listener
-    //         document.removeEventListener("mousedown", checkIfClickedOutside)
-    //     }
-    // }, [dropdownOpen])
 
     const handleClickNotify = () =>{
         navigate("/shares")
