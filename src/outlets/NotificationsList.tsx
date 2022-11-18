@@ -3,7 +3,7 @@ import {
     changeUnreadNotificationsToRead,
     selectUnReadNotifications
 } from "../slices/notificationsSlice";
-import React, {useState, useEffect, useRef} from "react";
+import React from "react";
 import {useNavigate} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { regular} from '@fortawesome/fontawesome-svg-core/import.macro'
@@ -23,24 +23,23 @@ const NotificationsList = ({handleClose}: NotificationsListProps)=>{
     const user = useAppSelector(selectUser)
     const unReadNotifications = useAppSelector(selectUnReadNotifications)
     const dispatch = useAppDispatch()
-    const ref = useRef<HTMLUListElement>(null);
     let navigate = useNavigate()
-    const [dropdownOpen, setDropdownOpen] = useState(false)
-
-    useEffect(() => {
-         const checkIfClickedOutside =(e:any) => {
-            // If the menu is open and the clicked target is not within the menu,
-            // then close the menu
-            if (dropdownOpen && !!ref.current && !ref.current?.contains(e.target)) {
-                setDropdownOpen(false)
-            }
-        }
-        document.addEventListener("mousedown", checkIfClickedOutside)
-        return () => {
-            // Cleanup the event listener
-            document.removeEventListener("mousedown", checkIfClickedOutside)
-        }
-    }, [dropdownOpen])
+    // const [dropdownOpen, setDropdownOpen] = useState(false)
+    //
+    // useEffect(() => {
+    //      const checkIfClickedOutside =(e:any) => {
+    //         // If the menu is open and the clicked target is not within the menu,
+    //         // then close the menu
+    //         if (dropdownOpen && !!ref.current && !ref.current?.contains(e.target)) {
+    //             setDropdownOpen(false)
+    //         }
+    //     }
+    //     document.addEventListener("mousedown", checkIfClickedOutside)
+    //     return () => {
+    //         // Cleanup the event listener
+    //         document.removeEventListener("mousedown", checkIfClickedOutside)
+    //     }
+    // }, [dropdownOpen])
 
     const handleClickNotify = () =>{
         navigate("/shares")

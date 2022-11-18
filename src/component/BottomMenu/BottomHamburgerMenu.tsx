@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 import {AiOutlineMenu} from "react-icons/ai";
@@ -25,7 +25,21 @@ const BottomHamburgerMenu = () => {
         }
     },[isEnglish])// eslint-disable-line react-hooks/exhaustive-deps
 
-
+    const ref = useRef<HTMLUListElement>(null);
+    useEffect(() => {
+        const checkIfClickedOutside =(e:any) => {
+            // If the menu is open and the clicked target is not within the menu,
+            // then close the menu
+            if (isOpen && !!ref.current && !ref.current?.contains(e.target)) {
+                setIsOpen(false)
+            }
+        }
+        document.addEventListener("mousedown", checkIfClickedOutside)
+        return () => {
+            // Cleanup the event listener
+            document.removeEventListener("mousedown", checkIfClickedOutside)
+        }
+    }, [isOpen])
     return (
         <>
             <AiOutlineMenu className='text-gray-light text-center mx-auto text-3xl' onClick={toggleDrawer} />

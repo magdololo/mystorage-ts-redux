@@ -32,6 +32,7 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     const modalHeader = ""
     const addProductModalHeader = t("products.AddProductForm.formAddProductTitle")
     const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
+    const isBiggerThan1280 = useMediaQuery('(min-width: 1280px)')
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation();
         if(toggleDrawer !== null){
@@ -71,6 +72,7 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     }
     const handleOpenAddCoUserModal = ()=>{
         handleShownAddCoUserModal()
+
     }
     const handleCloseAddCoUserModal =()=>{
         handleCloseAddCoUser()
@@ -79,6 +81,7 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
         marginLeft: '1rem',
         marginRight: '1rem'
     }
+
     return(
         <>
             <div className="flex justify-center">
@@ -99,9 +102,10 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
                     <li key='4' className="px-6 py-2  w-full cursor-pointer" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />{t("BottomHamburgerMenu.signOut")}</li>
                 </ul>
             </div>
+            {isBiggerThan1280 ?
             <div className="flex justify-center py-10 pl-6">
                 <AddProductButton onClick={handleOpenAddProductModal}>{t("buttons.addProduct")}</AddProductButton>
-            </div>
+            </div> : null}
             <Modal isShown={isShownAddCoUserModal} hide={handleCloseAddCoUserModal} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleCloseAddCoUser, isShownAddCoUserModal, handleClick})}/>
             <Modal isShown={isShownAddProductModal} hide={handleCloseAddProductModal} modalHeaderText={addProductModalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal})}/>
         </>
