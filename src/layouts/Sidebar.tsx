@@ -16,8 +16,6 @@ import AddProductForm from "../features/products/AddProductForm";
 import {AddProductButton} from "../styles/Products.components";
 import {useMediaQuery} from "usehooks-ts";
 
-
-
 interface SidebarProps{
     toggleDrawer: null | (()=> void);
 }
@@ -63,20 +61,6 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
             content: <span className="text-sm font-bold">{user?.email}</span>}
     ]
 
-    const handleOpenAddProductModal = ()=>{
-        handleShownAddProductModal()
-    }
-    const handleCloseAddProductModal = ()=>{
-
-        handleCloseAddProduct()
-    }
-    const handleOpenAddCoUserModal = ()=>{
-        handleShownAddCoUserModal()
-
-    }
-    const handleCloseAddCoUserModal =()=>{
-        handleCloseAddCoUser()
-    }
     const dividerStyle = {
         marginLeft: '1rem',
         marginRight: '1rem'
@@ -98,16 +82,16 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
                         <Accordion items={myAccordion} duration={300} multiple={false}/>
                     </li>
                     <li key='6' className="px-6 py-2  w-full cursor-pointer" onClick={handleClick}><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faUserGroup} /><Link to={'/shares/'}>{t("BottomHamburgerMenu.coUsers")}</Link></li>
-                    <li key='7' className="pl-6 py-2  w-full cursor-pointer" onClick={handleOpenAddCoUserModal}><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faUserPlus} />{t("BottomHamburgerMenu.addCoUser")}</li>
+                    <li key='7' className="pl-6 py-2  w-full cursor-pointer" onClick={()=>handleShownAddCoUserModal()}><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faUserPlus} />{t("BottomHamburgerMenu.addCoUser")}</li>
                     <li key='4' className="px-6 py-2  w-full cursor-pointer" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />{t("BottomHamburgerMenu.signOut")}</li>
                 </ul>
             </div>
             {isBiggerThan1280 ?
             <div className="flex justify-center py-10 pl-6">
-                <AddProductButton onClick={handleOpenAddProductModal}>{t("buttons.addProduct")}</AddProductButton>
+                <AddProductButton onClick={()=> handleShownAddProductModal()}>{t("buttons.addProduct")}</AddProductButton>
             </div> : null}
-            <Modal isShown={isShownAddCoUserModal} hide={handleCloseAddCoUserModal} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleCloseAddCoUser, isShownAddCoUserModal, handleClick})}/>
-            <Modal isShown={isShownAddProductModal} hide={handleCloseAddProductModal} modalHeaderText={addProductModalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal})}/>
+            <Modal isShown={isShownAddCoUserModal} hide={()=> handleCloseAddCoUser()} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleCloseAddCoUser, isShownAddCoUserModal, handleClick})}/>
+            <Modal isShown={isShownAddProductModal} hide={()=> handleCloseAddProduct()} modalHeaderText={addProductModalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal})}/>
         </>
     )
 }

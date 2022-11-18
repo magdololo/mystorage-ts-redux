@@ -24,7 +24,7 @@ import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons
 
 import {Modal} from "../component/Modal/Modal";
 import EditProductForm from "../features/products/EditProductForm";
-import {ToastContainer} from "react-toastify";
+
 
 import ReturnToCategoryList from "../component/ReturnToCategoryList";
 
@@ -148,7 +148,7 @@ const SingleCategoryPage = () => {
                     </ProductsBox>
                 </MainContent>
                 <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
-                <ToastContainer />
+
             </div>
         </>
     );

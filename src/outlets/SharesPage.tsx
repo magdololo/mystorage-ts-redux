@@ -9,7 +9,7 @@ import {
 } from "../slices/sharesSlice";
 import {Invite} from "../slices/sharesSlice";
 
-import BottomMenu from "../layouts/BottomMenu";
+
 import ReturnToCategoryList from "../component/ReturnToCategoryList";
 import {useMediaQuery} from "usehooks-ts";
 
@@ -76,7 +76,7 @@ const SharesPage = ()=>{
                         <div className="p-2 mx-6 ">
                             <div className="w-full flex flex-col divide-y divide-gray-extraLight">
                                 {incomingInvites.map((invite: Invite) =>
-                                    <SingleInvite>
+                                    <SingleInvite key={invite.id}>
                                         <div className={"h-2/3 "}>
                                             <h2 className="text-md xmd:text-lg text-gray-light pb-3 md:text-lg">Od <span className="font-bold">{invite.user_email}</span></h2>
                                             <h3 className="text-md xmd:text-md text-gray-light pb-3 xl:pb-2.5">
@@ -165,7 +165,7 @@ const SharesPage = ()=>{
                         </div>
                     </SectionOutgoing>
                 </MainContent>
-            {isSmallerThan1280 ? <BottomMenu/> : null}
+
         </>
     )
 }

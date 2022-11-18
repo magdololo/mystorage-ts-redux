@@ -5,7 +5,7 @@ import ReturnToCategoryList from "../component/ReturnToCategoryList";
 import {Modal} from "../component/Modal/Modal";
 import {useModal} from "../component/Modal/UseModal";
 import EditProductForm from "../features/products/EditProductForm";
-import BottomMenu from "../layouts/BottomMenu";
+
 
 import {
     changeProductQuantity,
@@ -81,7 +81,9 @@ const ProductsList = () => {
         const searchProductCategory = categories.find(category => category.id === userProduct.categoryId)
         return {...userProduct, categoryPath: searchProductCategory?.path, categoryTitle: searchProductCategory?.title}
     })
-    console.log(userProductsWithCategory)
+
+
+
     return (
         <>
             {isSmallerThan1280 ? <ReturnToCategoryList/>: null}
@@ -89,8 +91,8 @@ const ProductsList = () => {
                     <SinglePageTitle>{t('products.ProductsList.title')}</SinglePageTitle>
                     <ProductsListBox justifyContent = "space-between">
                         {userProductsWithCategory.map((product) =>
-                            <SingleProductBox  width={isSmallerThan1280? "100%" : "32%"} height={isSmallerThan1280? "auto" :"240px"}>
-                                <div key={product.id} className="flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4 h-full">
+                            <SingleProductBox  width={isSmallerThan1280? "100%" : "32%"} height={isSmallerThan1280? "auto" :"240px"} key={product.id} >
+                                <div className="flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4 h-full">
                                     <ProductNameBox>
                                         {product.name}
                                     </ProductNameBox>
@@ -126,8 +128,8 @@ const ProductsList = () => {
                 </ProductsBox>
             <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}
                    modalContent={<EditProductForm handleClose={handleClose} isShown={isShown}/>}/>
-            <ToastContainer/>
-            {isSmallerThan1280 ? <BottomMenu/> : null}
+
+
         </>
     )
 }

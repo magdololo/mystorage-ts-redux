@@ -34,6 +34,7 @@ import {
     removeProduct,
 
 } from "../slices/userProductsSlice";
+import {ToastContainer} from "react-toastify";
 
 const Root = ()=>{
     let user = useAppSelector(selectUser);
@@ -184,6 +185,7 @@ const Root = ()=>{
                 <FooterBar><FooterBox/></FooterBar>
                 </>
                 : <BottomMenu/> }
+            <ToastContainer />
         </MainPageLayout>
         </>
     )

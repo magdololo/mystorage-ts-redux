@@ -6,18 +6,12 @@ import {useModal} from "../component/Modal/UseModal";
 import SearchInput from "../component/BottomMenu/SearchInput";
 import {useTranslation} from "react-i18next";
 import ButtonAddProduct from "../component/BottomMenu/ButtonAddProduct";
-import {useParams} from "react-router-dom";
-import {useAppSelector} from "../app/store";
-import {Category, selectCategoryByPath} from "../slices/categoriesSlice";
+
 
 const BottomMenu = () => {
-    const { t, i18n } = useTranslation();
-    console.log(i18n.language)
+    const { t } = useTranslation();
     const {isShown: isShownAddProductModal, handleShown, handleClose: handleCloseAddProduct} = useModal()
-    const {categoryPath} = useParams();
-    const categoryFromPath = useAppSelector(selectCategoryByPath(categoryPath ?? "")) as Category
 
-    console.log(categoryFromPath)
     const modalHeader = t("products.AddProductForm.formAddProductTitle")
 
     return(

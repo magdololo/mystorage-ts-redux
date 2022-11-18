@@ -5,7 +5,7 @@ import {Modal} from "../component/Modal/Modal";
 import {useModal} from "../component/Modal/UseModal";
 import ReturnToCategoryList from "../component/ReturnToCategoryList";
 import EditProductForm from "../features/products/EditProductForm";
-import BottomMenu from "../layouts/BottomMenu";
+
 import {
     changeProductQuantity,
     ChangeQuantity,
@@ -164,8 +164,8 @@ const SearchUserProductPage= ()=>{
                 {content}
             </ProductsBox>
             <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
-            <ToastContainer />
-            {isSmallerThan1280 ? <BottomMenu/> : null}
+
+
         </>
     )
 }

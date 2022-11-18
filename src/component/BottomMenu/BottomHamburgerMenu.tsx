@@ -26,12 +26,16 @@ const BottomHamburgerMenu = () => {
     },[isEnglish])// eslint-disable-line react-hooks/exhaustive-deps
 
     const ref = useRef<HTMLUListElement>(null);
+    console.log(isOpen)
     useEffect(() => {
         const checkIfClickedOutside =(e:any) => {
+            console.log(ref.current)
+            console.log(e.target)
             // If the menu is open and the clicked target is not within the menu,
             // then close the menu
             if (isOpen && !!ref.current && !ref.current?.contains(e.target)) {
-                setIsOpen(false)
+                // setIsOpen(false)
+                toggleDrawer()
             }
         }
         document.addEventListener("mousedown", checkIfClickedOutside)
