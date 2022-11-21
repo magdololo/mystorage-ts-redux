@@ -1,12 +1,12 @@
 import React, {useEffect, Suspense} from "react";
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {auth, onAuthStateChanged, db} from './firebase';
 
-import {login, selectUser, User} from "./slices/usersSlice";
+import {login, User} from "./slices/usersSlice";
 import {
     Routes,
     Route,
-    useNavigate, useLocation,
+    useNavigate,
 
 } from "react-router-dom";
 import Loading from "./component/Loading";
@@ -33,24 +33,18 @@ function App() {
     initializeApp(firebaseConfig);
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const location = useLocation()
 
-
-    console.log(location)
     useEffect(() => {
         onAuthStateChanged(auth,async (user) => {
 
             if(user === null) {
                 return
             }
-
-            console.log(user)
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
 
             let doExist = docSnap.exists()
             let result = docSnap.data() as User
-            console.log(doExist)
 
 
             if (!doExist) {
@@ -71,11 +65,6 @@ function App() {
         })
         }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
-
-
-
-    const user = useSelector(selectUser);
-    console.log(user)
     return (
         <>
         <Suspense fallback={<Loading />}>

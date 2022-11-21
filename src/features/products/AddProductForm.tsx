@@ -43,7 +43,7 @@ export type AutocompleteWithUserProductsProps = {
     onChange: (data: any) => void
     value: string
     setSelectedProductFromAutocomplete: (userProduct: UserProduct) => void;
-    //setNewProductName: (data: string) => void
+
 }
 export type AutocompleteWithCategoriesTitleProps = {
     onChange: (data: any) => void

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 
 export const ProductsBox = styled.div`
-  color: yellow;
+ 
   grid-area: productsOfCategory;
   padding: 0.25rem;
 `

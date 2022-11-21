@@ -178,7 +178,8 @@
     "coUsers": "Współużytkownicy",
     "addCoUser": "Dodaj współużytkownika",
     "headerFormAddCoUser" :"Wpisz email współużytkownika",
-    "messageAfterInvite": "Na ten adres email wysłalismy zaproszenie do Twojej spiżarni!"
+    "messageAfterInvite": "Na ten adres email wysłalismy zaproszenie do Twojej spiżarni!",
+    "searchProduct": "Wyszukaj produkt..."
   }
 }
 

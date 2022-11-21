@@ -37,7 +37,6 @@ export const StyledModal = styled.div`
   height: 90%;
   @media (min-width: 60em) {
     margin: 0 auto;
-    
   }
 `;
 
@@ -53,26 +52,13 @@ export const Header = styled.div`
 export const HeaderText = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
-  //padding-bottom: 0.8rem;
   align-self: center;
   color: rgb(55 65 81);
   
 `;
 
-// export const CloseButton = styled.button`
-//   font-size: 0.8rem;
-//   border: none;
-//   border-radius: 3px;
-//   margin-left: 0.5rem;
-//   background: none;
-//   :hover {
-//     cursor: pointer;
-//   }
-// `;
-
 export const Content = styled.div`
   color: rgb(107 114 128);
-  //max-height: 60rem;
   overflow-x: hidden;
   overflow-y: auto;
 `;

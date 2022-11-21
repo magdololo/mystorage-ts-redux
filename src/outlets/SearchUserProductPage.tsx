@@ -152,7 +152,7 @@ const SearchUserProductPage= ()=>{
            )}
            </ProductsListBox>
     } else {
-        content = <h2>{t("products.SearchUserProductPage.noSearchResult")}.</h2>
+        content = <h2 className={"text-xl font-bolder text-gray-light mt-10 ml-10 "}>{t("products.SearchUserProductPage.noSearchResult")}.</h2>
     }
     return(
         <>

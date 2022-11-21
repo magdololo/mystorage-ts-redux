@@ -136,16 +136,11 @@ export const addUserProduct = createAsyncThunk<UserProduct, UserProduct,{ //pier
     dispatch: AppDispatch
     state: RootState
 }>('userProducts/addUserProduct', async(userProduct, thunkApi)=> {
-    console.log(userProduct)
     await thunkApi.dispatch(fetchProductFromDictionaryId(userProduct))
-    let productFromDictionaryId = await thunkApi.getState().allProducts.productFromDictionaryId
-    console.log(productFromDictionaryId)
-    userProduct.productId = productFromDictionaryId
+
+    userProduct.productId =  await thunkApi.getState().allProducts.productFromDictionaryId
     try{
         let result = await addDoc(collection(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products"), userProduct);
-
-        console.log(result)
-        console.log(result.id)
         return {...userProduct,id: result.id} as UserProduct
     }
     catch(error){
@@ -160,12 +155,10 @@ export const editUserProduct = createAsyncThunk<UserProduct, UserProduct,{ //pie
     dispatch: AppDispatch
     state: RootState
 }>('userProducts/editUserProduct', async(userProduct, thunkApi)=> {
-    console.log(userProduct)
     await thunkApi.dispatch(fetchProductFromDictionaryId(userProduct))
-    let productFromDictionaryId = await thunkApi.getState().allProducts.productFromDictionaryId
-    console.log(productFromDictionaryId)
+    await thunkApi.getState().allProducts.productFromDictionaryId
     let editingProduct = await thunkApi.getState().userProducts.editProduct
-    console.log(editingProduct)
+
 
     if(userProduct.categoryId === editingProduct?.categoryId){
         const docRef = doc(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products/",userProduct.id);
@@ -236,7 +229,6 @@ const userProductsSlice = createSlice({
                 userProductsAdapter.upsertMany(state, action.payload as UserProduct[])
             })
             .addCase(changeProductQuantity.fulfilled,(state,action )=>{
-                console.log(action.payload)
                 let userProduct = action.payload as UserProduct
                 userProductsAdapter.updateOne(state, {id:userProduct.id, changes: {quantity: userProduct.quantity}})
 

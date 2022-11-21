@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent} from "react";
+import React, { useState } from "react";
 import {useNavigate, Link} from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useTranslation } from "react-i18next";
@@ -33,7 +33,7 @@ const LoginPage = () => {
     const[message, setMessage] = useState<boolean>(false);
     let navigate = useNavigate()
     const [checkboxState, setCheckboxState] =useState(false);
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>)=>{
+    const handleInputChange = ()=>{
        setCheckboxState(!checkboxState)
     }
     const [user,setUser] = useState({} as User)
@@ -43,7 +43,7 @@ const LoginPage = () => {
     const eye = <FontAwesomeIcon icon={faEye}/>;
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisibility = () => {
-        setPasswordShown(passwordShown ? false : true);
+        setPasswordShown(!passwordShown);
     };
     const {
         register,
@@ -55,11 +55,9 @@ const LoginPage = () => {
         password: string
     }>();
     const onSubmit = handleSubmit((data) => {
-        console.log(data)
         signInWithEmailAndPassword(auth, data.email, data.password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log("Singed in user: ", user);
                 reset();
                 dispatch(
                     login({uid: user.uid,
@@ -95,24 +93,16 @@ const LoginPage = () => {
             // This gives you a Google Access Token. You can use it to access the Google API.
 
            let user = result.user
-
-            console.log("log with google" + user)
-
-
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
             const userExist = docSnap.exists()
-            console.log(userExist)
                 if(!userExist){
                 setContent(true);
                 setUser(user as User)
                 setMessage(true)
 
             } else {
-                console.log("else")
                 GoogleAuthProvider.credentialFromResult(result);
-
-               console.log("Singed in user: ", user);
                dispatch(
                    login({uid: user.uid,
                        email: user.email ?? "",
@@ -148,8 +138,6 @@ const LoginPage = () => {
                     didSeeGreeting: false
                 }))
             navigate("/categories")
-        } else {
-            console.log("checkboxIsFalse")
         }
 
     }
@@ -318,7 +306,7 @@ const LoginPage = () => {
                             </button>
                         </div>
                         <div className="text-lg">
-                            <button onClick={(event) => {
+                            <button onClick={() => {
                                 setContent(false)
                             }}><BsArrowLeft className="inline-flex text-gray-light"/></button>
                         </div>

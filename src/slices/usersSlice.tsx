@@ -45,8 +45,8 @@ export const addNewUserToUsersCollection = createAsyncThunk('users/addNewUserToU
             didSeeGreeting: false
 
         })
-    } catch (e){
-        console.log(e)
+    } catch (error){
+        console.log(error)
     }
 
 
@@ -59,7 +59,6 @@ export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, AddDefaul
     dispatch: AppDispatch
     state: RootState
 }>("users/addDefaultCategoriesToNewUser", async (addDefaultCategoriesToNewUserProps: AddDefaultCategoriesToNewUserProps, thunkApi)=>{
-    let defaultCategories:Array<Category> =[];
     try{
 
         let q = await query(collection(db, "categories"), where("language","==",addDefaultCategoriesToNewUserProps.userLanguage));
@@ -68,19 +67,17 @@ export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, AddDefaul
             let category: Category = doc.data() as Category
             category.id = doc.id
             category.user = addDefaultCategoriesToNewUserProps.userId
-            defaultCategories.push(category);
             thunkApi.dispatch(addNewCategory({category, notify: false}))
-            console.log(doc.id, " => ", doc.data());
         })
-    } catch{
-
+    } catch(error){
+        console.log(error)
     }
    return true
 })
 export const changeSeeGreetingToTrue = createAsyncThunk<boolean,User,{
     dispatch: AppDispatch
     state: RootState
-}>('users/changeSeeGreetingToTrue', async (user: User, thunkApi)=>{
+}>('users/changeSeeGreetingToTrue', async (user: User)=>{
 
     try{
         const docRef = doc(db, "users/" + user?.uid);
@@ -114,25 +111,25 @@ const usersSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(addNewUserToUsersCollection.fulfilled,(state, action)=>{
-            console.log("fulfilled")
+            .addCase(addNewUserToUsersCollection.fulfilled,()=>{
+            console.log("Status addNewUserToUsersCollection is fulfilled")
             })
-            .addCase(addNewUserToUsersCollection.rejected,(state, action)=>{
-                console.log("rejected")
+            .addCase(addNewUserToUsersCollection.rejected,()=>{
+                console.log("Status addNewUserToUsersCollection is rejected")
             })
-            .addCase(addDefaultCategoriesToNewUser.fulfilled,(state, action)=>{
-                console.log("dodales domyslne kategorie nowemu userowi")
+            .addCase(addDefaultCategoriesToNewUser.fulfilled,()=>{
+                console.log("Add default categories to new user")
             })
-            .addCase(changeSeeGreetingToTrue.fulfilled,(state, action)=>{
+            .addCase(changeSeeGreetingToTrue.fulfilled,(state)=>{
                 let user = state.user!!
-                let newUser = {
+                state.user = {
                     uid: user.uid,
                     email: user.email,
                     provider: user.provider,
                     didSeeGreeting: true
 
                 }
-                state.user = newUser
+
             })
 
     }

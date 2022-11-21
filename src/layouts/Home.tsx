@@ -45,18 +45,17 @@ const Home = () => {
     const handleToggle = () => {
         setIsEnglish(!isEnglish);
     };
-    //const getLanguage = () => i18n.language || window.localStorage.i18nextLng
 
   useEffect(()=>{
         if(isEnglish){
             i18n.changeLanguage("en")
             .then(()=>{
-                console.log("english")
+                console.log("Language changed to english")
             })
         } else {
             i18n.changeLanguage("pl")
         .then(()=>{
-                console.log("polish")
+                console.log("Language changed to polish")
             })
         }
     },[isEnglish, i18n])
