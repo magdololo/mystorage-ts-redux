@@ -55,12 +55,12 @@ const AppHeader = () => {
         if(isEnglish){
             i18n.changeLanguage("en")
                 .then(()=>{
-                    console.log("english")
+                    console.log("Language changed to english")
                 })
         } else {
             i18n.changeLanguage("pl")
                 .then(()=>{
-                    console.log("polish")
+                    console.log("Language changed to polish")
                 })
         }
     },[isEnglish, i18n])

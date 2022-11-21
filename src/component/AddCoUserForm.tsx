@@ -33,7 +33,7 @@ const AddCoUserForm=({handleCloseAddCoUser,handleClick}: AddCoUserFormProps)=>{
     const [errorMessage, setErrorMessage] = useState("")
     const onSubmit = handleSubmit((data:{email:string})=>{
         let arrayInvites = outgoingInvites.find(invite=> invite.user_email === data.email)
-        console.log(arrayInvites)
+
         if(data.email === user?.email){
             setMessageAfterSendPassword(true)
             setErrorMessage("Wpisałeś/aś swój adres email")
@@ -88,28 +88,48 @@ const AddCoUserForm=({handleCloseAddCoUser,handleClick}: AddCoUserFormProps)=>{
                             {/*{errors.email?.type === 'pattern' && <span className="text-sm text-red">{ t("users.errors.emailTypePattern")}</span>}*/}
                             {/*{errorMessage!=="" && <p>{errorMessage}</p>}*/}
                         </div>
-                        <div className="flex flex row justify-between">
-                            <button type="submit" className=" w-2/5
+                        <div className={"flex flex-row justify-between"}>
+                            <div className="flex flex row justify-between">
+                                <button type="submit" className=" w-2/5
 
-                                          px-1
-                                          py-3
-                                          text-white
-                                          font-bold
-                                          bg-purple
-                                          text-sm
-                                          leading-tight
-                                          uppercase
-                                          rounded
-                                          shadow-md
-                                          hover:shadow-lg
-                                          focus:shadow-lg focus:outline-none focus:ring-0
-                                          active:shadow-lg
-                                          transition
-                                          duration-150
-                                          ease-in-out">{t("buttons.remindPassword")}</button>
+                                              px-1
+                                              py-3
+                                              text-white
+                                              font-bold
+                                              bg-purple
+                                              text-sm
+                                              leading-tight
+                                              uppercase
+                                              rounded
+                                              shadow-md
+                                              hover:shadow-lg
+                                              focus:shadow-lg focus:outline-none focus:ring-0
+                                              active:shadow-lg
+                                              transition
+                                              duration-150
+                                              ease-in-out">{t("buttons.remindPassword")}</button>
+                            </div>
+                            <div className="flex flex row justify-between">
+                                <button type="submit" className=" w-2/5
+
+                                              px-1
+                                              py-3
+                                              text-white
+                                              font-bold
+                                              bg-purple
+                                              text-sm
+                                              leading-tight
+                                              uppercase
+                                              rounded
+                                              shadow-md
+                                              hover:shadow-lg
+                                              focus:shadow-lg focus:outline-none focus:ring-0
+                                              active:shadow-lg
+                                              transition
+                                              duration-150
+                                              ease-in-out">{t("buttons.cancel")}</button>
+                            </div>
                         </div>
-
-
                     </form>
                 </div> :
                 <>

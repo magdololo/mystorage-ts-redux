@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from 'react-redux';
 import { useTranslation } from "react-i18next";
@@ -34,7 +34,7 @@ const RegisterPage = () => {
         formState: {errors}
     } = useForm<Inputs>();
     const [checkboxState, setCheckboxState] =useState(false);
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>)=>{
+    const handleInputChange = ()=>{
         setCheckboxState(!checkboxState)
     }
    const [message, setMessage] = useState("");
@@ -51,7 +51,6 @@ const RegisterPage = () => {
                         userId: user.uid,
                         userLanguage: userLanguage
                     }
-                    console.log("Registered user: ", user);
                     dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId, didSeeGreeting: false}))
                     dispatch( addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
 

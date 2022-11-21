@@ -66,16 +66,6 @@ export const HeaderText = styled.div`
   
 `;
 
-// export const CloseButton = styled.button`
-//   font-size: 0.8rem;
-//   border: none;
-//   border-radius: 3px;
-//   margin-left: 0.5rem;
-//   background: none;
-//   :hover {
-//     cursor: pointer;
-//   }
-// `;
 
 export const Content = styled.div`
   color: rgb(107 114 128);

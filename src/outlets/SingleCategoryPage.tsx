@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {useAppDispatch, useAppSelector} from "../app/store";
-import {Link, useLocation, useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {Category, selectAllCategoriesSortedByRequired, selectCategoryByPath} from "../slices/categoriesSlice";
 import {
     changeProductQuantity,
@@ -41,8 +41,6 @@ const SingleCategoryPage = () => {
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = t("categories.CategoryPage.editProduct")
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
-    const location = useLocation();
-    console.log(location)
     const categoriesWithoutCurrentCategory = categories?.filter(category => category !== currentCategory)
 
     const chooseEditProduct = (userProduct: UserProduct) =>{

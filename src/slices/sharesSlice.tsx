@@ -162,7 +162,6 @@ const  sharesSlice = createSlice({
                 sharesAdapter.addOne(state, action.payload as Invite)
             })
             .addCase(acceptIncomingShares.fulfilled,(state, action)=>{
-                console.log(action.payload)
                 sharesAdapter.updateOne(state, {id:action.payload, changes: {status: "accepted"}})
             })
             .addCase(cancelAcceptedShare.fulfilled,(state, action)=>{

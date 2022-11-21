@@ -179,6 +179,7 @@
     "coUsers": "Co-users",
     "addCoUser": "Add co-user",
     "headerFormAddCoUser" :"Enter the co-user email",
-    "messageAfterInvite": "We have sent an invitation to your home storage to this e-mail address!"
+    "messageAfterInvite": "We have sent an invitation to your home storage to this e-mail address!",
+    "searchProduct": "Search product..."
   }
 }

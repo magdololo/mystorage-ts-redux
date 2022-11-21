@@ -19,7 +19,6 @@ exports.onNewShare = functions.firestore
             let outgoingUserEmail =""; //john email
             let outgoingUserId ="";
             if(outgoingUserRef.exists){
-                console.log("user found")
                 outgoingUserEmail = outgoingUserRef.data()!!.email;
                 outgoingUserId = outgoingUserRef.data()!!.uid;
             }
@@ -52,13 +51,9 @@ exports.onNewShare = functions.firestore
                 })
                 console.log(res, respond)
             }} else {
-                console.log("email not found")
                 await db.doc("users/" + shareUserId + "/shares/" + outgoingShareId).set({
                     status: "noUserExist" }, {merge: true});
             }
-            console.log(queryRef)
-            console.log(context.params.userId)
-
         }
         return null;
     });
@@ -95,7 +90,6 @@ exports.onNewShare = functions.firestore
                      change: "pending to accepted"
                  })
              }
-        console.log(queryRef)
          }
 
 
@@ -129,7 +123,6 @@ exports.changeStatusShareToRejected = functions.firestore
                     change: "pending to rejected"
                 })
             }
-            console.log(queryRef)
         }
 
 
@@ -145,8 +138,6 @@ exports.changeStatusAcceptedShareToRejected = functions.firestore
         if (previousValue.direction === "incoming" && previousValue.status === "accepted" && newValue.status === "rejected"){ //marry anuluje
 
             const outgoingUserId = previousValue.user_id
-            console.log("outgoingUserId" + outgoingUserId)
-            console.log("previousValue.shareIdInOut" + previousValue.shareIdInOut)
             await db.doc("users/" + outgoingUserId + "/shares/" + previousValue.shareIdInOut).set({
                 status: newValue.status }, {merge: true});
 
@@ -155,15 +146,13 @@ exports.changeStatusAcceptedShareToRejected = functions.firestore
             if(userRef.exists) {
                 incomingUserEmail = userRef.data()!!.email;
             }
-            const respond = await db.collection("users/" + outgoingUserId + "/notifications").add({
+             await db.collection("users/" + outgoingUserId + "/notifications").add({
                 isRead: false,
                 cta: incomingUserEmail,
                 type: "info",
                 date: new Date(),
                 change: "accepted to rejected"
             })
-            console.log(respond)
-            console.log(userRef)
         }
         else if(previousValue.direction === "outgoing" && previousValue.status === "accepted" && newValue.status === "rejected"){ //u johna z accepted na rejected
             const usersRef = db.collection("users");
@@ -179,8 +168,6 @@ exports.changeStatusAcceptedShareToRejected = functions.firestore
                     queryRef.forEach(doc=> {
                         incomingUserId = doc.id //id marry
                     })
-                console.log("incomingUserId" + incomingUserId)
-                console.log(" previousValue.incomingShareId" +  previousValue.incomingShareId)
                 await db.doc("users/" + incomingUserId + "/shares/" + previousValue.incomingShareId).set({
                     status: newValue.status }, {merge: true});
                 await db.collection("users/" + incomingUserId + "/notifications").add({

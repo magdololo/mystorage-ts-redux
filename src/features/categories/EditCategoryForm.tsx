@@ -45,7 +45,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
             <img alt="gallery" src={image.url}/>
         </div>
     ))
-//event: React.MouseEvent<HTMLElement>
+
     useEffect(()=>{
         setNewCategoryTitle(categoryBeingEdited?.title);
     }, [categoryBeingEdited]);
@@ -56,14 +56,14 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
     const handleFocusEvent = () => {
     setNewCategoryTitle("")
     }
-    // e: FocusEvent<HTMLInputElement>
+
     const closeModal = () => {
         setNewCategoryTitle("");
         setNewPickedImage("")
         closeAddCategoryModal();
     }
     const canSave =  [newCategoryTitle, newPickedImage, uid].every(Boolean) //&& addRequestStatus === 'idle'
-    const onSaveCategory = ()=>{
+    const onSaveCategory = () => {
         if (canSave) {
             let afterEditingCategory: Category = {
                 id: categoryBeingEdited.id,
@@ -75,10 +75,7 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
             }
             dispatch(editCategory(afterEditingCategory))
             closeModal()
-
         }
-
-
     }
     return(
         <>

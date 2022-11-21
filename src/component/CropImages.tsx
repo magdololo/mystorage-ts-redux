@@ -30,7 +30,6 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
     const handleCloseModal = () => setIsOpen(false);
     const onCropComplete = useCallback(
         (croppedArea: Area , croppedAreaPixels: Area) => {
-            console.log(croppedArea, croppedAreaPixels);
             setCroppedAreaPixels(croppedAreaPixels)
         },
         []
@@ -40,7 +39,6 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
             const croppedImage = await getCroppedImg(
                 image,
                 croppedAreaPixels,
-
             )
             const file = await fetch(croppedImage).then(r => r.blob()).then(blobFile =>{
                 return new File([blobFile], newImageName, { type: blobFile.type })
@@ -53,14 +51,10 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
             if(file.size > 2048*1024){
                 console.log("rozmiar za duzy")
                 handleOpen()
-
-
             }else{
                 dispatch(addCategoryImage(newImageFromUser));
                 handleClose()
-
             }
-
         } catch (e) {
             console.error(e)
         }
@@ -69,46 +63,45 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
 
     return (
         <>
-
-            <div className ="crop_content">
-            <div className="crop-container">
-                <div className="crop">
-                <Cropper
-                    image={image}
-                    crop={crop}
-                    zoom={zoom}
-                    aspect={3 / 2}
-                    onCropChange={setCrop}
-                    onCropComplete={onCropComplete}
-                    onZoomChange={setZoom}
-                />
-            </div>
-            <div className="controls">
-                <Slider
-                    value={zoom}
-                    min={1}
-                    max={3}
-                    step={0.1}
-                    aria-labelledby="Zoom"
-                    onChange={(e, zoom) => setZoom(Number(zoom))}
-                    classes={{ root: "slider" }}
-                />
-            </div>
+            <div className="crop_content">
+                <div className="crop-container">
+                    <div className="crop">
+                        <Cropper
+                            image={image}
+                            crop={crop}
+                            zoom={zoom}
+                            aspect={3 / 2}
+                            onCropChange={setCrop}
+                            onCropComplete={onCropComplete}
+                            onZoomChange={setZoom}
+                        />
+                    </div>
+                    <div className="controls">
+                        <Slider
+                            value={zoom}
+                            min={1}
+                            max={3}
+                            step={0.1}
+                            aria-labelledby="Zoom"
+                            onChange={(e, zoom) => setZoom(Number(zoom))}
+                            classes={{root: "slider"}}
+                        />
+                    </div>
 
                 </div>
-            <div className="absolute bottom-6 right-14">
-                <button  className="w-24 text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
-                         onClick={showCroppedImage}>{t("buttons.confirm")}</button>
-                <button  className="w-24 text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 ml-4 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
-                         onClick={handleClose}>{t("buttons.close")} </button>
+                <div className="absolute bottom-6 right-14">
+                    <button
+                        className="w-24 text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                        onClick={showCroppedImage}>{t("buttons.confirm")}</button>
+                    <button
+                        className="w-24 text-sm bg-purple hover:bg-purple-500 text-white uppercase font-bold py-2 ml-4 border rounded-md shadow-xs hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                        onClick={handleClose}>{t("buttons.close")} </button>
+                </div>
             </div>
-
-
-
-            </div>
-            <Modal className={"modal-info"} isShown={isOpen} hide={handleCloseModal} modalHeaderText={t("component.CropImages.informationAboutSizeOfPicture")}  modalContent={<button onClick={handleCloseModal}>{t("buttons.close")}</button>}/>
-      </>
-
+            <Modal className={"modal-info"} isShown={isOpen} hide={handleCloseModal}
+                   modalHeaderText={t("component.CropImages.informationAboutSizeOfPicture")}
+                   modalContent={<button onClick={handleCloseModal}>{t("buttons.close")}</button>}/>
+        </>
     );
 };
 

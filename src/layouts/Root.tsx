@@ -51,11 +51,9 @@ const Root = ()=>{
                         notificationDate = Timestamp.fromMillis(data.date.seconds*1000).toDate();
                     }
                     if (change.type === "added") {
-                        console.log("New notifications: ", data);
                         dispatch(addNotification({...data,date: notificationDate, id: change.doc.id} as Notification))
                     }
                     if (change.type === "modified") {
-                        console.log("Modified notifications: ", change.doc.data());
                         dispatch(modifyNotification({...data, date: notificationDate,id: change.doc.id} as Notification))
                     }
                     if (change.type === "removed") {
@@ -78,16 +76,13 @@ const Root = ()=>{
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {
-                        console.log("New city: ", change.doc.data());
                         dispatch(addShare({...change.doc.data(), id: change.doc.id} as Invite))
                     }
                     if (change.type === "modified") {
-                        console.log("Modified share: ", change.doc.data());
                         dispatch(modifyShare({...change.doc.data(), id: change.doc.id} as Invite))
                     }
                     if (change.type === "removed") {
-                        console.log("Removed share" +
-                            ": ", change.doc.data());
+                        console.log("Removed share" + ": ", change.doc.data());
                     }
                 });
             },
@@ -105,16 +100,12 @@ const Root = ()=>{
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {
-                        console.log("New category: ", change.doc.data());
                         dispatch(addCategory({...change.doc.data(), id: change.doc.id} as Category))
                     }
                     if (change.type === "modified") {
-                        console.log("Modified category: ", change.doc.data());
                         dispatch(modifyCategory({...change.doc.data(), id: change.doc.id} as Category))
                     }
                     if (change.type === "removed") {
-                        console.log("Removed category" +
-                            ": ", change.doc.data());
                         dispatch(removeCategory(change.doc.id))
                     }
                 });
@@ -139,23 +130,16 @@ const Root = ()=>{
                     let productExpireDate = null;
                     if( data.expireDate != null){
                         let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds*1000);
-                        //
                         productExpireDate = expireDateTimestamp.toDate();
-
                     }
                     if (change.type === "added") {
-                        console.log("New product: ", change.doc.data());
-                        console.log(productExpireDate)
                         dispatch(addProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
                     }
                     if (change.type === "modified") {
-                        console.log("Modified product: ", change.doc.data());
                         dispatch(modifyProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
                     }
 
                     if (change.type === "removed") {
-                        console.log("Removed product" +
-                            ": ", change.doc.data());
                         dispatch(removeProduct(change.doc.id))
                     }
                 });

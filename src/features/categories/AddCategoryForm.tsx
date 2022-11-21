@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Modal} from "../../component/Modal/Modal";
 import {useModal} from "../../component/Modal/UseModal";
 import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
-import {addNewCategory, AddNewCategoryParams, Category} from "../../slices/categoriesSlice"
+import {addNewCategory, Category} from "../../slices/categoriesSlice"
 
 import slugify from "slugify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,10 +34,9 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const images = useAppSelector(selectAllImages)
 
     const imagesOptions = images?.map(image=>(
-        <div key={image.id} onClick={(event: React.MouseEvent<HTMLElement>) => {
+        <div key={image.id} onClick={() => {
             setPickedImage(image.url)
-            handleClose()
-             console.log(pickedImage)}}>
+            handleClose()}}>
                 <img className="object-contain h-full w-full" alt="gallery" src={image.url}/>
         </div>
     ))
@@ -55,7 +54,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
             setAddRequestStatus('pending')
             dispatch(addNewCategory({category: newCategory, notify: true}))
                 .unwrap()
-                .then((originalPromiseResult: AddNewCategoryParams) => {
+                .then(() => {
                     setTitle("")
                     setPickedImage("")
                     closeAddCategoryModal()

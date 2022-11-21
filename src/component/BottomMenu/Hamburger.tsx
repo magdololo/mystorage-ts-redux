@@ -2,7 +2,6 @@
 import BottomHamburgerMenu from "./BottomHamburgerMenu";
 const Hamburger = () => {
 
-
     return(
         <>
         <div className="flex pr-1">

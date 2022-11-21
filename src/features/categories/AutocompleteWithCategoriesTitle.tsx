@@ -32,7 +32,7 @@ export default function AutocompleteWithCategoriesTitle({ value, onChange, disab
             id="free-solo-with-text-demo"
             options={categories}
             getOptionLabel={option => typeof option === "object" ? option.title : option}
-            renderOption={(props, option) => <li {...props} key={option.id} className="capitalize">{option.title}</li>}
+            renderOption={(props, option) => <li {...props} key={option.id} className="capitalize cursor-pointer">{option.title}</li>}
             // freeSolo bo tu chcemy tylko z listy wybierac
             disabled={disabled}
             renderInput={(params) => (
