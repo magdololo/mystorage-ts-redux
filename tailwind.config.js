@@ -76,7 +76,8 @@ module.exports = {
         'lg': '18px',
         '1/5lg' : '24px',
         '2lg' : '30px',
-        '2.5xl': '1.8rem'
+        '2.5xl': '1.8rem',
+        '10xl': '36px'
 
       },
       width: {

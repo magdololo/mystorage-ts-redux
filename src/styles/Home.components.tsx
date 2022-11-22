@@ -289,7 +289,7 @@ const SectionBox = styled.div<SectionBoxProps>`
     }
   }
   @media (min-width: 960px) {
-    max-width: 72rem;
+    max-width: 66rem;
     margin: 0 auto;
   }
 `
@@ -306,16 +306,25 @@ const SectionBoxPhotos = styled.div`
 const SectionBoxText = styled.div`
   padding: 0 3rem; //3
   @media (min-width: 650px) {
-    width: 60%;
+    //width: 60%;
     text-align: left;
-    max-width: 42rem;
+    //max-width: 42rem;
   }
 `
-const SectionTextTitle = styled.h2`
-  text-align: center;
+
+const SectionTitle = styled.div`
+  display: flex;
+  flex-direction: row;
   margin-bottom: 2rem;
+  align-items: center;
+
+`
+
+const SectionTextTitle = styled.h2`
+ // text-align: center;
+  margin-left: 1rem;
   color: rgb(65, 82, 97);
-  font-size: 1.75rem;/*1.875rem; /* 30px */
+  font-size: 1.65rem;/*1.875rem; /* 30px */
   line-height: 2.5rem;/*2.25rem; /* 36px, 1.375 */
   font-weight: bold;
   @media (min-width: 650px) {
@@ -408,7 +417,7 @@ export {
   HeaderSectionButtonRegister,
   HeaderSectionBoxPhotos,
   PhotoBox,
-  Section,SectionBox, SectionBoxPhotos, SectionBoxText, SectionTextTitle, SectionTextSubtitle,
+  Section,SectionBox, SectionBoxPhotos, SectionBoxText,SectionTitle, SectionTextTitle, SectionTextSubtitle,
   FooterAuthor, FooterRegulations
 
 }
