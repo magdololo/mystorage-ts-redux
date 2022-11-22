@@ -53,7 +53,11 @@ export const StyledModal = styled.div`
     max-height: 85vh;
   }
 `;
-
+export const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-top: 0.5rem;
+`;
 
 
 export const HeaderText = styled.div`
@@ -63,6 +67,7 @@ export const HeaderText = styled.div`
   padding-left: 2rem;
   align-self: center;
   color: rgb(55 65 81);
+  width: 90%;
   
 `;
 

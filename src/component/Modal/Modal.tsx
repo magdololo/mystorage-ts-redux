@@ -2,6 +2,7 @@
 import ReactDOM from 'react-dom';
 
 import {
+    Header,
     Wrapper,
     StyledModal,
     HeaderText,
@@ -9,6 +10,8 @@ import {
     Backdrop,
 
 } from './modalStyle';
+ import {faClose} from "@fortawesome/free-solid-svg-icons";
+ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export interface ModalProps {
     isShown: boolean;
@@ -36,9 +39,10 @@ className
             }}/>
             <Wrapper tabIndex={-1} className={className??""}>
                 <StyledModal>
-                    {/*<Header>*/}
+                    <Header>
                         <HeaderText>{modalHeaderText}</HeaderText>
-                    {/*</Header>*/}
+                        <FontAwesomeIcon className=" text-md text-purple self-center pb-2 cursor-pointer  sm:text-lg" icon={faClose}  onClick={()=>hide()}/>
+                    </Header>
                     <Content>{modalContent}</Content>
                 </StyledModal>
             </Wrapper>
