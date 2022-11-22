@@ -15,6 +15,7 @@ import i18next from "i18next";
 
 
 
+
 export interface Category {
     id: string | null;
     path: Required<string>;
@@ -37,13 +38,9 @@ const categoriesAdapter = createEntityAdapter<Category>({
     }
 });
 const initialState: EntityState<Category> & {  error: null | string | undefined; status: string; currentCategory : Category | null } = categoriesAdapter.getInitialState({
-
     status: 'idle',
     error: null,
     currentCategory: null,
-
-
-
 })
 
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async (userId: string) => {
@@ -181,10 +178,8 @@ export const selectAllCategoriesSortedByRequired = createSelector(
     }
 )
 export const selectDefaultCategory = createSelector(
-    selectAllCategories, categories => {
-        const requiredCategory = categories.find(category => category.required === "true")
-        return requiredCategory
-    }
+    [(state: RootState) => selectAllCategories(state)],
+    (categories) => categories.find(category => category.required === "true")
 )
 export const {currentCategoryChange, removeCategories, addCategory, modifyCategory, removeCategory} = categoriesSlice.actions
 export default categoriesSlice.reducer
