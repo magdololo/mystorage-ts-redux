@@ -82,7 +82,7 @@ const Root = ()=>{
                         dispatch(modifyShare({...change.doc.data(), id: change.doc.id} as Invite))
                     }
                     if (change.type === "removed") {
-                        console.log("Removed share" + ": ", change.doc.data());
+                        console.log("Removed share: ", change.doc.data());
                     }
                 });
             },
