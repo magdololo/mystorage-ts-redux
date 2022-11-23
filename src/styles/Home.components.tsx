@@ -321,14 +321,17 @@ const SectionTitle = styled.div`
 `
 
 const SectionTextTitle = styled.h2`
- // text-align: center;
-  margin-left: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
   color: rgb(65, 82, 97);
-  font-size: 1.65rem;/*1.875rem; /* 30px */
+  font-size: 1.45rem;/*1.875rem; /* 30px */
   line-height: 2.5rem;/*2.25rem; /* 36px, 1.375 */
   font-weight: bold;
   @media (min-width: 650px) {
-    font-size: 2rem; /* 36px */
+    margin-bottom: 0;
+    text-align: start;
+    margin-left: 1rem;
+    font-size: 1.9rem; /* 36px */
     line-height: 3rem; /* 40px */
     text-align: left;
   }
@@ -338,7 +341,7 @@ const SectionTextTitle = styled.h2`
   }
 `
 const SectionTextSubtitle = styled.h4`
-  text-align: center;
+  text-align: left;
   margin-bottom: 1.5rem;
   color: rgb(141, 141, 153);
   font-size: 1.125rem; /* 18px */
@@ -396,7 +399,10 @@ const FooterRegulations = styled.div`
     line-height: 1.1rem; /* 16px */
   }
 `
-
+export const MarginOnMobile = styled.div`
+    margin-bottom: 2rem;
+    align-items: center;
+`
 export {
   Nav,
   BoxMain,

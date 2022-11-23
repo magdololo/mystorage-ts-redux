@@ -26,14 +26,16 @@ import {
     HeaderSectionBoxPhotos,
     PhotoBox,
     Section, SectionBox, SectionBoxPhotos, SectionBoxText,SectionTitle, SectionTextTitle, SectionTextSubtitle,
-    FooterAuthor, FooterRegulations
+    FooterAuthor, FooterRegulations, MarginOnMobile
 } from "../styles/Home.components";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
+import {useMediaQuery} from "usehooks-ts";
 
 
 const Home = () => {
     const { t, i18n } = useTranslation();
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
+    const isSmallerThan650 = useMediaQuery('(max-width: 649px)')
     useEffect(()=> {
         if (i18n.language === "pl" || window.localStorage.i18nextLng === "pl") {
             setIsEnglish(false)
@@ -113,7 +115,7 @@ const Home = () => {
                     </SectionBoxPhotos>
                     <SectionBoxText>
                         <SectionTitle>
-                            <FontAwesomeIcon className="text-4xl text-purple px-4 leading-8" icon={faListUl}/>
+                            <FontAwesomeIcon className="noVisibilityOnMobile text-4xl text-purple px-4 leading-8" icon={faListUl}/>
                             <SectionTextTitle>{t("home_section1_heading")}</SectionTextTitle>
                         </SectionTitle>
                         <SectionTextSubtitle>
@@ -160,7 +162,9 @@ const Home = () => {
                                  alt={"screen with product list and menu for quick editing"}/>}
                     </SectionBoxPhotos>
                     <SectionBoxText className={"visibilityOnMobile"}>
-                        <SectionTextTitle>{t("home_section2_heading")}</SectionTextTitle>
+                        <MarginOnMobile>
+                            <SectionTextTitle>{t("home_section2_heading")}</SectionTextTitle>
+                        </MarginOnMobile>
                         <SectionTextSubtitle>
                             <FontAwesomeIcon className="text-xl text-purple px-4" icon={faCheck}/>
                             {t("home_section2_subheading_one")}
@@ -187,10 +191,16 @@ const Home = () => {
                                  alt={"screen with product finder "}/>}
                     </SectionBoxPhotos>
                     <SectionBoxText>
-                        <SectionTitle>
-                            <FontAwesomeIcon className="text-4xl text-purple px-4 leading-8" icon={faSearch}/>
-                            <SectionTextTitle>{t("home_section3_heading")}</SectionTextTitle>
-                        </SectionTitle>
+                        {isSmallerThan650 ?
+                            <MarginOnMobile>
+                                <SectionTextTitle>{t("home_section3_heading")}</SectionTextTitle>
+                            </MarginOnMobile>
+                            :
+                            <SectionTitle>
+                                <FontAwesomeIcon className="noVisibilityOnMobile text-4xl text-purple px-4 leading-8" icon={faSearch}/>
+                                <SectionTextTitle>{t("home_section3_heading")}</SectionTextTitle>
+                            </SectionTitle>
+                        }
                         <SectionTextSubtitle>
                             <FontAwesomeIcon className="text-xl text-purple px-4" icon={faCheck}/>
                             {t("home_section3_subheading_one")}
@@ -208,7 +218,7 @@ const Home = () => {
                 <SectionBox size={"5.5rem"}>
                     <SectionBoxText className={"noVisibilityOnMobile"}>
                         <SectionTitle>
-                            <FontAwesomeIcon className="text-4xl text-purple px-8 leading-8" icon={faUserGroup}/>
+                            <FontAwesomeIcon className="text-4xl text-purple px-4 leading-8" icon={faUserGroup}/>
                             <SectionTextTitle>{t("home_section4_heading")}</SectionTextTitle>
                         </SectionTitle>
                         <SectionTextSubtitle>
@@ -233,7 +243,9 @@ const Home = () => {
                                       alt={"screen with invitings"}/>}
                     </SectionBoxPhotos>
                     <SectionBoxText className={"visibilityOnMobile"}>
+                        <MarginOnMobile>
                         <SectionTextTitle>{t("home_section4_heading")}</SectionTextTitle>
+                        </MarginOnMobile>
                         <SectionTextSubtitle>
                             <FontAwesomeIcon className="text-xl text-purple px-4" icon={faCheck}/>
                             {t("home_section4_subheading_one")}
