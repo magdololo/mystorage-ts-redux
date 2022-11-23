@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch} from 'react-redux';
 import { useTranslation } from "react-i18next";
 import {useForm, SubmitHandler} from "react-hook-form";
+import {sendEmailVerification} from "firebase/auth";
 
 import {addNewUserToUsersCollection, login, addDefaultCategoriesToNewUser,AddDefaultCategoriesToNewUserProps} from "../../slices/usersSlice";
 import {
@@ -37,13 +38,77 @@ const RegisterPage = () => {
     const handleInputChange = ()=>{
         setCheckboxState(!checkboxState)
     }
-   const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageAboutSentActivateLink, setMessageAboutSentActivateLink] = useState(false);
+    const actionCodeSettings = {
+        // URL you want to redirect back to. The domain (www.example.com) for this
+        // URL must be in the authorized domains list in the Firebase Console.
+        url: 'https://mystorage.ovh',
+        handleCodeInApp: true
+
+    };
 
     const onSubmit: SubmitHandler<Inputs> = (data, e) => {
-
+        console.log("hej")
         e?.preventDefault()
-        if(checkboxState){
+
+        if (checkboxState) {
+            console.log("checkbox")
+
             createUserWithEmailAndPassword(auth, data.email, data.password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    sendEmailVerification(user, actionCodeSettings)
+                    setMessageAboutSentActivateLink(true)
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log("Error ocured: ", errorCode, errorMessage);
+                    switch (error.code){
+                        case "auth/wrong-password":
+                            setMessage (t("users.RegisterPage.message.wrongPassword"))
+                            break;
+                        case "auth/user-not-found":
+                            setMessage (t("users.RegisterPage.message.userNotFound"));
+                            break;
+                        case "auth/email-already-in-use":
+                            setMessage(t("users.RegisterPage.message.emailAlreadyInUse"));
+                            break;
+                        case "auth/user-disabled":
+                            setMessage  (t("users.RegisterPage.message.userDisabled"));
+                            break;
+                        case "auth/weak-password":
+                            setMessage (t("users.RegisterPage.message.weakPassword"));
+                            break;
+                        default:
+                            setMessage(t("users.RegisterPage.message.default"));
+                    }
+
+                })
+        } else {
+            setMessage((t("users.RegisterPage.message.acceptRegulations")))
+        }
+
+    };
+            // console.log("send email")
+            // sendSignInLinkToEmail(auth, data.email, actionCodeSettings)
+            //     .then(() => {
+            //         console.log("email sent")
+            //         // The link was successfully sent. Inform the user.
+            //         // Save the email locally so you don't need to ask the user for it again
+            //         // if they open the link on the same device.
+            //         setMessageAboutSentActivateLink(true)
+            //         window.localStorage.setItem('emailForSignIn', data.email);
+            //         // ...
+            //     })
+            //     .catch((error) => {
+            //         const errorCode = error.code;
+            //         const errorMessage = error.message;
+            //         // ...
+            //     });
+
+           /* createUserWithEmailAndPassword(auth, data.email, data.password)
                 .then((userCredential) => {
 
                     const user = userCredential.user;
@@ -93,7 +158,7 @@ const RegisterPage = () => {
         } else {
             setMessage((t("users.RegisterPage.message.acceptRegulations")))
         }
-        }
+        }*/
 
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisibility = () => {
@@ -193,6 +258,7 @@ const RegisterPage = () => {
                         </button>
                     </div>
                     {message}
+                    {messageAboutSentActivateLink ? <h3 className={"text-xl font-bold"}>Na podany adres email wysłaliśmy link do aktywacji konta! </h3> : null }
                 </form>
             </div>
         </>
