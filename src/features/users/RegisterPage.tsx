@@ -60,6 +60,7 @@ const RegisterPage = () => {
                     const user = userCredential.user;
                     sendEmailVerification(user, actionCodeSettings)
                     setMessageAboutSentActivateLink(true)
+
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -91,22 +92,6 @@ const RegisterPage = () => {
         }
 
     };
-            // console.log("send email")
-            // sendSignInLinkToEmail(auth, data.email, actionCodeSettings)
-            //     .then(() => {
-            //         console.log("email sent")
-            //         // The link was successfully sent. Inform the user.
-            //         // Save the email locally so you don't need to ask the user for it again
-            //         // if they open the link on the same device.
-            //         setMessageAboutSentActivateLink(true)
-            //         window.localStorage.setItem('emailForSignIn', data.email);
-            //         // ...
-            //     })
-            //     .catch((error) => {
-            //         const errorCode = error.code;
-            //         const errorMessage = error.message;
-            //         // ...
-            //     });
 
            /* createUserWithEmailAndPassword(auth, data.email, data.password)
                 .then((userCredential) => {
@@ -168,7 +153,8 @@ const RegisterPage = () => {
 
     return (
         <>
-
+            {!messageAboutSentActivateLink ?
+        <>
             <div className="text-center bg-gray-50 text-gray-dark pt-20 pb-4 px-6">
                 <h1 className="text-4xl font-bold mt-0 mb-6">{t("app_title")}</h1>
             </div>
@@ -258,11 +244,19 @@ const RegisterPage = () => {
                         </button>
                     </div>
                     {message}
-                    {messageAboutSentActivateLink ? <h3 className={"text-xl font-bold"}>Na podany adres email wysłaliśmy link do aktywacji konta! </h3> : null }
                 </form>
+
+            </div>
+            </>
+                :
+        <>
+            <div>
+                <h2 className={"text-center pt-64 text-3xl text-gray"}>Na podany adres email wysłaliśmy link do aktywacji konta!</h2>
             </div>
         </>
+                }
 
+        </>
     );
 }
 

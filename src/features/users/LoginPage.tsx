@@ -59,6 +59,16 @@ const LoginPage = () => {
             .then((userCredential) => {
                 const user = userCredential.user;
                 reset();
+                if(user.emailVerified){
+                    console.log("user verified")
+                    const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
+                        userId: user.uid,
+                        userLanguage: userLanguage
+                    }
+                    dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId, didSeeGreeting: false}))
+                    dispatch( addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
+
+                }
                 dispatch(
                     login({uid: user.uid,
                                 email: user.email ?? "",
