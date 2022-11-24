@@ -23,14 +23,10 @@ type Inputs = {
 
 }
 const RegisterPage = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
-    const userLanguage = i18n.language;
-    const dispatch = useDispatch();
-    let navigate = useNavigate()
     let {
         register,
-        reset,
         handleSubmit,
         formState: {errors}
     } = useForm<Inputs>();
@@ -92,58 +88,6 @@ const RegisterPage = () => {
         }
 
     };
-
-           /* createUserWithEmailAndPassword(auth, data.email, data.password)
-                .then((userCredential) => {
-
-                    const user = userCredential.user;
-                    const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
-                        userId: user.uid,
-                        userLanguage: userLanguage
-                    }
-                    dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId, didSeeGreeting: false}))
-                    dispatch( addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
-
-                    dispatch(
-                        login({
-                            uid: user.uid,
-                            email: user.email ?? "",
-                            provider: user.providerId,
-                            didSeeGreeting: false
-                        })
-                    )
-                    navigate("/categories")
-                    reset();
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log("Error ocured: ", errorCode, errorMessage);
-                    switch (error.code){
-                        case "auth/wrong-password":
-                            setMessage (t("users.RegisterPage.message.wrongPassword"))
-                            break;
-                        case "auth/user-not-found":
-                            setMessage (t("users.RegisterPage.message.userNotFound"));
-                            break;
-                        case "auth/email-already-in-use":
-                            setMessage(t("users.RegisterPage.message.emailAlreadyInUse"));
-                            break;
-                        case "auth/user-disabled":
-                            setMessage  (t("users.RegisterPage.message.userDisabled"));
-                            break;
-                        case "auth/weak-password":
-                            setMessage (t("users.RegisterPage.message.weakPassword"));
-                            break;
-                        default:
-                            setMessage(t("users.RegisterPage.message.default"));
-                    }
-
-                })
-        } else {
-            setMessage((t("users.RegisterPage.message.acceptRegulations")))
-        }
-        }*/
 
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisibility = () => {
@@ -251,7 +195,7 @@ const RegisterPage = () => {
                 :
         <>
             <div>
-                <h2 className={"text-center pt-64 text-3xl text-gray"}>Na podany adres email wysłaliśmy link do aktywacji konta!</h2>
+                <h2 className={"text-center pt-64 text-3xl text-gray"}>{t("users.RegisterPage.message.messageToVerifiedEmail")}</h2>
             </div>
         </>
                 }
