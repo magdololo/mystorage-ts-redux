@@ -1,11 +1,8 @@
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {useDispatch} from 'react-redux';
 import { useTranslation } from "react-i18next";
 import {useForm, SubmitHandler} from "react-hook-form";
 import {sendEmailVerification} from "firebase/auth";
 
-import {addNewUserToUsersCollection, login, addDefaultCategoriesToNewUser,AddDefaultCategoriesToNewUserProps} from "../../slices/usersSlice";
 import {
     auth,
     createUserWithEmailAndPassword,
