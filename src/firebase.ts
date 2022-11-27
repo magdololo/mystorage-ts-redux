@@ -1,6 +1,4 @@
 
-
-
 import { initializeApp } from 'firebase/app';
 import {getAnalytics} from "firebase/analytics"
 import {
@@ -12,7 +10,9 @@ import {
     GoogleAuthProvider,
     signOut,
     updateProfile,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    sendSignInLinkToEmail,
+    sendEmailVerification
 } from 'firebase/auth';
 import { getFirestore } from "firebase/firestore";
 
@@ -36,7 +36,6 @@ export const firebaseConfig = {
     measurementId: "G-DVJ29Z37WL"
 
 };
-
 //init firebase app
 export const app = initializeApp(firebaseConfig);
 getAnalytics(app);
@@ -54,5 +53,7 @@ export {
     signInWithPopup,
     GoogleAuthProvider,
     signOut,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    sendSignInLinkToEmail,
+    sendEmailVerification
 }

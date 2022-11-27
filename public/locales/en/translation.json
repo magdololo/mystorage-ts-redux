@@ -117,7 +117,8 @@
         "userDisabled": "User disabled!",
         "weakPassword": "Weak password!",
         "default": "Unknown error. Report to the administrator!",
-        "acceptRegulations": "Acceptance of the regulations required!"
+        "acceptRegulations": "Acceptance of the regulations required!",
+        "messageToVerifiedEmail" : "We have sent a link to activate your account to the e-mail address provided!"
       }
     },
     "RemindPassword": {
@@ -191,5 +192,6 @@
     "headerFormAddCoUser" :"Enter the co-user email",
     "messageAfterInvite": "We have sent an invitation to your home storage to this e-mail address!",
     "searchProduct": "Search product..."
-  }
+  },
+
 }

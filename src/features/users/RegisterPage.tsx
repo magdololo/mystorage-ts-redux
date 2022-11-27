@@ -1,10 +1,8 @@
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {useDispatch} from 'react-redux';
 import { useTranslation } from "react-i18next";
 import {useForm, SubmitHandler} from "react-hook-form";
+import {sendEmailVerification} from "firebase/auth";
 
-import {addNewUserToUsersCollection, login, addDefaultCategoriesToNewUser,AddDefaultCategoriesToNewUserProps} from "../../slices/usersSlice";
 import {
     auth,
     createUserWithEmailAndPassword,
@@ -22,14 +20,10 @@ type Inputs = {
 
 }
 const RegisterPage = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
-    const userLanguage = i18n.language;
-    const dispatch = useDispatch();
-    let navigate = useNavigate()
     let {
         register,
-        reset,
         handleSubmit,
         formState: {errors}
     } = useForm<Inputs>();
@@ -37,33 +31,29 @@ const RegisterPage = () => {
     const handleInputChange = ()=>{
         setCheckboxState(!checkboxState)
     }
-   const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageAboutSentActivateLink, setMessageAboutSentActivateLink] = useState(false);
+    const actionCodeSettings = {
+        // URL you want to redirect back to. The domain (www.example.com) for this
+        // URL must be in the authorized domains list in the Firebase Console.
+        url: 'https://mystorage.ovh',
+        handleCodeInApp: true
+
+    };
 
     const onSubmit: SubmitHandler<Inputs> = (data, e) => {
-
+        console.log("hej")
         e?.preventDefault()
-        if(checkboxState){
+
+        if (checkboxState) {
+            console.log("checkbox")
+
             createUserWithEmailAndPassword(auth, data.email, data.password)
                 .then((userCredential) => {
-
                     const user = userCredential.user;
-                    const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
-                        userId: user.uid,
-                        userLanguage: userLanguage
-                    }
-                    dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId, didSeeGreeting: false}))
-                    dispatch( addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
+                    sendEmailVerification(user, actionCodeSettings)
+                    setMessageAboutSentActivateLink(true)
 
-                    dispatch(
-                        login({
-                            uid: user.uid,
-                            email: user.email ?? "",
-                            provider: user.providerId,
-                            didSeeGreeting: false
-                        })
-                    )
-                    navigate("/categories")
-                    reset();
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -93,7 +83,8 @@ const RegisterPage = () => {
         } else {
             setMessage((t("users.RegisterPage.message.acceptRegulations")))
         }
-        }
+
+    };
 
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisibility = () => {
@@ -103,7 +94,8 @@ const RegisterPage = () => {
 
     return (
         <>
-
+            {!messageAboutSentActivateLink ?
+        <>
             <div className="text-center bg-gray-50 text-gray-dark pt-20 pb-4 px-6">
                 <h1 className="text-4xl font-bold mt-0 mb-6">{t("app_title")}</h1>
             </div>
@@ -194,9 +186,18 @@ const RegisterPage = () => {
                     </div>
                     {message}
                 </form>
+
+            </div>
+            </>
+                :
+        <>
+            <div>
+                <h2 className={"text-center pt-64 text-3xl text-gray"}>{t("users.RegisterPage.message.messageToVerifiedEmail")}</h2>
             </div>
         </>
+                }
 
+        </>
     );
 }
 

@@ -39,7 +39,6 @@ const LoginPage = () => {
     const [user,setUser] = useState({} as User)
 
 
-
     const eye = <FontAwesomeIcon icon={faEye}/>;
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisibility = () => {
@@ -54,11 +53,22 @@ const LoginPage = () => {
         email: string,
         password: string
     }>();
+
     const onSubmit = handleSubmit((data) => {
         signInWithEmailAndPassword(auth, data.email, data.password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 reset();
+                if(user.emailVerified){
+                    console.log("user verified")
+                    const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
+                        userId: user.uid,
+                        userLanguage: userLanguage
+                    }
+                    dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId, didSeeGreeting: false}))
+                    dispatch( addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
+
+                }
                 dispatch(
                     login({uid: user.uid,
                                 email: user.email ?? "",
@@ -70,15 +80,15 @@ const LoginPage = () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log("An error occured: ", errorCode, errorMessage);
+                console.log("An error occured: ", errorMessage);
                 if(errorCode === 'auth/wrong-password'){
-                    setErrorMessage('Niepoprawne hasło')
+                    setErrorMessage(t("users.RegisterPage.message.wrongPassword"))
                 }
                 else if(errorCode === 'auth/wrong-email'){
-                    setErrorMessage('Niepoprawny email')
+                    setErrorMessage(t("errors.emailTypePattern"))
                 }
                 else if (errorCode === 'auth/user-not-found'){
-                    setErrorMessage('Konto nie istnieje')
+                    setErrorMessage(t("users.RegisterPage.message.userNotFound"))
                 }});
                 reset()
 
@@ -175,7 +185,7 @@ const LoginPage = () => {
                                    id="exampleInputEmail2"
                                    aria-describedby="emailHelp"/>
 
-                            {errorMessage === 'Niepoprawny email' ? <span className="text-sm text-red">{t("users.errorMessage.email")}</span> : null}
+                            {errorMessage === t("errors.emailTypePattern") ? <span className="text-sm text-red">{t("users.errorMessage.email")}</span> : null}
                             {errors.email?.type === 'required' && <span className="text-sm text-red">{t("users.errors.emailTypeRequired")}</span>}
                             {errors.email?.type === 'pattern' && <span className="text-sm text-red">{ t("users.errors.emailTypePattern")}</span>}
                         </div>
@@ -200,8 +210,8 @@ const LoginPage = () => {
                                    id="exampleInputPassword2"
                             />
                             <i onClick={togglePasswordVisibility}>{eye}</i>{" "}
-                            {errorMessage === 'Niepoprawne hasło' && <p className="text-sm text-red">{t("users.errorMessage.password")}</p>}
-                            {errorMessage === 'Konto nie istnieje' && <p className="text-sm text-red">{t("users.errorMessage.account")}</p>}
+                            {errorMessage === t("users.RegisterPage.message.wrongPassword") && <p className="text-sm text-red">{t("users.errorMessage.password")}</p>}
+                            {errorMessage === t("users.RegisterPage.message.userNotFound") && <p className="text-sm text-red">{t("users.errorMessage.account")}</p>}
                             {errors.password?.type === 'required' && <span className="text-sm text-red">{t("users.errors.passwordTypeRequired")}</span>}
                         </div>
                         <p className="text-gray-800 mt-6 text-center pb-6">{t("users.LoginPage.questionRemember")}
@@ -273,7 +283,7 @@ const LoginPage = () => {
 
 
                         </div>
-                        {errorMessage === "Konto nie istnieje. Zarejestruj się!" ? <p className="text-sm text-red">{t("users.errorMessage.register")}</p> : null}
+                        {errorMessage === (t("users.RegisterPage.message.userNotFound")) ? <p className="text-md text-red pt-4">{t("users.errorMessage.register")}</p> : null}
                         <p className="text-gray-800 mt-6 text-center">{t("users.LoginPage.questionAccount")}
                             <Link to="/register"
                                   className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1">{t("users.LoginPage.linkToRegister")}</Link>

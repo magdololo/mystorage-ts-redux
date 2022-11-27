@@ -114,7 +114,8 @@
         "userDisabled": "Użytkownik zablokowany.",
         "weakPassword": "Hasło nie spełnia reguł bezpieczeństwa.",
         "default": "Nieznany błąd. Zgłoś się do administaratora.",
-        "acceptRegulations": "Wymagana akceptacja regulaminu!"
+        "acceptRegulations": "Wymagana akceptacja regulaminu!",
+        "messageToVerifiedEmail" : "Na podany adres email wysłaliśmy link do aktywacji konta!"
       }
     },
     "RemindPassword": {
