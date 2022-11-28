@@ -24,7 +24,6 @@ export const Header = styled.header`
   grid-area: header;
   padding: 1.5rem;
   align-self: center;
-  //max-width: 1280px;
   width: 100%;
 `;
 export const Section = styled.section`
@@ -35,9 +34,7 @@ export const Section = styled.section`
   display: block;
   width: 100%;
   align-self: center;
-  //@media (max-width: 955px) {
-  //  width: 70%;
-  //}
+  
 `;
 export const Main = styled.main`
   color: white;

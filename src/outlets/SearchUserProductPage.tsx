@@ -36,12 +36,11 @@ const SearchUserProductPage= ()=>{
     let searchProductId = useAppSelector(state=> state.userProducts.searchProduct)
     let searchUserProductFromSelect = useAppSelector((state) => selectUserProductById(state, searchProductId??"")) ?? {}as UserProduct
     const searchInputValue= useAppSelector(state=>state.userProducts.searchProductByString)
-    const maxWidth440 = useMediaQuery('(max-width:440px)');
     const categories = useAppSelector(selectAllCategories)
     let [todayDate] = useState(new Date());
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = t("products.SearchUserProductPage.editProduct")
-    const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
+    const isSmallerThan1280 = useMediaQuery('(max-width: 1280px)')
     // const notify = () => toast.success(t('🦄 Products.SearchUserProductPage.toastSuccess!'), {
     //     position: "top-center",
     //     autoClose: 2000,
@@ -97,7 +96,7 @@ const SearchUserProductPage= ()=>{
        content =
            <ProductsListBox justifyContent={"none"}>
            {searchProductsWithCategory.map((product:SearchProduct) =>
-               <SingleProductBox width={isSmallerThan1280? "100%" : "32%"} height={isSmallerThan1280? "auto" :"240px"}>
+               <SingleProductBox primary={true}>
                    <div key={product.id} className="flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4 h-full">
                        <ProductNameBox>
                            {product.name}
@@ -116,22 +115,6 @@ const SearchUserProductPage= ()=>{
                                </Link>
                            </div>
                        </div>
-                       {maxWidth440 ?
-                           <>
-                               <div className="flex flex-auto flex-row relative w-6/12 sm:flex-col md:w-4/12 items-center justify-center">
-                                   <div className="flex flex-col items-center justify-between max-h-20 absolute right-0">
-                                       <div className="h-1/2 pb-1">
-                                           <FontAwesomeIcon className="text-xl text-blue-500 px-2" icon={faPlus} onClick={() => increment(product)}/>
-                                           <span className="text-xl text-blue-800 px-2 ">{product.quantity}</span>
-                                           <FontAwesomeIcon className="text-xl text-blue-500 border-blue-400  px-2" icon={faMinus} onClick={() => decrement(product)}/>
-                                       </div>
-                                       <div className="h-1/2 pt-1">
-                                           <FontAwesomeIcon className="text-xl text-blue-800 border-blue-400 border-solid border-r px-6 " icon={faTrash} onClick={() => deleteUserOneProduct(product)}/>
-                                           <FontAwesomeIcon className="text-xl text-blue-800 px-6 " icon={faPen} onClick={() => chooseEditProduct(product)}/>
-                                       </div>
-                                   </div>
-                               </div>
-                           </> :
                            <>
                                <div className={"h-1/3 md:flex md:justify-end md:items-end"}>
                                    <div className={"md:flex md:justify-end"}>
@@ -145,8 +128,6 @@ const SearchUserProductPage= ()=>{
                                    </div>
                                </div>
                            </>
-                       }
-
                    </div>
                </SingleProductBox>
            )}

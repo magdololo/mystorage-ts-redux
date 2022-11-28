@@ -21,8 +21,7 @@ export const ProductsListBox = styled.div<ProductsListBoxProps>`
 `
 
 export interface SingleProductBoxProps{
-    width: string;
-    height: string;
+    primary: boolean
 }
 export const SingleProductBox = styled.div<SingleProductBoxProps>`
     width: 100%;
@@ -35,9 +34,12 @@ export const SingleProductBox = styled.div<SingleProductBoxProps>`
     border: 1px solid lightgray;
     border-radius: 0.125rem;
     cursor: pointer;
-  @media(min-width: 700px){
+  @media(min-width: 800px){
     width: 47%;
-    height: auto;
+    //height: 240px;
+  }
+  @media(min-width: 1280px){
+    width:  ${props => props.primary ? "32%" : "47%"};
   }
 `
 
@@ -49,9 +51,7 @@ export const ProductNameBox = styled.div`
   font-weight: bold;
   text-transform: capitalize;
   padding-bottom: 1rem;
-  @media (min-width: 390px) {
-    font-size: 15px;
-  }
+  
   @media (min-width: 650px) {
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
@@ -59,7 +59,7 @@ export const ProductNameBox = styled.div`
     line-height: 1.75rem; /* 28px */
   }
   @media (min-width: 1280px) {
-    height: 90px;
+    //height: 90px;
   }
   
     `

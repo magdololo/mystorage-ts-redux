@@ -3,7 +3,6 @@
   "my_storage": "My storage",
   "home_header_heading": "Your products always at hand",
   "home_heading_subheading": "Get easy access to products in your home to better plan your purchases, meals and time.",
-
   "home_section1_heading": "Create your own categories and add products",
   "home_section1_subheading_one": "The names of the categories are arranged alphabetically, which makes it easy to find them.",
   "home_section1_subheading_two": "Add your own pictures and photos.",
@@ -15,12 +14,10 @@
   "home_section3_heading": "Quick Search",
   "home_section3_subheading_one": " Thanks to the search engine, you will find all similar products as well as a specific product.",
   "home_section3_subheading_two": "You can quickly check whether you have a given product in stock at any place and time. ",
-  "home_section3_subheading_three": "",
   "home_section4_heading": "Share Account",
   "home_section4_subheading_one" : "Share the account with your loved ones so that you can manage your pantry together.",
   "home_section4_subheading_two" : "Any changes you make are immediately visible to everyone sharing the account.",
   "home_section4_subheading_three" : "Check the notifications and you will find out if you have received a new invitation or if the person you invited to share your account has accepted it.",
-
   "home_footer_word1" : "Accept",
   "home_footer_word2" : "service",
   "home_footer_link" : "regulations",
@@ -192,6 +189,5 @@
     "headerFormAddCoUser" :"Enter the co-user email",
     "messageAfterInvite": "We have sent an invitation to your home storage to this e-mail address!",
     "searchProduct": "Search product..."
-  },
-
+  }
 }

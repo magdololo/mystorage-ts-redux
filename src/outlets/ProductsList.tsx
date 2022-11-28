@@ -91,7 +91,7 @@ const ProductsList = () => {
                     <SinglePageTitle>{t('products.ProductsList.title')}</SinglePageTitle>
                     <ProductsListBox justifyContent = "space-between">
                         {userProductsWithCategory.map((product) =>
-                            <SingleProductBox  width={isSmallerThan1280? "100%" : "32%"} height={isSmallerThan1280? "auto" :"240px"} key={product.id} >
+                            <SingleProductBox primary={true} key={product.id} >
                                 <div className="flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4 h-full">
                                     <ProductNameBox>
                                         {product.name}

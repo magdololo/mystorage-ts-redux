@@ -17,7 +17,7 @@ import {
     SingleCategoryBox,
     ProductsListContent, CategoriesSideBar,
 } from "../styles/Categories.components";
-import {ProductsListBox, ProductsBox,SingleProductBox} from "../styles/Products.components"
+import {ProductsListBox, ProductsBox, SingleProductBox, ProductNameBox} from "../styles/Products.components"
 import {SinglePageTitle} from  "../styles/Root.components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
@@ -74,80 +74,149 @@ const SingleCategoryPage = () => {
     return (
         <>
             {isLargerThan1280 ? null : <ReturnToCategoryList/>}
-            <div className=" mx-auto max-w-screen-xl mb-32 mt-2 px-4">
-                <MainContent>
-                    {isLargerThan1280 ?
+            {isLargerThan1280 ?
+                <>
+                <div className=" mx-auto max-w-screen-xl mb-32 mt-2 px-4">
+                    <MainContent>
                         <CategoriesSideBar>
                             <SingleCategoryBox className={"mainCategory"} key={categoryId}>
                                 <Link to={`/categories/${categoryId}`}>
-                                <img src={currentCategory?.url}
-                                     className={"w-full h-auto object-cover flex-1 flex-grow"}
-                                     alt="Louvre"/>
+                                    <img src={currentCategory?.url}
+                                         className={"w-full h-auto object-cover flex-1 flex-grow"}
+                                         alt="Louvre"/>
                                 </Link>
                             </SingleCategoryBox>
+
                             <ProductsListContent>
-                            {categoriesWithoutCurrentCategory.map(category =>
-                                (
-                                    <SingleCategoryBox className={"singleOtherCategory"}
-                                        key={category?.id}>
 
-                                        <Link to={`/categories/${category?.path}`}>
-                                            <img src={category?.url}
-                                                 className={"w-full h-auto object-cover flex-1 flex-grow"}
-                                                 alt="Louvre"/>
+                                {categoriesWithoutCurrentCategory.map(category =>
+                                    (
+                                        <SingleCategoryBox className={"singleOtherCategory"}
+                                                           key={category?.id}>
 
-                                            <span
-                                                className={"absolute align-middle bottom-0 left-0 right-0 h-full inline-flex items-center justify-center px-2 bg-black opacity-70  text-sm sm:text-md md:text-lg lg:text-md capitalize text-center text-white font-bold"}>{category?.title}</span>
+                                            <Link to={`/categories/${category?.path}`}>
+                                                <img src={category?.url}
+                                                     className={"w-full h-auto object-cover flex-1 flex-grow"}
+                                                     alt="Louvre"/>
 
-                                        </Link>
-                                    </SingleCategoryBox>
+                                                <span
+                                                    className={"absolute align-middle bottom-0 left-0 right-0 h-full inline-flex items-center justify-center px-2 bg-black opacity-70  text-sm sm:text-md md:text-lg lg:text-md capitalize text-center text-white font-bold"}>{category?.title}</span>
 
-                                )
-                            )}
+                                            </Link>
+                                        </SingleCategoryBox>
+
+                                    )
+                                )}
                             </ProductsListContent>
+
                         </CategoriesSideBar>
-                    : null}
-                    <ProductsBox>
-                        <SinglePageTitle>{categoryFromPath?.title}</SinglePageTitle>
-                        <ProductsListBox justifyContent={"space-between"}>
-                            {productsOfCategory.map((product: UserProduct) =>
-                                <SingleProductBox  width={isLargerThan1280? "32%" : "100%"} height={isLargerThan1280? "240px" :"auto"}>
-                                    <div key={product.id} className=" flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4">
-                                        <div className={"h-1/3 "}>
-                                            <div className="text-lg  text-gray font-bold capitalize align-baseline pb-4 sm:text-md md:pb-2 md:text-lg md:text-xl">
+                        <ProductsBox>
+                            <SinglePageTitle>{categoryFromPath?.title}</SinglePageTitle>
+                            <ProductsListBox justifyContent={"space-between"}>
+                                {productsOfCategory.map((product: UserProduct) =>
+                                    <SingleProductBox primary={false} key={product.id}>
+                                        <div key={product.id}
+                                             className=" flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4">
+                                            <ProductNameBox>
                                                 {product.name}
-                                            </div>
-                                        </div>
-                                        <div className="h-1/3 flex flex-col md:flex-row ">
-                                            <div className={"w-1/3"}>
+                                            </ProductNameBox>
+
+                                            <div className={'h-auto mt-auto flex flex-col'}>
                                                 <div className="text-md text-gray-light  pb-1.5 sm:text-sm md:text-base">
                                                     {product.capacity}{product.unit}
                                                 </div>
-                                                <div className={"text-sm md:text-md " + ((product.expireDate !== null && product?.expireDate > todayDate) ? "text-gray-light" : "text-red font-bold")}>
+                                                {product.expireDate === null && <span></span>}
+                                                <div
+                                                    className={"text-sm md:text-md " + ((product.expireDate !== null && product?.expireDate > todayDate) ? "text-gray-light" : "text-red font-bold")}>
                                                     {product.expireDate ? product.expireDate.toISOString().substring(0, 10) : ""} &nbsp;
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className={"h-1/3 md:flex md:justify-end"}>
-                                            <div className={"md:flex md:justify-end"}>
-                                                <div className="flex flex-row flex-nowrap  relative items-center pt-4 justify-end">
-                                                    <FontAwesomeIcon className="text-md text-blue-500  px-4 sm:text-lg" icon={faMinus} onClick={() => decrement(product)}/>
-                                                    <span className="text-md text-blue-800 px-2 sm:text-lg">{product.quantity}</span>
-                                                    <FontAwesomeIcon className="text-md text-blue-500 border-blue-400 border-solid border-r px-4 sm:text-lg" icon={faPlus} onClick={()=>increment(product)}/>
-                                                    <FontAwesomeIcon className="text-md text-blue-800 border-blue-400 border-solid border-r px-4 sm:text-xl" icon={faTrash} onClick={()=>deleteUserOneProduct(product)}/>
-                                                    <FontAwesomeIcon className="text-md text-blue-800 px-4 sm:text-lg" icon={faPen}  onClick={()=>chooseEditProduct(product) }/>
+
+                                            <div className={"h-1/3 md:flex md:justify-end md:items-end"}>
+                                                <div className={"md:flex md:justify-end"}>
+                                                    <div
+                                                        className="flex flex-row flex-nowrap  relative items-center pt-4 justify-end items-end">
+                                                        <FontAwesomeIcon className="text-md text-blue-500  px-4 sm:text-lg"
+                                                                         icon={faMinus} onClick={() => decrement(product)}/>
+                                                        <span
+                                                            className="text-md text-blue-800 px-2 sm:text-lg">{product.quantity}</span>
+                                                        <FontAwesomeIcon
+                                                            className="text-md text-blue-500 border-blue-400 border-solid border-r px-4 sm:text-lg"
+                                                            icon={faPlus} onClick={() => increment(product)}/>
+                                                        <FontAwesomeIcon
+                                                            className="text-md text-blue-800 border-blue-400 border-solid border-r px-4 sm:text-xl"
+                                                            icon={faTrash} onClick={() => deleteUserOneProduct(product)}/>
+                                                        <FontAwesomeIcon className="text-md text-blue-800 px-4 sm:text-lg"
+                                                                         icon={faPen}
+                                                                         onClick={() => chooseEditProduct(product)}/>
+                                                    </div>
                                                 </div>
+                                            </div>
+
+                                        </div>
+                                    </SingleProductBox>
+                                )}
+                            </ProductsListBox>
+                        </ProductsBox>
+
+
+                    </MainContent>
+                </div>
+                </>
+                :
+                <ProductsBox>
+                    <SinglePageTitle>{categoryFromPath?.title}</SinglePageTitle>
+                    <ProductsListBox justifyContent={"space-between"}>
+                        {productsOfCategory.map((product: UserProduct) =>
+                            <SingleProductBox primary={true} key={product.id}>
+                                <div key={product.id}
+                                     className=" flex flex-col relative px-2 pt-2 pb-2 cursor-pointer md:pb-4">
+                                    <ProductNameBox>
+                                        {product.name}
+                                    </ProductNameBox>
+
+                                    <div className={'h-auto mt-auto flex flex-col'}>
+                                        <div className="text-md text-gray-light  pb-1.5 sm:text-sm md:text-base">
+                                            {product.capacity}{product.unit}
+                                        </div>
+                                        {product.expireDate === null && <span></span>}
+                                        <div
+                                            className={"text-sm md:text-md " + ((product.expireDate !== null && product?.expireDate > todayDate) ? "text-gray-light" : "text-red font-bold")}>
+                                            {product.expireDate ? product.expireDate.toISOString().substring(0, 10) : ""} &nbsp;
+                                        </div>
+                                    </div>
+
+                                    <div className={"h-1/3 md:flex md:justify-end md:items-end"}>
+                                        <div className={"md:flex md:justify-end"}>
+                                            <div
+                                                className="flex flex-row flex-nowrap  relative items-center pt-4 justify-end items-end">
+                                                <FontAwesomeIcon className="text-md text-blue-500  px-4 sm:text-lg"
+                                                                 icon={faMinus} onClick={() => decrement(product)}/>
+                                                <span
+                                                    className="text-md text-blue-800 px-2 sm:text-lg">{product.quantity}</span>
+                                                <FontAwesomeIcon
+                                                    className="text-md text-blue-500 border-blue-400 border-solid border-r px-4 sm:text-lg"
+                                                    icon={faPlus} onClick={() => increment(product)}/>
+                                                <FontAwesomeIcon
+                                                    className="text-md text-blue-800 border-blue-400 border-solid border-r px-4 sm:text-xl"
+                                                    icon={faTrash} onClick={() => deleteUserOneProduct(product)}/>
+                                                <FontAwesomeIcon className="text-md text-blue-800 px-4 sm:text-lg"
+                                                                 icon={faPen}
+                                                                 onClick={() => chooseEditProduct(product)}/>
                                             </div>
                                         </div>
                                     </div>
-                                </SingleProductBox>
-                            )}
-                        </ProductsListBox>
-                    </ProductsBox>
-                </MainContent>
+
+                                </div>
+                            </SingleProductBox>
+                        )}
+                    </ProductsListBox>
+                </ProductsBox>
+            }
+
                 <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}  modalContent={<EditProductForm handleClose={handleClose} isShown={isShown} />}/>
 
-            </div>
+
         </>
     );
 };
