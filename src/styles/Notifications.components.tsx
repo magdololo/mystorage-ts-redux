@@ -58,22 +58,8 @@ const MessageBodyDate = styled.p`
 
 const MenuInviteList = styled.ul`
   margin: 0.5rem auto;
-  //box-shadow: 0 3px 6px rgba(0, 0, 0, 0.175);
-  //border: 1px solid #ccc;
-  //list-style-type: none;
-  //padding: 0;
-  //margin: 0 0 0 55%;
-  //width: 25%;
-  //display: block;
-  //height: auto;
-  //overflow: visible;
-  //position: absolute;
-  //top: 2rem;
-  //right: 2.5rem;
-  //z-index: 100;
   ;
 `
-// bg-white rounded-lg w-full
 const MenuInviteItem = styled.li`
   
   padding: 4px;
