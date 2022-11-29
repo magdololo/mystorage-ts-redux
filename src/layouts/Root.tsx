@@ -153,6 +153,8 @@ const Root = ()=>{
         }
 
     },[currentStorageId, dispatch])
+
+
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
 
     return (

@@ -267,7 +267,7 @@ const Home = () => {
                     <FooterAuthor>
                         <h5 className="footer-header">
                             <FontAwesomeIcon className="icons" icon={faCopyright} />
-                            <span >by <a href='https://github.com/magdololo/mystorage-ts-redux' target='_blank' className="footerRegulationsLink text-purple">magdololo</a> 2022</span>
+                            <span >by <a href='https://github.com/magdololo/mystorage-ts-redux' className="footerRegulationsLink text-purple">magdololo</a> 2022</span>
                         </h5>
                     </FooterAuthor>
                     <FooterRegulations>
