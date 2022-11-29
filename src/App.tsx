@@ -15,6 +15,8 @@ import LoginPage from "./features/users/LoginPage";
 import RemindPassword from "./features/users/RemindPassword";
 import ProductsList from "./outlets/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
+import TermsAndConditions from "./features/users/TermsAndConditions";
+import PrivacyPolicy from "./features/users/PrivacyPolicy";
 import Home from "./layouts/Home";
 import Root from "./layouts/Root";
 import './App.css';
@@ -76,6 +78,8 @@ function App() {
                     <Route path="/login" element={<LoginPage/>}/>
                     <Route path="/register" element={<RegisterPage/>}/>
                     <Route path="/remindPassword" element={<RemindPassword/>}/>
+                    <Route path="/privacyPolicy" element={<PrivacyPolicy/>}/>
+                    <Route path="/termsAndConditions" element={<TermsAndConditions/>}/>
                     :
                     <Route path="/" element={<Root/>}>
                         <Route path="/categories" element={<CategoryList/>}/>

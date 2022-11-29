@@ -20,7 +20,8 @@
   "home_section4_subheading_three" : "Check the notifications and you will find out if you have received a new invitation or if the person you invited to share your account has accepted it.",
   "home_footer_word1" : "Accept",
   "home_footer_word2" : "service",
-  "home_footer_link" : "regulations",
+  "home_footer_link_conditions" : "regulations",
+  "home_footer_link_privacy" : "privacy policy",
   "acceptRegulations": "I accept the website regulations.",
   "returnToCategoryList" : "Return to category list",
   "categories": {
@@ -189,6 +190,5 @@
     "headerFormAddCoUser" :"Enter the co-user email",
     "messageAfterInvite": "We have sent an invitation to your home storage to this e-mail address!",
     "searchProduct": "Search product..."
-  },
-
+  }
 }

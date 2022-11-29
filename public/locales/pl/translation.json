@@ -20,7 +20,8 @@
   "home_section4_subheading_three" : "Sprawdź powiadomienia a dowiesz się czy otrzymałes nowe zaproszenie lub czy osoba którą zaprosiłeś do współdzielenia konta zaakceptowała je.",
   "home_footer_word1": "Akceptuję",
   "home_footer_word2": "serwisu",
-  "home_footer_link": "regulamin",
+  "home_footer_link_conditions": "regulamin",
+  "home_footer_link_privacy": "politykę prywatności",
   "acceptRegulations": "Akceptuję regulamin serwisu.",
   "returnToCategoryList": "Wróć do listy kategorii",
   "categories": {

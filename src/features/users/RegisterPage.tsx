@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Link} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {useForm, SubmitHandler} from "react-hook-form";
 import {sendEmailVerification} from "firebase/auth";
@@ -10,6 +11,7 @@ import {
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
+
 
 
 const eye = <FontAwesomeIcon icon={faEye}/>;
@@ -158,8 +160,14 @@ const RegisterPage = () => {
                             className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox" onChange={handleInputChange} checked={checkboxState} id="flexCheckDefault">
                         </input>
-                        <label className="form-check-label inline-block text-gray-800 " htmlFor="flexCheckDefault">
-                            {t("acceptRegulations")}
+                        <label htmlFor="flexCheckDefault">
+                           <span className="text-md leading-6 text-gray-light">{t("home_footer_word1")}
+                               <Link to="/termsAndConditions" className="text-purple mx-1">{t("home_footer_link_conditions")}</Link>
+                               <span className={"mx-1"}>and</span>
+                            <Link to="/privacyPolicy" className="text-purple mx-1 ">{t("home_footer_link_privacy")}</Link>
+                               {t("home_footer_word2")}
+                           </span>
+
                         </label>
                     </div>
                     <div className="flex justify-center space-x-6 mt-3">
