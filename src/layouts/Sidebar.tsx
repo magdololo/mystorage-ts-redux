@@ -3,9 +3,9 @@ import {useAppDispatch, useAppSelector} from "../app/store";
 import {useTranslation} from "react-i18next";
 import {Link, useNavigate} from "react-router-dom";
 import {auth, signOut} from "../firebase";
-import {logout, selectUser} from "../slices/usersSlice";
+import {deleteUserAccount, logout, selectUser} from "../slices/usersSlice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faUser, faHandPointRight, faUserGroup, faUserPlus} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRightFromBracket, faUser, faHandPointRight, faUserGroup, faUserPlus, faUserSlash} from "@fortawesome/free-solid-svg-icons";
 import Divider from "@mui/material/Divider";
 import {Accordion} from "react-accordion-ts";
 import {Modal} from "../component/Modal/Modal";
@@ -56,6 +56,11 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
         refreshPage()
 
     };
+    const deleteAccount = (userId: string) => {
+        console.log(userId)
+        dispatch(deleteUserAccount(userId));
+        // logoutOfApp()
+    }
     const myAccordion = [
         {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />{t("BottomHamburgerMenu.myAccount")}</span>,
             content: <span className="text-sm font-bold">{user?.email}</span>}
@@ -84,6 +89,7 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
                     <li key='6' className="px-6 py-2  w-full cursor-pointer" onClick={handleClick}><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faUserGroup} /><Link to={'/shares/'}>{t("BottomHamburgerMenu.coUsers")}</Link></li>
                     <li key='7' className="pl-6 py-2  w-full cursor-pointer" onClick={()=>handleShownAddCoUserModal()}><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faUserPlus} />{t("BottomHamburgerMenu.addCoUser")}</li>
                     <li key='4' className="px-6 py-2  w-full cursor-pointer" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />{t("BottomHamburgerMenu.signOut")}</li>
+                    <li key='8' className="px-6 py-2  w-full cursor-pointer" onClick={()=>deleteAccount(user!!.uid)}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUserSlash} />{t("BottomHamburgerMenu.deleteAccount")}</li>
                 </ul>
             </div>
             {isBiggerThan1280 ?

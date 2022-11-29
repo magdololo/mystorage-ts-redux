@@ -188,7 +188,8 @@
     "addCoUser": "Dodaj współużytkownika",
     "headerFormAddCoUser" :"Wpisz email współużytkownika",
     "messageAfterInvite": "Na ten adres email wysłalismy zaproszenie do Twojej spiżarni!",
-    "searchProduct": "Wyszukaj produkt..."
+    "searchProduct": "Wyszukaj produkt...",
+    "deleteAccount" : "Usuń konto"
   }
 }
 
