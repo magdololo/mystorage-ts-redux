@@ -3,9 +3,11 @@ import * as admin from "firebase-admin";
 
 
 
+
 admin.initializeApp();
 
 const db = admin.firestore();
+const auth = admin.auth();
 
 exports.onNewShare = functions.firestore
     .document("users/{userId}/shares/{shareId}") //to jest adres shera outgoing wysłanego przez johna
@@ -179,5 +181,15 @@ exports.changeStatusAcceptedShareToRejected = functions.firestore
                     change: "accepted to rejected"
                 })
             }
+        }
+    })
+exports.deleteSubcollectionsOnDeleteUser = functions.firestore
+    .document("users/{userId}")
+    .onUpdate(async (change,context)=> {
+        const newValue = change.after.data();
+        if(newValue.isDeleted === true){
+            const userRef = await db.doc("users/" + context.params.userId).get()
+            await db.recursiveDelete(userRef.ref)
+            await auth.deleteUser(context.params.userId)
         }
     })

@@ -8,7 +8,7 @@ import {
     getDoc,
     collection,
     updateDoc,
-    where
+    where,
 } from "firebase/firestore";
 import {db} from "../firebase";
 import {addNewCategory, Category} from "./categoriesSlice";
@@ -89,7 +89,15 @@ export const changeSeeGreetingToTrue = createAsyncThunk<boolean,User,{
    return true
 })
 
+export const deleteUserAccount = createAsyncThunk('users/deleteUserAccount', async (userId: string)=>{
+    try {
+        const docRef = doc(db, "users/" + userId);
+        await updateDoc(docRef, {"isDeleted": true})
+    } catch (error){
+        console.log(error)
+    }
 
+})
 const usersSlice = createSlice({
     name: 'users',
     initialState,
@@ -130,6 +138,9 @@ const usersSlice = createSlice({
 
                 }
 
+            })
+            .addCase(deleteUserAccount.fulfilled, ()=>{
+                console.log('Delete user account')
             })
 
     }
