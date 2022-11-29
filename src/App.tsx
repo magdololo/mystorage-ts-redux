@@ -90,11 +90,10 @@ function App() {
                     </Route>
                 </Routes>
             </div>
-
-            </Suspense>
+        </Suspense>
 
         </>
-    );
+    )
 }
 
 export default App;
