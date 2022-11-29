@@ -267,12 +267,12 @@ const Home = () => {
                     <FooterAuthor>
                         <h5 className="footer-header">
                             <FontAwesomeIcon className="icons" icon={faCopyright} />
-                            <span >by <a href='https://github.com/magdololo/mystorage-ts-redux' target='_blank' className="footerRegulationsLink text-purple">magdololo</a> 2022</span>
+                            <span >by <a href='https://github.com/magdololo/mystorage-ts-redux' className="footerRegulationsLink text-purple">magdololo</a> 2022</span>
                         </h5>
                     </FooterAuthor>
                     <FooterRegulations>
                         <span className="footerRegulationsSpan">{t("home_footer_word1")}
-                            <Link to="/termsAndConditions" className="footerRegulationsLink text-purple">{t("home_footer_link_conditions")}</Link>
+                            <Link to="/termsAndConditions" className="footerRegulationsLink">{t("home_footer_link_conditions")}</Link>
                             and
                             <Link to="/privacyPolicy" className="footerRegulationsLink">{t("home_footer_link_privacy")}</Link>
                             {t("home_footer_word2")}</span>
