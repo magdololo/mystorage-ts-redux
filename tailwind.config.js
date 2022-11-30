@@ -71,6 +71,7 @@ module.exports = {
       },
       fontSize: {
         'labelSize': '17.6px',
+        'xsm' : '10px',
         'sm' : '12px',
         'md': '15px',
         'lg': '18px',

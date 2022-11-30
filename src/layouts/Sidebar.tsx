@@ -5,7 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {auth, signOut} from "../firebase";
 import {deleteUserAccount, logout, selectUser} from "../slices/usersSlice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faUser, faHandPointRight, faUserGroup, faUserPlus, faUserSlash} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRightFromBracket, faUser, faHandPointRight, faUserGroup, faUserPlus, faUserSlash, faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import Divider from "@mui/material/Divider";
 import {Accordion} from "react-accordion-ts";
 import {Modal} from "../component/Modal/Modal";
@@ -27,6 +27,8 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
     const {isShown: isShownAddProductModal, handleClose: handleCloseAddProduct, handleShown: handleShownAddProductModal } = useModal()
     const {isShown: isShownAddCoUserModal, handleClose: handleCloseAddCoUser, handleShown: handleShownAddCoUserModal} = useModal()
+    const {isShown: isShownDeleteAccountModal, handleClose: handleCloseDeleteAccount, handleShown: handleShownDeleteAccountModal} = useModal()
+    const {isShown: isShownAfterDeleteAccountModal, handleClose: handleCloseAfterDeleteAccount, handleShown: handleShownAfterDeleteAccountModal} = useModal()
     const modalHeader = ""
     const addProductModalHeader = t("products.AddProductForm.formAddProductTitle")
     const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
@@ -59,18 +61,41 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     const deleteAccount = (userId: string) => {
         console.log(userId)
         dispatch(deleteUserAccount(userId));
-        // logoutOfApp()
+        handleCloseDeleteAccount()
+        handleShownAfterDeleteAccountModal()
+    }
+    const onCloseAfterDeleteAccount =()=>{
+        handleCloseAfterDeleteAccount();
+        logoutOfApp()
     }
     const myAccordion = [
         {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />{t("BottomHamburgerMenu.myAccount")}</span>,
-            content: <span className="text-sm font-bold">{user?.email}</span>}
+            content:
+            <>
+                <ul className="text-gray-light text-lg pt-2 relative" >
+                <li className="text-sm pt-1 pl-2"><FontAwesomeIcon className="text-sm text-purple px-4" icon={faEnvelope} />{user?.email}</li>
+                <li  className="text-sm cursor-pointer pt-2 pl-2" onClick={()=>handleShownDeleteAccountModal()}><FontAwesomeIcon className="text-sm text-purple px-4" icon={faUserSlash} />{t("BottomHamburgerMenu.deleteAccount")}</li>
+                </ul>
+            </>
+        }
     ]
 
     const dividerStyle = {
         marginLeft: '1rem',
         marginRight: '1rem'
     }
-
+    let contentModalDeleteAccount =
+        <>
+            <h3 className="text-center">Czy napewno chcesz usunąć konto?</h3>
+            <p className={"text-center mb-2"}> Utracisz wszystkie swoje dane.</p>
+            <button  className=" block mx-auto px-2 py-2 text-white font-bold bg-purple text-xsm leading-tight uppercase rounded shadow-md tracking-wider
+                                 hover:shadow-l focus:shadow-lg focus:outline-none focus:ring-0" onClick={() => deleteAccount(user!!.uid)}>{t("buttons.confirm")}</button>
+        </>
+    let contentModalAfterDeleteAccount=
+        <>
+            <h3 className="text-center">Dziękujemy że byłeś/aś z nami!</h3>
+            <p className={"text-center mb-2 mt-2"}> Zapraszamy jeśli będziesz znów nas potrzebował.</p>
+        </>
     return(
         <>
             <div className="flex justify-center">
@@ -89,7 +114,7 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
                     <li key='6' className="px-6 py-2  w-full cursor-pointer" onClick={handleClick}><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faUserGroup} /><Link to={'/shares/'}>{t("BottomHamburgerMenu.coUsers")}</Link></li>
                     <li key='7' className="pl-6 py-2  w-full cursor-pointer" onClick={()=>handleShownAddCoUserModal()}><FontAwesomeIcon className="text-xl text-purple px-4 " icon={faUserPlus} />{t("BottomHamburgerMenu.addCoUser")}</li>
                     <li key='4' className="px-6 py-2  w-full cursor-pointer" onClick={logoutOfApp}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faArrowRightFromBracket} />{t("BottomHamburgerMenu.signOut")}</li>
-                    <li key='8' className="px-6 py-2  w-full cursor-pointer" onClick={()=>deleteAccount(user!!.uid)}><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUserSlash} />{t("BottomHamburgerMenu.deleteAccount")}</li>
+
                 </ul>
             </div>
             {isBiggerThan1280 ?
@@ -98,6 +123,8 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
             </div> : null}
             <Modal isShown={isShownAddCoUserModal} hide={()=> handleCloseAddCoUser()} modalHeaderText={modalHeader}  modalContent={AddCoUserForm({handleCloseAddCoUser, isShownAddCoUserModal, handleClick})}/>
             <Modal isShown={isShownAddProductModal} hide={()=> handleCloseAddProduct()} modalHeaderText={addProductModalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal})}/>
+            <Modal isShown={isShownDeleteAccountModal} hide={()=> handleCloseDeleteAccount()} modalHeaderText={""}  modalContent={contentModalDeleteAccount}/>
+            <Modal isShown={isShownAfterDeleteAccountModal} hide={()=> onCloseAfterDeleteAccount()} modalHeaderText={""}  modalContent={contentModalAfterDeleteAccount}/>
         </>
     )
 }
