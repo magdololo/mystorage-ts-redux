@@ -7,7 +7,7 @@ import {
     EntityState
 } from '@reduxjs/toolkit'
 import {AppDispatch, RootState} from "../app/store";
-import {addDoc, collection, deleteDoc, doc, getDocs, query, setDoc} from "firebase/firestore";
+import {addDoc, collection, doc, getDocs, query, setDoc, updateDoc} from "firebase/firestore";
 import {db} from "../firebase";
 import {notify} from "../helpers";
 import i18next from "i18next";
@@ -37,10 +37,11 @@ const categoriesAdapter = createEntityAdapter<Category>({
 
     }
 });
-const initialState: EntityState<Category> & {  error: null | string | undefined; status: string; currentCategory : Category | null } = categoriesAdapter.getInitialState({
+const initialState: EntityState<Category> & {  error: null | string | undefined; status: string; currentCategory : Category | null; deletingCategory : Category | null} = categoriesAdapter.getInitialState({
     status: 'idle',
     error: null,
     currentCategory: null,
+    deletingCategory: null
 })
 
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async (userId: string) => {
@@ -97,8 +98,8 @@ export const editCategory = createAsyncThunk<Category, Category,{ //pierwsze to 
 export const deleteCategory = createAsyncThunk('categories/deleteCategory', async (category: Category)=> {
      if(category.title !== "produkty bez kategorii"){
     try {
-        await deleteDoc(doc(db, "users/" + category.user + "/categories/" , category.id!))
-        return category.id
+        const docRef = doc(db, "users/" + category.user + "/categories/" , category.id!)
+        await updateDoc(docRef, {"isDeleted": true})
 
     }    catch(error){
         console.log(error)
@@ -127,7 +128,10 @@ const categoriesSlice = createSlice({
         },
         removeCategory: (state, action:PayloadAction<string> )=> {
             categoriesAdapter.removeOne(state, action.payload);
-        }
+        },
+        deletingCategoryChange: (state, action: PayloadAction<Category | null>) => {
+            state.deletingCategory = action.payload;
+        },
 
 
     },
@@ -153,10 +157,10 @@ const categoriesSlice = createSlice({
                 categoriesAdapter.setOne(state, action.payload)
                 notify(i18next.t("categories.categoriesSlice.notify.changeCategory"))
             })
-            .addCase(deleteCategory.fulfilled,(state,action)=>{
-                categoriesAdapter.removeOne(state, action.payload as string)
-                notify(i18next.t("categories.categoriesSlice.notify.removeCategory"))
-            })
+            // .addCase(deleteCategory.fulfilled,(state,action)=>{
+            //     categoriesAdapter.removeOne(state, action.payload as string)
+            //     notify(i18next.t("categories.categoriesSlice.notify.removeCategory"))
+            // })
 
     }
 })
@@ -181,5 +185,5 @@ export const selectDefaultCategory = createSelector(
     [(state: RootState) => selectAllCategories(state)],
     (categories) => categories.find(category => category.required === "true")
 )
-export const {currentCategoryChange, removeCategories, addCategory, modifyCategory, removeCategory} = categoriesSlice.actions
+export const {currentCategoryChange, removeCategories, addCategory, modifyCategory, removeCategory, deletingCategoryChange} = categoriesSlice.actions
 export default categoriesSlice.reducer

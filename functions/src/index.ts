@@ -193,3 +193,13 @@ exports.deleteSubcollectionsOnDeleteUser = functions.firestore
             await auth.deleteUser(context.params.userId)
         }
     })
+
+exports.deleteSubcollectionsOnDeleteCategory = functions.firestore
+    .document("users/{userId}/categories/{categoryId}")
+    .onUpdate(async (change,context)=> {
+        const newValue = change.after.data();
+        if(newValue.isDeleted === true){
+            const categoryRef = await db.doc("users/" + context.params.userId + "/categories/" +  context.params.categoryId).get()
+            await db.recursiveDelete(categoryRef.ref)
+        }
+    })
