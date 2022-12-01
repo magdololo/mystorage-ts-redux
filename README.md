@@ -1,6 +1,6 @@
 # My storage
 > Application that allows collecting and managing information about your home storeroom content, like groceries, household chemicals etc. Anyone can register in service and create own storeroom that later can be shared with others.
-> Live demo [_here_](https://www.example.com). 
+> Live demo [_here_](https://www.mystorage.ovh.com). 
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -48,20 +48,32 @@ List the ready features here:
 
 ## Screenshots
 ![Example screenshot](./img/screenshot.png)
+(./screenshots/screenshot_categories.png)
+(./screenshots/screenshot_products_in_category.png)
+(./screenshots/screenshot_shares.png)
 <!-- If you have screenshots you'd like to share, include them here. -->
 
 
 ## Setup
-What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
+You can take all the files of this site and run them just on your computer as if it were live online, only it's just on your machine.
+Requirements
 
-Proceed to describe how to install / setup one's local environment / get started with the project.
+    Node.js
+    firebase-tools
+    Git
 
+If you have installed GitHub Desktop, Git was also installed automatically.
 
-## Usage
-How does one go about using it?
-Provide various use cases and code examples here.
+To copy the repository's files from here onto your computer and to view and serve those files locally, at your computer's command line type:
 
-`write-your-code-here`
+git clone https://github.com/magdololo/mystorage-ts-redux
+cd mystorage-ts-redux
+
+`npm install` to install all req'd dependencies
+
+`npm start` to start the local server (this project uses create-react-app)
+
+Open http://localhost:3000 in your browser
 
 
 ## Project Status
@@ -70,7 +82,7 @@ Project is: _in progress_ / _complete_ / _no longer being worked on_. If you are
 - - Migration from Tailwind to Styled Components
 - - Covering system actions with notifications
 - Completed
-- - Sharing storerooms
+
 
 
 ## Room for Improvement
@@ -85,11 +97,6 @@ To do:
 
 
 ## Contact
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
+Created by magdololo - feel free to contact me!
 
 
-<!-- Optional -->
-<!-- ## License -->
-<!-- This project is open source and available under the [... License](). -->
-
-<!-- You don't have to include all sections - just the one's relevant to your project -->

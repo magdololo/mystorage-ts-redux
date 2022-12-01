@@ -78,7 +78,7 @@ const SharesPage = ()=>{
                                 {incomingInvites.map((invite: Invite) =>
                                     <SingleInvite key={invite.id}>
                                         <div className={"h-2/3 "}>
-                                            <h2 className="text-md xmd:text-lg text-gray-light pb-3 md:text-lg">Od <span className="font-bold">{invite.user_email}</span></h2>
+                                            <h2 className="text-md xmd:text-lg text-gray-light pb-3 md:text-lg">From <span className="font-bold">{invite.user_email}</span></h2>
                                             <h3 className="text-md xmd:text-md text-gray-light pb-3 xl:pb-2.5">
                                                 <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && t("shares.statusAccepted")}</span>
                                                 <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && t("shares.statusRejected")}</span>
@@ -124,7 +124,7 @@ const SharesPage = ()=>{
                                 {outgoingInvites.map((invite: Invite) =>
                                     <SingleInvite key={invite.id} >
                                         <div className={"h-2/3 "}>
-                                            <h2 className="text-md text-gray-light pb-3 md:text-lg">Do <span className="font-bold">{invite.user_email}</span></h2>
+                                            <h2 className="text-md text-gray-light pb-3 md:text-lg">To <span className="font-bold">{invite.user_email}</span></h2>
                                             <h3 className="text-md xmd:text-md text-gray-light pb-3 xl:pb-2.5">
                                                 <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && t("shares.statusAccepted")}</span>
                                                 <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && t("shares.statusRejected")}</span>

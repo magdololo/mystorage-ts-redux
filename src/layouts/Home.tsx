@@ -271,11 +271,11 @@ const Home = () => {
                         </h5>
                     </FooterAuthor>
                     <FooterRegulations>
-                        <span className="footerRegulationsSpan">{t("home_footer_word1")}
-                            <Link to="/termsAndConditions" className="footerRegulationsLink">{t("home_footer_link_conditions")}</Link>
-                            and
-                            <Link to="/privacyPolicy" className="footerRegulationsLink">{t("home_footer_link_privacy")}</Link>
-                            {t("home_footer_word2")}</span>
+                                <span className="footerRegulationsSpan">{t("home_footer_word1")}
+                                    <Link to="/termsAndConditions" className="footerRegulationsLink ">{t("home_footer_link_conditions")}</Link>
+                                    {t("home_footer_word2")}
+                                    <Link to="/privacyPolicy" className="footerRegulationsLink ">{t("home_footer_link_privacy")}</Link>
+                                </span>
                     </FooterRegulations>
                 </SectionBox>
             </Section>

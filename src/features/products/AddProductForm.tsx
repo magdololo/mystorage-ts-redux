@@ -119,6 +119,9 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
         {
             value: 'l',
 
+        },
+        {
+            value: 'box'
         }
 
     ];

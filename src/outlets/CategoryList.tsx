@@ -102,7 +102,7 @@ export const CategoryList = () => {
 
     const chooseEditCategory = (category: Category) => {
         handleShown()
-        // let editingCategory = dispatch(currentCategoryChange(category))
+        dispatch(currentCategoryChange(category))
     }
     const deletingCategory = (category: Category) => {
         dispatch(deleteCategory(category))
