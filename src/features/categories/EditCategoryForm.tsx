@@ -15,7 +15,7 @@ type EditCategoryFormProps = {
 export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps) => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-       const categoryBeingEdited = useAppSelector((state=>state.categories.currentCategory)) as Category
+    const categoryBeingEdited = useAppSelector((state=>state.categories.currentCategory)) as Category
     const [newCategoryTitle, setNewCategoryTitle] = useState("")
     const [newPickedImage, setNewPickedImage] = useState("")
     const currentStorageId = useAppSelector(selectCurrentStorage)

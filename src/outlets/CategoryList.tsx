@@ -14,6 +14,7 @@ import {changeSeeGreetingToTrue, selectUser, User} from "../slices/usersSlice";
 import {
     currentCategoryChange,
     deleteCategory,
+    deletingCategoryChange,
     selectAllCategoriesSortedByRequired,
     Category,
 } from "../slices/categoriesSlice";
@@ -34,14 +35,15 @@ export const CategoryList = () => {
     let user = useSelector(selectUser);
     let didSee = user?.didSeeGreeting;
 
-    const {isShown, handleShown, handleClose} = useModal()
+    const {isShown: isShownAddCategoryModal, handleShown: handleShownAddCategoryModal , handleClose: handleCloseAddCategoryModal} = useModal()
+    const {isShown: isShownDeleteCategoryModal, handleShown: handleShownDeleteCategoryModal , handleClose: handleCloseDeleteCategoryModal} = useModal()
     const modalAddHeader = t("categories.CategoryList.modalAddHeader")
     const modalEditHeader = t("categories.CategoryList.modalEditHeader")
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const handleCloseGreeting = () => setIsOpen(false);
     const dispatch = useAppDispatch()
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
-
+    const categoryBeingDeleted = useAppSelector((state=>state.categories.deletingCategory)) as Category
     const [toggleSwitch, setToggleSwitch] = useState(false);
     const closeModalWithGreeting = () => {
         handleCloseGreeting();
@@ -101,11 +103,12 @@ export const CategoryList = () => {
     }, [dispatch])
 
     const chooseEditCategory = (category: Category) => {
-        handleShown()
+        handleShownAddCategoryModal()
         dispatch(currentCategoryChange(category))
     }
-    const deletingCategory = (category: Category) => {
-        dispatch(deleteCategory(category))
+    const chooseDeleteCategory = (category: Category) => {
+        handleShownDeleteCategoryModal()
+        dispatch(deletingCategoryChange(category))
     }
       let content;
     // if (categoriesStatus === "loading") {
@@ -123,7 +126,7 @@ export const CategoryList = () => {
                            <FontAwesomeIcon className="absolute align-middle top-8 left-8 inline-flex items-center justify-center text-white text-md sm:text-lg font-bold cursor-pointer" icon={faPen} onClick={() => {chooseEditCategory(category as Category)}}/>
                        }
                        {toggleSwitch &&
-                           <FontAwesomeIcon className="absolute align-middle top-8 right-8 inline-flex items-center justify-center text-red text-lg font-bold cursor-pointer" icon={faXmark} onClick={() => deletingCategory(category as Category)}/>
+                           <FontAwesomeIcon className="absolute align-middle top-8 right-8 inline-flex items-center justify-center text-red text-lg font-bold cursor-pointer" icon={faXmark} onClick={() =>  chooseDeleteCategory(category as Category)}/>
                        }
                    </div>
                 )
@@ -134,8 +137,8 @@ export const CategoryList = () => {
                     <MainBox>
                         {renderedCategories}
                         {!toggleSwitch &&
-                            <div className=" relative overflow-hidden bg-no-repeat bg-cover border-solid border-purple border-2 border-opacity-25" onClick={handleShown}>
-                                <img src="http://placehold.jp/ffffff/ffffff/1280x900.png" alt={"placeholder"} className="bg-cover"/>
+                            <div className=" relative overflow-hidden bg-no-repeat bg-cover border-solid border-purple border-2 border-opacity-25" onClick={handleShownAddCategoryModal}>
+                                <img src="https://placehold.jp/ffffff/ffffff/1280x900.png" alt={"placeholder"} className="bg-cover"/>
                                 <div className="absolute top-0 right-0  w-full h-full overflow-hidden bg-fixed ">
                                     <div className="relative mx-auto top-1/3 text-purple font-bold text-2xl h-5 w-5 ">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
@@ -158,19 +161,30 @@ export const CategoryList = () => {
     // } else if (categoriesStatus === "failed") {
     //     content = <div><span> {t("categories.CategoryList.categoriesStatusFailed")}</span></div>;
     //  }
+    const deletingCategory = (category: Category)=>{
+        dispatch(deleteCategory(category));
+        handleCloseDeleteCategoryModal()
+    }
 
+    let contentModalDeleteCategory =
+        <>
+            <h3 className="text-center">Czy napewno chcesz usunąć tę kategorię?</h3>
+            <p className={"text-center mb-2"}> Utracisz wszystkie produkty w niej zawarte!.</p>
+            <button  className=" block mx-auto px-2 py-2 text-white font-bold bg-purple text-xsm leading-tight uppercase rounded shadow-md tracking-wider
+                                 hover:shadow-l focus:shadow-lg focus:outline-none focus:ring-0" onClick={() =>deletingCategory(categoryBeingDeleted)}>{t("buttons.confirm")}</button>
+        </>
     return (
         <>
             <EditCategoriesButton toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
                 {content}
                 <Modal className={"addCategory-modal"}
-                       isShown={isShown}
-                       hide={handleClose}
+                       isShown={isShownAddCategoryModal}
+                       hide={handleCloseAddCategoryModal}
                        modalHeaderText={!toggleSwitch ? modalAddHeader : modalEditHeader}
-                       modalContent={!toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleClose}/> : <EditCategoryForm closeAddCategoryModal={handleClose}/>}
+                       modalContent={!toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleCloseAddCategoryModal}/> : <EditCategoryForm closeAddCategoryModal={handleCloseAddCategoryModal}/>}
                 />
                 {didSee === false && greeting}
-
+            <Modal isShown={isShownDeleteCategoryModal} hide={()=> handleCloseDeleteCategoryModal()} modalHeaderText={""}  modalContent={contentModalDeleteCategory}/>
         </>
     )
 }
