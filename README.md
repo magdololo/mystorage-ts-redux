@@ -1,46 +1,95 @@
-# Getting Started with Create React App
+# My storage
+> Application that allows collecting and managing information about your home storeroom content, like groceries, household chemicals etc. Anyone can register in service and create own storeroom that later can be shared with others.
+> Live demo [_here_](https://www.example.com). 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
+* [General Info](#general-information)
+* [Technologies Used](#technologies-used)
+* [Features](#features)
+* [Screenshots](#screenshots)
+* [Setup](#setup)
+* [Usage](#usage)
+* [Project Status](#project-status)
+* [Room for Improvement](#room-for-improvement)
+* [Contact](#contact)
+<!-- * [License](#license) -->
 
-## Available Scripts
 
-In the project directory, you can run:
+## General Information
+- Provide general information about your project here.
+- What problem does it (intend to) solve?
+- What is the purpose of your project?
+- Why did you undertake it?
+<!-- You don't have to answer all the questions - just the ones relevant to your project. -->
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Technologies Used
+- Created with Creat React App
+- React
+- Redux toolkit
+- Firebase
+- - Firestore
+- - Storage
+- - Hosting
+- - Cloud Functions
+- Tailwind
+- StyledComponents
+- i18next
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## Features
+List the ready features here:
+- Creating user accounts using email/password and social accounts (supported by firebase)/
+- Categories management - create your own product categories, upload your own image if default ones are not enough.
+- Products management - interface made to support quick product quantity changes, information about epired products
+- Sharing storage with others - invite or got invited to share storage with other, great to have household storeroom manage by whole family
+- Get notifications when something changes by others or expiry date is near
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Screenshots
+![Example screenshot](./img/screenshot.png)
+<!-- If you have screenshots you'd like to share, include them here. -->
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Setup
+What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Proceed to describe how to install / setup one's local environment / get started with the project.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Usage
+How does one go about using it?
+Provide various use cases and code examples here.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`write-your-code-here`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Project Status
+Project is: _in progress_ / _complete_ / _no longer being worked on_. If you are no longer working on it, provide reasons why.
+- In Progess
+- - Migration from Tailwind to Styled Components
+- - Covering system actions with notifications
+- Completed
+- - Sharing storerooms
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Room for Improvement
+Room for improvement:
+- Listen to the server data changes
+- Data caching
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To do:
+- Other social media login providers
+- Suppport other development platforms such us Supabase
+
+
+
+## Contact
+Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
+
+
+<!-- Optional -->
+<!-- ## License -->
+<!-- This project is open source and available under the [... License](). -->
+
+<!-- You don't have to include all sections - just the one's relevant to your project -->
