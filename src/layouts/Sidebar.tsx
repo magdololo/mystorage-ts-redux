@@ -86,15 +86,15 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
     }
     let contentModalDeleteAccount =
         <>
-            <h3 className="text-center">Czy napewno chcesz usunąć konto?</h3>
-            <p className={"text-center mb-2"}> Utracisz wszystkie swoje dane.</p>
+            <h3 className="text-center">{t("sidebar.contentModalDeleteAccount_h3")}</h3>
+            <p className={"text-center mb-2"}>{t("sidebar.contentModalDeleteAccount_p")}</p>
             <button  className=" block mx-auto px-2 py-2 text-white font-bold bg-purple text-xsm leading-tight uppercase rounded shadow-md tracking-wider
                                  hover:shadow-l focus:shadow-lg focus:outline-none focus:ring-0" onClick={() => deleteAccount(user!!.uid)}>{t("buttons.confirm")}</button>
         </>
     let contentModalAfterDeleteAccount=
         <>
-            <h3 className="text-center">Dziękujemy że byłeś/aś z nami!</h3>
-            <p className={"text-center mb-2 mt-2"}> Zapraszamy jeśli będziesz znów nas potrzebował.</p>
+            <h3 className="text-center">{t("sidebar.contentModalAfterDeleteAccount_h3")}</h3>
+            <p className={"text-center mb-2 mt-2"}>{t("sidebar.contentModalAfterDeleteAccount_h3")}</p>
         </>
     return(
         <>

@@ -80,25 +80,30 @@ const StoragesList = ()=>{
     return (
         <>
             {isBiggerThan960 ?
-                <StorageList>
-                    <StorageItem primary={currentStorageId === userId} onClick={() => changeStorage(userId!!)}>{t("my_storage")}</StorageItem>
-                    <ArrowRight><ChevronRightIcon/></ArrowRight>
+
+                <StorageList key={"cos"}>
+                    <StorageItem key={userId} primary={currentStorageId === userId}
+                                 onClick={() => changeStorage(userId!!)}>{t("my_storage")}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
+
                     {allAcceptedIncomingInvites.map(invite => {
                         return (
                             <>
-                                <StorageItem primary={currentStorageId === invite.user_id}
-                                             onClick={() => changeStorage(invite.user_id)}>{invite.user_email}</StorageItem>
-                                <ArrowRight><ChevronRightIcon/></ArrowRight>
+                                <StorageItem key={invite.user_id}
+                                             primary={currentStorageId === invite.user_id}
+                                             onClick={() => changeStorage(invite.user_id)}>{invite.user_email}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
+
                             </>
                         )
 
                     })}
-                </StorageList> :
+                </StorageList>
+                :
                 <Select options={options}
                         defaultValue={options[options.length-1]}
                         onChange={handleChange}
                         styles={customStyles}
                 />
+
             }
         </>
     )
