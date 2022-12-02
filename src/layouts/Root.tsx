@@ -41,7 +41,11 @@ const Root = ()=>{
     const dispatch = useAppDispatch()
     const currentStorageId = useAppSelector(selectCurrentStorage)
 
+
     useEffect(()=>{
+        if(!currentStorageId){
+            return
+        }
         const q = query(collection(db, "users/" + user?.uid +"/notifications"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
@@ -72,6 +76,9 @@ const Root = ()=>{
     },[currentStorageId, dispatch, user?.uid])
 
     useEffect(()=>{
+        if(!currentStorageId){
+            return
+        }
         const q = query(collection(db, "users/" + user?.uid +"/shares"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
@@ -96,6 +103,9 @@ const Root = ()=>{
 
     },[currentStorageId,dispatch,user?.uid])
     useEffect(()=>{
+        if(!currentStorageId){
+            return
+        }
         const q = query(collection(db, "users/" + currentStorageId +"/categories"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
@@ -120,37 +130,43 @@ const Root = ()=>{
 
     },[currentStorageId, dispatch])
     useEffect(()=>{
+            if(!currentStorageId){
+                return
+            }
+            const docRef = doc(db, "users", currentStorageId!!);
+            let q = query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
 
-        const docRef = doc(db, "users", currentStorageId!!);
-        let q = query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        let data = change.doc.data()
+                        let productExpireDate = null;
+                        if( data.expireDate != null){
+                            let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds*1000);
+                            productExpireDate = expireDateTimestamp.toDate();
+                        }
+                        if (change.type === "added") {
+                            dispatch(addProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
+                        }
+                        if (change.type === "modified") {
+                            dispatch(modifyProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
+                        }
 
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    let data = change.doc.data()
-                    let productExpireDate = null;
-                    if( data.expireDate != null){
-                        let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds*1000);
-                        productExpireDate = expireDateTimestamp.toDate();
-                    }
-                    if (change.type === "added") {
-                        dispatch(addProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
-                    }
-                    if (change.type === "modified") {
-                        dispatch(modifyProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
-                    }
-
-                    if (change.type === "removed") {
-                        dispatch(removeProduct(change.doc.id))
-                    }
+                        if (change.type === "removed") {
+                            dispatch(removeProduct(change.doc.id))
+                        }
+                    });
+                },
+                (error) => {
+                    console.log(error)
                 });
-            },
-            (error) => {
-                console.log(error)
-            });
 
-        return ()=>{
-            unsubscribe()
-        }
+            return ()=>{
+                unsubscribe()
+            }
+
+
+
+
 
     },[currentStorageId, dispatch])
 

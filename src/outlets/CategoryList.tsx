@@ -26,7 +26,6 @@ import {useTranslation} from "react-i18next";
 import {EditCategoriesButtonComponent} from "../styles/Categories.components";
 import {MainBox} from "../styles/Categories.components";
 import {fetchImages} from "../slices/imagesSlice";
-import {fetchNotifications} from "../slices/notificationsSlice";
 
 
 export const CategoryList = () => {
@@ -89,7 +88,7 @@ export const CategoryList = () => {
         //dispatch(fetchUserProducts(currentStorageId!!))
         dispatch(fetchAllProducts())
         dispatch(fetchImages())
-        dispatch(fetchNotifications(user?.uid!!))
+        //dispatch(fetchNotifications(user?.uid!!))
         // dispatch(fetchShares(user?.uid!!))
     }, [user, dispatch])
 
@@ -168,8 +167,8 @@ export const CategoryList = () => {
 
     let contentModalDeleteCategory =
         <>
-            <h3 className="text-center">Czy napewno chcesz usunąć tę kategorię?</h3>
-            <p className={"text-center mb-2"}> Utracisz wszystkie produkty w niej zawarte!.</p>
+            <h3 className="text-center">{t("categories.CategoryList.contentModalDeleteCategory_h3")}</h3>
+            <p className={"text-center mb-2"}> {t("categories.CategoryList.contentModalDeleteCategory_p")}</p>
             <button  className=" block mx-auto px-2 py-2 text-white font-bold bg-purple text-xsm leading-tight uppercase rounded shadow-md tracking-wider
                                  hover:shadow-l focus:shadow-lg focus:outline-none focus:ring-0" onClick={() =>deletingCategory(categoryBeingDeleted)}>{t("buttons.confirm")}</button>
         </>
