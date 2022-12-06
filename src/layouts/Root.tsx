@@ -1,4 +1,3 @@
-
 import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../app/store";
 import {Outlet} from "react-router-dom";
@@ -26,7 +25,7 @@ import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
 import {addNotification,modifyNotification, Notification} from "../slices/notificationsSlice";
 import {addShare,modifyShare, Invite} from"../slices/sharesSlice";
 import {addCategory, modifyCategory, Category, removeCategory} from "../slices/categoriesSlice";
-import StoragesList from "./StoragesList";
+
 import {
     UserProduct,
     addProduct,
@@ -35,12 +34,14 @@ import {
 
 } from "../slices/userProductsSlice";
 import {ToastContainer} from "react-toastify";
+import ToggleSections from "./ToggleSections";
+import SelectStorageOrPharmacy from "./SelectStorageOrPharmacy";
 
 const Root = ()=>{
     let user = useAppSelector(selectUser);
     const dispatch = useAppDispatch()
     const currentStorageId = useAppSelector(selectCurrentStorage)
-
+    const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
 
     useEffect(()=>{
         if(!currentStorageId){
@@ -177,7 +178,9 @@ const Root = ()=>{
         <>
         <MainPageLayout>
                 <Header><AppHeader/></Header>
-            <Section><StoragesList/></Section>
+                <Section>
+                    {isBiggerThan960 ? <ToggleSections/> : <SelectStorageOrPharmacy/>}
+                </Section>
                 <Main>
                     <Outlet/>
                 </Main>

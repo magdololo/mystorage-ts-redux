@@ -7,6 +7,7 @@ export type VariantStyle = {
         backgroundColor: string;
         boxShadow: string;
         width: string;
+        border: string;
     };
 
     placeholder: {
@@ -30,39 +31,56 @@ export type VariantStyle = {
     menu: {
         backgroundColor: string;
     };
+
+    indicatorContainer: {
+        color: string;
+    };
+
+    indicatorSeparator: {
+        color: string;
+    };
 };
 
 const VARIANTS: { [key in Variants]: VariantStyle } = {
     // Dark-theme style
     primary: {
         control: {
-            backgroundColor: "#6366F1",
-            boxShadow: "#6366F1",
-            width: "300px"
+            backgroundColor: "white",
+            boxShadow: "#6b21a8",
+            width: "",
+            border: "#6b21a8"
         },
 
         placeholder: {
-            color: "#52525B"
+            color: "pink"
 
         },
 
         input: {
-            color: "#E5E7EB"
+            color: "yellow"
         },
 
         singleValue: {
-            color: "#E5E7EB"
+            color: "pink"
         },
 
         option: {
             backgroundColor: "transparent",
-            backgroundColorFocused: "#4B5563",
+            backgroundColorFocused: "#591c87", //"#4B5563",
             color: "#E5E7EB"
         },
 
         menu: {
-            backgroundColor: "#374151"
-        }
+            backgroundColor: "#6b21a8"//"#374151"
+        },
+
+        indicatorContainer: {
+            color: "purple",
+        },
+
+        indicatorSeparator: {
+            color: "#6b21a8",
+        },
     },
 
     // Light-theme style
@@ -70,7 +88,8 @@ const VARIANTS: { [key in Variants]: VariantStyle } = {
         control: {
             backgroundColor: "#ffffff",
             boxShadow: "#6366F1",
-            width: "300px"
+            width: "300px",
+            border: "#6366F1"
         },
 
         placeholder: {
@@ -89,10 +108,19 @@ const VARIANTS: { [key in Variants]: VariantStyle } = {
             backgroundColor: "transparent",
             backgroundColorFocused: "#E5E7EB",
             color: "#111827"
+
         },
 
         menu: {
             backgroundColor: "#F3F4F6"
+        },
+
+        indicatorContainer: {
+            color: "purple"
+        },
+
+        indicatorSeparator: {
+            color: "#111827"
         }
     }
 };
@@ -102,19 +130,31 @@ const VARIANTS: { [key in Variants]: VariantStyle } = {
  * `<Select isMulti={true} />`. Make sure to use colors from TailwindCSS color
  * palette.
  */
+type Option = {
+    value: string
+    label: string
+    padding: string
+    class: string
+}
 export const singleSelectStyle = (
     variant: Variants = "primary"
-): StylesConfig<unknown, false> => {
+): StylesConfig<Option> => {
     const style = VARIANTS[variant];
 
     return {
         control: (provided, state) => ({
             ...provided,
-            border: "1px solid gray",
+            border: state.isFocused
+                ? `1px solid ${style.control.border}`
+                : "1px solid #6b21a8",
+            "&:hover":{
+                border: `1px solid ${style.control.border}`,
+                boxShadow: "none"
+            },
             borderRadius: "0.225rem",
             backgroundColor: style.control.backgroundColor,
             boxShadow: state.isFocused
-                ? `0 0 0 3px ${style.control.boxShadow}, 0 0 #0000`
+                ? `0 0 0 1.5px ${style.control.boxShadow},0 0 #0000`
                 : "",
             transition: "box-shadow 0.1s ease-in-out",
             padding: "4px 2px"
@@ -134,9 +174,15 @@ export const singleSelectStyle = (
             padding: "0.25rem 1rem"
         }),
 
+        indicatorsContainer: (provided) => ({
+            ...provided,
+            color: style.indicatorContainer.color
+        }),
+
         indicatorSeparator: (provided) => ({
             ...provided,
-            display: "none"
+            display: "inline",
+            color: style.indicatorSeparator.color,
         }),
 
         input: (provided) => ({
@@ -154,24 +200,31 @@ export const singleSelectStyle = (
             fontWeight: 500,
             fontSize: "1.125rem",
             lineHeight: "1.75rem",
-            color: style.singleValue.color
+            color: "#111827"
+
         }),
 
         option: (provided, state) => ({
             ...provided,
             fontFamily: "Inter",
             fontWeight: 400,
-            fontSize: "1rem",
+            fontSize: state.data.class === "optionBase" ? "1.2rem": "1rem",
             lineHeight: "1.25rem",
             backgroundColor: state.isFocused
                 ? style.option.backgroundColorFocused
                 : style.option.backgroundColor,
-            color: style.option.color
+            color: style.option.color,
+            paddingLeft: state.data.class === "optionBase" ? "20px": "40px"
         }),
 
         menu: (provided) => ({
             ...provided,
             backgroundColor: style.menu.backgroundColor
+        }),
+
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            color: "#6b21a8"
         })
     };
 };
