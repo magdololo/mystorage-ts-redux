@@ -23,6 +23,7 @@ export interface Category {
     title: Required<string>;
     user: string;
     required: string;
+    type: string;
 }
 
 
