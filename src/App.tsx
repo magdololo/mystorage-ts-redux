@@ -71,8 +71,8 @@ function App() {
         <>
         <Suspense fallback={<Loading />}>
             <div className="App">
-                <Routes>
 
+                <Routes>
                     !user ?
                     <Route path="/" element={<Home/>}/>
                     <Route path="/login" element={<LoginPage/>}/>

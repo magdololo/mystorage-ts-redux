@@ -71,7 +71,8 @@ export const EditCategoryForm = ({closeAddCategoryModal}: EditCategoryFormProps)
                 url: newPickedImage,
                 path: slugify(newCategoryTitle, "_"),
                 user: currentStorageId!!,
-                required: "false"
+                required: "false",
+                type: "storage"
             }
             dispatch(editCategory(afterEditingCategory))
             closeModal()

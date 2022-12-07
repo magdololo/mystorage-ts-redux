@@ -49,7 +49,8 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                 url: pickedImage,
                 path: slugify(title, "_"),
                 user: currentStorageId!!,
-                required: "false"
+                required: "false",
+                type: "storage"
             }
             setAddRequestStatus('pending')
             dispatch(addNewCategory({category: newCategory, notify: true}))
