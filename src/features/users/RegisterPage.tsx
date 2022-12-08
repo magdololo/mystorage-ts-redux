@@ -44,12 +44,9 @@ const RegisterPage = () => {
     };
 
     const onSubmit: SubmitHandler<Inputs> = (data, e) => {
-        console.log("hej")
         e?.preventDefault()
 
         if (checkboxState) {
-            console.log("checkbox")
-
             createUserWithEmailAndPassword(auth, data.email, data.password)
                 .then((userCredential) => {
                     const user = userCredential.user;

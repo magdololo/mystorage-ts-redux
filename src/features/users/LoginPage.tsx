@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
-import {auth, signInWithEmailAndPassword,signInWithPopup, GoogleAuthProvider} from '../../firebase';
+import {useDispatch} from 'react-redux';
+import {useTranslation} from "react-i18next";
+import {useForm} from "react-hook-form";
+import {auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from '../../firebase';
 
-import {addDefaultCategoriesToNewUser, addNewUserToUsersCollection, login, AddDefaultCategoriesToNewUserProps} from "../../slices/usersSlice";
+import {
+    addDefaultCategoriesToNewUser,
+    addNewUserToUsersCollection,
+    login,
+    AddDefaultCategoriesToNewUserProps,
+    userInUsers
+} from "../../slices/usersSlice";
 import {
     doc,
     getDoc,
@@ -15,29 +21,25 @@ import {db} from "../../firebase";
 import {BsArrowLeft} from "react-icons/bs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
+import {useAppSelector} from "../../app/store";
 
-interface User{
-    uid: string;
-    email: string;
-    providerId: string;
 
-}
 
 const LoginPage = () => {
-    const { t, i18n } = useTranslation();
+    const {t, i18n} = useTranslation();
     const userLanguage = i18n.language;
     const dispatch = useDispatch()
     const provider = new GoogleAuthProvider();
-    const [errorMessage,setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const [content, setContent] = useState(false);
-    const[message, setMessage] = useState<boolean>(false);
+    const [message, setMessage] = useState<boolean>(false);
     let navigate = useNavigate()
-    const [checkboxState, setCheckboxState] =useState(false);
-    const handleInputChange = ()=>{
-       setCheckboxState(!checkboxState)
+    const [checkboxState, setCheckboxState] = useState(false);
+    const handleInputChange = () => {
+        setCheckboxState(!checkboxState)
     }
-    const [user,setUser] = useState({} as User)
 
+    const isUserInUsers = useAppSelector(userInUsers)
 
     const eye = <FontAwesomeIcon icon={faEye}/>;
     const [passwordShown, setPasswordShown] = useState(false);
@@ -48,7 +50,7 @@ const LoginPage = () => {
         register,
         handleSubmit,
         reset,
-        formState: { errors }
+        formState: {errors}
     } = useForm<{
         email: string,
         password: string
@@ -59,99 +61,102 @@ const LoginPage = () => {
             .then((userCredential) => {
                 const user = userCredential.user;
                 reset();
-                if(user.emailVerified){
+                if (user.emailVerified && !isUserInUsers) {
                     console.log("user verified")
                     const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
                         userId: user.uid,
                         userLanguage: userLanguage
                     }
-                    dispatch(addNewUserToUsersCollection({uid: user.uid, email: user.email ?? "", provider: user.providerId, didSeeGreeting: false}))
-                    dispatch( addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
-
+                    dispatch(addNewUserToUsersCollection({
+                        uid: user.uid,
+                        email: user.email ?? "",
+                        provider: user.providerId,
+                        didSeeGreeting: false
+                    }))
+                    dispatch(addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
+                    dispatch(login({
+                            uid: user.uid,
+                            email: user.email ?? "",
+                            provider: user.providerId,
+                            didSeeGreeting: false
+                        }
+                    ))
+                    navigate("/choose")
                 }
-                dispatch(
-                    login({uid: user.uid,
-                                email: user.email ?? "",
-                                provider: user.providerId,
-                                didSeeGreeting: true})
-                )
-                navigate("/categories")
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log("An error occured: ", errorMessage);
-                if(errorCode === 'auth/wrong-password'){
+                if (errorCode === 'auth/wrong-password') {
                     setErrorMessage(t("users.RegisterPage.message.wrongPassword"))
-                }
-                else if(errorCode === 'auth/wrong-email'){
+                } else if (errorCode === 'auth/wrong-email') {
                     setErrorMessage(t("errors.emailTypePattern"))
-                }
-                else if (errorCode === 'auth/user-not-found'){
+                } else if (errorCode === 'auth/user-not-found') {
                     setErrorMessage(t("users.RegisterPage.message.userNotFound"))
-                }});
-                reset()
+                }
+            });
+        reset()
 
     });
 
 
-
-
-    const socialSignIn= async()=> {
+    const socialSignIn = async () => {
         try {
             let result = await signInWithPopup(auth, provider)
             // This gives you a Google Access Token. You can use it to access the Google API.
 
-           let user = result.user
+            let user = result.user
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
             const userExist = docSnap.exists()
-                if(!userExist){
+            if (!userExist) {
                 setContent(true);
-                setUser(user as User)
                 setMessage(true)
 
             } else {
                 GoogleAuthProvider.credentialFromResult(result);
-               dispatch(
-                   login({uid: user.uid,
-                       email: user.email ?? "",
-                       provider: user.providerId,
-                       didSeeGreeting: true})
-               )
-               navigate("/categories")
+                dispatch(
+                    login({
+                        uid: user.uid,
+                        email: user.email ?? "",
+                        provider: user.providerId,
+                        didSeeGreeting: true
+                    })
+                )
+                navigate("/categories")
             }
 
-        } catch (error: any){
+        } catch (error: any) {
             console.log(error.code)
         }
     }
-    const signUserIfCheckboxStateIsTrue=(user: User)=> {
-        if(checkboxState) {
-            dispatch(addNewUserToUsersCollection({
-                uid: user.uid,
-                email: user.email ?? "",
-                provider: user.providerId,
-                didSeeGreeting: false
-            }))
-            const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
-                userId: user.uid,
-                userLanguage: userLanguage
-            }
-            dispatch(addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
-
-            dispatch(
-                login({
-                    uid: user.uid,
-                    email: user.email ?? "",
-                    provider: user.providerId,
-                    didSeeGreeting: false
-                }))
-            navigate("/categories")
-        }
-
-    }
-    return(
+    // const signUserIfCheckboxStateIsTrue=(user: User)=> {
+    //     if(checkboxState) {
+    //         dispatch(addNewUserToUsersCollection({
+    //             uid: user.uid,
+    //             email: user.email ?? "",
+    //             provider: user.providerId,
+    //             didSeeGreeting: false
+    //         }))
+    //         const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
+    //             userId: user.uid,
+    //             userLanguage: userLanguage
+    //         }
+    //         dispatch(addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
+    //
+    //         dispatch(
+    //             login({
+    //                 uid: user.uid,
+    //                 email: user.email ?? "",
+    //                 provider: user.providerId,
+    //                 didSeeGreeting: true
+    //             }))
+    //         navigate("/choose")
+    //     }
+    //
+    // }
+    return (
         <>
 
             <div className="text-center bg-gray-50 text-gray-dark pt-20 pb-4 px-6">
@@ -185,13 +190,17 @@ const LoginPage = () => {
                                    id="exampleInputEmail2"
                                    aria-describedby="emailHelp"/>
 
-                            {errorMessage === t("errors.emailTypePattern") ? <span className="text-sm text-red">{t("users.errorMessage.email")}</span> : null}
-                            {errors.email?.type === 'required' && <span className="text-sm text-red">{t("users.errors.emailTypeRequired")}</span>}
-                            {errors.email?.type === 'pattern' && <span className="text-sm text-red">{ t("users.errors.emailTypePattern")}</span>}
+                            {errorMessage === t("errors.emailTypePattern") ?
+                                <span className="text-sm text-red">{t("users.errorMessage.email")}</span> : null}
+                            {errors.email?.type === 'required' &&
+                                <span className="text-sm text-red">{t("users.errors.emailTypeRequired")}</span>}
+                            {errors.email?.type === 'pattern' &&
+                                <span className="text-sm text-red">{t("users.errors.emailTypePattern")}</span>}
                         </div>
                         <div className="form-group mb-6 relative">
                             <label className="form-label inline-block mb-2 text-gray-700">Password</label>
-                            <input type={passwordShown ? "text" : "password"}{...register("password", {required: true})} placeholder="password"
+                            <input type={passwordShown ? "text" : "password"}{...register("password", {required: true})}
+                                   placeholder="password"
                                    className="  form-control
                                             block
                                             w-full
@@ -210,9 +219,12 @@ const LoginPage = () => {
                                    id="exampleInputPassword2"
                             />
                             <i onClick={togglePasswordVisibility}>{eye}</i>{" "}
-                            {errorMessage === t("users.RegisterPage.message.wrongPassword") && <p className="text-sm text-red">{t("users.errorMessage.password")}</p>}
-                            {errorMessage === t("users.RegisterPage.message.userNotFound") && <p className="text-sm text-red">{t("users.errorMessage.account")}</p>}
-                            {errors.password?.type === 'required' && <span className="text-sm text-red">{t("users.errors.passwordTypeRequired")}</span>}
+                            {errorMessage === t("users.RegisterPage.message.wrongPassword") &&
+                                <p className="text-sm text-red">{t("users.errorMessage.password")}</p>}
+                            {errorMessage === t("users.RegisterPage.message.userNotFound") &&
+                                <p className="text-sm text-red">{t("users.errorMessage.account")}</p>}
+                            {errors.password?.type === 'required' &&
+                                <span className="text-sm text-red">{t("users.errors.passwordTypeRequired")}</span>}
                         </div>
                         <p className="text-gray-800 mt-6 text-center pb-6">{t("users.LoginPage.questionRemember")}
                             <Link to="/remindPassword"
@@ -283,7 +295,8 @@ const LoginPage = () => {
 
 
                         </div>
-                        {errorMessage === (t("users.RegisterPage.message.userNotFound")) ? <p className="text-md text-red pt-4">{t("users.errorMessage.register")}</p> : null}
+                        {errorMessage === (t("users.RegisterPage.message.userNotFound")) ?
+                            <p className="text-md text-red pt-4">{t("users.errorMessage.register")}</p> : null}
                         <p className="text-gray-800 mt-6 text-center">{t("users.LoginPage.questionAccount")}
                             <Link to="/register"
                                   className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out ml-1">{t("users.LoginPage.linkToRegister")}</Link>
@@ -309,12 +322,12 @@ const LoginPage = () => {
                                 {t("acceptRegulations")}
                             </label>
                         </div>
-                        <div className="mx-auto text-lg text-purple text-center max-w-sm  ">
-                            <button type="button"
-                                    className="mt-4 inline-block px-6 py-2 border-2 border-purple-600 text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
-                                    onClick={() => signUserIfCheckboxStateIsTrue(user)}>{t("buttons.register")}
-                            </button>
-                        </div>
+                        {/*<div className="mx-auto text-lg text-purple text-center max-w-sm  ">*/}
+                        {/*    <button type="button"*/}
+                        {/*            className="mt-4 inline-block px-6 py-2 border-2 border-purple-600 text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"*/}
+                        {/*            onClick={() => signUserIfCheckboxStateIsTrue(user)}>{t("buttons.register")}*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
                         <div className="text-lg">
                             <button onClick={() => {
                                 setContent(false)
@@ -327,4 +340,4 @@ const LoginPage = () => {
     )
 }
 
-export default  LoginPage
+export default LoginPage

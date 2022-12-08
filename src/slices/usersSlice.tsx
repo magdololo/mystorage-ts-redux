@@ -27,12 +27,13 @@ export interface User{
 interface UserState {
     user: User | null
     currentStorageId: string | null
-
+    userInUsers: boolean
 }
 
 const initialState: UserState = {
     user: null,
-    currentStorageId: null
+    currentStorageId: null,
+    userInUsers: false
 }
 
 
@@ -89,20 +90,33 @@ export const changeSeeGreetingToTrue = createAsyncThunk<boolean,User,{
    return true
 })
 
-export const deleteUserAccount = createAsyncThunk('users/deleteUserAccount', async (userId: string)=>{
+export const deleteUserAccount = createAsyncThunk('users/deleteUserAccount', async (userId: string) => {
     try {
         const docRef = doc(db, "users/" + userId);
         await updateDoc(docRef, {"isDeleted": true})
-    } catch (error){
+    } catch (error) {
         console.log(error)
     }
 
 })
+
+export const checkIfUserInUsersCollection = createAsyncThunk('userProduct/checkIfUserInUserscollection', async (userId: string) => {
+    try {
+        const userRef = await getDoc(doc(db, "users/" + userId))
+        if (userRef) {
+            return true
+        }
+    } catch (error) {
+        console.log(error)
+    }
+    return false
+})
+
 const usersSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
-        login: (state, action:PayloadAction<User>) => {
+        login: (state, action: PayloadAction<User>) => {
             state.user = action.payload;
             state.currentStorageId = action.payload.uid;
 
@@ -139,14 +153,17 @@ const usersSlice = createSlice({
                 }
 
             })
-            .addCase(deleteUserAccount.fulfilled, ()=>{
+            .addCase(deleteUserAccount.fulfilled, () => {
                 console.log('Delete user account')
             })
-
+            .addCase(checkIfUserInUsersCollection.fulfilled, (state, action) => {
+                state.userInUsers = action.payload
+            })
     }
 });
-export const { login, logout, setCurrentStorage} = usersSlice.actions;
+export const {login, logout, setCurrentStorage} = usersSlice.actions;
 export const selectUser = (state: RootState) => state.users.user;
-export const selectCurrentStorage = (state: RootState)=> state.users.currentStorageId
+export const userInUsers = (state: RootState) => state.users.userInUsers;
+export const selectCurrentStorage = (state: RootState) => state.users.currentStorageId
 
 export default usersSlice.reducer

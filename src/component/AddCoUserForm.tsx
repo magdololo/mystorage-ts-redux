@@ -6,7 +6,6 @@ import {
     addOutgoingToShares, selectOutgoingInvites,
 
 } from "../slices/sharesSlice";
-import {useSelector} from "react-redux";
 import {selectUser} from "../slices/usersSlice";
 
 type AddCoUserFormProps = {
@@ -18,7 +17,7 @@ type AddCoUserFormProps = {
 const AddCoUserForm=({handleCloseAddCoUser,handleClick}: AddCoUserFormProps)=>{
     const {t} = useTranslation()
     const dispatch = useAppDispatch();
-    let user = useSelector(selectUser);
+    let user = useAppSelector(selectUser);
     const userId = user?.uid;
     const {
         reset,

@@ -12,7 +12,6 @@ export interface ProductFromDictionary{
     unit: Required<string>;
     userId: null | string;
 
-
 }
 const allProductsAdapter = createEntityAdapter<ProductFromDictionary>({
     sortComparer: (a: ProductFromDictionary, b: ProductFromDictionary) => {
@@ -38,7 +37,8 @@ export const fetchProductFromDictionaryId = createAsyncThunk<ProductFromDictiona
         name: userProduct.name,
         capacity: userProduct.capacity,
         unit: userProduct.unit,
-        userId: userProduct.userId
+        userId: userProduct.userId,
+        isStorage: true
     }
     let result = await addDoc(collection(db, "allProducts/" ), dictionaryProduct);
     return {...dictionaryProduct,id: result.id} as ProductFromDictionary
@@ -72,6 +72,7 @@ export const fetchAllProducts = createAsyncThunk('allProducts/fetchAllProducts',
         }
     }
 )
+
 
 const allProductsSlice = createSlice({
     name: 'allProducts',

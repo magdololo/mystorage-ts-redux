@@ -96,8 +96,6 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
                 expireDate: data.expireDate,
                 userId: currentStorageId!!,
                 id: ""
-
-
             }
             dispatch(addUserProduct(userProduct))
             closeModal();

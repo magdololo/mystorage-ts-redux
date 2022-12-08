@@ -17,6 +17,7 @@ import ProductsList from "./outlets/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
 import TermsAndConditions from "./features/users/TermsAndConditions";
 import PrivacyPolicy from "./features/users/PrivacyPolicy";
+import PageWithFirstChoose from "./layouts/PageWithFirstChoose";
 import Home from "./layouts/Home";
 import Root from "./layouts/Root";
 import './App.css';
@@ -82,6 +83,7 @@ function App() {
                     <Route path="/termsAndConditions" element={<TermsAndConditions/>}/>
                     :
                     <Route path="/" element={<Root/>}>
+                        <Route path="/choose" element={<PageWithFirstChoose/>}/>
                         <Route path="/categories" element={<CategoryList/>}/>
                         <Route path="/categories/:categoryPath" element={<SingleCategoryPage/>}/>
                         <Route path="/products" element={<ProductsList/>}/>

@@ -182,6 +182,8 @@ export const deleteUserProduct = createAsyncThunk('userProducts/deleteUserProduc
 
 }
 })
+
+
 const initialState: EntityState<UserProduct>& { error: null | string | undefined; status: string ; editProduct: UserProduct | null ; searchProduct: string | null; searchProductByString: string | null} = userProductsAdapter.getInitialState({
     status: 'idle',
     error: null ,
@@ -212,7 +214,7 @@ const userProductsSlice = createSlice({
         },
         searchByString: (state, action:PayloadAction<string | null>)=>{
             state.searchProduct = null
-          state.searchProductByString = action.payload
+            state.searchProductByString = action.payload
 
         },
         removeProducts: (state)=>{
@@ -245,6 +247,7 @@ const userProductsSlice = createSlice({
                 userProductsAdapter.setOne(state, action.payload)
                 notify('🦄 Zmiany zostały dodane!')
             })
+
     }
 })
 
