@@ -59,11 +59,12 @@ function App() {
                         uid: result.uid,
                         email: result.email ?? "",
                         provider: "",
-                        didSeeGreeting: result.didSeeGreeting
+                        didSeeGreeting: result.didSeeGreeting,
+                        defaultCategoriesAdded: result.defaultCategoriesAdded
                     })
                 );
 
-                navigate("/categories")
+                navigate("/")
             }
         })
         }, [])// eslint-disable-line react-hooks/exhaustive-deps
@@ -81,9 +82,10 @@ function App() {
                     <Route path="/remindPassword" element={<RemindPassword/>}/>
                     <Route path="/privacyPolicy" element={<PrivacyPolicy/>}/>
                     <Route path="/termsAndConditions" element={<TermsAndConditions/>}/>
+
                     :
+                    <Route path="/choose" element={<PageWithFirstChoose/>}/>
                     <Route path="/" element={<Root/>}>
-                        <Route path="/choose" element={<PageWithFirstChoose/>}/>
                         <Route path="/categories" element={<CategoryList/>}/>
                         <Route path="/categories/:categoryPath" element={<SingleCategoryPage/>}/>
                         <Route path="/products" element={<ProductsList/>}/>

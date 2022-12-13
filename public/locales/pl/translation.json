@@ -16,15 +16,18 @@
   "home_section3_subheading_one": "Dzięki wyszukiwarce odnajdziesz wszystkie podobne produkty jak również konkretny produkt.",
   "home_section3_subheading_two": "W dowolnym miejscu i czasie możesz szybko sprawdzić czy posiadasz dany produkt na stanie. ",
   "home_section4_heading": "Dzielenie konta",
-  "home_section4_subheading_one" : "Udostępnij konto bliskim abyście razem mogli zarządzać waszą spiżarnią.",
-  "home_section4_subheading_two" : "Wszelkie zmiany które tworzycie są odrazu widoczne u wszystkich współdzielących konto.",
-  "home_section4_subheading_three" : "Sprawdź powiadomienia a dowiesz się czy otrzymałes nowe zaproszenie lub czy osoba którą zaprosiłeś do współdzielenia konta zaakceptowała je.",
+  "home_section4_subheading_one": "Udostępnij konto bliskim abyście razem mogli zarządzać waszą spiżarnią.",
+  "home_section4_subheading_two": "Wszelkie zmiany które tworzycie są odrazu widoczne u wszystkich współdzielących konto.",
+  "home_section4_subheading_three": "Sprawdź powiadomienia a dowiesz się czy otrzymałes nowe zaproszenie lub czy osoba którą zaprosiłeś do współdzielenia konta zaakceptowała je.",
   "home_footer_word1": "Akceptuję",
   "home_footer_word2": "serwisu i",
   "home_footer_link_conditions": "regulamin",
   "home_footer_link_privacy": "politykę prywatności",
   "acceptRegulations": "Akceptuję regulamin serwisu.",
   "returnToCategoryList": "Wróć do listy kategorii",
+  "notify": {
+    "verifiedEmail": "Jeśli sie rejestrowałeś prosze kliknij na link weryfikacyjny który otrzymałeś na adres email!"
+  },
   "categories": {
     "CategoryList": {
       "modalWithGreeting_h1": "Dziękujemy za rejestrację!",

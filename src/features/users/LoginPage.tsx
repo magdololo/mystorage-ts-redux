@@ -6,11 +6,10 @@ import {useForm} from "react-hook-form";
 import {auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from '../../firebase';
 
 import {
-    addDefaultCategoriesToNewUser,
-    addNewUserToUsersCollection,
     login,
-    AddDefaultCategoriesToNewUserProps,
-    userInUsers
+    LoginData,
+    selectUser,
+    getUserData,
 } from "../../slices/usersSlice";
 import {
     doc,
@@ -24,10 +23,9 @@ import {faEye} from "@fortawesome/free-solid-svg-icons";
 import {useAppSelector} from "../../app/store";
 
 
-
 const LoginPage = () => {
     const {t, i18n} = useTranslation();
-    const userLanguage = i18n.language;
+    let userLanguage = i18n.language
     const dispatch = useDispatch()
     const provider = new GoogleAuthProvider();
     const [errorMessage, setErrorMessage] = useState("");
@@ -39,7 +37,8 @@ const LoginPage = () => {
         setCheckboxState(!checkboxState)
     }
 
-    const isUserInUsers = useAppSelector(userInUsers)
+
+    const user = useAppSelector(selectUser)
 
     const eye = <FontAwesomeIcon icon={faEye}/>;
     const [passwordShown, setPasswordShown] = useState(false);
@@ -59,30 +58,22 @@ const LoginPage = () => {
     const onSubmit = handleSubmit((data) => {
         signInWithEmailAndPassword(auth, data.email, data.password)
             .then((userCredential) => {
-                const user = userCredential.user;
+                const userFirebase = userCredential.user;
                 reset();
-                if (user.emailVerified && !isUserInUsers) {
-                    console.log("user verified")
-                    const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
-                        userId: user.uid,
+                //dispatch(checkIfUserInUsersCollection(auth.currentUser!!.uid))
+                if (!userFirebase.emailVerified) {
+                    console.log("email not verified")
+                    setErrorMessage(t("notify.verifiedEmail"))
+                } else {
+                    const addDefaultCategoriesToNewUserParams: LoginData = {
+                        userId: user?.uid as string,
                         userLanguage: userLanguage
                     }
-                    dispatch(addNewUserToUsersCollection({
-                        uid: user.uid,
-                        email: user.email ?? "",
-                        provider: user.providerId,
-                        didSeeGreeting: false
-                    }))
-                    dispatch(addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
-                    dispatch(login({
-                            uid: user.uid,
-                            email: user.email ?? "",
-                            provider: user.providerId,
-                            didSeeGreeting: false
-                        }
-                    ))
+                    dispatch(getUserData(addDefaultCategoriesToNewUserParams))
                     navigate("/choose")
+
                 }
+
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -121,7 +112,8 @@ const LoginPage = () => {
                         uid: user.uid,
                         email: user.email ?? "",
                         provider: user.providerId,
-                        didSeeGreeting: true
+                        didSeeGreeting: true,
+                        defaultCategoriesAdded: true
                     })
                 )
                 navigate("/categories")
@@ -156,6 +148,7 @@ const LoginPage = () => {
     //     }
     //
     // }
+
     return (
         <>
 
@@ -223,6 +216,8 @@ const LoginPage = () => {
                                 <p className="text-sm text-red">{t("users.errorMessage.password")}</p>}
                             {errorMessage === t("users.RegisterPage.message.userNotFound") &&
                                 <p className="text-sm text-red">{t("users.errorMessage.account")}</p>}
+                            {errorMessage === t("notify.verifiedEmail") &&
+                                <p className="text-sm text-red">{t("notify.verifiedEmail")}</p>}
                             {errors.password?.type === 'required' &&
                                 <span className="text-sm text-red">{t("users.errors.passwordTypeRequired")}</span>}
                         </div>
@@ -336,6 +331,10 @@ const LoginPage = () => {
                     </>
                 }
             </div>
+            {/*{ !userNotVerified ?*/}
+            {/*    <div><h3 className={"w-10/12 mx-auto pt-12 font-medium text-gray-light text-xl md:w-5/12"}>{t("notify.verifiedEmail")}</h3></div> :*/}
+            {/*    null }*/}
+
         </>
     )
 }

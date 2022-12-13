@@ -21,6 +21,7 @@ export interface User{
     email: string;
     provider: string;
     didSeeGreeting: boolean;
+    defaultCategoriesAdded: boolean;
 
 }
 
@@ -39,41 +40,48 @@ const initialState: UserState = {
 
 export const addNewUserToUsersCollection = createAsyncThunk('users/addNewUserToUsersCollection', async (user: User)=>{
     try {
-        await setDoc(doc(db, "users", user.uid),{
+        await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             email: user.email,
             provider: user.provider,
-            didSeeGreeting: false
-
+            didSeeGreeting: false,
+            defaultCategoriesAdded: false
         })
-    } catch (error){
+    } catch (error) {
         console.log(error)
     }
 
 
 })
-export interface AddDefaultCategoriesToNewUserProps {
-    userId : string,
+
+export interface LoginData {
+    userId: string,
     userLanguage: string
 }
-export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, AddDefaultCategoriesToNewUserProps,{ //pierwsze to typ tego co zwracamy, drugie to typ tego co przyjmujemy jako parametr
+
+export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, LoginData, { //pierwsze to typ tego co zwracamy, drugie to typ tego co przyjmujemy jako parametr
     dispatch: AppDispatch
     state: RootState
-}>("users/addDefaultCategoriesToNewUser", async (addDefaultCategoriesToNewUserProps: AddDefaultCategoriesToNewUserProps, thunkApi)=>{
-    try{
-
-        let q = await query(collection(db, "categories"), where("language","==",addDefaultCategoriesToNewUserProps.userLanguage));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            let category: Category = doc.data() as Category
-            category.id = doc.id
-            category.user = addDefaultCategoriesToNewUserProps.userId
-            thunkApi.dispatch(addNewCategory({category, notify: false}))
-        })
-    } catch(error){
+}>("users/addDefaultCategoriesToNewUser", async (addDefaultCategoriesToNewUserProps: LoginData, thunkApi) => {
+    try {
+        let userRef = doc(db, "users/" + addDefaultCategoriesToNewUserProps.userId);
+        let userDoc = await getDoc(userRef);
+        let user = userDoc.data()
+        if (user!!.defaultCategoriesAdded === false) {
+            let q = await query(collection(db, "categories"), where("language", "==", addDefaultCategoriesToNewUserProps.userLanguage));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                let category: Category = doc.data() as Category
+                category.id = doc.id
+                category.user = addDefaultCategoriesToNewUserProps.userId
+                thunkApi.dispatch(addNewCategory({category, notify: false}))
+            })
+            await updateDoc(userRef, {"defaultCategoriesAdded": true})
+        }
+    } catch (error) {
         console.log(error)
     }
-   return true
+    return true
 })
 export const changeSeeGreetingToTrue = createAsyncThunk<boolean,User,{
     dispatch: AppDispatch
@@ -100,10 +108,14 @@ export const deleteUserAccount = createAsyncThunk('users/deleteUserAccount', asy
 
 })
 
-export const checkIfUserInUsersCollection = createAsyncThunk('userProduct/checkIfUserInUserscollection', async (userId: string) => {
+export const checkIfUserInUsersCollection = createAsyncThunk('users/checkIfUserInUserscollection', async (userId: string) => {
+    console.log(userId)
     try {
-        const userRef = await getDoc(doc(db, "users/" + userId))
-        if (userRef) {
+        const userRef = doc(db, "users/" + userId)
+        const userDoc = await getDoc(userRef)
+        if (userDoc.exists()) {
+            console.log(userDoc)
+            console.log("user jesr w usersach")
             return true
         }
     } catch (error) {
@@ -112,6 +124,29 @@ export const checkIfUserInUsersCollection = createAsyncThunk('userProduct/checkI
     return false
 })
 
+export const getUserData = createAsyncThunk<User | null, LoginData, {
+    dispatch: AppDispatch
+    state: RootState
+}>('users/getUserData', async (loginData: LoginData, thunkApi) => {
+    try {
+        console.log(loginData)
+        const userRef = doc(db, "users/" + loginData.userId)
+        console.log(userRef)
+        const userDoc = await getDoc(userRef)
+        console.log(userDoc)
+        if (userDoc.exists()) {
+            const user = userDoc.data() as User
+            console.log(user)
+            if (!user.defaultCategoriesAdded) {
+                await thunkApi.dispatch(addDefaultCategoriesToNewUser(loginData))
+            }
+            return user
+        }
+    } catch (error) {
+        console.log(error)
+    }
+    return null
+})
 const usersSlice = createSlice({
     name: 'users',
     initialState,
@@ -148,8 +183,8 @@ const usersSlice = createSlice({
                     uid: user.uid,
                     email: user.email,
                     provider: user.provider,
-                    didSeeGreeting: true
-
+                    didSeeGreeting: true,
+                    defaultCategoriesAdded: false
                 }
 
             })
@@ -157,7 +192,12 @@ const usersSlice = createSlice({
                 console.log('Delete user account')
             })
             .addCase(checkIfUserInUsersCollection.fulfilled, (state, action) => {
+                console.log(action.payload)
                 state.userInUsers = action.payload
+            })
+            .addCase(getUserData.fulfilled, (state, action) => {
+                state.user = action.payload
+                //state.currentStorageId = action.payload?.uid
             })
     }
 });
