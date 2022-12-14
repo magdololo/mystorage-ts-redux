@@ -196,10 +196,45 @@ exports.deleteSubcollectionsOnDeleteUser = functions.firestore
 
 exports.deleteSubcollectionsOnDeleteCategory = functions.firestore
     .document("users/{userId}/categories/{categoryId}")
-    .onUpdate(async (change,context)=> {
+    .onUpdate(async (change, context) => {
         const newValue = change.after.data();
-        if(newValue.isDeleted === true){
-            const categoryRef = await db.doc("users/" + context.params.userId + "/categories/" +  context.params.categoryId).get()
+        if (newValue.isDeleted === true) {
+            const categoryRef = await db.doc("users/" + context.params.userId + "/categories/" + context.params.categoryId).get()
             await db.recursiveDelete(categoryRef.ref)
         }
     })
+
+exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user) => {
+    console.log("before signIn " + user.uid)
+    if (user.emailVerified) {
+        console.log("email verified")
+        const uid = user.uid
+        let userDoc = null;
+        try {
+            userDoc = await db.doc("users/" + uid).get()
+        } catch (error) {
+            console.log(error)
+        }
+
+        if (!userDoc?.exists) {
+            console.log("user not found")
+            try {
+                await db.doc("users/" + uid).set({
+                    uid: user.uid,
+                    email: user.email,
+                    provider: "",
+                    didSeeGreeting: false,
+                    defaultCategoriesAdded: false
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            console.log("user found")
+            console.log(userDoc)
+        }
+    } else {
+        console.log("email not verified")
+    }
+
+});

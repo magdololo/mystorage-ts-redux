@@ -8,7 +8,7 @@ import {useModal} from "../component/Modal/UseModal";
 import AddCategoryForm from "../features/categories/AddCategoryForm";
 import EditCategoryForm from "../features/categories/EditCategoryForm";
 import {fetchAllProducts} from "../slices/allProductsSlice";
-import {changeSeeGreetingToTrue, selectUser, User} from "../slices/usersSlice";
+import {selectUser} from "../slices/usersSlice";
 
 
 import {
@@ -32,54 +32,18 @@ export const CategoryList = () => {
 
     const {t} = useTranslation();
     let user = useSelector(selectUser);
-    let didSee = user?.didSeeGreeting;
+
 
     const {isShown: isShownAddCategoryModal, handleShown: handleShownAddCategoryModal , handleClose: handleCloseAddCategoryModal} = useModal()
     const {isShown: isShownDeleteCategoryModal, handleShown: handleShownDeleteCategoryModal , handleClose: handleCloseDeleteCategoryModal} = useModal()
     const modalAddHeader = t("categories.CategoryList.modalAddHeader")
     const modalEditHeader = t("categories.CategoryList.modalEditHeader")
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const handleCloseGreeting = () => setIsOpen(false);
+
     const dispatch = useAppDispatch()
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
     const categoryBeingDeleted = useAppSelector((state=>state.categories.deletingCategory)) as Category
     const [toggleSwitch, setToggleSwitch] = useState(false);
-    const closeModalWithGreeting = () => {
-        handleCloseGreeting();
-        dispatch(changeSeeGreetingToTrue(user as User))
-    }
-    useEffect(() => {
-        if (didSee === false) {
-            setIsOpen(true)
-        }
-    }, [user, didSee])
-    let greeting = <>
-        <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""}
-               modalContent={<><h1>{t("categories.CategoryList.modalWithGreeting_h1")}</h1>
-                   <h2> {t("categories.CategoryList.modalWithGreeting_h2")}</h2>
-                   <div
-                       className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 rounded-b-md">
-                       <button type="button" className="  px-6
-                                                          py-2.5
-                                                          bg-purple
-                                                          text-white
-                                                          font-medium
-                                                          text-xs
-                                                          leading-tight
-                                                          uppercase
-                                                          rounded
-                                                          shadow-md
-                                                          hover:bg-purple-700 hover:shadow-lg
-                                                          focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0
-                                                          active:bg-purple-800 active:shadow-lg
-                                                          transition
-                                                          duration-150
-                                                          ease-in-out"
-                               data-bs-dismiss="modal" onClick={closeModalWithGreeting}>{t("buttons.close")}
-                       </button>
-                   </div>
-               </>}/>
-    </>;
+
 
     useEffect(() => {
         // dispatch(fetchNotifications(user?.uid!!))
@@ -172,6 +136,7 @@ export const CategoryList = () => {
             <button  className=" block mx-auto px-2 py-2 text-white font-bold bg-purple text-xsm leading-tight uppercase rounded shadow-md tracking-wider
                                  hover:shadow-l focus:shadow-lg focus:outline-none focus:ring-0" onClick={() =>deletingCategory(categoryBeingDeleted)}>{t("buttons.confirm")}</button>
         </>
+
     return (
         <>
             <EditCategoriesButton toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>
@@ -182,8 +147,8 @@ export const CategoryList = () => {
                        modalHeaderText={!toggleSwitch ? modalAddHeader : modalEditHeader}
                        modalContent={!toggleSwitch ? <AddCategoryForm closeAddCategoryModal={handleCloseAddCategoryModal}/> : <EditCategoryForm closeAddCategoryModal={handleCloseAddCategoryModal}/>}
                 />
-                {didSee === false && greeting}
             <Modal isShown={isShownDeleteCategoryModal} hide={()=> handleCloseDeleteCategoryModal()} modalHeaderText={""}  modalContent={contentModalDeleteCategory}/>
+
         </>
     )
 }

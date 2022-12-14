@@ -21,12 +21,6 @@ const SearchInput =()=>{
         return{label: userProduct.name + " " +userProduct.capacity + userProduct.unit, value: userProduct.id}})
 
     let searchFromOnChange = true;
-    // const onChange=(e: any)=>{
-    //     if(searchFromOnChange){
-    //         dispatch(searchProduct(e.value))
-    //         navigate('/search')
-    //     }
-    // }
 
     const onChange = (option: Option | null, actionMeta: ActionMeta<Option>) => {
         if (actionMeta.action === "clear") return;

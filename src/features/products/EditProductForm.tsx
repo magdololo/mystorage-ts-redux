@@ -88,7 +88,6 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             userId: currentStorageId!!,
             id: editProduct?.id??""
 
-
         }
         dispatch(editUserProduct(updatedProduct))
         closeModal()
