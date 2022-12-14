@@ -2,7 +2,7 @@ import React, {useEffect, Suspense} from "react";
 import {useDispatch} from 'react-redux';
 import {auth, onAuthStateChanged, db} from './firebase';
 
-import {login, User} from "./slices/usersSlice";
+import {getUserData, LoginData} from "./slices/usersSlice";
 import {
     Routes,
     Route,
@@ -28,7 +28,8 @@ import SingleCategoryPage from "./outlets/SingleCategoryPage";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 import SearchUserProductPage from "./outlets/SearchUserProductPage";
-import { doc, getDoc} from "firebase/firestore";
+import {doc, getDoc} from "firebase/firestore";
+import {useTranslation} from "react-i18next";
 
 library.add(fas)
 
@@ -36,35 +37,28 @@ function App() {
     initializeApp(firebaseConfig);
     const navigate = useNavigate()
     const dispatch = useDispatch();
-
+    const {i18n} = useTranslation();
+    let userLanguage = i18n.language
     useEffect(() => {
-        onAuthStateChanged(auth,async (user) => {
+        onAuthStateChanged(auth, async (user) => {
 
-            if(user === null) {
+            if (user === null) {
                 return
             }
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
-
             let doExist = docSnap.exists()
-            let result = docSnap.data() as User
-
-
             if (!doExist) {
                 console.log("info")
             }
             else {
-                dispatch(
-                    login({
-                        uid: result.uid,
-                        email: result.email ?? "",
-                        provider: "",
-                        didSeeGreeting: result.didSeeGreeting,
-                        defaultCategoriesAdded: result.defaultCategoriesAdded
-                    })
+                const addDefaultCategoriesToNewUserParams: LoginData = {
+                    userId: user?.uid as string,
+                    userLanguage: userLanguage
+                }
+                dispatch(getUserData(addDefaultCategoriesToNewUserParams)
                 );
-
-                navigate("/")
+                navigate("/categories")
             }
         })
         }, [])// eslint-disable-line react-hooks/exhaustive-deps

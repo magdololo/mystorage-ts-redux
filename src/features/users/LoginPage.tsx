@@ -6,9 +6,7 @@ import {useForm} from "react-hook-form";
 import {auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from '../../firebase';
 
 import {
-    login,
     LoginData,
-    selectUser,
     getUserData,
 } from "../../slices/usersSlice";
 import {
@@ -20,7 +18,6 @@ import {db} from "../../firebase";
 import {BsArrowLeft} from "react-icons/bs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
-import {useAppSelector} from "../../app/store";
 
 
 const LoginPage = () => {
@@ -36,10 +33,6 @@ const LoginPage = () => {
     const handleInputChange = () => {
         setCheckboxState(!checkboxState)
     }
-
-
-    const user = useAppSelector(selectUser)
-
     const eye = <FontAwesomeIcon icon={faEye}/>;
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisibility = () => {
@@ -65,11 +58,11 @@ const LoginPage = () => {
                     console.log("email not verified")
                     setErrorMessage(t("notify.verifiedEmail"))
                 } else {
-                    const addDefaultCategoriesToNewUserParams: LoginData = {
-                        userId: user?.uid as string,
+                    const loginData: LoginData = {
+                        userId: userFirebase?.uid,
                         userLanguage: userLanguage
                     }
-                    dispatch(getUserData(addDefaultCategoriesToNewUserParams))
+                    dispatch(getUserData(loginData))
                     navigate("/choose")
 
                 }
@@ -107,15 +100,11 @@ const LoginPage = () => {
 
             } else {
                 GoogleAuthProvider.credentialFromResult(result);
-                dispatch(
-                    login({
-                        uid: user.uid,
-                        email: user.email ?? "",
-                        provider: user.providerId,
-                        didSeeGreeting: true,
-                        defaultCategoriesAdded: true
-                    })
-                )
+                const addDefaultCategoriesToNewUserParams: LoginData = {
+                    userId: user?.uid as string,
+                    userLanguage: userLanguage
+                }
+                dispatch(getUserData(addDefaultCategoriesToNewUserParams))
                 navigate("/categories")
             }
 
