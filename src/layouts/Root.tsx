@@ -45,9 +45,9 @@ const Root = () => {
     const dispatch = useAppDispatch()
     const currentStorageId = useAppSelector(selectCurrentStorage)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const handleCloseGreeting = () => setIsOpen(false);
-    let didSee = user?.didSeeGreeting;
+    // const [isOpen, setIsOpen] = useState<boolean>(false);
+    // const handleCloseGreeting = () => setIsOpen(false);
+    // let didSee = user?.didSeeGreeting;
     const {t} = useTranslation();
     useEffect(() => {
         if (!currentStorageId) {
@@ -176,44 +176,44 @@ const Root = () => {
 
 
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
-    useEffect(() => {
-        if (didSee === false) {
-            setIsOpen(true)
-        }
-    }, [user, didSee])
-
-
-    const closeModalWithGreeting = () => {
-        handleCloseGreeting();
-        dispatch(changeSeeGreetingToTrue(user as User))
-    }
-    let greeting = <>
-        <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""}
-               modalContent={<><h1>{t("categories.CategoryList.modalWithGreeting_h1")}</h1>
-                   <h2> {t("categories.CategoryList.modalWithGreeting_h2")}</h2>
-                   <div
-                       className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 rounded-b-md">
-                       <button type="button" className="  px-6
-                                                          py-2.5
-                                                          bg-purple
-                                                          text-white
-                                                          font-medium
-                                                          text-xs
-                                                          leading-tight
-                                                          uppercase
-                                                          rounded
-                                                          shadow-md
-                                                          hover:bg-purple-700 hover:shadow-lg
-                                                          focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0
-                                                          active:bg-purple-800 active:shadow-lg
-                                                          transition
-                                                          duration-150
-                                                          ease-in-out"
-                               data-bs-dismiss="modal" onClick={closeModalWithGreeting}>{t("buttons.close")}
-                       </button>
-                   </div>
-               </>}/>
-    </>;
+    // useEffect(() => {
+    //     if (didSee === false) {
+    //         setIsOpen(true)
+    //     }
+    // }, [user, didSee])
+    //
+    //
+    // const closeModalWithGreeting = () => {
+    //     handleCloseGreeting();
+    //     dispatch(changeSeeGreetingToTrue(user as User))
+    // }
+    // let greeting = <>
+    //     <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""}
+    //            modalContent={<><h1>{t("categories.CategoryList.modalWithGreeting_h1")}</h1>
+    //                <h2> {t("categories.CategoryList.modalWithGreeting_h2")}</h2>
+    //                <div
+    //                    className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 rounded-b-md">
+    //                    <button type="button" className="  px-6
+    //                                                       py-2.5
+    //                                                       bg-purple
+    //                                                       text-white
+    //                                                       font-medium
+    //                                                       text-xs
+    //                                                       leading-tight
+    //                                                       uppercase
+    //                                                       rounded
+    //                                                       shadow-md
+    //                                                       hover:bg-purple-700 hover:shadow-lg
+    //                                                       focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0
+    //                                                       active:bg-purple-800 active:shadow-lg
+    //                                                       transition
+    //                                                       duration-150
+    //                                                       ease-in-out"
+    //                            data-bs-dismiss="modal" onClick={closeModalWithGreeting}>{t("buttons.close")}
+    //                    </button>
+    //                </div>
+    //            </>}/>
+    // </>;
 
     return (
         <>
@@ -232,7 +232,6 @@ const Root = () => {
                     </>
                     : <BottomMenu/>}
                 <ToastContainer/>
-                {didSee === false && greeting}
 
             </MainPageLayout>
         </>

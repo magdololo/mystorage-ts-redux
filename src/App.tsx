@@ -30,6 +30,7 @@ import {fas} from '@fortawesome/free-solid-svg-icons'
 import SearchUserProductPage from "./outlets/SearchUserProductPage";
 import {doc, getDoc} from "firebase/firestore";
 import {useTranslation} from "react-i18next";
+import PharmacyList from "./layouts/PharmacyList";
 
 library.add(fas)
 
@@ -85,6 +86,7 @@ function App() {
                         <Route path="/products" element={<ProductsList/>}/>
                         <Route path="/search" element={<SearchUserProductPage/>}/>
                         <Route path="/shares" element={<SharesPage/>}/>
+                        <Route path="/medicines" element={<PharmacyList/>}/>
                     </Route>
                 </Routes>
             </div>
