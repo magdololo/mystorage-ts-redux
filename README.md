@@ -1,6 +1,6 @@
 # My storage
 > Application that allows collecting and managing information about your home storeroom content, like groceries, household chemicals etc. Anyone can register in service and create own storeroom that later can be shared with others.
-> Live demo [_here_](https://www.mystorage.ovh.com). 
+> Live demo [https://mystorage.ovh](https://mystorage.ovh). 
 
 ## Table of Contents
 * [General Info](#general-information)
