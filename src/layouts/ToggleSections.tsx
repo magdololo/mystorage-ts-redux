@@ -1,13 +1,13 @@
-import StoragesList from "./StoragesList";
-import PharmacyList from "./PharmacyList";
+import StoragesUsersList from "./StoragesUsersList";
+import PharmaciesUsersList from "./PharmaciesUsersList";
 
-const ToggleSections= ()=>{
+const ToggleSections = () => {
 
-    return(
+    return (
         <>
             <div className="flex flex-col ">
-                <StoragesList/>
-                <PharmacyList/>
+                <StoragesUsersList/>
+                <PharmaciesUsersList/>
             </div>
         </>
     )

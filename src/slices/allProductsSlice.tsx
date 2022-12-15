@@ -38,7 +38,6 @@ export const fetchProductFromDictionaryId = createAsyncThunk<ProductFromDictiona
         capacity: userProduct.capacity,
         unit: userProduct.unit,
         userId: userProduct.userId,
-        isStorage: true
     }
     let result = await addDoc(collection(db, "allProducts/" ), dictionaryProduct);
     return {...dictionaryProduct,id: result.id} as ProductFromDictionary

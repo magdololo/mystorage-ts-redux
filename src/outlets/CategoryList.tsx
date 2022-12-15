@@ -8,7 +8,7 @@ import {useModal} from "../component/Modal/UseModal";
 import AddCategoryForm from "../features/categories/AddCategoryForm";
 import EditCategoryForm from "../features/categories/EditCategoryForm";
 import {fetchAllProducts} from "../slices/allProductsSlice";
-import {selectUser} from "../slices/usersSlice";
+import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
 
 
 import {
@@ -16,7 +16,7 @@ import {
     deleteCategory,
     deletingCategoryChange,
     selectAllCategoriesSortedByRequired,
-    Category,
+    Category
 } from "../slices/categoriesSlice";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -26,32 +26,43 @@ import {useTranslation} from "react-i18next";
 import {EditCategoriesButtonComponent} from "../styles/Categories.components";
 import {MainBox} from "../styles/Categories.components";
 import {fetchImages} from "../slices/imagesSlice";
+import {fetchAllMedicines} from "../slices/allMedicinesSlice";
 
 
 export const CategoryList = () => {
 
     const {t} = useTranslation();
     let user = useSelector(selectUser);
-
-
-    const {isShown: isShownAddCategoryModal, handleShown: handleShownAddCategoryModal , handleClose: handleCloseAddCategoryModal} = useModal()
-    const {isShown: isShownDeleteCategoryModal, handleShown: handleShownDeleteCategoryModal , handleClose: handleCloseDeleteCategoryModal} = useModal()
+    let currentStorage = useAppSelector(selectCurrentStorage)
+    console.log(currentStorage)
+    const {
+        isShown: isShownAddCategoryModal,
+        handleShown: handleShownAddCategoryModal,
+        handleClose: handleCloseAddCategoryModal
+    } = useModal()
+    const {
+        isShown: isShownDeleteCategoryModal,
+        handleShown: handleShownDeleteCategoryModal,
+        handleClose: handleCloseDeleteCategoryModal
+    } = useModal()
     const modalAddHeader = t("categories.CategoryList.modalAddHeader")
     const modalEditHeader = t("categories.CategoryList.modalEditHeader")
 
     const dispatch = useAppDispatch()
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
-    const categoryBeingDeleted = useAppSelector((state=>state.categories.deletingCategory)) as Category
+    console.log(categories)
+    const categoryBeingDeleted = useAppSelector((state => state.categories.deletingCategory)) as Category
     const [toggleSwitch, setToggleSwitch] = useState(false);
 
 
     useEffect(() => {
         // dispatch(fetchNotifications(user?.uid!!))
-       // dispatch(fetchCategories(user?.uid!!))
+        // dispatch(fetchCategories(user?.uid!!))
         //dispatch(fetchImages(currentStorageId!!))
         //dispatch(fetchUserProducts(currentStorageId!!))
         dispatch(fetchAllProducts())
         dispatch(fetchImages())
+        dispatch(fetchAllMedicines())
         //dispatch(fetchNotifications(user?.uid!!))
         // dispatch(fetchShares(user?.uid!!))
     }, [user, dispatch])
@@ -136,7 +147,7 @@ export const CategoryList = () => {
             <button  className=" block mx-auto px-2 py-2 text-white font-bold bg-purple text-xsm leading-tight uppercase rounded shadow-md tracking-wider
                                  hover:shadow-l focus:shadow-lg focus:outline-none focus:ring-0" onClick={() =>deletingCategory(categoryBeingDeleted)}>{t("buttons.confirm")}</button>
         </>
-
+    console.log(renderedCategories)
     return (
         <>
             <EditCategoriesButton toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>

@@ -8,17 +8,20 @@ import {fetchUserImages} from "../slices/imagesSlice";
 import {StorageList, StorageItem, ArrowRight} from "../styles/StoragesList.components";
 import { ChevronRightIcon} from "@heroicons/react/solid";
 import {useTranslation} from "react-i18next";
+import {useLocation} from "react-router-dom";
 
 
-const StoragesList = ()=>{
+const StoragesUsersList = () => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const allAcceptedIncomingInvites = useAppSelector(selectAcceptedIncomingInvites)
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
     const currentStorageId = useAppSelector(selectCurrentStorage)
+    const location = useLocation().pathname
+    console.log(location)
 
-    const changeStorage =(userId: string)=> {
+    const changeStorage = (userId: string) => {
 
         dispatch(setCurrentStorage(userId))
         dispatch(removeProducts())
@@ -54,4 +57,4 @@ const StoragesList = ()=>{
     )
 }
 
-export default StoragesList;
+export default StoragesUsersList;

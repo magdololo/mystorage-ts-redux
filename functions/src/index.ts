@@ -226,6 +226,10 @@ exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user) => {
                     didSeeGreeting: false,
                     defaultCategoriesAdded: false
                 })
+                await db.doc("users/" + uid + "pharmacy").set({
+                    uid: user.uid + "pharmacy"
+
+                })
             } catch (error) {
                 console.log(error)
             }

@@ -72,9 +72,15 @@ const Sidebar =({toggleDrawer}:SidebarProps)=>{
         {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />{t("BottomHamburgerMenu.myAccount")}</span>,
             content:
             <>
-                <ul className="text-gray-light text-lg pt-2 relative" >
-                <li className="text-sm pt-1 pl-2"><FontAwesomeIcon className="text-sm text-purple px-4" icon={faEnvelope} />{user?.email}</li>
-                <li  className="text-sm cursor-pointer pt-2 pl-2" onClick={()=>handleShownDeleteAccountModal()}><FontAwesomeIcon className="text-sm text-purple px-4" icon={faUserSlash} />{t("BottomHamburgerMenu.deleteAccount")}</li>
+                <ul className="text-gray-light text-lg pt-2 relative">
+                    <li className="text-sm pt-1 pl-2" onClick={() => navigate('/choose')}><FontAwesomeIcon
+                        className="text-sm text-purple px-4" icon={faEnvelope}/>Choose type
+                    </li>
+                    <li className="text-sm pt-1 pl-2"><FontAwesomeIcon className="text-sm text-purple px-4"
+                                                                       icon={faEnvelope}/>{user?.email}</li>
+                    <li className="text-sm cursor-pointer pt-2 pl-2" onClick={() => handleShownDeleteAccountModal()}>
+                        <FontAwesomeIcon className="text-sm text-purple px-4"
+                                         icon={faUserSlash}/>{t("BottomHamburgerMenu.deleteAccount")}</li>
                 </ul>
             </>
         }

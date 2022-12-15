@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import {configureStore} from '@reduxjs/toolkit'
 import allProductsReducer from '../slices/allProductsSlice'
 import categoriesReducer from '../slices/categoriesSlice'
 import usersReducer from '../slices/usersSlice'
@@ -6,7 +6,8 @@ import userProductsReducer from '../slices/userProductsSlice'
 import imagesReducer from '../slices/imagesSlice'
 import notificationsReducer from "../slices/notificationsSlice";
 import sharesReducer from "../slices/sharesSlice";
-import {useDispatch,TypedUseSelectorHook, useSelector} from "react-redux";
+import allMedicinesReducer from "../slices/allMedicinesSlice";
+import {useDispatch, TypedUseSelectorHook, useSelector} from "react-redux";
 
 const store = configureStore({
 
@@ -18,7 +19,8 @@ const store = configureStore({
         userProducts: userProductsReducer,
         images: imagesReducer,
         notifications: notificationsReducer,
-        shares: sharesReducer
+        shares: sharesReducer,
+        allMedicines: allMedicinesReducer
     },
 
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({

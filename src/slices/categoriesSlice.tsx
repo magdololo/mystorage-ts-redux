@@ -49,9 +49,9 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 
 
         try {
-            const categories: Array<Category> = [];
+            const categoriesStorage: Array<Category> = [];
             if (userId === "")
-                return categories
+                return categoriesStorage
 
             let q = await query(collection(db, "users/" + userId + "/categories"));
             const querySnapshot = await getDocs(q);
@@ -59,11 +59,11 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 
                 let categoryDoc = result.data() as Category;
                 categoryDoc.id = result.id;
-                categories.push(categoryDoc);
+                categoriesStorage.push(categoryDoc);
 
             })
 
-            return categories
+            return categoriesStorage
         } catch (error) {
             console.log(error)
             return {error: error}
@@ -177,6 +177,7 @@ export const selectCategoryByPath = (categoryPath: string) => createSelector(
 );
 export const selectAllCategoriesSortedByRequired = createSelector(
     selectAllCategories, categories => {
+        console.log(categories)
         const requiredCategory = categories.find(category => category.required === "true")
         const filteredCategories = categories.filter(category => category.required !== "true")
         return [requiredCategory, ...filteredCategories]

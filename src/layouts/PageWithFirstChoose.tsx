@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {Modal} from "../component/Modal/Modal";
 import {useAppDispatch, useAppSelector} from "../app/store";
-import {changeSeeGreetingToTrue, selectUser, User} from "../slices/usersSlice";
+import {changeSeeGreetingToTrue, selectUser, setCurrentStorage, User} from "../slices/usersSlice";
 
 const PageWithFirstChoose = () => {
     const mobileLayout = useMediaQuery('(max-width: 800px)')
@@ -13,6 +13,7 @@ const PageWithFirstChoose = () => {
     let navigate = useNavigate()
     const dispatch = useAppDispatch()
     let user = useAppSelector(selectUser);
+
     let didSee = user?.didSeeGreeting;
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const handleCloseGreeting = () => setIsOpen(false);
@@ -72,14 +73,20 @@ const PageWithFirstChoose = () => {
                             <button
                                 className={"border border-2 border-purple-400 rounded-sm cursor-pointer px-20 py-12 font-bold text-gray-light uppercase text-2xl" +
                                     "transition ease-in-out duration-300 hover:scale-110 hover:border-purple-800"}
-                                onClick={() => navigate("/categories")}>{t('my_storage')}
+                                onClick={() => {
+                                    dispatch(setCurrentStorage(user!!.uid))
+                                    navigate("/categories")
+                                }}>{t('my_storage')}
                             </button>
                         </div>
                         <div className={"justify-center"}>
                             <button
                                 className={"border border-2 border-purple-400 rounded-sm cursor-pointer px-20 py-12 font-bold text-gray-light uppercase text-2xl" +
                                     "transition ease-in-out duration-300 hover:scale-110 hover:border-purple-800"}
-                                onClick={() => navigate("/medicines")}>{t('my_pharmacy')}
+                                onClick={() => {
+                                    dispatch(setCurrentStorage(user!!.uid + "pharmacy"))
+                                    navigate("/categories")
+                                }}>{t('my_pharmacy')}
                             </button>
                         </div>
                     </div>

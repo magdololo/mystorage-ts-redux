@@ -6,12 +6,12 @@ import {useMediaQuery} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../app/store";
 import {selectAcceptedIncomingInvites} from "../slices/sharesSlice";
 import {selectCurrentStorage, selectUser, setCurrentStorage} from "../slices/usersSlice";
-import {fetchUserProducts, removeProducts} from "../slices/userProductsSlice";
-import {fetchCategories, removeCategories} from "../slices/categoriesSlice";
-import {fetchUserImages} from "../slices/imagesSlice";
+import {removeProducts} from "../slices/userProductsSlice";
+import {removeCategories} from "../slices/categoriesSlice";
 import {useTranslation} from "react-i18next";
+import {useLocation} from "react-router-dom";
 
-const PharmacyList = () =>{
+const PharmaciesUsersList = () => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const allAcceptedIncomingInvites = useAppSelector(selectAcceptedIncomingInvites)
@@ -19,23 +19,27 @@ const PharmacyList = () =>{
     const userId = user?.uid;
     const currentStorageId = useAppSelector(selectCurrentStorage)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
-    const changeStorage =(userId: string)=> {
+    const changeStorage = (userId: string) => {
 
-        dispatch(setCurrentStorage(userId))
+        dispatch(setCurrentStorage(userId + "pharmacy"))
         dispatch(removeProducts())
         dispatch(removeCategories())
-        dispatch(fetchCategories(userId))
-        dispatch(fetchUserProducts(userId))
-        dispatch(fetchUserImages(userId))
+
+        // dispatch(fetchCategoriesPharmacy(userId+"pharmacy"))
+        // dispatch(fetchUserMedicines(userId+"pharmacy"))
+        // dispatch(fetchUserPharmacyImages(userId+"pharmacy"))
     }
 
-    const options:{value: string, label: string}[] = []
+    const options: { value: string, label: string }[] = []
 
-    allAcceptedIncomingInvites.map( (invite) => (
-        options.push({ value: invite.user_id, label: invite.user_email })
+    allAcceptedIncomingInvites.map((invite) => (
+        options.push({value: invite.user_id, label: invite.user_email})
     ))
-    options.push({value: userId!!, label: t("my_storage")})
+    options.push({value: userId!!, label: t("my_pharmacy")})
 
+
+    const location = useLocation().pathname
+    console.log(location)
     // const handleChange =(e: any)=>{
     //     console.log(e.value)
     //     changeStorage(e.value)
@@ -75,10 +79,9 @@ const PharmacyList = () =>{
     //     }),
     //
     // }
-    return(
+    return (
         <>
             {isBiggerThan960 ?
-
                 <StorageList>
                     <StorageItem key={userId} primary={currentStorageId === userId}
                                  onClick={() => changeStorage(userId!!)}>{t("my_pharmacy")}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
@@ -87,6 +90,7 @@ const PharmacyList = () =>{
                         return (
                             <>
                                 <StorageItem key={invite.user_id}
+
                                              primary={currentStorageId === invite.user_id}
                                              onClick={() => changeStorage(invite.user_id)}>{invite.user_email}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
 
@@ -102,4 +106,4 @@ const PharmacyList = () =>{
         </>
     )
 }
-export default PharmacyList
+export default PharmaciesUsersList

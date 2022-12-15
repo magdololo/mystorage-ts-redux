@@ -10,15 +10,15 @@ import {useTranslation} from "react-i18next";
 import {singleSelectStyle} from "../searchStyle";
 
 
-const SelectStorageOrPharmacy = () =>{
+
+const SelectStorageOrPharmacy = () => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const allAcceptedIncomingInvites = useAppSelector(selectAcceptedIncomingInvites)
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
     const currentStorageId = useAppSelector(selectCurrentStorage)
-
-    const changeStorage =(userId: string)=> {
+    const changeStorage = (userId: string) => {
 
         dispatch(setCurrentStorage(userId))
         dispatch(removeProducts())
@@ -27,18 +27,18 @@ const SelectStorageOrPharmacy = () =>{
         dispatch(fetchUserProducts(userId))
         dispatch(fetchUserImages(userId))
     }
-    const invitesNoChoose = allAcceptedIncomingInvites.filter((invite)=> invite.user_id !== currentStorageId)
-   const options:{value: string, label: string, padding: string, class: string}[] = []
+    const invitesNoChoose = allAcceptedIncomingInvites.filter((invite) => invite.user_id !== currentStorageId)
+    const options: { value: string, label: string, padding: string, class: string }[] = []
 
-    invitesNoChoose.map( (invite) => (
-            options.push({ value: invite.user_id, label: invite.user_email, padding: "40px", class: "optionInvites" })
+    invitesNoChoose.map((invite) => (
+        options.push({value: invite.user_id, label: invite.user_email, padding: "40px", class: "optionInvites"})
     ))
 
     options.unshift({value: userId!!, label: t("my_storage"), padding: "20px", class: "optionBase"})
 
-    options.push({ value: userId!!, label: t("my_pharmacy"), padding: "20px", class: "optionBase"})
+    options.push({value: userId!!, label: t("my_pharmacy"), padding: "20px", class: "optionBase"})
 
-    const handleChange =(e: any)=>{
+    const handleChange = (e: any) => {
         console.log(e.value)//id wybranego currentStorage
         changeStorage(e.value)
     }
@@ -87,10 +87,10 @@ const SelectStorageOrPharmacy = () =>{
             <Select
 
                 options={options}
-                    defaultValue={options[options.length-1]}
-                    onChange={handleChange}
-                    //styles={customStyles}
-                 styles={singleSelectStyle("primary")}
+                defaultValue={options[options.length - 1]}
+                onChange={handleChange}
+                //styles={customStyles}
+                styles={singleSelectStyle("primary")}
             />
 
 
