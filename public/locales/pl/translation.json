@@ -72,6 +72,8 @@
       "formAddProductTitle": "Dodaj produkt",
       "label_quantity": "Ilość",
       "label_expireDate": "Data ważnosci",
+      "label_openDate": "Data otwarcia",
+      "label_validity": "Ważność po otwarciu",
       "label_productName": "Nazwa produktu",
       "label_categoryName": "Nazwa kategorii",
       "label_capacity": "Pojemność",

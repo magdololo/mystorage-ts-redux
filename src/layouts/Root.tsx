@@ -104,7 +104,6 @@ const Root = () => {
 
     },[currentStorageId,dispatch,user?.uid])
     useEffect(()=>{
-        console.log("users/" + currentStorageId + "/categories")
         if(!currentStorageId){
             return
         }

@@ -119,36 +119,17 @@ export const deleteUserAccount = createAsyncThunk('users/deleteUserAccount', asy
 
 })
 
-// export const checkIfUserInUsersCollection = createAsyncThunk('users/checkIfUserInUserscollection', async (userId: string) => {
-//     console.log(userId)
-//     try {
-//         const userRef = doc(db, "users/" + userId)
-//         const userDoc = await getDoc(userRef)
-//         if (userDoc.exists()) {
-//             console.log(userDoc)
-//             console.log("user jesr w usersach")
-//             return true
-//         }
-//     } catch (error) {
-//         console.log(error)
-//     }
-//     return false
-// })
 
 export const getUserData = createAsyncThunk<User | null, LoginData, {
     dispatch: AppDispatch
     state: RootState
 }>('users/getUserData', async (loginData: LoginData, thunkApi) => {
     try {
-        console.log(loginData)
         const userRef = doc(db, "users/" + loginData.userId)
-        console.log(userRef)
         const userDoc = await getDoc(userRef)
-        console.log(userDoc)
 
         if (userDoc.exists()) {
             const user = userDoc.data() as User
-            console.log(user)
             if (!user.defaultCategoriesAdded) {
                 await thunkApi.dispatch(addDefaultCategoriesToNewUser(loginData))
             }
@@ -159,6 +140,7 @@ export const getUserData = createAsyncThunk<User | null, LoginData, {
     }
     return null
 })
+
 const usersSlice = createSlice({
     name: 'users',
     initialState,
@@ -166,7 +148,6 @@ const usersSlice = createSlice({
         login: (state, action: PayloadAction<User>) => {
             state.user = action.payload;
             state.currentStorageId = action.payload.uid;
-
         },
         logout: (state) => {
             state.user = null;
@@ -175,7 +156,6 @@ const usersSlice = createSlice({
             state.user = action.payload;
         },
         setCurrentStorage: (state, action:PayloadAction<string>)=> {
-            console.log(action.payload)
             state.currentStorageId = action.payload
         }
     },
@@ -209,9 +189,8 @@ const usersSlice = createSlice({
             //     state.userInUsers = action.payload
             // })
             .addCase(getUserData.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.user = action.payload
-                //state.currentStorageId = action.payload?.uid
+                state.currentStorageId = state.user!!.uid
             })
     }
 });

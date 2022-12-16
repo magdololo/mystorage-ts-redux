@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppSelector} from "../../app/store";
 
-import {AutocompleteWithUserProductsProps} from "./AddProductForm";
+import {AutocompleteWithUserMedicinesProps} from "./AddMedicineForm";
 
 import {UserProduct} from "../../slices/userProductsSlice";
 import {ProductFromDictionary, selectAllProducts} from "../../slices/allProductsSlice";
@@ -9,20 +9,20 @@ import {ProductFromDictionary, selectAllProducts} from "../../slices/allProducts
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import {TextField} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
 import {selectAllMedicines} from "../../slices/allMedicinesSlice";
+import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
 
 const filter = createFilterOptions<ProductFromDictionary>();
 
 
-export const AutocompleteWithUserProducts = ({
-                                                 onChange,
-                                                 value,
-                                                 setSelectedProductFromAutocomplete
-                                             }: AutocompleteWithUserProductsProps) => {
+export const AutocompleteWithUserMedicines = ({
+                                                  onChange,
+                                                  value,
+                                                  setSelectedProductFromAutocomplete
+                                              }: AutocompleteWithUserMedicinesProps) => {
     const {t} = useTranslation();
-    const allProducts = useAppSelector(selectAllProducts)
     const allMedicines = useAppSelector(selectAllMedicines)
+    const allProducts = useAppSelector(selectAllProducts)
     const user = useAppSelector(selectUser)
     const currentStorageId = useAppSelector(selectCurrentStorage)
     let optionsStorage = {} as ProductFromDictionary[];
@@ -56,7 +56,8 @@ export const AutocompleteWithUserProducts = ({
             id="free-solo-with-text-demo"
             options={optionsStorage}
             getOptionLabel={option => typeof option === "object" ? option.name : option}
-            renderOption={(props, option) => <li {...props} key={option.id}>{option.name} {option.capacity} {option.unit}</li>}
+            renderOption={(props, option) => <li {...props}
+                                                 key={option.id}>{option.name} {option.capacity} {option.unit}</li>}
             freeSolo
             renderInput={(params) => (
                 <TextField  {...params} label={t("products.AddProductForm.label_productName")}/>

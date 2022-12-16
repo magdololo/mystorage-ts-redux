@@ -177,7 +177,6 @@ export const selectCategoryByPath = (categoryPath: string) => createSelector(
 );
 export const selectAllCategoriesSortedByRequired = createSelector(
     selectAllCategories, categories => {
-        console.log(categories)
         const requiredCategory = categories.find(category => category.required === "true")
         const filteredCategories = categories.filter(category => category.required !== "true")
         return [requiredCategory, ...filteredCategories]

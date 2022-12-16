@@ -28,8 +28,6 @@ import {fetchProductFromDictionaryId} from "./allProductsSlice";
 import {notify} from "../helpers";
 
 
-
-
 export interface UserProduct{
     productId: Required<string>;
     name: Required<string>;
@@ -137,7 +135,6 @@ export const addUserProduct = createAsyncThunk<UserProduct, UserProduct,{ //pier
     state: RootState
 }>('userProducts/addUserProduct', async(userProduct, thunkApi)=> {
     await thunkApi.dispatch(fetchProductFromDictionaryId(userProduct))
-
     userProduct.productId =  await thunkApi.getState().allProducts.productFromDictionaryId
     try{
         let result = await addDoc(collection(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products"), userProduct);

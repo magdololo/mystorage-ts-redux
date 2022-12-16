@@ -2,9 +2,7 @@ import {createAsyncThunk, createEntityAdapter, createSlice, EntityState} from "@
 import {AppDispatch, RootState} from "../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../firebase";
-import {
-    ProductFromDictionary,
-} from "./allProductsSlice";
+
 
 
 export interface UserMedicine {
@@ -15,6 +13,8 @@ export interface UserMedicine {
     unit: Required<string>;
     quantity: Required<number | null>;
     expireDate: Date | null;
+    openDate: Date | null;
+    validityDate: number;
     userId: string;
     id: string;
 
@@ -62,7 +62,7 @@ export const fetchMedicineFromDictionaryId = createAsyncThunk<MedicineFromDictio
         userId: userMedicine.userId,
     }
     let result = await addDoc(collection(db, "allMedicines/"), dictionaryMedicine);
-    return {...dictionaryMedicine, id: result.id} as ProductFromDictionary
+    return {...dictionaryMedicine, id: result.id} as MedicineFromDictionary
 
 })
 

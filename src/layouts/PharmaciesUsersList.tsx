@@ -9,7 +9,7 @@ import {selectCurrentStorage, selectUser, setCurrentStorage} from "../slices/use
 import {removeProducts} from "../slices/userProductsSlice";
 import {removeCategories} from "../slices/categoriesSlice";
 import {useTranslation} from "react-i18next";
-import {useLocation} from "react-router-dom";
+
 
 const PharmaciesUsersList = () => {
     const {t} = useTranslation()
@@ -37,9 +37,6 @@ const PharmaciesUsersList = () => {
     ))
     options.push({value: userId!!, label: t("my_pharmacy")})
 
-
-    const location = useLocation().pathname
-    console.log(location)
     // const handleChange =(e: any)=>{
     //     console.log(e.value)
     //     changeStorage(e.value)
@@ -83,7 +80,7 @@ const PharmaciesUsersList = () => {
         <>
             {isBiggerThan960 ?
                 <StorageList>
-                    <StorageItem key={userId} primary={currentStorageId === userId}
+                    <StorageItem key={userId} primary={currentStorageId === userId + "pharmacy"}
                                  onClick={() => changeStorage(userId!!)}>{t("my_pharmacy")}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
 
                     {allAcceptedIncomingInvites.map(invite => {

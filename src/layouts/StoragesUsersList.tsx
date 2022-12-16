@@ -8,7 +8,6 @@ import {fetchUserImages} from "../slices/imagesSlice";
 import {StorageList, StorageItem, ArrowRight} from "../styles/StoragesList.components";
 import { ChevronRightIcon} from "@heroicons/react/solid";
 import {useTranslation} from "react-i18next";
-import {useLocation} from "react-router-dom";
 
 
 const StoragesUsersList = () => {
@@ -18,8 +17,7 @@ const StoragesUsersList = () => {
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
     const currentStorageId = useAppSelector(selectCurrentStorage)
-    const location = useLocation().pathname
-    console.log(location)
+
 
     const changeStorage = (userId: string) => {
 
