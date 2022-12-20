@@ -1,9 +1,18 @@
-import {createAsyncThunk, createEntityAdapter, createSelector, createSlice, EntityState} from "@reduxjs/toolkit";
+import {
+    createAsyncThunk,
+    createEntityAdapter,
+    //createSelector,
+    createSlice,
+    EntityState,
+    PayloadAction
+} from "@reduxjs/toolkit";
 import {AppDispatch, RootState} from "../app/store";
-import {addDoc, collection} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, setDoc} from "firebase/firestore";
 import {db} from "../firebase";
 import {fetchMedicineFromDictionaryId, UserMedicine} from "./allMedicinesSlice";
 import {notify} from "../helpers";
+// import {fetchProductFromDictionaryId} from "./allProductsSlice";
+// import {UserProduct} from "./userProductsSlice";
 
 // export interface UserMedicine{
 //     id: string,
@@ -54,10 +63,56 @@ export const addUserMedicine = createAsyncThunk<UserMedicine, UserMedicine, { //
 
     return {...userMedicine, id: ""} as UserMedicine
 })
+
+export const editUserMedicine = createAsyncThunk<UserMedicine, UserMedicine, { //pierwsze to co zwracamy, drugie to co przyjmujemy jako parametr
+    dispatch: AppDispatch
+    state: RootState
+}>('userMedicines/editUserMedicine', async (userMedicine, thunkApi) => {
+    await thunkApi.dispatch(fetchMedicineFromDictionaryId(userMedicine))
+    let editingMedicine = await thunkApi.getState().userMedicines.editMedicine
+
+    if (userMedicine.categoryId === editingMedicine?.categoryId) {
+        const docRef = doc(db, "users/" + userMedicine.userId + "/categories/" + userMedicine.categoryId + "/products/", userMedicine.id);
+        await setDoc(docRef, userMedicine);
+    } else {
+        await deleteDoc(doc(db, "users/" + userMedicine.userId + "/categories/" + editingMedicine?.categoryId + "/products", userMedicine.id))
+        await setDoc(doc(db, "users/" + userMedicine.userId + "/categories/" + userMedicine?.categoryId + "/products/" + userMedicine.id), userMedicine);
+
+    }
+    return userMedicine as UserMedicine
+
+});
+
 const userMedicinesSlice = createSlice({
     name: "userMedicines",
     initialState,
-    reducers: {},
+    reducers: {
+        addMedicine: (state, action: PayloadAction<UserMedicine>) => {
+            userMedicinesAdapter.addOne(state, action.payload);
+        },
+        modifyMedicine: (state, action: PayloadAction<UserMedicine>) => {
+            userMedicinesAdapter.setOne(state, action.payload);
+        },
+        editMedicine: (state, action: PayloadAction<UserMedicine>) => {
+            state.editMedicine = action.payload
+        },
+        searchMedicine: (state, action: PayloadAction<string | null>) => {
+            const searchMedicineId = action.payload ?? ""
+            state.searchMedicineByString = null
+            state.searchMedicine = searchMedicineId
+        },
+        searchByString: (state, action: PayloadAction<string | null>) => {
+            state.searchMedicine = null
+            state.searchMedicineByString = action.payload
+
+        },
+        removeMedicines: (state) => {
+            userMedicinesAdapter.removeAll(state)
+        },
+        removeMedicine: (state, action: PayloadAction<string>) => {
+            userMedicinesAdapter.removeOne(state, action.payload);
+        },
+    },
     extraReducers(builder) {
         builder
             .addCase(addUserMedicine.fulfilled, (state, action) => {
@@ -69,16 +124,24 @@ const userMedicinesSlice = createSlice({
 
 export const {
     selectAll: selectUserMedicines,
-    selectById: selectUserProductById,
-    selectIds: selectUserProductIds,
+    // selectById: selectUserProductById,
+    // selectIds: selectUserProductIds,
 
     // Pass in a selector that returns the posts slice of state
 } = userMedicinesAdapter.getSelectors<RootState>((state) => state.userMedicines);
 
-export const selectProductsOfCategory = (categoryId: string) => createSelector(
-    [(state: RootState) => selectUserMedicines(state)],
-    (userProducts) => userProducts.filter(product => product.categoryId === categoryId)
-)
+// export const selectMedicinesOfCategory = (categoryId: string) => createSelector(
+//     [(state: RootState) => selectUserMedicines(state)],
+//     (userMedicine) => userMedicine.filter(product => product.categoryId === categoryId)
+// )
 
-
+export const {
+    // editMedicine,
+    // searchMedicine,
+    // searchByString,
+    // removeMedicines,
+    addMedicine,
+    modifyMedicine,
+    removeMedicine
+} = userMedicinesSlice.actions //editProduct
 export default userMedicinesSlice.reducer

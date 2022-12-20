@@ -5,7 +5,7 @@ import {useForm, SubmitHandler, Controller} from 'react-hook-form';
 import {AutocompleteWithUserProducts} from "./AutocompleteWithUserProducts";
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 
-import {selectCurrentStorage} from "../../slices/usersSlice";
+import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
 import {addUserProduct, UserProduct} from "../../slices/userProductsSlice";
 import {
     Category,
@@ -24,6 +24,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
+import {UserMedicine} from "../../slices/allMedicinesSlice";
+import {addUserMedicine} from "../../slices/userMedicineSlice";
 
 export type FormValues = {
     expireDate: Date | null
@@ -32,6 +34,8 @@ export type FormValues = {
     capacity: number | null
     unit: string
     quantity: number | null
+    openDate: Date | null
+    validityDate: number
 };
 
 type AddProductFormProps = {
@@ -53,7 +57,8 @@ export type AutocompleteWithCategoriesTitleProps = {
 
 }
 const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddProductFormProps,) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
+    const user = useAppSelector((selectUser))
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
     const currentStorageId = useAppSelector(selectCurrentStorage)
@@ -86,6 +91,7 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
         handleCloseAddProduct();
     }
     const onSubmit: SubmitHandler<FormValues> = data => {
+        if (currentStorageId === user!!.uid) {
             let userProduct: UserProduct = {
                 productId: "",
                 name: data.productName,
@@ -95,33 +101,44 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
                 quantity: data.quantity ?? 0,
                 expireDate: data.expireDate,
                 userId: currentStorageId!!,
-                id: ""
+                id: "",
             }
             dispatch(addUserProduct(userProduct))
             closeModal();
 
+        } else if (currentStorageId === user!!.uid + "pharmacy") {
+            let userMedicine: UserMedicine = {
+                medicineId: "",
+                name: data.productName,
+                categoryId: data.category ? data.category.id ?? "" : "",
+                capacity: data.capacity ?? 0,
+                unit: data.unit,
+                quantity: data.quantity ?? 0,
+                expireDate: data.expireDate,
+                openDate: data.openDate,
+                validityDate: data.validityDate,
+                userId: currentStorageId!!,
+                id: ""
+            }
+            dispatch(addUserMedicine(userMedicine))
+            closeModal();
+
         }
+    }
     const units = [
-        {
-            value: 'gr',
-        },
-        {
-            value: 'ml',
-        },
-        {
-            value: 'kg',
-        },
-        {
-            value: 'szt',
-        },
-        {
-            value: 'l',
-
-        },
-        {
-            value: 'box'
-        }
-
+        {value: 'gr'},
+        {value: 'ml'},
+        {value: 'kg'},
+        {value: 'szt'},
+        {value: 'l'},
+        {value: 'box'}
+    ];
+    const unitsMedicines = [
+        {value: 'opak'},
+        {value: 'ml'},
+        {value: 'szt'},
+        {value: 'blister'},
+        {value: 'box'}
     ];
     const {categoryPath} = useParams();
     const categoryFromPath = useAppSelector(selectCategoryByPath(categoryPath ?? "")) as Category
@@ -188,7 +205,7 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
                             name="unit"
                             control={control}
                             rules={{required: true}}
-                            defaultValue={"kg"}//{product ? product.unit : "gr"}
+                            defaultValue={"szt"}//{product ? product.unit : "gr"}
                             render={({field: {onChange, value}, fieldState: {error}}) => (
                                 <TextField sx={{width: "35%", marginRight: "10%", marginLeft: "10%"}}
                                            id="standard-select-currency"
@@ -201,14 +218,21 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
                                            variant="standard"
                                            type="text"
                                 >
-                                    {units.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.value}
-                                        </MenuItem>
-                                    ))}
+                                    {currentStorageId === user!!.uid ?
+                                        units.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.value}
+                                            </MenuItem>
+                                        ))
+                                        :
+                                        unitsMedicines.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.value}
+                                            </MenuItem>
+                                        ))
+                                    }
                                 </TextField>
-                            )}
-                        />
+                            )}/>
                     </Box>
                     {errors.capacity && (<p className="text-xs text-red ml-10">{t("products.AddProductForm.validationCapacity")}</p>)}
                     <Box>
@@ -225,12 +249,63 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
                                         value={value}
                                         onChange={onChange}
                                         renderInput={(params) => <TextField {...params}
-                                                                            sx={{width: "80%", marginLeft: "10%", marginTop:"5%"}}/>}/>
+                                                                            sx={{
+                                                                                width: "80%",
+                                                                                marginLeft: "10%",
+                                                                                marginTop: "5%"
+                                                                            }}/>}/>
                                 </LocalizationProvider>
                             )}
                         />
                     </Box>
+                    {currentStorageId === user?.uid + "pharmacy" ?
+                        <>
+                            <Box>
+                                <Controller
+                                    name="openDate"
+                                    control={control}
+                                    defaultValue={null}
+                                    render={({field: {onChange, value}}) => (
+                                        <LocalizationProvider
+                                            dateAdapter={AdapterDateFns} locale={plLocale}>
+                                            <DatePicker
+                                                mask={'__.__.____'}
+                                                label={t("products.AddProductForm.label_openDate")}
+                                                value={value}
+                                                onChange={onChange}
+                                                renderInput={(params) => <TextField {...params}
+                                                                                    sx={{
+                                                                                        width: "80%",
+                                                                                        marginLeft: "10%",
+                                                                                        marginTop: "5%"
+                                                                                    }}/>}/>
+                                        </LocalizationProvider>
+                                    )}
+                                />
+                            </Box>
 
+                            <Box id="modal-modal-description" sx={{mt: 2}}>
+                                <Controller
+                                    name="validityDate"
+                                    control={control}
+                                    rules={{required: true, min: 1}}
+                                    defaultValue={1}
+                                    render={({field: {onChange, value}, fieldState: {error}}) => (
+                                        <TextField
+                                            sx={{width: "80%", marginLeft: "10%"}}
+                                            //id="outlined-number"
+                                            label={t("products.AddProductForm.label_validity")}
+                                            type="number"
+                                            value={value}
+                                            onChange={onChange}
+                                            error={!!error}
+                                            helperText={error ? error.message : null}
+                                        />
+                                    )}
+                                />
+                            </Box>
+                        </>
+                        : null}
                     <Box id="modal-modal-description" sx={{mt: 2}}>
                         <Controller
                             name="quantity"

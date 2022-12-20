@@ -21,7 +21,7 @@ const PharmaciesUsersList = () => {
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
     const changeStorage = (userId: string) => {
 
-        dispatch(setCurrentStorage(userId + "pharmacy"))
+        dispatch(setCurrentStorage("pharmacy" + userId))
         dispatch(removeProducts())
         dispatch(removeCategories())
 
@@ -80,7 +80,7 @@ const PharmaciesUsersList = () => {
         <>
             {isBiggerThan960 ?
                 <StorageList>
-                    <StorageItem key={userId} primary={currentStorageId === userId + "pharmacy"}
+                    <StorageItem key={userId} primary={currentStorageId === "pharmacy" + userId}
                                  onClick={() => changeStorage(userId!!)}>{t("my_pharmacy")}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
 
                     {allAcceptedIncomingInvites.map(invite => {

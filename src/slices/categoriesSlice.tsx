@@ -13,9 +13,6 @@ import {notify} from "../helpers";
 import i18next from "i18next";
 
 
-
-
-
 export interface Category {
     id: string | null;
     path: Required<string>;

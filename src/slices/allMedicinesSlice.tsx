@@ -88,7 +88,7 @@ export const fetchAllMedicines = createAsyncThunk('allMedicines/fetchAllMedicine
 )
 
 const allMedicinesSlice = createSlice({
-    name: 'allProducts',
+    name: 'allMedicines',
     initialState,
     reducers: {},
     extraReducers(builder) {

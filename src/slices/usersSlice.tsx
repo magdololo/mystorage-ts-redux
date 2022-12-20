@@ -66,6 +66,7 @@ export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, LoginData
     dispatch: AppDispatch
     state: RootState
 }>("users/addDefaultCategoriesToNewUser", async (addDefaultCategoriesToNewUserProps: LoginData, thunkApi) => {
+    console.log(addDefaultCategoriesToNewUserProps.userId)
     try {
         let userRef = doc(db, "users/" + addDefaultCategoriesToNewUserProps.userId);
         let userDoc = await getDoc(userRef);
@@ -84,7 +85,7 @@ export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, LoginData
             querySnapshotPharm.forEach((doc) => {
                 let category: Category = doc.data() as Category
                 category.id = doc.id
-                category.user = addDefaultCategoriesToNewUserProps.userId + "pharmacy"
+                category.user = "pharmacy" + addDefaultCategoriesToNewUserProps.userId
                 thunkApi.dispatch(addNewCategory({category, notify: false}))
             })
             await updateDoc(userRef, {"defaultCategoriesAdded": true})

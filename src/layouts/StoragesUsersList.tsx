@@ -2,11 +2,11 @@ import React from "react";
 import {useAppSelector, useAppDispatch} from "../app/store";
 import {selectCurrentStorage, selectUser, setCurrentStorage} from "../slices/usersSlice";
 import {selectAcceptedIncomingInvites} from "../slices/sharesSlice";
-import {fetchUserProducts, removeProducts} from "../slices/userProductsSlice";
-import {fetchCategories, removeCategories} from "../slices/categoriesSlice";
-import {fetchUserImages} from "../slices/imagesSlice";
+import {removeProducts} from "../slices/userProductsSlice";
+import {removeCategories} from "../slices/categoriesSlice";
+//import {fetchUserImages} from "../slices/imagesSlice";
 import {StorageList, StorageItem, ArrowRight} from "../styles/StoragesList.components";
-import { ChevronRightIcon} from "@heroicons/react/solid";
+import {ChevronRightIcon} from "@heroicons/react/solid";
 import {useTranslation} from "react-i18next";
 
 
@@ -24,9 +24,9 @@ const StoragesUsersList = () => {
         dispatch(setCurrentStorage(userId))
         dispatch(removeProducts())
         dispatch(removeCategories())
-        dispatch(fetchCategories(userId))
-        dispatch(fetchUserProducts(userId))
-        dispatch(fetchUserImages(userId))
+        // dispatch(fetchCategories(userId))
+        // dispatch(fetchUserProducts(userId))
+        // dispatch(fetchUserImages(userId))
     }
 
 

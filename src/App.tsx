@@ -30,6 +30,7 @@ import {fas} from '@fortawesome/free-solid-svg-icons'
 import SearchUserProductPage from "./outlets/SearchUserProductPage";
 import {doc, getDoc} from "firebase/firestore";
 import {useTranslation} from "react-i18next";
+//import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 
 
 library.add(fas)
@@ -53,11 +54,11 @@ function App() {
                 console.log("info")
             }
             else {
-                const addDefaultCategoriesToNewUserParams: LoginData = {
+                const loginData: LoginData = {
                     userId: user?.uid as string,
                     userLanguage: userLanguage
                 }
-                dispatch(getUserData(addDefaultCategoriesToNewUserParams)
+                dispatch(getUserData(loginData)
                 );
                 navigate("/categories")
             }

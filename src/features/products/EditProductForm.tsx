@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {useForm, Controller, SubmitHandler} from "react-hook-form";
-import {selectCurrentStorage} from "../../slices/usersSlice";
+import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
 import {Category, selectAllCategories} from "../../slices/categoriesSlice"
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,13 +15,15 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 import {editUserProduct, UserProduct} from "../../slices/userProductsSlice";
 import {useTranslation} from "react-i18next";
+import {editUserMedicine} from "../../slices/userMedicineSlice";
+import {UserMedicine} from "../../slices/allMedicinesSlice";
 
 
 type EditProductFormProps = {
     handleClose: () => void
     isShown: boolean
 }
-type EditFormValues= {
+type EditFormValues = {
 
     newExpireDate: Date | null
     newProductName: string
@@ -29,9 +31,12 @@ type EditFormValues= {
     newCapacity: number | null
     newUnit: string
     newQuantity: number | null
+    newOpenDate: Date | null
+    newValidityDate: number
 }
 const EditProductForm = ({handleClose}: EditProductFormProps) => {
     const {t} = useTranslation()
+    const user = useAppSelector(selectUser)
     const {
         handleSubmit,
         control,
@@ -40,9 +45,10 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
         formState: {errors}
     } = useForm<EditFormValues>();
     const currentStorageId = useAppSelector(selectCurrentStorage)
-    const editProduct = useAppSelector(state=>state.userProducts.editProduct)
+    const editProduct = useAppSelector(state => state.userProducts.editProduct)
+    const editMedicine = useAppSelector(state => state.userMedicines.editMedicine)
     const allCategories = useAppSelector(selectAllCategories)
-    const editProductCategory = allCategories.find(category=>category.id === editProduct?.categoryId)
+    const editProductCategory = allCategories.find(category => category.id === editProduct?.categoryId)
 
     const dispatch = useAppDispatch()
 
@@ -63,8 +69,17 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
         {value: 'kg'},
         {value: 'szt'},
         {value: 'l'}];
+
+    const unitsMedicines = [
+        {value: 'szt'},
+        {value: 'opak'},
+        {value: 'blister'},
+        {value: 'box'},
+        {value: 'ml'}
+    ];
+
     useEffect(() => {
-        if (editProductCategory ){
+        if (editProductCategory) {
             setValue('newCategory', editProductCategory);
         }
     }, [editProductCategory, setValue]);
@@ -76,38 +91,60 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
 
 
     const onSubmit: SubmitHandler<EditFormValues> = data => {
+        if (currentStorageId === user?.uid) {
+            let updatedProduct: UserProduct = {
+                productId: editProduct?.productId ?? "",
+                name: data.newProductName,
+                categoryId: data.newCategory?.id ?? "",
+                capacity: data.newCapacity ?? 0,
+                unit: data.newUnit,
+                quantity: data.newQuantity ?? 1,
+                expireDate: data.newExpireDate,
+                userId: currentStorageId!!,
+                id: editProduct?.id ?? ""
 
-        let updatedProduct: UserProduct = {
-            productId: editProduct?.productId??"",
-            name: data.newProductName,
-            categoryId: data.newCategory?.id ??"",
-            capacity: data.newCapacity ?? 0,
-            unit: data.newUnit,
-            quantity: data.newQuantity ?? 1,
-            expireDate: data.newExpireDate,
-            userId: currentStorageId!!,
-            id: editProduct?.id??""
+            }
+            dispatch(editUserProduct(updatedProduct))
+            closeModal()
+        } else if (currentStorageId === user?.uid + "pharmacy") {
+            let updatedMedicine: UserMedicine = {
+                medicineId: editMedicine?.medicineId ?? "",
+                name: data.newProductName,
+                categoryId: data.newCategory?.id ?? "",
+                capacity: data.newCapacity ?? 0,
+                unit: data.newUnit,
+                quantity: data.newQuantity ?? 1,
+                expireDate: data.newExpireDate,
+                openDate: data.newOpenDate,
+                validityDate: data.newValidityDate,
+                userId: currentStorageId!!,
+                id: editMedicine?.id ?? ""
 
+            }
+            dispatch(editUserMedicine(updatedMedicine))
+            closeModal()
         }
-        dispatch(editUserProduct(updatedProduct))
-        closeModal()
 
     }
-    return(
+    console.log(editProduct)
+    console.log(editMedicine)
+    console.log(currentStorageId)
+    console.log(user!!.uid + "pharmacy")
+    return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <Box>
-                    <Box id="modal-modal-description"  sx={{mt: 2, width: "80%", marginLeft: "10%"}}>
+                    <Box id="modal-modal-description" sx={{mt: 2, width: "80%", marginLeft: "10%"}}>
                         <Controller
                             name="newCategory"
                             control={control}
                             rules={{required: true}}
                             defaultValue={editProductCategory}
                             render={({field: {onChange, value}}) => (
-                            <AutocompleteWithCategoriesTitle
-                                onChange= {onChange}
-                                value={value}
-                                disabled={false}
+                                <AutocompleteWithCategoriesTitle
+                                    onChange={onChange}
+                                    value={value}
+                                    disabled={false}
                             />
                             )}
                     />
@@ -159,11 +196,19 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
                                            onChange={onChange}
                                            variant="standard"
                                 >
-                                    {units.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.value}
-                                        </MenuItem>
-                                    ))}
+                                    {currentStorageId === user!!.uid ?
+                                        units.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.value}
+                                            </MenuItem>
+                                        ))
+                                        :
+                                        unitsMedicines.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.value}
+                                            </MenuItem>
+                                        ))
+                                    }
                                 </TextField>
                             )}/>
                     </Box>
@@ -180,12 +225,62 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
                                         label={t("products.EditProductForm.labelExpireDate")}
                                         value={value}
                                         onChange={onChange}
-                                        renderInput={(params) => <TextField {...params}  sx={{width: "80%", marginLeft: "10%", marginTop: "5%"}}/>}
-                                     />
+                                        renderInput={(params) => <TextField {...params} sx={{
+                                            width: "80%",
+                                            marginLeft: "10%",
+                                            marginTop: "5%"
+                                        }}/>}
+                                    />
                                 </LocalizationProvider>
                             )}
                         />
                     </Box>
+                    {currentStorageId === user!!.uid + "pharmacy" ?
+                        <>
+                            <Box>
+                                <Controller
+                                    name="newOpenDate"
+                                    control={control}
+                                    defaultValue={null}
+                                    render={({field: {onChange, value}}) => (
+                                        <LocalizationProvider
+                                            dateAdapter={AdapterDateFns} locale={plLocale}>
+                                            <DatePicker
+                                                mask={'__.__.____'}
+                                                label={t("products.AddProductForm.label_openDate")}
+                                                value={value}
+                                                onChange={onChange}
+                                                renderInput={(params) => <TextField {...params}
+                                                                                    sx={{
+                                                                                        width: "80%",
+                                                                                        marginLeft: "10%",
+                                                                                        marginTop: "5%"
+                                                                                    }}/>}/>
+                                        </LocalizationProvider>
+                                    )}
+                                />
+                            </Box>
+                            <Box id="modal-modal-description" sx={{mt: 2}}>
+                                <Controller
+                                    name="newValidityDate"
+                                    control={control}
+                                    rules={{required: true, min: 1}}
+                                    defaultValue={1}
+                                    render={({field: {onChange, value}, fieldState: {error}}) => (
+                                        <TextField
+                                            sx={{width: "80%", marginLeft: "10%"}}
+                                            //id="outlined-number"
+                                            label={t("products.AddProductForm.label_validity")}
+                                            type="number"
+                                            value={value}
+                                            onChange={onChange}
+                                            error={!!error}
+                                            helperText={error ? error.message : null}
+                                        />
+                                    )}
+                                />
+                            </Box>
+                        </> : null}
                     <Box id="modal-modal-description" sx={{mt: 2}}>
                         <Controller
                             name="newQuantity"

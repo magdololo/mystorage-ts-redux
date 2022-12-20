@@ -8,7 +8,7 @@ import {useModal} from "../component/Modal/UseModal";
 import AddCategoryForm from "../features/categories/AddCategoryForm";
 import EditCategoryForm from "../features/categories/EditCategoryForm";
 import {fetchAllProducts} from "../slices/allProductsSlice";
-import {selectUser} from "../slices/usersSlice";
+import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
 
 
 import {
@@ -34,7 +34,8 @@ export const CategoryList = () => {
     console.log("category list")
     const {t} = useTranslation();
     let user = useSelector(selectUser);
-
+    let currentStorageId = useAppSelector(selectCurrentStorage)
+    console.log(currentStorageId)
     const {
         isShown: isShownAddCategoryModal,
         handleShown: handleShownAddCategoryModal,
@@ -50,24 +51,29 @@ export const CategoryList = () => {
 
     const dispatch = useAppDispatch()
     const categories = useAppSelector(selectAllCategoriesSortedByRequired)
+    console.log(categories)
     const categoryBeingDeleted = useAppSelector((state => state.categories.deletingCategory)) as Category
     const [toggleSwitch, setToggleSwitch] = useState(false);
 
 
     useEffect(() => {
-        console.log(user)
+        if (currentStorageId === user?.uid) {
+            console.log(currentStorageId)
+            dispatch(fetchAllProducts())
+            dispatch(fetchImages())
+        } else if (currentStorageId === "pharmacy" + user?.uid) {
+            console.log(currentStorageId)
+            dispatch(fetchAllMedicines())
+            dispatch(fetchImagesPharmacy())
+        }
         // dispatch(fetchNotifications(user?.uid!!))
         // dispatch(fetchCategories(user?.uid!!))
         // dispatch(fetchCategories(user?.uid!!))
         //dispatch(fetchImages(currentStorageId!!))
         //dispatch(fetchUserProducts(currentStorageId!!))
-        dispatch(fetchAllProducts())
-        dispatch(fetchImages())
-        dispatch(fetchAllMedicines())
-        dispatch(fetchImagesPharmacy())
         //dispatch(fetchNotifications(user?.uid!!))
         // dispatch(fetchShares(user?.uid!!))
-    }, [user, dispatch])
+    }, [currentStorageId, dispatch])
 
 
     const toggleEdit = () => {

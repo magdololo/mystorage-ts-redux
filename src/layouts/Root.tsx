@@ -25,7 +25,7 @@ import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
 import {addNotification, modifyNotification, Notification} from "../slices/notificationsSlice";
 import {addShare, modifyShare, Invite} from "../slices/sharesSlice";
 import {addCategory, modifyCategory, Category, removeCategory} from "../slices/categoriesSlice";
-
+// import {addMedicine, modifyMedicine, removeMedicine} from "../slices/userMedicineSlice";
 import {
     UserProduct,
     addProduct,
@@ -36,6 +36,7 @@ import {
 import {ToastContainer} from "react-toastify";
 import ToggleSections from "./ToggleSections";
 import SelectStorageOrPharmacy from "./SelectStorageOrPharmacy";
+// import {UserMedicine} from "../slices/allMedicinesSlice";
 
 
 const Root = () => {
@@ -126,49 +127,94 @@ const Root = () => {
                 console.log(error)
             });
 
-        return ()=>{
+        return () => {
             unsubscribe()
         }
 
-    },[currentStorageId, dispatch])
-    useEffect(()=>{
-            if(!currentStorageId){
-                return
-            }
-            const docRef = doc(db, "users", currentStorageId!!);
-            let q = query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
+    }, [currentStorageId, dispatch])
+    useEffect(() => {
+        if (!currentStorageId) {
+            return
+        }
+        console.log(currentStorageId)
+        const docRef = doc(db, "users", currentStorageId);
+        let q = query(collectionGroup(db, "products"), orderBy(documentId()), startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
 
-            const unsubscribe = onSnapshot(q, (snapshot) => {
-                    snapshot.docChanges().forEach((change) => {
-                        let data = change.doc.data()
-                        let productExpireDate = null;
-                        if( data.expireDate != null){
-                            let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds*1000);
-                            productExpireDate = expireDateTimestamp.toDate();
-                        }
-                        if (change.type === "added") {
-                            dispatch(addProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
-                        }
-                        if (change.type === "modified") {
-                            dispatch(modifyProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
-                        }
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    let data = change.doc.data()
+                    let productExpireDate = null;
+                    if (data.expireDate != null) {
+                        let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds * 1000);
+                        productExpireDate = expireDateTimestamp.toDate();
+                    }
+                    if (change.type === "added") {
+                        dispatch(addProduct({
+                            ...data,
+                            expireDate: productExpireDate,
+                            id: change.doc.id
+                        } as UserProduct))
+                    }
+                    if (change.type === "modified") {
+                        dispatch(modifyProduct({
+                            ...data,
+                            expireDate: productExpireDate,
+                            id: change.doc.id
+                        } as UserProduct))
+                    }
 
-                        if (change.type === "removed") {
-                            dispatch(removeProduct(change.doc.id))
-                        }
-                    });
-                },
-                (error) => {
-                    console.log(error)
+                    if (change.type === "removed") {
+                        dispatch(removeProduct(change.doc.id))
+                    }
                 });
+            },
+            (error) => {
+                console.log(error)
+            });
 
         return () => {
             unsubscribe()
         }
 
-
     }, [currentStorageId, dispatch])
 
+    // useEffect(()=>{
+    //     if(!currentStorageId){
+    //         return
+    //     }
+    //     const docRef = doc(db, "users", user?.uid+"pharmacy");
+    //     let q = query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
+    //
+    //     const unsubscribe = onSnapshot(q, (snapshot) => {
+    //             snapshot.docChanges().forEach((change) => {
+    //                 let data = change.doc.data()
+    //                 let productExpireDate = null;
+    //                 if( data.expireDate != null){
+    //                     let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds*1000);
+    //                     productExpireDate = expireDateTimestamp.toDate();
+    //                 }
+    //                 if (change.type === "added") {
+    //                     dispatch(addMedicine({...data, expireDate: productExpireDate, id: change.doc.id} as UserMedicine))
+    //                 }
+    //                 if (change.type === "modified") {
+    //                     dispatch(modifyMedicine({...data, expireDate: productExpireDate, id: change.doc.id} as UserMedicine))
+    //                 }
+    //
+    //                 if (change.type === "removed") {
+    //                     dispatch(removeMedicine(change.doc.id))
+    //                 }
+    //             });
+    //         },
+    //         (error) => {
+    //             console.log(error)
+    //         });
+    //
+    //     return () => {
+    //         unsubscribe()
+    //     }
+    //
+    //
+    // }, [currentStorageId, dispatch])
 
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
 

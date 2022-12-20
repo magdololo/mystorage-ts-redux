@@ -98,23 +98,11 @@ const AddMedicineForm = ({handleCloseAddProduct, isShownAddProductModal}: AddPro
 
     }
     const units = [
-        {
-            value: 'opak',
-        },
-        {
-            value: 'ml',
-        },
-        {
-            value: 'szt',
-        },
-        {
-            value: 'blister',
-
-        },
-        {
-            value: 'box'
-        }
-
+        {value: 'opak'},
+        {value: 'ml'},
+        {value: 'szt'},
+        {value: 'blister'},
+        {value: 'box'}
     ];
     const {categoryPath} = useParams();
     const categoryFromPath = useAppSelector(selectCategoryByPath(categoryPath ?? "")) as Category
