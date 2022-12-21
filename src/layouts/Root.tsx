@@ -109,7 +109,6 @@ const Root = () => {
             return
         }
         const q = query(collection(db, "users/" + currentStorageId +"/categories"));
-        console.log("users/" + currentStorageId + "/categories")
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {
@@ -136,7 +135,7 @@ const Root = () => {
         if (!currentStorageId) {
             return
         }
-        console.log(currentStorageId)
+        const type: "medicine" | "product" = currentStorageId.startsWith("pharmacy") ? "medicine" : "product";
         const docRef = doc(db, "users", currentStorageId);
         let q = query(collectionGroup(db, "products"), orderBy(documentId()), startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
 

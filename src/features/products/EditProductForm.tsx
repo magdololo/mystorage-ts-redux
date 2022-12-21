@@ -15,8 +15,7 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
 import {editUserProduct, UserProduct} from "../../slices/userProductsSlice";
 import {useTranslation} from "react-i18next";
-import {editUserMedicine} from "../../slices/userMedicineSlice";
-import {UserMedicine} from "../../slices/allMedicinesSlice";
+import {editUserMedicine, UserMedicine} from "../../slices/userMedicineSlice";
 
 
 type EditProductFormProps = {
@@ -92,6 +91,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
 
     const onSubmit: SubmitHandler<EditFormValues> = data => {
         if (currentStorageId === user?.uid) {
+            console.log(data)
             let updatedProduct: UserProduct = {
                 productId: editProduct?.productId ?? "",
                 name: data.newProductName,
@@ -106,7 +106,8 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             }
             dispatch(editUserProduct(updatedProduct))
             closeModal()
-        } else if (currentStorageId === user?.uid + "pharmacy") {
+        } else if (currentStorageId === "pharmacy" + user?.uid) {
+            console.log(data)
             let updatedMedicine: UserMedicine = {
                 medicineId: editMedicine?.medicineId ?? "",
                 name: data.newProductName,
@@ -118,7 +119,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
                 openDate: data.newOpenDate,
                 validityDate: data.newValidityDate,
                 userId: currentStorageId!!,
-                id: editMedicine?.id ?? ""
+                id: editProduct?.id ?? ""
 
             }
             dispatch(editUserMedicine(updatedMedicine))
@@ -129,7 +130,8 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
     console.log(editProduct)
     console.log(editMedicine)
     console.log(currentStorageId)
-    console.log(user!!.uid + "pharmacy")
+    console.log(user!!.uid)
+    console.log(allCategories)
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -235,7 +237,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
                             )}
                         />
                     </Box>
-                    {currentStorageId === user!!.uid + "pharmacy" ?
+                    {currentStorageId === "pharmacy" + user!!.uid ?
                         <>
                             <Box>
                                 <Controller

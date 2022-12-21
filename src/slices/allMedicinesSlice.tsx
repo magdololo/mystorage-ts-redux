@@ -2,23 +2,8 @@ import {createAsyncThunk, createEntityAdapter, createSlice, EntityState} from "@
 import {AppDispatch, RootState} from "../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../firebase";
+import {UserMedicine} from "./userMedicineSlice";
 
-
-
-export interface UserMedicine {
-    medicineId: Required<string>;
-    name: Required<string>;
-    categoryId: Required<string>;
-    capacity: Required<number | null>;
-    unit: Required<string>;
-    quantity: Required<number | null>;
-    expireDate: Date | null;
-    openDate: Date | null;
-    validityDate: number;
-    userId: string;
-    id: string;
-
-}
 
 export interface MedicineFromDictionary {
     id: Required<string>;

@@ -31,6 +31,7 @@ import SearchUserProductPage from "./outlets/SearchUserProductPage";
 import {doc, getDoc} from "firebase/firestore";
 import {useTranslation} from "react-i18next";
 //import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
+//import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 
 
 library.add(fas)

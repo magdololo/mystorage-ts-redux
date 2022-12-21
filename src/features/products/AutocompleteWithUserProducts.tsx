@@ -28,7 +28,7 @@ export const AutocompleteWithUserProducts = ({
     let optionsStorage = {} as ProductFromDictionary[];
     if (currentStorageId === user?.uid) {
         optionsStorage = allProducts
-    } else if (currentStorageId === user?.uid + "pharmacy") {
+    } else if (currentStorageId === "pharmacy" + user?.uid) {
         optionsStorage = allMedicines
     }
 

@@ -24,8 +24,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
-import {UserMedicine} from "../../slices/allMedicinesSlice";
-import {addUserMedicine} from "../../slices/userMedicineSlice";
+
+import {addUserMedicine, UserMedicine} from "../../slices/userMedicineSlice";
+import AutocompleteWithUserMedicines from "../medicines/AutocompleteWithUserMedicines";
 
 export type FormValues = {
     expireDate: Date | null
@@ -56,11 +57,18 @@ export type AutocompleteWithCategoriesTitleProps = {
 
 
 }
-const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddProductFormProps,) => {
+export type AutocompleteWithUserMedicinesProps = {
+    onChange: (data: any) => void
+    value: string
+    setSelectedMedicineFromAutocomplete: (userMedicine: UserMedicine) => void;
+
+}
+const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProductFormProps,) => {
     const {t} = useTranslation();
     const user = useAppSelector((selectUser))
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
+    const [selectedMedicineFromAutocomplete, setSelectedMedicineFromAutocomplete] = useState<UserMedicine | null>(null);
     const currentStorageId = useAppSelector(selectCurrentStorage)
 
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
@@ -76,17 +84,22 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
         if (!isShownAddProductModal) {
             reset()
             setSelectedProductFromAutocomplete(null)
+            setSelectedMedicineFromAutocomplete(null)
         }
     }, [isShownAddProductModal, reset])
     useEffect(() => {
         if (selectedProductFromAutocomplete) {
             setValue('capacity', selectedProductFromAutocomplete.capacity);
             setValue('unit', selectedProductFromAutocomplete.unit);
+        } else if (selectedMedicineFromAutocomplete) {
+            setValue('capacity', selectedMedicineFromAutocomplete.capacity);
+            setValue('unit', selectedMedicineFromAutocomplete.unit);
         }
-    }, [selectedProductFromAutocomplete, setValue]);
+    }, [selectedProductFromAutocomplete, setValue, selectedMedicineFromAutocomplete]);
     const closeModal = () => {
         setErrorMessage('');
         setSelectedProductFromAutocomplete(null)
+        setSelectedMedicineFromAutocomplete(null)
         reset();
         handleCloseAddProduct();
     }
@@ -106,7 +119,7 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
             dispatch(addUserProduct(userProduct))
             closeModal();
 
-        } else if (currentStorageId === user!!.uid + "pharmacy") {
+        } else if (currentStorageId === "pharmacy" + user!!.uid) {
             let userMedicine: UserMedicine = {
                 medicineId: "",
                 name: data.productName,
@@ -171,12 +184,21 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
                             control={control}
                             rules={{required: true}}
                             render={({field: {onChange, value}}) => (<>
-                                <AutocompleteWithUserProducts
-                                    value={value ?? ""}
-                                    onChange={onChange}
-                                    setSelectedProductFromAutocomplete={setSelectedProductFromAutocomplete}
+                                    {currentStorageId === user!!.uid ?
 
-                                />
+                                        <AutocompleteWithUserProducts
+                                            value={value ?? ""}
+                                            onChange={onChange}
+                                            setSelectedProductFromAutocomplete={setSelectedProductFromAutocomplete}
+                                        />
+                                        :
+
+                                        <AutocompleteWithUserMedicines
+                                            onChange={onChange}
+                                            value={value ?? ""}
+                                            setSelectedMedicineFromAutocomplete={setSelectedMedicineFromAutocomplete}
+                                        />
+                                    }
                                 </>
                             )}
                         />
@@ -258,7 +280,7 @@ const AddProductForm = ( {handleCloseAddProduct, isShownAddProductModal}: AddPro
                             )}
                         />
                     </Box>
-                    {currentStorageId === user?.uid + "pharmacy" ?
+                    {currentStorageId === "pharmacy" + user?.uid ?
                         <>
                             <Box>
                                 <Controller

@@ -70,7 +70,7 @@ const SingleCategoryPage = () => {
         dispatch(deleteUserProduct(userProduct))
 
     }
-
+    console.log(categoryPath)
     return (
         <>
             {isLargerThan1280 ? null : <ReturnToCategoryList/>}

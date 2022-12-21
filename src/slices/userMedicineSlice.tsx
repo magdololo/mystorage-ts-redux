@@ -9,24 +9,24 @@ import {
 import {AppDispatch, RootState} from "../app/store";
 import {addDoc, collection, deleteDoc, doc, setDoc} from "firebase/firestore";
 import {db} from "../firebase";
-import {fetchMedicineFromDictionaryId, UserMedicine} from "./allMedicinesSlice";
+import {fetchMedicineFromDictionaryId} from "./allMedicinesSlice";
 import {notify} from "../helpers";
 // import {fetchProductFromDictionaryId} from "./allProductsSlice";
 // import {UserProduct} from "./userProductsSlice";
 
-// export interface UserMedicine{
-//     id: string,
-//     medicineId: Required<string>;
-//     name: Required<string>;
-//     categoryId: Required<string>;
-//     capacity: Required<number | null>;
-//     unit: Required<string>;
-//     quantity: Required<number | null> ;
-//     expireDate: Date|null;
-//     openDate: Date|null;
-//     validityDate: number;
-//     userId: string;
-// }
+export interface UserMedicine {
+    id: string,
+    medicineId: Required<string>;
+    name: Required<string>;
+    categoryId: Required<string>;
+    capacity: Required<number | null>;
+    unit: Required<string>;
+    quantity: Required<number | null>;
+    expireDate: Date | null;
+    openDate: Date | null;
+    validityDate: number;
+    userId: string;
+}
 const userMedicinesAdapter = createEntityAdapter<UserMedicine>({
     sortComparer: (a: UserMedicine, b: UserMedicine) => {
         let aTitle = a.name.toLowerCase();
@@ -69,8 +69,9 @@ export const editUserMedicine = createAsyncThunk<UserMedicine, UserMedicine, { /
     state: RootState
 }>('userMedicines/editUserMedicine', async (userMedicine, thunkApi) => {
     await thunkApi.dispatch(fetchMedicineFromDictionaryId(userMedicine))
-    let editingMedicine = await thunkApi.getState().userMedicines.editMedicine
-
+    let editingMedicine = await thunkApi.getState().userProducts.editProduct
+    console.log(editingMedicine)
+    console.log(userMedicine)
     if (userMedicine.categoryId === editingMedicine?.categoryId) {
         const docRef = doc(db, "users/" + userMedicine.userId + "/categories/" + userMedicine.categoryId + "/products/", userMedicine.id);
         await setDoc(docRef, userMedicine);
@@ -136,7 +137,7 @@ export const {
 // )
 
 export const {
-    // editMedicine,
+    editMedicine,
     // searchMedicine,
     // searchByString,
     // removeMedicines,

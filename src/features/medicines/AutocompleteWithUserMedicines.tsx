@@ -1,9 +1,9 @@
 import React from 'react';
 import {useAppSelector} from "../../app/store";
 
-import {AutocompleteWithUserMedicinesProps} from "./AddMedicineForm";
+// import {AutocompleteWithUserMedicinesProps} from "./AddMedicineForm";
 
-import {UserProduct} from "../../slices/userProductsSlice";
+//import {UserProduct} from "../../slices/userProductsSlice";
 import {ProductFromDictionary, selectAllProducts} from "../../slices/allProductsSlice";
 
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
@@ -11,15 +11,16 @@ import {TextField} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {selectAllMedicines} from "../../slices/allMedicinesSlice";
 import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
+import {AutocompleteWithUserMedicinesProps} from "../products/AddProductForm";
+import {UserMedicine} from "../../slices/userMedicineSlice";
 
 const filter = createFilterOptions<ProductFromDictionary>();
 
-
-export const AutocompleteWithUserMedicines = ({
-                                                  onChange,
-                                                  value,
-                                                  setSelectedProductFromAutocomplete
-                                              }: AutocompleteWithUserMedicinesProps) => {
+const AutocompleteWithUserMedicines = ({
+                                           onChange,
+                                           value,
+                                           setSelectedMedicineFromAutocomplete
+                                       }: AutocompleteWithUserMedicinesProps) => {
     const {t} = useTranslation();
     const allMedicines = useAppSelector(selectAllMedicines)
     const allProducts = useAppSelector(selectAllProducts)
@@ -28,7 +29,7 @@ export const AutocompleteWithUserMedicines = ({
     let optionsStorage = {} as ProductFromDictionary[];
     if (currentStorageId === user?.uid) {
         optionsStorage = allProducts
-    } else if (currentStorageId === user?.uid + "pharmacy") {
+    } else if (currentStorageId === "pharmacy" + user?.uid) {
         optionsStorage = allMedicines
     }
 
@@ -40,7 +41,7 @@ export const AutocompleteWithUserMedicines = ({
 
                 onChange(data);
                 if (data && typeof data === "object") {
-                    setSelectedProductFromAutocomplete(data as UserProduct);
+                    setSelectedMedicineFromAutocomplete(data as UserMedicine);
                 }
             }
             }
@@ -67,4 +68,6 @@ export const AutocompleteWithUserMedicines = ({
 
 
     );
-}
+};
+
+export default AutocompleteWithUserMedicines;

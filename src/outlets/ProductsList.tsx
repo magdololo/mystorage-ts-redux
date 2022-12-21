@@ -31,7 +31,7 @@ import {
 } from "../styles/Products.components";
 import {SinglePageTitle} from "../styles/Root.components";
 import {selectCurrentStorage} from "../slices/usersSlice";
-
+//import {editMedicine, UserMedicine} from "../slices/userMedicineSlice";
 
 const ProductsList = () => {
     const {t} = useTranslation()
@@ -53,11 +53,28 @@ const ProductsList = () => {
     //     progress: undefined,
     //
     // });
+    // const chooseEditProduct = (userProduct: UserProduct | null, userMedicine: UserMedicine | null) => {
+    //     handleShown()
+    //     if(currentStorageId === user!!.uid && userProduct){
+    //         dispatch(editProduct(userProduct))
+    //     } else if(currentStorageId === "pharmacy"+user!!.uid && userMedicine){
+    //         dispatch(editMedicine(userMedicine))
+    //     }
+    //
+    //
+    // }
     const chooseEditProduct = (userProduct: UserProduct) => {
+
         handleShown()
+        console.log(userProduct)
         dispatch(editProduct(userProduct))
 
     }
+    // const chooseEditMedicine = (userMedicine: UserMedicine) => {
+    //     handleShown()
+    //     console.log(userMedicine)
+    //     dispatch(editMedicine(userMedicine))
+    // }
     const increment = (userProduct: UserProduct) => {
         const changeQuantityProduct: ChangeQuantity = {
             userProduct: userProduct,
@@ -66,7 +83,7 @@ const ProductsList = () => {
         dispatch(changeProductQuantity(changeQuantityProduct))
     }
     const decrement = (userProduct: UserProduct) => {
-        if(userProduct.quantity === 1)
+        if (userProduct.quantity === 1)
             return
         const changeQuantityProduct: ChangeQuantity = {
             userProduct: userProduct,
@@ -87,7 +104,7 @@ const ProductsList = () => {
 
     console.log(currentStorageId)
     console.log(userProducts)
-
+    console.log(userProductsWithCategory)
     return (
         <>
             {isSmallerThan1280 ? <ReturnToCategoryList/> : null}

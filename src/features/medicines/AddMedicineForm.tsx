@@ -14,8 +14,7 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import plLocale from "date-fns/locale/pl";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import {UserMedicine} from "../../slices/allMedicinesSlice";
-import {addUserMedicine} from "../../slices/userMedicineSlice";
+import {addUserMedicine, UserMedicine} from "../../slices/userMedicineSlice";
 
 export type FormValues = {
     expireDate: Date | null

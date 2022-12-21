@@ -9,11 +9,13 @@ import {selectCurrentStorage, selectUser, setCurrentStorage} from "../slices/use
 import {removeProducts} from "../slices/userProductsSlice";
 import {removeCategories} from "../slices/categoriesSlice";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 
 
 const PharmaciesUsersList = () => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const allAcceptedIncomingInvites = useAppSelector(selectAcceptedIncomingInvites)
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
@@ -76,12 +78,16 @@ const PharmaciesUsersList = () => {
     //     }),
     //
     // }
+    const onClickChangeStorage = (userId: string) => {
+        changeStorage(userId!!);
+        navigate("/categories")
+    }
     return (
         <>
             {isBiggerThan960 ?
                 <StorageList>
                     <StorageItem key={userId} primary={currentStorageId === "pharmacy" + userId}
-                                 onClick={() => changeStorage(userId!!)}>{t("my_pharmacy")}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
+                                 onClick={() => onClickChangeStorage(userId!!)}>{t("my_pharmacy")}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
 
                     {allAcceptedIncomingInvites.map(invite => {
                         return (
