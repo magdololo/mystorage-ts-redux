@@ -36,7 +36,7 @@ export type FormValues = {
     unit: string
     quantity: number | null
     openDate: Date | null
-    validityDate: number
+    validityAfterOpen: number
 };
 
 type AddProductFormProps = {
@@ -129,7 +129,7 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
                 quantity: data.quantity ?? 0,
                 expireDate: data.expireDate,
                 openDate: data.openDate,
-                validityDate: data.validityDate,
+                validityAfterOpen: data.validityAfterOpen,
                 userId: currentStorageId!!,
                 id: ""
             }
@@ -308,10 +308,10 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
 
                             <Box id="modal-modal-description" sx={{mt: 2}}>
                                 <Controller
-                                    name="validityDate"
+                                    name="validityAfterOpen"
                                     control={control}
-                                    rules={{required: true, min: 1}}
-                                    defaultValue={1}
+                                    rules={{required: true, min: 0}}
+                                    defaultValue={0}
                                     render={({field: {onChange, value}, fieldState: {error}}) => (
                                         <TextField
                                             sx={{width: "80%", marginLeft: "10%"}}

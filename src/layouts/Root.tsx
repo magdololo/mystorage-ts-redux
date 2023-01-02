@@ -36,6 +36,7 @@ import {
 import {ToastContainer} from "react-toastify";
 import ToggleSections from "./ToggleSections";
 import SelectStorageOrPharmacy from "./SelectStorageOrPharmacy";
+import {addMedicine, modifyMedicine, removeMedicine, UserMedicine} from "../slices/userMedicineSlice";
 // import {UserMedicine} from "../slices/allMedicinesSlice";
 
 
@@ -142,28 +143,57 @@ const Root = () => {
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     let data = change.doc.data()
+                    console.log(data)
                     let productExpireDate = null;
                     if (data.expireDate != null) {
                         let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds * 1000);
                         productExpireDate = expireDateTimestamp.toDate();
                     }
+                    let medicineOpenDate = null;
+                    if (data.openDate != null) {
+                        let openDateTimestamp = Timestamp.fromMillis(data.openDate.seconds * 1000);
+                        medicineOpenDate = openDateTimestamp.toDate();
+                    }
                     if (change.type === "added") {
-                        dispatch(addProduct({
-                            ...data,
-                            expireDate: productExpireDate,
-                            id: change.doc.id
-                        } as UserProduct))
+                        if (type === "product") {
+                            dispatch(addProduct({
+                                ...data,
+                                expireDate: productExpireDate,
+                                id: change.doc.id
+                            } as UserProduct))
+                        } else if (type === "medicine") {
+
+                            dispatch(addMedicine({
+                                ...data,
+                                expireDate: productExpireDate,
+                                openDate: medicineOpenDate,
+                                id: change.doc.id
+                            } as UserMedicine))
+                        }
                     }
                     if (change.type === "modified") {
-                        dispatch(modifyProduct({
-                            ...data,
-                            expireDate: productExpireDate,
-                            id: change.doc.id
-                        } as UserProduct))
+                        if (type === "product") {
+                            dispatch(modifyProduct({
+                                ...data,
+                                expireDate: productExpireDate,
+                                id: change.doc.id
+                            } as UserProduct))
+                        } else if (type === "medicine") {
+                            dispatch(modifyMedicine({
+                                ...data,
+                                expireDate: productExpireDate,
+                                openDate: medicineOpenDate,
+                                id: change.doc.id
+                            } as UserMedicine))
+                        }
                     }
 
                     if (change.type === "removed") {
-                        dispatch(removeProduct(change.doc.id))
+                        if (type === "product") {
+                            dispatch(removeProduct(change.doc.id))
+                        } else if (type === "medicine") {
+                            dispatch(removeMedicine(change.doc.id))
+                        }
                     }
                 });
             },

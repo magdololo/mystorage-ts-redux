@@ -1,13 +1,13 @@
 import {
     createAsyncThunk,
-    createEntityAdapter,
+    createEntityAdapter, createSelector,
     //createSelector,
     createSlice,
     EntityState,
     PayloadAction
 } from "@reduxjs/toolkit";
 import {AppDispatch, RootState} from "../app/store";
-import {addDoc, collection, deleteDoc, doc, setDoc} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDoc, setDoc} from "firebase/firestore";
 import {db} from "../firebase";
 import {fetchMedicineFromDictionaryId} from "./allMedicinesSlice";
 import {notify} from "../helpers";
@@ -24,7 +24,7 @@ export interface UserMedicine {
     quantity: Required<number | null>;
     expireDate: Date | null;
     openDate: Date | null;
-    validityDate: number;
+    validityAfterOpen: number;
     userId: string;
 }
 const userMedicinesAdapter = createEntityAdapter<UserMedicine>({
@@ -69,26 +69,78 @@ export const editUserMedicine = createAsyncThunk<UserMedicine, UserMedicine, { /
     state: RootState
 }>('userMedicines/editUserMedicine', async (userMedicine, thunkApi) => {
     await thunkApi.dispatch(fetchMedicineFromDictionaryId(userMedicine))
-    let editingMedicine = await thunkApi.getState().userProducts.editProduct
+    let editingMedicine = await thunkApi.getState().userMedicines.editMedicine
     console.log(editingMedicine)
     console.log(userMedicine)
+
     if (userMedicine.categoryId === editingMedicine?.categoryId) {
-        const docRef = doc(db, "users/" + userMedicine.userId + "/categories/" + userMedicine.categoryId + "/products/", userMedicine.id);
+        const docRef = doc(db, "users/" + userMedicine.userId + "/categories/" + userMedicine.categoryId + "/products/", editingMedicine.id);
         await setDoc(docRef, userMedicine);
     } else {
-        await deleteDoc(doc(db, "users/" + userMedicine.userId + "/categories/" + editingMedicine?.categoryId + "/products", userMedicine.id))
-        await setDoc(doc(db, "users/" + userMedicine.userId + "/categories/" + userMedicine?.categoryId + "/products/" + userMedicine.id), userMedicine);
-
+        try {
+            await deleteDoc(doc(db, "users/" + userMedicine.userId + "/categories/" + editingMedicine?.categoryId + "/products/", editingMedicine!!.id))
+        } catch (error) {
+            console.log(error)
+        }
+        try {
+            await setDoc(doc(db, "users/" + userMedicine.userId + "/categories/" + userMedicine?.categoryId + "/products/" + editingMedicine?.id), userMedicine);
+        } catch (error) {
+            console.log(error)
+        }
     }
+
     return userMedicine as UserMedicine
 
 });
+
+export interface ChangeMedicineQuantity {
+    userMedicine: UserMedicine,
+    changeQuantity: "increment" | "decrement"
+}
+
+export const changeMedicineQuantity = createAsyncThunk('userMedicine/changeProductQuantity', async (changeQuantity: ChangeMedicineQuantity) => {
+        try {
+            const userMedicine = changeQuantity.userMedicine;
+            const productRef = doc(db, "users/" + userMedicine.userId + "/categories/" + userMedicine.categoryId + "/products/", userMedicine.id);
+            const medicineDoc = await getDoc(productRef);
+
+            const userMedicineFromFirebase = medicineDoc.data() as UserMedicine;
+            userMedicineFromFirebase.id = medicineDoc.id
+
+            if (userMedicineFromFirebase) {
+                let newQuantity = userMedicine.quantity ?? 1
+                changeQuantity.changeQuantity === "increment" ? newQuantity++ : newQuantity--
+                userMedicineFromFirebase.quantity = newQuantity;
+
+                await setDoc(productRef, userMedicineFromFirebase);
+
+            }
+            return userMedicineFromFirebase
+        } catch (error) {
+            console.log(error)
+            return {error: error}
+        }
+    }
+)
+
+export const deleteUserMedicine = createAsyncThunk('userMedicine/deleteUserMedicine', async (userMedicine: UserMedicine) => {
+    try {
+        await deleteDoc(doc(db, "users/" + userMedicine.userId + "/categories/" + userMedicine.categoryId + "/products/", userMedicine.id))
+        return userMedicine.id
+
+    } catch (error) {
+        console.log(error)
+        return {error: error}
+
+    }
+})
 
 const userMedicinesSlice = createSlice({
     name: "userMedicines",
     initialState,
     reducers: {
         addMedicine: (state, action: PayloadAction<UserMedicine>) => {
+            console.log("addMedicine")
             userMedicinesAdapter.addOne(state, action.payload);
         },
         modifyMedicine: (state, action: PayloadAction<UserMedicine>) => {
@@ -120,6 +172,14 @@ const userMedicinesSlice = createSlice({
                 userMedicinesAdapter.addOne(state, action.payload)
                 notify('🦄 Lek dodany!')
             })
+            .addCase(changeMedicineQuantity.fulfilled, (state, action) => {
+                let userMedicine = action.payload as UserMedicine
+                userMedicinesAdapter.updateOne(state, {id: userMedicine.id, changes: {quantity: userMedicine.quantity}})
+            })
+            .addCase(deleteUserMedicine.fulfilled, (state, action) => {
+                userMedicinesAdapter.removeOne(state, action.payload as string)
+                notify('🦄 Lek usunięty!')
+            })
     }
 })
 
@@ -145,4 +205,10 @@ export const {
     modifyMedicine,
     removeMedicine
 } = userMedicinesSlice.actions //editProduct
+
+export const selectMedicinesOfCategory = (categoryId: string) => createSelector(
+    selectUserMedicines, userMedicines => {
+        return userMedicines.filter(medicine => medicine.categoryId === categoryId)
+    }
+)
 export default userMedicinesSlice.reducer

@@ -88,7 +88,7 @@ const AddMedicineForm = ({handleCloseAddProduct, isShownAddProductModal}: AddPro
             quantity: data.quantity ?? 0,
             expireDate: data.expireDate,
             openDate: data.openDate,
-            validityDate: data.validityDate,
+            validityAfterOpen: data.validityDate,
             userId: currentStorageId!!,
             id: ""
         }

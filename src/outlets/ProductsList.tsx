@@ -31,12 +31,14 @@ import {
 } from "../styles/Products.components";
 import {SinglePageTitle} from "../styles/Root.components";
 import {selectCurrentStorage} from "../slices/usersSlice";
+import {selectUserMedicines} from "../slices/userMedicineSlice";
 //import {editMedicine, UserMedicine} from "../slices/userMedicineSlice";
 
 const ProductsList = () => {
     const {t} = useTranslation()
     const currentStorageId = useAppSelector(selectCurrentStorage)
     const userProducts = useAppSelector(selectUserProducts)
+    const userMedicines = useAppSelector(selectUserMedicines)
     const dispatch = useAppDispatch()
     const categories = useAppSelector(selectAllCategories)
     let [todayDate] = useState(new Date());
@@ -105,6 +107,7 @@ const ProductsList = () => {
     console.log(currentStorageId)
     console.log(userProducts)
     console.log(userProductsWithCategory)
+    console.log(userMedicines)
     return (
         <>
             {isSmallerThan1280 ? <ReturnToCategoryList/> : null}

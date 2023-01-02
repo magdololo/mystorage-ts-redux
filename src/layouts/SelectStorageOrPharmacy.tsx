@@ -81,7 +81,7 @@ const SelectStorageOrPharmacy = () => {
     //     }),
     //
     // }
-
+    console.log(currentStorageId)
     return(
         <>
             <Select

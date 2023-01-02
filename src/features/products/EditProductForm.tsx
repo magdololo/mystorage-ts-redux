@@ -18,6 +18,7 @@ import {useTranslation} from "react-i18next";
 import {editUserMedicine, UserMedicine} from "../../slices/userMedicineSlice";
 
 
+
 type EditProductFormProps = {
     handleClose: () => void
     isShown: boolean
@@ -47,8 +48,12 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
     const editProduct = useAppSelector(state => state.userProducts.editProduct)
     const editMedicine = useAppSelector(state => state.userMedicines.editMedicine)
     const allCategories = useAppSelector(selectAllCategories)
-    const editProductCategory = allCategories.find(category => category.id === editProduct?.categoryId)
-
+    const categoriesOfProducts = allCategories.filter(category => category.user === user?.uid)
+    const categoriesOfMedicines = allCategories.filter(category => category.user === "pharmacy" + user?.uid)
+    const editProductCategory = categoriesOfProducts.find(category => category.id === editProduct?.categoryId)
+    const editMedicineCategory = categoriesOfMedicines.find(category => category.id === editMedicine?.categoryId)
+    console.log(editProductCategory)
+    console.log(editMedicineCategory)
     const dispatch = useAppDispatch()
 
     // const notify = () => toast.success('🦄 Zmiany zostały dodane!', {
@@ -80,8 +85,10 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
     useEffect(() => {
         if (editProductCategory) {
             setValue('newCategory', editProductCategory);
+        } else if (editMedicineCategory) {
+            setValue('newCategory', editMedicineCategory);
         }
-    }, [editProductCategory, setValue]);
+    }, [editProductCategory, editMedicineCategory, setValue]);
 
     const closeModal = () => {
         reset();
@@ -117,7 +124,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
                 quantity: data.newQuantity ?? 1,
                 expireDate: data.newExpireDate,
                 openDate: data.newOpenDate,
-                validityDate: data.newValidityDate,
+                validityAfterOpen: data.newValidityDate,
                 userId: currentStorageId!!,
                 id: editProduct?.id ?? ""
 
@@ -141,13 +148,13 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
                             name="newCategory"
                             control={control}
                             rules={{required: true}}
-                            defaultValue={editProductCategory}
+                            defaultValue={currentStorageId === user?.uid ? editProductCategory : editMedicineCategory}
                             render={({field: {onChange, value}}) => (
                                 <AutocompleteWithCategoriesTitle
                                     onChange={onChange}
                                     value={value}
                                     disabled={false}
-                            />
+                                />
                             )}
                     />
                     </Box>

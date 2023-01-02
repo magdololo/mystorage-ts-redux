@@ -84,7 +84,7 @@ const PageWithFirstChoose = () => {
                                 className={"border border-2 border-purple-400 rounded-sm cursor-pointer px-20 py-12 font-bold text-gray-light uppercase text-2xl" +
                                     "transition ease-in-out duration-300 hover:scale-110 hover:border-purple-800"}
                                 onClick={() => {
-                                    dispatch(setCurrentStorage(user!!.uid + "pharmacy"))
+                                    dispatch(setCurrentStorage("pharmacy" + user!!.uid))
                                     navigate("/categories")
                                 }}>{t('my_pharmacy')}
                             </button>

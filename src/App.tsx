@@ -13,7 +13,6 @@ import Loading from "./component/Loading";
 import CategoryList from "./outlets/CategoryList";
 import LoginPage from "./features/users/LoginPage";
 import RemindPassword from "./features/users/RemindPassword";
-import ProductsList from "./outlets/ProductsList";
 import RegisterPage from "./features/users/RegisterPage";
 import TermsAndConditions from "./features/users/TermsAndConditions";
 import PrivacyPolicy from "./features/users/PrivacyPolicy";
@@ -30,6 +29,7 @@ import {fas} from '@fortawesome/free-solid-svg-icons'
 import SearchUserProductPage from "./outlets/SearchUserProductPage";
 import {doc, getDoc} from "firebase/firestore";
 import {useTranslation} from "react-i18next";
+import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 //import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 //import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 
@@ -85,7 +85,7 @@ function App() {
                     <Route path="/" element={<Root/>}>
                         <Route path="/categories" element={<CategoryList/>}/>
                         <Route path="/categories/:categoryPath" element={<SingleCategoryPage/>}/>
-                        <Route path="/products" element={<ProductsList/>}/>
+                        <Route path="/products" element={<ProductsAndMedicines/>}/>
                         <Route path="/search" element={<SearchUserProductPage/>}/>
                         <Route path="/shares" element={<SharesPage/>}/>
 

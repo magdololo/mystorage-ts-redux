@@ -9,14 +9,11 @@ import AddCategoryForm from "../features/categories/AddCategoryForm";
 import EditCategoryForm from "../features/categories/EditCategoryForm";
 import {fetchAllProducts} from "../slices/allProductsSlice";
 import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
-
-
 import {
     currentCategoryChange,
     deleteCategory,
     deletingCategoryChange,
-    selectAllCategoriesSortedByRequired,
-    Category
+    Category, selectCategoriesCurrentStorageByRequired
 } from "../slices/categoriesSlice";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -48,23 +45,19 @@ export const CategoryList = () => {
     } = useModal()
     const modalAddHeader = t("categories.CategoryList.modalAddHeader")
     const modalEditHeader = t("categories.CategoryList.modalEditHeader")
-
     const dispatch = useAppDispatch()
-    const categories = useAppSelector(selectAllCategoriesSortedByRequired)
-    console.log(categories)
+    let categories = useAppSelector(selectCategoriesCurrentStorageByRequired(currentStorageId as string))
     const categoryBeingDeleted = useAppSelector((state => state.categories.deletingCategory)) as Category
     const [toggleSwitch, setToggleSwitch] = useState(false);
 
-
     useEffect(() => {
         if (currentStorageId === user?.uid) {
-            console.log(currentStorageId)
             dispatch(fetchAllProducts())
             dispatch(fetchImages())
         } else if (currentStorageId === "pharmacy" + user?.uid) {
-            console.log(currentStorageId)
             dispatch(fetchAllMedicines())
             dispatch(fetchImagesPharmacy())
+
         }
         // dispatch(fetchNotifications(user?.uid!!))
         // dispatch(fetchCategories(user?.uid!!))
