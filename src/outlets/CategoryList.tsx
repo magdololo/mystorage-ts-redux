@@ -66,7 +66,7 @@ export const CategoryList = () => {
         //dispatch(fetchUserProducts(currentStorageId!!))
         //dispatch(fetchNotifications(user?.uid!!))
         // dispatch(fetchShares(user?.uid!!))
-    }, [currentStorageId, dispatch])
+    }, [currentStorageId, dispatch, user?.uid])
 
 
     const toggleEdit = () => {
