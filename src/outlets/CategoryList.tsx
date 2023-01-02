@@ -8,15 +8,12 @@ import {useModal} from "../component/Modal/UseModal";
 import AddCategoryForm from "../features/categories/AddCategoryForm";
 import EditCategoryForm from "../features/categories/EditCategoryForm";
 import {fetchAllProducts} from "../slices/allProductsSlice";
-import {selectUser} from "../slices/usersSlice";
-
-
+import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
 import {
     currentCategoryChange,
     deleteCategory,
     deletingCategoryChange,
-    selectAllCategoriesSortedByRequired,
-    Category,
+    Category, selectCategoriesCurrentStorageByRequired
 } from "../slices/categoriesSlice";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -26,35 +23,50 @@ import {useTranslation} from "react-i18next";
 import {EditCategoriesButtonComponent} from "../styles/Categories.components";
 import {MainBox} from "../styles/Categories.components";
 import {fetchImages} from "../slices/imagesSlice";
+import {fetchAllMedicines} from "../slices/allMedicinesSlice";
+import {fetchImagesPharmacy} from "../slices/imagesPharmacySlice";
 
 
 export const CategoryList = () => {
-
+    console.log("category list")
     const {t} = useTranslation();
     let user = useSelector(selectUser);
-
-
-    const {isShown: isShownAddCategoryModal, handleShown: handleShownAddCategoryModal , handleClose: handleCloseAddCategoryModal} = useModal()
-    const {isShown: isShownDeleteCategoryModal, handleShown: handleShownDeleteCategoryModal , handleClose: handleCloseDeleteCategoryModal} = useModal()
+    let currentStorageId = useAppSelector(selectCurrentStorage)
+    console.log(currentStorageId)
+    const {
+        isShown: isShownAddCategoryModal,
+        handleShown: handleShownAddCategoryModal,
+        handleClose: handleCloseAddCategoryModal
+    } = useModal()
+    const {
+        isShown: isShownDeleteCategoryModal,
+        handleShown: handleShownDeleteCategoryModal,
+        handleClose: handleCloseDeleteCategoryModal
+    } = useModal()
     const modalAddHeader = t("categories.CategoryList.modalAddHeader")
     const modalEditHeader = t("categories.CategoryList.modalEditHeader")
-
     const dispatch = useAppDispatch()
-    const categories = useAppSelector(selectAllCategoriesSortedByRequired)
-    const categoryBeingDeleted = useAppSelector((state=>state.categories.deletingCategory)) as Category
+    let categories = useAppSelector(selectCategoriesCurrentStorageByRequired(currentStorageId as string))
+    const categoryBeingDeleted = useAppSelector((state => state.categories.deletingCategory)) as Category
     const [toggleSwitch, setToggleSwitch] = useState(false);
 
-
     useEffect(() => {
+        if (currentStorageId === user?.uid) {
+            dispatch(fetchAllProducts())
+            dispatch(fetchImages())
+        } else if (currentStorageId === "pharmacy" + user?.uid) {
+            dispatch(fetchAllMedicines())
+            dispatch(fetchImagesPharmacy())
+
+        }
         // dispatch(fetchNotifications(user?.uid!!))
-       // dispatch(fetchCategories(user?.uid!!))
+        // dispatch(fetchCategories(user?.uid!!))
+        // dispatch(fetchCategories(user?.uid!!))
         //dispatch(fetchImages(currentStorageId!!))
         //dispatch(fetchUserProducts(currentStorageId!!))
-        dispatch(fetchAllProducts())
-        dispatch(fetchImages())
         //dispatch(fetchNotifications(user?.uid!!))
         // dispatch(fetchShares(user?.uid!!))
-    }, [user, dispatch])
+    }, [currentStorageId, dispatch])
 
 
     const toggleEdit = () => {
@@ -62,6 +74,7 @@ export const CategoryList = () => {
     }
 
     useEffect(() => {
+        console.log("current category change")
         dispatch(currentCategoryChange(null))
     }, [dispatch])
 
@@ -136,7 +149,6 @@ export const CategoryList = () => {
             <button  className=" block mx-auto px-2 py-2 text-white font-bold bg-purple text-xsm leading-tight uppercase rounded shadow-md tracking-wider
                                  hover:shadow-l focus:shadow-lg focus:outline-none focus:ring-0" onClick={() =>deletingCategory(categoryBeingDeleted)}>{t("buttons.confirm")}</button>
         </>
-
     return (
         <>
             <EditCategoriesButton toggleEdit={toggleEdit} toggleValue={toggleSwitch}/>

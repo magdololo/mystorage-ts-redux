@@ -53,7 +53,6 @@ const LoginPage = () => {
             .then((userCredential) => {
                 const userFirebase = userCredential.user;
                 reset();
-                //dispatch(checkIfUserInUsersCollection(auth.currentUser!!.uid))
                 if (!userFirebase.emailVerified) {
                     console.log("email not verified")
                     setErrorMessage(t("notify.verifiedEmail"))
@@ -100,11 +99,11 @@ const LoginPage = () => {
 
             } else {
                 GoogleAuthProvider.credentialFromResult(result);
-                const addDefaultCategoriesToNewUserParams: LoginData = {
+                const loginData: LoginData = {
                     userId: user?.uid as string,
                     userLanguage: userLanguage
                 }
-                dispatch(getUserData(addDefaultCategoriesToNewUserParams))
+                dispatch(getUserData(loginData))
                 navigate("/categories")
             }
 

@@ -72,6 +72,8 @@
       "formAddProductTitle": "Add product",
       "label_quantity": "Quantity",
       "label_expireDate": "Expire date",
+      "label_openDate": "Open date",
+      "label_validity": "Validity after open",
       "label_productName": "Product name",
       "label_categoryName": "Category name",
       "label_capacity": "Capacity",

@@ -210,12 +210,18 @@ exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user) => {
         console.log("email verified")
         const uid = user.uid
         let userDoc = null;
+
         try {
             userDoc = await db.doc("users/" + uid).get()
         } catch (error) {
             console.log(error)
         }
-
+        let userDocPharm = null;
+        try {
+            userDocPharm = await db.doc("users/" + uid + "pharmacy").get()
+        } catch (error) {
+            console.log(error)
+        }
         if (!userDoc?.exists) {
             console.log("user not found")
             try {
@@ -226,15 +232,26 @@ exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user) => {
                     didSeeGreeting: false,
                     defaultCategoriesAdded: false
                 })
+                await db.doc("users/" + "pharmacy" + uid).set({
+                    uid: "pharmacy" + user.uid,
+                    defaultCategoriesAdded: false
+
+                })
             } catch (error) {
                 console.log(error)
             }
-        } else {
-            console.log("user found")
+        } else if (!userDocPharm?.exists) {
+            console.log("user found but userPharmacy not found")
             console.log(userDoc)
+            await db.doc("users/" + "pharmacy" + uid).set({
+                uid: "pharmacy" + user.uid,
+                defaultCategoriesAdded: false
+
+            })
         }
     } else {
         console.log("email not verified")
     }
+
 
 });

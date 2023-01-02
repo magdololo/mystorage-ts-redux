@@ -13,9 +13,6 @@ import {notify} from "../helpers";
 import i18next from "i18next";
 
 
-
-
-
 export interface Category {
     id: string | null;
     path: Required<string>;
@@ -49,9 +46,9 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 
 
         try {
-            const categories: Array<Category> = [];
+            const categoriesStorage: Array<Category> = [];
             if (userId === "")
-                return categories
+                return categoriesStorage
 
             let q = await query(collection(db, "users/" + userId + "/categories"));
             const querySnapshot = await getDocs(q);
@@ -59,11 +56,11 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 
                 let categoryDoc = result.data() as Category;
                 categoryDoc.id = result.id;
-                categories.push(categoryDoc);
+                categoriesStorage.push(categoryDoc);
 
             })
 
-            return categories
+            return categoriesStorage
         } catch (error) {
             console.log(error)
             return {error: error}
@@ -179,6 +176,14 @@ export const selectAllCategoriesSortedByRequired = createSelector(
     selectAllCategories, categories => {
         const requiredCategory = categories.find(category => category.required === "true")
         const filteredCategories = categories.filter(category => category.required !== "true")
+        return [requiredCategory, ...filteredCategories]
+    }
+)
+export const selectCategoriesCurrentStorageByRequired = (currentStorageId: string) => createSelector(
+    selectAllCategories, categories => {
+        const categoriesOfStorage = categories.filter(category => category.user === currentStorageId)
+        const requiredCategory = categoriesOfStorage.find(category => category.required === "true")
+        const filteredCategories = categoriesOfStorage.filter(category => category.required !== "true")
         return [requiredCategory, ...filteredCategories]
     }
 )

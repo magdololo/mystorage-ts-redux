@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../app/store";
 import {Outlet} from "react-router-dom";
 
@@ -21,11 +21,11 @@ import {
     startAt, Timestamp
 } from "firebase/firestore";
 import {db} from "../firebase";
-import {changeSeeGreetingToTrue, selectCurrentStorage, selectUser, User} from "../slices/usersSlice";
+import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
 import {addNotification, modifyNotification, Notification} from "../slices/notificationsSlice";
 import {addShare, modifyShare, Invite} from "../slices/sharesSlice";
 import {addCategory, modifyCategory, Category, removeCategory} from "../slices/categoriesSlice";
-
+// import {addMedicine, modifyMedicine, removeMedicine} from "../slices/userMedicineSlice";
 import {
     UserProduct,
     addProduct,
@@ -36,8 +36,8 @@ import {
 import {ToastContainer} from "react-toastify";
 import ToggleSections from "./ToggleSections";
 import SelectStorageOrPharmacy from "./SelectStorageOrPharmacy";
-import {Modal} from "../component/Modal/Modal";
-import {useTranslation} from "react-i18next";
+import {addMedicine, modifyMedicine, removeMedicine, UserMedicine} from "../slices/userMedicineSlice";
+// import {UserMedicine} from "../slices/allMedicinesSlice";
 
 
 const Root = () => {
@@ -45,10 +45,6 @@ const Root = () => {
     const dispatch = useAppDispatch()
     const currentStorageId = useAppSelector(selectCurrentStorage)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const handleCloseGreeting = () => setIsOpen(false);
-    let didSee = user?.didSeeGreeting;
-    const {t} = useTranslation();
     useEffect(() => {
         if (!currentStorageId) {
             return
@@ -131,89 +127,126 @@ const Root = () => {
                 console.log(error)
             });
 
-        return ()=>{
+        return () => {
             unsubscribe()
         }
 
-    },[currentStorageId, dispatch])
-    useEffect(()=>{
-            if(!currentStorageId){
-                return
-            }
-            const docRef = doc(db, "users", currentStorageId!!);
-            let q = query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
+    }, [currentStorageId, dispatch])
+    useEffect(() => {
+        if (!currentStorageId) {
+            return
+        }
+        const type: "medicine" | "product" = currentStorageId.startsWith("pharmacy") ? "medicine" : "product";
+        const docRef = doc(db, "users", currentStorageId);
+        let q = query(collectionGroup(db, "products"), orderBy(documentId()), startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
 
-            const unsubscribe = onSnapshot(q, (snapshot) => {
-                    snapshot.docChanges().forEach((change) => {
-                        let data = change.doc.data()
-                        let productExpireDate = null;
-                        if( data.expireDate != null){
-                            let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds*1000);
-                            productExpireDate = expireDateTimestamp.toDate();
-                        }
-                        if (change.type === "added") {
-                            dispatch(addProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
-                        }
-                        if (change.type === "modified") {
-                            dispatch(modifyProduct({...data, expireDate: productExpireDate, id: change.doc.id} as UserProduct))
-                        }
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    let data = change.doc.data()
+                    console.log(data)
+                    let productExpireDate = null;
+                    if (data.expireDate != null) {
+                        let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds * 1000);
+                        productExpireDate = expireDateTimestamp.toDate();
+                    }
+                    let medicineOpenDate = null;
+                    if (data.openDate != null) {
+                        let openDateTimestamp = Timestamp.fromMillis(data.openDate.seconds * 1000);
+                        medicineOpenDate = openDateTimestamp.toDate();
+                    }
+                    if (change.type === "added") {
+                        if (type === "product") {
+                            dispatch(addProduct({
+                                ...data,
+                                expireDate: productExpireDate,
+                                id: change.doc.id
+                            } as UserProduct))
+                        } else if (type === "medicine") {
 
-                        if (change.type === "removed") {
+                            dispatch(addMedicine({
+                                ...data,
+                                expireDate: productExpireDate,
+                                openDate: medicineOpenDate,
+                                id: change.doc.id
+                            } as UserMedicine))
+                        }
+                    }
+                    if (change.type === "modified") {
+                        if (type === "product") {
+                            dispatch(modifyProduct({
+                                ...data,
+                                expireDate: productExpireDate,
+                                id: change.doc.id
+                            } as UserProduct))
+                        } else if (type === "medicine") {
+                            dispatch(modifyMedicine({
+                                ...data,
+                                expireDate: productExpireDate,
+                                openDate: medicineOpenDate,
+                                id: change.doc.id
+                            } as UserMedicine))
+                        }
+                    }
+
+                    if (change.type === "removed") {
+                        if (type === "product") {
                             dispatch(removeProduct(change.doc.id))
+                        } else if (type === "medicine") {
+                            dispatch(removeMedicine(change.doc.id))
                         }
-                    });
-                },
-                (error) => {
-                    console.log(error)
+                    }
                 });
+            },
+            (error) => {
+                console.log(error)
+            });
 
         return () => {
             unsubscribe()
         }
 
-
     }, [currentStorageId, dispatch])
 
+    // useEffect(()=>{
+    //     if(!currentStorageId){
+    //         return
+    //     }
+    //     const docRef = doc(db, "users", user?.uid+"pharmacy");
+    //     let q = query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
+    //
+    //     const unsubscribe = onSnapshot(q, (snapshot) => {
+    //             snapshot.docChanges().forEach((change) => {
+    //                 let data = change.doc.data()
+    //                 let productExpireDate = null;
+    //                 if( data.expireDate != null){
+    //                     let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds*1000);
+    //                     productExpireDate = expireDateTimestamp.toDate();
+    //                 }
+    //                 if (change.type === "added") {
+    //                     dispatch(addMedicine({...data, expireDate: productExpireDate, id: change.doc.id} as UserMedicine))
+    //                 }
+    //                 if (change.type === "modified") {
+    //                     dispatch(modifyMedicine({...data, expireDate: productExpireDate, id: change.doc.id} as UserMedicine))
+    //                 }
+    //
+    //                 if (change.type === "removed") {
+    //                     dispatch(removeMedicine(change.doc.id))
+    //                 }
+    //             });
+    //         },
+    //         (error) => {
+    //             console.log(error)
+    //         });
+    //
+    //     return () => {
+    //         unsubscribe()
+    //     }
+    //
+    //
+    // }, [currentStorageId, dispatch])
 
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
-    useEffect(() => {
-        if (didSee === false) {
-            setIsOpen(true)
-        }
-    }, [user, didSee])
 
-
-    const closeModalWithGreeting = () => {
-        handleCloseGreeting();
-        dispatch(changeSeeGreetingToTrue(user as User))
-    }
-    let greeting = <>
-        <Modal isShown={isOpen} hide={closeModalWithGreeting} modalHeaderText={""}
-               modalContent={<><h1>{t("categories.CategoryList.modalWithGreeting_h1")}</h1>
-                   <h2> {t("categories.CategoryList.modalWithGreeting_h2")}</h2>
-                   <div
-                       className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 rounded-b-md">
-                       <button type="button" className="  px-6
-                                                          py-2.5
-                                                          bg-purple
-                                                          text-white
-                                                          font-medium
-                                                          text-xs
-                                                          leading-tight
-                                                          uppercase
-                                                          rounded
-                                                          shadow-md
-                                                          hover:bg-purple-700 hover:shadow-lg
-                                                          focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0
-                                                          active:bg-purple-800 active:shadow-lg
-                                                          transition
-                                                          duration-150
-                                                          ease-in-out"
-                               data-bs-dismiss="modal" onClick={closeModalWithGreeting}>{t("buttons.close")}
-                       </button>
-                   </div>
-               </>}/>
-    </>;
 
     return (
         <>
@@ -232,7 +265,6 @@ const Root = () => {
                     </>
                     : <BottomMenu/>}
                 <ToastContainer/>
-                {didSee === false && greeting}
 
             </MainPageLayout>
         </>

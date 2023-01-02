@@ -13,7 +13,8 @@ export const StorageList = styled.ul`
   line-height: 1.6;
 `
 export interface StorageItemProps {
-    primary: boolean
+    primary: boolean,
+
 }
 export const StorageItem = styled.li<StorageItemProps>`
   display: flex;
@@ -21,11 +22,11 @@ export const StorageItem = styled.li<StorageItemProps>`
   align-items: center;
   list-style: none;
   font-weight: 400;
-  font-size: 18px;
+  font-size: ${props => props.primary ? "22px" : "18px"};
   line-height: 1.6;
   color: ${props => props.primary ? "rgb(107, 33, 168)" : "#52525B"};
   cursor: pointer;
-  
+
   &:hover {
     font-size: 20px;
     color: rgb(107, 33, 168);

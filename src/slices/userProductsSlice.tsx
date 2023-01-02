@@ -28,8 +28,6 @@ import {fetchProductFromDictionaryId} from "./allProductsSlice";
 import {notify} from "../helpers";
 
 
-
-
 export interface UserProduct{
     productId: Required<string>;
     name: Required<string>;
@@ -69,27 +67,28 @@ const userProductsAdapter = createEntityAdapter<UserProduct>({
 });
 
 export const fetchUserProducts = createAsyncThunk('userProducts/fetchUserProducts', async (userId:string) => {
-
+       console.log(userId)
         try {
             const userProducts: Array<UserProduct> = [];
             if (userId === "")
                 return userProducts
-
+            console.log(userId + "hejjjjjj")
             const docRef = doc(db, "users", userId);
             let q = query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
             const querySnapshot = await getDocs(q);
+            console.log(querySnapshot)
             querySnapshot.forEach((doc) => {
 
                 let productDoc = doc.data() as FirebaseUserProduct;
                 productDoc.id = doc.id;
 
                 let expireDate: Date | null = null;
-
-                if(productDoc.hasOwnProperty("expireDate") && productDoc.expireDate !== null){
-                    let expireTimestamp = Timestamp.fromMillis(productDoc.expireDate.seconds*1000);
+                if (productDoc.hasOwnProperty("expireDate") && productDoc.expireDate !== null) {
+                    let expireTimestamp = Timestamp.fromMillis(productDoc.expireDate.seconds * 1000);
                     //
                     expireDate = expireTimestamp.toDate();
                 }
+
                 let product = {...productDoc, expireDate: expireDate} as UserProduct
 
                 userProducts.push(product);
@@ -137,7 +136,6 @@ export const addUserProduct = createAsyncThunk<UserProduct, UserProduct,{ //pier
     state: RootState
 }>('userProducts/addUserProduct', async(userProduct, thunkApi)=> {
     await thunkApi.dispatch(fetchProductFromDictionaryId(userProduct))
-
     userProduct.productId =  await thunkApi.getState().allProducts.productFromDictionaryId
     try{
         let result = await addDoc(collection(db, "users/" + userProduct.userId + "/categories/" + userProduct.categoryId + "/products"), userProduct);
@@ -226,10 +224,10 @@ const userProductsSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(fetchUserProducts.fulfilled, (state, action) => {
-                state.status = 'succeeded'
-                userProductsAdapter.upsertMany(state, action.payload as UserProduct[])
-            })
+            // .addCase(fetchUserProducts.fulfilled, (state, action) => {
+            //     state.status = 'succeeded'
+            //     userProductsAdapter.upsertMany(state, action.payload as UserProduct[])
+            // })
             .addCase(changeProductQuantity.fulfilled,(state,action )=>{
                 let userProduct = action.payload as UserProduct
                 userProductsAdapter.updateOne(state, {id:userProduct.id, changes: {quantity: userProduct.quantity}})

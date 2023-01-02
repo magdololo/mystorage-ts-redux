@@ -4,7 +4,6 @@ import {
     doc,
     getDocs,
     query,
-    setDoc,
     getDoc,
     collection,
     updateDoc,
@@ -14,9 +13,7 @@ import {db} from "../firebase";
 import {addNewCategory, Category} from "./categoriesSlice";
 
 
-
-
-export interface User{
+export interface User {
     uid: Required<string>;
     email: string;
     provider: string;
@@ -25,34 +22,40 @@ export interface User{
 
 }
 
+export interface User {
+    uid: Required<string>;
+    defaultCategoriesAdded: boolean;
+}
+
+
 interface UserState {
     user: User | null
     currentStorageId: string | null
-    userInUsers: boolean
+    //userInUsers: boolean
 }
 
 const initialState: UserState = {
     user: null,
     currentStorageId: null,
-    userInUsers: false
+    // userInUsers: false
 }
 
 
-export const addNewUserToUsersCollection = createAsyncThunk('users/addNewUserToUsersCollection', async (user: User)=>{
-    try {
-        await setDoc(doc(db, "users", user.uid), {
-            uid: user.uid,
-            email: user.email,
-            provider: user.provider,
-            didSeeGreeting: false,
-            defaultCategoriesAdded: false
-        })
-    } catch (error) {
-        console.log(error)
-    }
-
-
-})
+// export const addNewUserToUsersCollection = createAsyncThunk('users/addNewUserToUsersCollection', async (user: User)=>{
+//     try {
+//         await setDoc(doc(db, "users", user.uid), {
+//             uid: user.uid,
+//             email: user.email,
+//             provider: user.provider,
+//             didSeeGreeting: false,
+//             defaultCategoriesAdded: false
+//         })
+//     } catch (error) {
+//         console.log(error)
+//     }
+//
+//
+// })
 
 export interface LoginData {
     userId: string,
@@ -63,6 +66,7 @@ export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, LoginData
     dispatch: AppDispatch
     state: RootState
 }>("users/addDefaultCategoriesToNewUser", async (addDefaultCategoriesToNewUserProps: LoginData, thunkApi) => {
+    console.log(addDefaultCategoriesToNewUserProps.userId)
     try {
         let userRef = doc(db, "users/" + addDefaultCategoriesToNewUserProps.userId);
         let userDoc = await getDoc(userRef);
@@ -74,6 +78,14 @@ export const addDefaultCategoriesToNewUser = createAsyncThunk<boolean, LoginData
                 let category: Category = doc.data() as Category
                 category.id = doc.id
                 category.user = addDefaultCategoriesToNewUserProps.userId
+                thunkApi.dispatch(addNewCategory({category, notify: false}))
+            })
+            let qPharm = await query(collection(db, "categoriesPharmacy"), where("language", "==", addDefaultCategoriesToNewUserProps.userLanguage));
+            const querySnapshotPharm = await getDocs(qPharm);
+            querySnapshotPharm.forEach((doc) => {
+                let category: Category = doc.data() as Category
+                category.id = doc.id
+                category.user = "pharmacy" + addDefaultCategoriesToNewUserProps.userId
                 thunkApi.dispatch(addNewCategory({category, notify: false}))
             })
             await updateDoc(userRef, {"defaultCategoriesAdded": true})
@@ -108,35 +120,17 @@ export const deleteUserAccount = createAsyncThunk('users/deleteUserAccount', asy
 
 })
 
-export const checkIfUserInUsersCollection = createAsyncThunk('users/checkIfUserInUserscollection', async (userId: string) => {
-    console.log(userId)
-    try {
-        const userRef = doc(db, "users/" + userId)
-        const userDoc = await getDoc(userRef)
-        if (userDoc.exists()) {
-            console.log(userDoc)
-            console.log("user jesr w usersach")
-            return true
-        }
-    } catch (error) {
-        console.log(error)
-    }
-    return false
-})
 
 export const getUserData = createAsyncThunk<User | null, LoginData, {
     dispatch: AppDispatch
     state: RootState
 }>('users/getUserData', async (loginData: LoginData, thunkApi) => {
     try {
-        console.log(loginData)
         const userRef = doc(db, "users/" + loginData.userId)
-        console.log(userRef)
         const userDoc = await getDoc(userRef)
-        console.log(userDoc)
+
         if (userDoc.exists()) {
             const user = userDoc.data() as User
-            console.log(user)
             if (!user.defaultCategoriesAdded) {
                 await thunkApi.dispatch(addDefaultCategoriesToNewUser(loginData))
             }
@@ -147,6 +141,7 @@ export const getUserData = createAsyncThunk<User | null, LoginData, {
     }
     return null
 })
+
 const usersSlice = createSlice({
     name: 'users',
     initialState,
@@ -154,7 +149,6 @@ const usersSlice = createSlice({
         login: (state, action: PayloadAction<User>) => {
             state.user = action.payload;
             state.currentStorageId = action.payload.uid;
-
         },
         logout: (state) => {
             state.user = null;
@@ -168,12 +162,12 @@ const usersSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(addNewUserToUsersCollection.fulfilled,()=>{
-            console.log("Status addNewUserToUsersCollection is fulfilled")
-            })
-            .addCase(addNewUserToUsersCollection.rejected,()=>{
-                console.log("Status addNewUserToUsersCollection is rejected")
-            })
+            // .addCase(addNewUserToUsersCollection.fulfilled,()=>{
+            // console.log("Status addNewUserToUsersCollection is fulfilled")
+            // })
+            // .addCase(addNewUserToUsersCollection.rejected,()=>{
+            //     console.log("Status addNewUserToUsersCollection is rejected")
+            // })
             .addCase(addDefaultCategoriesToNewUser.fulfilled,()=>{
                 console.log("Add default categories to new user")
             })
@@ -191,19 +185,19 @@ const usersSlice = createSlice({
             .addCase(deleteUserAccount.fulfilled, () => {
                 console.log('Delete user account')
             })
-            .addCase(checkIfUserInUsersCollection.fulfilled, (state, action) => {
-                console.log(action.payload)
-                state.userInUsers = action.payload
-            })
+            // .addCase(checkIfUserInUsersCollection.fulfilled, (state, action) => {
+            //     console.log(action.payload)
+            //     state.userInUsers = action.payload
+            // })
             .addCase(getUserData.fulfilled, (state, action) => {
                 state.user = action.payload
-                //state.currentStorageId = action.payload?.uid
+                state.currentStorageId = state.user!!.uid
             })
     }
 });
 export const {login, logout, setCurrentStorage} = usersSlice.actions;
 export const selectUser = (state: RootState) => state.users.user;
-export const userInUsers = (state: RootState) => state.users.userInUsers;
+// export const userInUsers = (state: RootState) => state.users.userInUsers;
 export const selectCurrentStorage = (state: RootState) => state.users.currentStorageId
 
 export default usersSlice.reducer
