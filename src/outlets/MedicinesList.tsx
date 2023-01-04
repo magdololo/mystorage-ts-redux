@@ -16,7 +16,7 @@ import {SinglePageTitle} from "../styles/Root.components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPen, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {Modal} from "../component/Modal/Modal";
-import EditProductForm from "../features/products/EditProductForm";
+import EditMedicineForm from "../features/medicines/EditMedicineForm";
 import {useTranslation} from "react-i18next";
 
 
@@ -26,11 +26,16 @@ const MedicinesList = () => {
     const categories = useAppSelector(selectAllCategories)
     const userMedicines = useAppSelector(selectUserMedicines)
     let [todayDate] = useState(new Date());
-    const {isShown, handleShown, handleClose} = useModal()
+    const {
+        isShown: isShownEditMedicineModal,
+        handleShown: handleShownEditMedicineModal,
+        handleClose: handleCloseEditMedicineModal
+    } = useModal()
     const modalHeader = "Edytuj lek"
     const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
+
     const chooseEditMedicine = (userMedicine: UserMedicine) => {
-        handleShown()
+        handleShownEditMedicineModal()
         dispatch(editMedicine(userMedicine))
     }
 
@@ -60,7 +65,7 @@ const MedicinesList = () => {
         <>
             {isSmallerThan1280 ? <ReturnToCategoryList/> : null}
             <ProductsBox>
-                <SinglePageTitle>{t('products.ProductsList.title')}</SinglePageTitle>
+                <SinglePageTitle>{t('medicines.MedicinesList.title')}</SinglePageTitle>
                 <ProductsListBox justifyContent="space-between">
                     {userMedicines.map((product) =>
                         <SingleProductBox primary={true} key={product.id}>
@@ -115,8 +120,9 @@ const MedicinesList = () => {
                     )}
                 </ProductsListBox>
             </ProductsBox>
-            <Modal isShown={isShown} hide={handleClose} modalHeaderText={modalHeader}
-                   modalContent={<EditProductForm handleClose={handleClose} isShown={isShown}/>}/>
+            <Modal isShown={isShownEditMedicineModal} hide={handleCloseEditMedicineModal} modalHeaderText={modalHeader}
+                   modalContent={<EditMedicineForm handleClose={handleCloseEditMedicineModal}
+                                                   isShown={isShownEditMedicineModal}/>}/>
 
 
         </>

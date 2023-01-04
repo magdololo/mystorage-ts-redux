@@ -207,6 +207,11 @@
     "contentModalDeleteAccount_p": "Utracisz wszystkie swoje dane.",
     "contentModalAfterDeleteAccount_h3": "Dziękujemy że byłeś/aś z nami!",
     "contentModalAfterDeleteAccount_p": "Zapraszamy jeśli będziesz znów nas potrzebował."
+  },
+  "medicines": {
+    "MedicinesList": {
+      "title": "Lista leków"
+    }
   }
 }
 
