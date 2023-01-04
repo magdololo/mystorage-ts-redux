@@ -154,7 +154,7 @@ const userMedicinesSlice = createSlice({
             state.searchMedicineByString = null
             state.searchMedicine = searchMedicineId
         },
-        searchByString: (state, action: PayloadAction<string | null>) => {
+        searchMedicineByString: (state, action: PayloadAction<string | null>) => {
             state.searchMedicine = null
             state.searchMedicineByString = action.payload
 
@@ -185,7 +185,7 @@ const userMedicinesSlice = createSlice({
 
 export const {
     selectAll: selectUserMedicines,
-    // selectById: selectUserProductById,
+    selectById: selectUserMedicineById,
     // selectIds: selectUserProductIds,
 
     // Pass in a selector that returns the posts slice of state
@@ -198,8 +198,8 @@ export const {
 
 export const {
     editMedicine,
-    // searchMedicine,
-    // searchByString,
+    searchMedicine,
+    searchMedicineByString,
     // removeMedicines,
     addMedicine,
     modifyMedicine,

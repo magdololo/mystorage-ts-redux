@@ -97,10 +97,11 @@
     },
     "SearchUserProductPage": {
       "searchResult": "Search result",
-      "noSearchResult" :"No search results",
+      "noSearchResult": "No search results",
       "toastSuccess": "Product removed!",
       "category": "Category",
-      "editProduct" : "Edit product"
+      "editProduct": "Edit product",
+      "editMedicine": "Edit medicine"
     }
   },
   "users": {
@@ -191,14 +192,16 @@
   "BottomHamburgerMenu": {
     "categoryList": "Category list",
     "productList": "Product list",
+    "medicineList": "Medicine list",
     "myAccount": "My account",
     "signOut": "Sign out",
     "coUsers": "Co-users",
     "addCoUser": "Add co-user",
-    "headerFormAddCoUser" :"Enter the co-user email",
+    "headerFormAddCoUser": "Enter the co-user email",
     "messageAfterInvite": "We have sent an invitation to your home storage to this e-mail address!",
     "searchProduct": "Search product...",
-    "deleteAccount" : "Delete account"
+    "searchMedicine": "Search medicine...",
+    "deleteAccount": "Delete account"
   },
   "sidebar": {
     "contentModalDeleteAccount_h3": "Are you sure you want to delete your account?",
