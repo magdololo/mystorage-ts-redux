@@ -63,7 +63,7 @@ const SingleCategoryPage = () => {
         handleClose: handleCloseEditMedicineModal
     } = useModal()
     const modalHeader = t("categories.CategoryPage.editProduct")
-    const modalEditMedicineHeader = "Edytuj lek"
+    const modalEditMedicineHeader = t("categories.CategoryPage.editMedicine")
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
     const categoriesWithoutCurrentCategory = categories?.filter(category => category !== currentCategory)
 

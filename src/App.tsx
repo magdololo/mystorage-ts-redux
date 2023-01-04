@@ -2,7 +2,7 @@ import React, {useEffect, Suspense} from "react";
 import {useDispatch} from 'react-redux';
 import {auth, onAuthStateChanged, db} from './firebase';
 
-import {getUserData, LoginData} from "./slices/usersSlice";
+import {getUserData, LoginData, selectTypeStorage} from "./slices/usersSlice";
 import {
     Routes,
     Route,
@@ -30,6 +30,8 @@ import SearchUserProductPage from "./outlets/SearchUserProductPage";
 import {doc, getDoc} from "firebase/firestore";
 import {useTranslation} from "react-i18next";
 import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
+import {useAppSelector} from "./app/store";
+import SearchUserMedicinePage from "./outlets/SearchUserMedicinePage";
 //import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 //import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 
@@ -41,6 +43,7 @@ function App() {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const {i18n} = useTranslation();
+    const typeStorage = useAppSelector(selectTypeStorage)
     let userLanguage = i18n.language
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -86,7 +89,8 @@ function App() {
                         <Route path="/categories" element={<CategoryList/>}/>
                         <Route path="/categories/:categoryPath" element={<SingleCategoryPage/>}/>
                         <Route path="/products" element={<ProductsAndMedicines/>}/>
-                        <Route path="/search" element={<SearchUserProductPage/>}/>
+                        <Route path="/search" element={typeStorage === "product" ? <SearchUserProductPage/> :
+                            <SearchUserMedicinePage/>}/>
                         <Route path="/shares" element={<SharesPage/>}/>
 
                     </Route>

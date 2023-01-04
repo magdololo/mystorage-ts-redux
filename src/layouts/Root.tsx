@@ -175,7 +175,6 @@ const Root = () => {
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     let data = change.doc.data()
-                    console.log(data)
                     let productExpireDate = null;
                     if (data.expireDate != null) {
                         let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds * 1000);

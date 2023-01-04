@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../app/store";
 import {useTranslation} from "react-i18next";
 import {Link, useNavigate} from "react-router-dom";
 import {auth, signOut} from "../firebase";
-import {deleteUserAccount, logout, selectUser} from "../slices/usersSlice";
+import {deleteUserAccount, logout, selectTypeStorage, selectUser} from "../slices/usersSlice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket, faUser, faHandPointRight, faUserGroup, faUserPlus, faUserSlash, faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import Divider from "@mui/material/Divider";
@@ -27,6 +27,7 @@ const Sidebar = ({toggleDrawer}: SidebarProps) => {
     const {t, i18n} = useTranslation()
     const navigate = useNavigate()
     let user = useAppSelector(selectUser);
+    const typeStorage = useAppSelector(selectTypeStorage)
     //const currentStorageId = useAppSelector(selectCurrentStorage)
     const [isEnglish, setIsEnglish] = useState<boolean>(false);
     const {
@@ -151,7 +152,7 @@ const Sidebar = ({toggleDrawer}: SidebarProps) => {
                     </Link></li>
                     <li key='2' className="px-6 py-2  w-full" onClick={handleClick}><Link
                         to={'/products'}><FontAwesomeIcon className="text-xl text-purple px-4"
-                                                          icon={faHandPointRight}/>{t("BottomHamburgerMenu.productList")}
+                                                          icon={faHandPointRight}/>{typeStorage === "product" ? t("BottomHamburgerMenu.productList") : t("BottomHamburgerMenu.medicineList")}
                     </Link></li>
                     <Divider style={isSmallerThan1280 ? dividerStyle : {}}/>
                     <li key='3' className="px-6 py-2  w-full cursor-pointer -toggle-down">

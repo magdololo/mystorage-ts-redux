@@ -99,7 +99,8 @@
       "noSearchResult": "Brak wyników wyszukiwania",
       "toastSuccess": "Produkt usunięty!",
       "category": "Kategoria",
-      "editProduct" : "Edytuj produkt"
+      "editProduct": "Edytuj produkt",
+      "editMedicine": "Edytuj lek"
     }
   },
   "users": {
@@ -190,20 +191,27 @@
   "BottomHamburgerMenu": {
     "categoryList": "Lista kategorii",
     "productList": "Lista produktów",
+    "medicineList": "Lista leków",
     "myAccount": "Moje konto",
     "signOut": "Wyloguj się",
     "coUsers": "Współużytkownicy",
     "addCoUser": "Dodaj współużytkownika",
-    "headerFormAddCoUser" :"Wpisz email współużytkownika",
+    "headerFormAddCoUser": "Wpisz email współużytkownika",
     "messageAfterInvite": "Na ten adres email wysłalismy zaproszenie do Twojej spiżarni!",
     "searchProduct": "Wyszukaj produkt...",
-    "deleteAccount" : "Usuń konto"
+    "searchMedicine": "Wyszukaj lek...",
+    "deleteAccount": "Usuń konto"
   },
   "sidebar": {
     "contentModalDeleteAccount_h3": "Czy napewno chcesz usunąć konto?",
     "contentModalDeleteAccount_p": "Utracisz wszystkie swoje dane.",
     "contentModalAfterDeleteAccount_h3": "Dziękujemy że byłeś/aś z nami!",
     "contentModalAfterDeleteAccount_p": "Zapraszamy jeśli będziesz znów nas potrzebował."
+  },
+  "medicines": {
+    "MedicinesList": {
+      "title": "Lista leków"
+    }
   }
 }
 
