@@ -2,7 +2,7 @@ import {
     createSlice,
     createAsyncThunk,
     createEntityAdapter,
-    EntityState
+    EntityState, PayloadAction, createSelector
 } from '@reduxjs/toolkit'
 
 import {AppDispatch, RootState} from "../app/store";
@@ -10,6 +10,7 @@ import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {notify} from "../helpers";
+import i18next from "i18next";
 
 
 const storage = getStorage();
@@ -33,20 +34,23 @@ const initialState: EntityState<Image>& { error: null | string | undefined; stat
 
 })
 
-export const fetchImages = createAsyncThunk('images/fetchImages', async()=>{
-    try{
-        const imagesDefault: Array<Image> = []
-        let q = await query(collection(db, "images"));
+export const fetchImages = createAsyncThunk('images/fetchImages', async (userId: string) => {
+    try {
+        const imagesStorage: Array<Image> = []
+        if (userId === "")
+            return imagesStorage
+
+        let q = await query(collection(db, "users/" + userId + "/images"));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
 
-            let productDoc = doc.data() as Image;
-            productDoc.id = doc.id;
-            imagesDefault.push(productDoc);
+            let imageDoc = doc.data() as Image;
+            imageDoc.id = doc.id;
+            imagesStorage.push(imageDoc);
 
 
         })
-        return imagesDefault
+        return imagesStorage
 
     } catch (error) {
         console.log(error)
@@ -54,29 +58,33 @@ export const fetchImages = createAsyncThunk('images/fetchImages', async()=>{
     }
 })
 
-export const fetchUserImages = createAsyncThunk('images/fetchImages', async(uid: string)=> {
-    try {
-        const userImages :Array<Image> = []
-        let query_2 = await query(collection(db, "users/" + uid + "/images"));
-        const query_Snapshot = await getDocs(query_2);
-        query_Snapshot.forEach((doc) => {
+export type AddNewImageParams = {
+    image: Image
+    notify: boolean
+}
+export const addNewImage = createAsyncThunk<AddNewImageParams, AddNewImageParams>("images/addNewImage",
+    async (addNewImageParams: AddNewImageParams) => {
+        let result = await addDoc(collection(db, "users/" + addNewImageParams.image.uid + "/images"), addNewImageParams.image);
+        const newImage = {...addNewImageParams.image, id: result.id} as Image
+        console.log(newImage)
+        return {"image": newImage, "notify": addNewImageParams.notify}
 
-            let productDoc = doc.data() as Image;
-            productDoc.id = doc.id;
-            userImages.push(productDoc);
-
-        })
-
-        return userImages
-    }catch (error) {
-        console.log(error)
-        return {error: error}
     }
-})
+)
+
+export const addNewPharmacyImage = createAsyncThunk<AddNewImageParams, AddNewImageParams>("images/addNewPharmacyImage",
+    async (addNewImageParams: AddNewImageParams) => {
+        let result = await addDoc(collection(db, "users/" + addNewImageParams.image.uid + "/images"), addNewImageParams.image);
+        const newImage = {...addNewImageParams.image, id: result.id} as Image
+        return {"image": newImage, "notify": addNewImageParams.notify}
+
+    }
+)
 
 async function uploadCategoryPicture(fileName: string, file: File):Promise<string>{
-    return new Promise(function (resolve, reject){
+    return new Promise(function (resolve) {
         const storageRef = ref(storage, fileName);
+        console.log(storageRef)
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on('state_changed',
             (snapshot) => {
@@ -108,25 +116,38 @@ async function uploadCategoryPicture(fileName: string, file: File):Promise<strin
     })
 }
 
-export const addCategoryImage = createAsyncThunk<Image, ImageFromUser,{
+export const addCategoryImage = createAsyncThunk<Image, ImageFromUser, {
     dispatch: AppDispatch
     state: RootState
-}>('images/addCategoryImage', async (imageFromUser: ImageFromUser ,thunkApi)=> {
-
-    const storageUrl = await uploadCategoryPicture( imageFromUser.newPictureName, imageFromUser.newPicture) //musimy poczekac na to co zwroci czyli storageUrl zeby dodac do imagesow i stamsad pobrac id i dopiero caly obiekt Image dodac do stamu czyli tablicy imagesów
-    const result =  await addDoc(collection(db, "users/"+ imageFromUser.uid +"/images"), {
+}>('images/addCategoryImage', async (imageFromUser: ImageFromUser) => {
+    console.log(imageFromUser.uid)
+    const storageUrl = await uploadCategoryPicture(imageFromUser.newPictureName, imageFromUser.newPicture) //musimy poczekac na to co zwroci czyli storageUrl zeby dodac do imagesow i stamsad pobrac id i dopiero caly obiekt Image dodac do stamu czyli tablicy imagesów
+    const result = await addDoc(collection(db, "users/" + imageFromUser.uid + "/images"), {
         url: storageUrl,
     })
 
-    return { url: storageUrl, id: result.id} as Image
+    return {url: storageUrl, id: result.id} as Image
 })
 const imagesSlice = createSlice({
     name: 'images',
     initialState,
-    reducers:{},
-    extraReducers(builder){
+    reducers: {
+        addImage: (state, action: PayloadAction<Image>) => {
+            imagesAdapter.addOne(state, action.payload);
+        },
+        modifyImage: (state, action: PayloadAction<Image>) => {
+            imagesAdapter.setOne(state, action.payload)
+        },
+        removeImages: (state) => {
+            imagesAdapter.removeAll(state)
+        },
+        removeImage: (state, action: PayloadAction<string>) => {
+            imagesAdapter.removeOne(state, action.payload);
+        },
+    },
+    extraReducers(builder) {
         builder
-            .addCase(fetchImages.pending, (state, action) => {
+            .addCase(fetchImages.pending, (state) => {
                 state.status = 'loading'
             })
             .addCase(fetchImages.fulfilled, (state, action) => {
@@ -137,14 +158,24 @@ const imagesSlice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message
             })
-            .addCase(addCategoryImage.fulfilled, (state, action)=> {
+            .addCase(addCategoryImage.fulfilled, (state, action) => {
                 imagesAdapter.addOne(state, action.payload)
-                notify("Zdjęcie dodane!")})
-            .addCase(addCategoryImage.rejected, (state, action)=>{
+                notify("Zdjęcie dodane!")
+            })
+            .addCase(addCategoryImage.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.error.message
             })
-
+            .addCase(addNewImage.fulfilled, (state, action) => {
+                imagesAdapter.addOne(state, action.payload.image)
+                if (action.payload.notify)
+                    notify(i18next.t("categories.categoriesSlice.notify.addCategory"))
+            })
+            .addCase(addNewPharmacyImage.fulfilled, (state, action) => {
+                imagesAdapter.addOne(state, action.payload.image)
+                if (action.payload.notify)
+                    notify(i18next.t("categories.categoriesSlice.notify.addCategory"))
+            })
     }
 })
 
@@ -154,4 +185,10 @@ export const {
     selectIds: selectImagesIds
 
 } = imagesAdapter.getSelectors<RootState>((state) => state.images);
+
+export const selectImagesCurrentStorage = (currentStorageId: string) => createSelector(
+    [(state: RootState) => selectAllImages(state)],
+    (images) => images.filter((image) => image.uid === currentStorageId)
+)
+export const {addImage, removeImage, modifyImage, removeImages} = imagesSlice.actions
 export default imagesSlice.reducer

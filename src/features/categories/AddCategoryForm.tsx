@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from 'react'
+import React, {useState} from 'react'
 import {useSelector} from "react-redux";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 
@@ -11,9 +11,9 @@ import slugify from "slugify";
 import 'react-toastify/dist/ReactToastify.css';
 
 import SearchOwnPictureCategory from "../../component/SearchOwnPictureCategory";
-import {selectAllImages} from "../../slices/imagesSlice";
+import {selectImagesCurrentStorage} from "../../slices/imagesSlice";
 import {useTranslation} from "react-i18next";
-import {selectAllImagesPharmacy} from "../../slices/imagesPharmacySlice";
+
 
 
 type AddCategoryFormProps = {
@@ -23,7 +23,7 @@ type AddCategoryFormProps = {
 const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const { t } = useTranslation();
     const user = useSelector(selectUser)
-    const uid = user? user.uid: ""
+    const uid = user ? user.uid : ""
     const currentStorageId = useAppSelector(selectCurrentStorage)
     const dispatch = useAppDispatch()
     const [title, setTitle] = useState('')
@@ -32,30 +32,19 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = t("categories.AddCategoryForm.modalHeaderWithPictures")
     const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-    const images = useAppSelector(selectAllImages)
-    const imagesPharmacy = useAppSelector(selectAllImagesPharmacy);
+    const images = useAppSelector(selectImagesCurrentStorage(currentStorageId as string))
 
-    let imagesOptions: Array<ReactElement> = []
 
-    if (currentStorageId === user?.uid) {
-        imagesOptions = images?.map(image => (
-            <div key={image.id} onClick={() => {
-                setPickedImage(image.url)
-                handleClose()
-            }}>
-                <img className="object-contain h-full w-full" alt="gallery" src={image.url}/>
-            </div>
-        ))
-    } else if (currentStorageId === user?.uid + "pharmacy") {
-        imagesOptions = imagesPharmacy?.map(image => (
-            <div key={image.id} onClick={() => {
-                setPickedImage(image.url)
-                handleClose()
-            }}>
-                <img className="object-contain h-full w-full" alt="gallery" src={image.url}/>
-            </div>
-        ))
-    }
+    //let imagesOptions: Array<ReactElement> = []
+
+    let imagesOptions = images?.map(image => (
+        <div key={image.id} onClick={() => {
+            setPickedImage(image.url)
+            handleClose()
+        }}>
+            <img className="object-contain h-full w-full" alt="gallery" src={image.url}/>
+        </div>
+    ))
 
 
     const canSave = [title, pickedImage, uid].every(Boolean) && addRequestStatus === 'idle'
@@ -68,7 +57,7 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
                 path: slugify(title, "_"),
                 user: currentStorageId!!,
                 required: "false",
-                type: "storage"
+                type: ""
             }
             setAddRequestStatus('pending')
             dispatch(addNewCategory({category: newCategory, notify: true}))

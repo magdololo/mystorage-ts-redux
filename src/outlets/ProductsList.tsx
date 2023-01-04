@@ -32,7 +32,7 @@ import {
 import {SinglePageTitle} from "../styles/Root.components";
 import {selectCurrentStorage} from "../slices/usersSlice";
 import {selectUserMedicines} from "../slices/userMedicineSlice";
-//import {editMedicine, UserMedicine} from "../slices/userMedicineSlice";
+
 
 const ProductsList = () => {
     const {t} = useTranslation()
@@ -55,16 +55,7 @@ const ProductsList = () => {
     //     progress: undefined,
     //
     // });
-    // const chooseEditProduct = (userProduct: UserProduct | null, userMedicine: UserMedicine | null) => {
-    //     handleShown()
-    //     if(currentStorageId === user!!.uid && userProduct){
-    //         dispatch(editProduct(userProduct))
-    //     } else if(currentStorageId === "pharmacy"+user!!.uid && userMedicine){
-    //         dispatch(editMedicine(userMedicine))
-    //     }
-    //
-    //
-    // }
+
     const chooseEditProduct = (userProduct: UserProduct) => {
 
         handleShown()
@@ -72,11 +63,7 @@ const ProductsList = () => {
         dispatch(editProduct(userProduct))
 
     }
-    // const chooseEditMedicine = (userMedicine: UserMedicine) => {
-    //     handleShown()
-    //     console.log(userMedicine)
-    //     dispatch(editMedicine(userMedicine))
-    // }
+
     const increment = (userProduct: UserProduct) => {
         const changeQuantityProduct: ChangeQuantity = {
             userProduct: userProduct,

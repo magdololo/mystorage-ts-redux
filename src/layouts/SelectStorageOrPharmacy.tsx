@@ -5,7 +5,7 @@ import {selectAcceptedIncomingInvites} from "../slices/sharesSlice";
 import {selectCurrentStorage, selectUser, setCurrentStorage} from "../slices/usersSlice";
 import {fetchUserProducts, removeProducts} from "../slices/userProductsSlice";
 import {fetchCategories, removeCategories} from "../slices/categoriesSlice";
-import {fetchUserImages} from "../slices/imagesSlice";
+import {fetchImages, removeImages} from "../slices/imagesSlice";
 import {useTranslation} from "react-i18next";
 import {singleSelectStyle} from "../searchStyle";
 
@@ -18,14 +18,17 @@ const SelectStorageOrPharmacy = () => {
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
     const currentStorageId = useAppSelector(selectCurrentStorage)
-    const changeStorage = (userId: string) => {
+    const changeStorage = (currentStorageId: string) => {
 
-        dispatch(setCurrentStorage(userId))
+        dispatch(setCurrentStorage(currentStorageId))
         dispatch(removeProducts())
         dispatch(removeCategories())
-        dispatch(fetchCategories(userId))
-        dispatch(fetchUserProducts(userId))
-        dispatch(fetchUserImages(userId))
+        dispatch(removeImages())
+        dispatch(fetchCategories(currentStorageId))
+        dispatch(fetchUserProducts(currentStorageId))
+        dispatch(fetchImages(currentStorageId))
+
+        //dispatch(fetchUserImages(currentStorageId))
     }
     const invitesNoChoose = allAcceptedIncomingInvites.filter((invite) => invite.user_id !== currentStorageId)
     const options: { value: string, label: string, padding: string, class: string }[] = []

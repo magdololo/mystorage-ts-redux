@@ -1,7 +1,8 @@
-import {createAsyncThunk, createEntityAdapter, createSlice, EntityState} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice, EntityState, PayloadAction} from "@reduxjs/toolkit";
 import {collection, getDocs, query} from "firebase/firestore";
 import {db} from "../firebase";
 import {RootState} from "../app/store";
+
 
 export interface ImagePharmacy {
     url: Required<string>;
@@ -48,7 +49,20 @@ export const fetchImagesPharmacy = createAsyncThunk("imagesPharmacy/fetchImagesP
 const imagesPharmacySlice = createSlice({
     name: "imagesPharmacy",
     initialState,
-    reducers: {},
+    reducers: {
+        addPharmacyImage: (state, action: PayloadAction<ImagePharmacy>) => {
+            imagesPharmacyAdapter.addOne(state, action.payload);
+        },
+        modifyPharmacyImage: (state, action: PayloadAction<ImagePharmacy>) => {
+            imagesPharmacyAdapter.setOne(state, action.payload)
+        },
+        removePharmacyImages: (state) => {
+            imagesPharmacyAdapter.removeAll(state)
+        },
+        removePharmacyImage: (state, action: PayloadAction<string>) => {
+            imagesPharmacyAdapter.removeOne(state, action.payload);
+        },
+    },
     extraReducers(builder) {
         builder
             .addCase(fetchImagesPharmacy.pending, (state) => {
@@ -71,5 +85,4 @@ export const {
     selectIds: selectImagesPharmacyIds
 
 } = imagesPharmacyAdapter.getSelectors<RootState>((state) => state.imagesPharmacy);
-
 export default imagesPharmacySlice.reducer

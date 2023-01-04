@@ -5,7 +5,7 @@ import MedicinesList from "./MedicinesList";
 
 const ProductsAndMedicines = () => {
     const user = useAppSelector(selectUser)
-    const currentStorageId = useAppSelector((selectCurrentStorage))
+    const currentStorageId = useAppSelector(selectCurrentStorage)
     console.log(user?.uid)
     console.log(currentStorageId)
     return (

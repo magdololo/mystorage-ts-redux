@@ -1,6 +1,6 @@
 // @ts-nocheck
-import React, { useState, useCallback } from "react";
-import {useAppDispatch} from "../app/store";
+import React, {useState, useCallback} from "react";
+import {useAppDispatch, useAppSelector} from "../app/store";
 import {useTranslation} from "react-i18next";
 import {Modal} from "./Modal/Modal";
 
@@ -8,8 +8,9 @@ import {addCategoryImage, ImageFromUser} from "../slices/imagesSlice";
 
 import Slider from "@material-ui/core/Slider";
 import Cropper from "react-easy-crop";
-import { Area } from "react-easy-crop/types";
+import {Area} from "react-easy-crop/types";
 import getCroppedImg from './canvasUtils';
+import {selectCurrentStorage} from "../slices/usersSlice";
 
 type CropImagesProps = {
     handleClose: () => void
@@ -21,15 +22,18 @@ type CropImagesProps = {
 const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch();
+    const currentStorageId = useAppSelector(selectCurrentStorage)
+    console.log(currentStorageId)
     const [crop, setCrop] = useState<Crop>({
-        unit: 'px', x: 0, y: 0, width: 1280, height: 815 });
+        unit: 'px', x: 0, y: 0, width: 1280, height: 815
+    });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const handleOpen = () => setIsOpen(true);
     const handleCloseModal = () => setIsOpen(false);
     const onCropComplete = useCallback(
-        (croppedArea: Area , croppedAreaPixels: Area) => {
+        (croppedArea: Area, croppedAreaPixels: Area) => {
             setCroppedAreaPixels(croppedAreaPixels)
         },
         []
@@ -46,8 +50,9 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
             let newImageFromUser: ImageFromUser ={
                         newPictureName : newImageName,
                         newPicture : file,
-                        uid: uid
+                uid: currentStorageId
             }
+            console.log(newImageFromUser)
             if(file.size > 2048*1024){
                 console.log("rozmiar za duzy")
                 handleOpen()
@@ -60,7 +65,7 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
         }
     }, [croppedAreaPixels, dispatch,handleClose,image, newImageName,uid])
 
-
+    console.log(uid)
     return (
         <>
             <div className="crop_content">

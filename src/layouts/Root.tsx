@@ -25,7 +25,7 @@ import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
 import {addNotification, modifyNotification, Notification} from "../slices/notificationsSlice";
 import {addShare, modifyShare, Invite} from "../slices/sharesSlice";
 import {addCategory, modifyCategory, Category, removeCategory} from "../slices/categoriesSlice";
-// import {addMedicine, modifyMedicine, removeMedicine} from "../slices/userMedicineSlice";
+import {addImage, modifyImage, removeImage} from "../slices/imagesSlice";
 import {
     UserProduct,
     addProduct,
@@ -37,7 +37,7 @@ import {ToastContainer} from "react-toastify";
 import ToggleSections from "./ToggleSections";
 import SelectStorageOrPharmacy from "./SelectStorageOrPharmacy";
 import {addMedicine, modifyMedicine, removeMedicine, UserMedicine} from "../slices/userMedicineSlice";
-// import {UserMedicine} from "../slices/allMedicinesSlice";
+import {Image} from "../slices/imagesSlice";
 
 
 const Root = () => {
@@ -45,6 +45,7 @@ const Root = () => {
     const dispatch = useAppDispatch()
     const currentStorageId = useAppSelector(selectCurrentStorage)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
+    console.log(currentStorageId)
     useEffect(() => {
         if (!currentStorageId) {
             return
@@ -105,6 +106,7 @@ const Root = () => {
         }
 
     },[currentStorageId,dispatch,user?.uid])
+
     useEffect(()=>{
         if(!currentStorageId){
             return
@@ -132,6 +134,37 @@ const Root = () => {
         }
 
     }, [currentStorageId, dispatch])
+
+
+    useEffect(() => {
+        if (!currentStorageId) {
+            return
+        }
+        const q = query(collection(db, "users/" + currentStorageId + "/images"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        console.log(change.doc.data())
+                        dispatch(addImage({...change.doc.data(), id: change.doc.id, uid: currentStorageId} as Image))
+                    }
+                    if (change.type === "modified") {
+                        dispatch(modifyImage({...change.doc.data(), id: change.doc.id} as Image))
+                    }
+                    if (change.type === "removed") {
+                        dispatch(removeImage(change.doc.id))
+                    }
+                });
+            },
+            (error) => {
+                console.log(error)
+            });
+
+        return () => {
+            unsubscribe()
+        }
+
+    }, [currentStorageId, dispatch])
+
     useEffect(() => {
         if (!currentStorageId) {
             return

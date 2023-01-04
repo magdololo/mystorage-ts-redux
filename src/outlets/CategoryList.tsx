@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import {useSelector} from 'react-redux'
 import {useAppDispatch, useAppSelector} from "../app/store";
 import {Link} from 'react-router-dom';
 import EditCategoriesButton from "../features/categories/EditCategoriesButton";
@@ -8,7 +7,7 @@ import {useModal} from "../component/Modal/UseModal";
 import AddCategoryForm from "../features/categories/AddCategoryForm";
 import EditCategoryForm from "../features/categories/EditCategoryForm";
 import {fetchAllProducts} from "../slices/allProductsSlice";
-import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
+import {selectCurrentStorage, selectTypeStorage} from "../slices/usersSlice";
 import {
     currentCategoryChange,
     deleteCategory,
@@ -22,17 +21,16 @@ import {useTranslation} from "react-i18next";
 
 import {EditCategoriesButtonComponent} from "../styles/Categories.components";
 import {MainBox} from "../styles/Categories.components";
-import {fetchImages} from "../slices/imagesSlice";
 import {fetchAllMedicines} from "../slices/allMedicinesSlice";
-import {fetchImagesPharmacy} from "../slices/imagesPharmacySlice";
+
 
 
 export const CategoryList = () => {
-    console.log("category list")
+
     const {t} = useTranslation();
-    let user = useSelector(selectUser);
     let currentStorageId = useAppSelector(selectCurrentStorage)
-    console.log(currentStorageId)
+    let typeStorage = useAppSelector(selectTypeStorage)
+
     const {
         isShown: isShownAddCategoryModal,
         handleShown: handleShownAddCategoryModal,
@@ -51,22 +49,13 @@ export const CategoryList = () => {
     const [toggleSwitch, setToggleSwitch] = useState(false);
 
     useEffect(() => {
-        if (currentStorageId === user?.uid) {
+        if (typeStorage === "product") {
             dispatch(fetchAllProducts())
-            dispatch(fetchImages())
-        } else if (currentStorageId === "pharmacy" + user?.uid) {
+        } else if (typeStorage === "medicine") {
             dispatch(fetchAllMedicines())
-            dispatch(fetchImagesPharmacy())
 
         }
-        // dispatch(fetchNotifications(user?.uid!!))
-        // dispatch(fetchCategories(user?.uid!!))
-        // dispatch(fetchCategories(user?.uid!!))
-        //dispatch(fetchImages(currentStorageId!!))
-        //dispatch(fetchUserProducts(currentStorageId!!))
-        //dispatch(fetchNotifications(user?.uid!!))
-        // dispatch(fetchShares(user?.uid!!))
-    }, [currentStorageId, dispatch, user?.uid])
+    }, [typeStorage, dispatch])
 
 
     const toggleEdit = () => {
@@ -74,7 +63,6 @@ export const CategoryList = () => {
     }
 
     useEffect(() => {
-        console.log("current category change")
         dispatch(currentCategoryChange(null))
     }, [dispatch])
 
