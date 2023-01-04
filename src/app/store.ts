@@ -7,7 +7,6 @@ import imagesReducer from '../slices/imagesSlice'
 import notificationsReducer from "../slices/notificationsSlice";
 import sharesReducer from "../slices/sharesSlice";
 import allMedicinesReducer from "../slices/allMedicinesSlice";
-import imagesPharmacyReducer from "../slices/imagesPharmacySlice";
 import userMedicinesReducer from "../slices/userMedicineSlice";
 import {useDispatch, TypedUseSelectorHook, useSelector} from "react-redux";
 
@@ -23,7 +22,6 @@ const store = configureStore({
         notifications: notificationsReducer,
         shares: sharesReducer,
         allMedicines: allMedicinesReducer,
-        imagesPharmacy: imagesPharmacyReducer,
         userMedicines: userMedicinesReducer
     },
 

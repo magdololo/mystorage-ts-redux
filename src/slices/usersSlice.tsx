@@ -19,15 +19,7 @@ export interface User {
     provider: string;
     didSeeGreeting: boolean;
     defaultCategoriesAdded: boolean;
-    //defaultImagesAdded: boolean;
 }
-
-//
-// export interface User {
-//     uid: Required<string>;
-//     defaultCategoriesAdded: boolean;
-//     defaultImagesAdded: boolean;
-// }
 
 
 interface UserState {
@@ -56,7 +48,6 @@ export const addDefaultCategoriesAndImagesToNewUser = createAsyncThunk<boolean, 
     dispatch: AppDispatch
     state: RootState
 }>("users/addDefaultCategoriesAndImagesToNewUser", async (addDefaultCategoriesToNewUserProps: LoginData, thunkApi) => {
-    console.log(addDefaultCategoriesToNewUserProps.userId)
 
     try {
         let userRef = doc(db, "users/" + addDefaultCategoriesToNewUserProps.userId);
@@ -174,19 +165,10 @@ const usersSlice = createSlice({
                 state.typeStorage = "medicine" :
                 state.typeStorage = "product"
         },
-        // setTypeStorage : (state, action:PayloadAction<"product"|"medicine">)=> {
-        //     //const currentStorage =
-        //     state.typeStorage = action.payload
-        // }
     },
     extraReducers(builder) {
         builder
-            // .addCase(addNewUserToUsersCollection.fulfilled,()=>{
-            // console.log("Status addNewUserToUsersCollection is fulfilled")
-            // })
-            // .addCase(addNewUserToUsersCollection.rejected,()=>{
-            //     console.log("Status addNewUserToUsersCollection is rejected")
-            // })
+
             .addCase(addDefaultCategoriesAndImagesToNewUser.fulfilled, () => {
                 console.log("Add default categories to new user")
             })
@@ -199,15 +181,10 @@ const usersSlice = createSlice({
                     didSeeGreeting: true,
                     defaultCategoriesAdded: false
                 }
-
             })
             .addCase(deleteUserAccount.fulfilled, () => {
                 console.log('Delete user account')
             })
-            // .addCase(checkIfUserInUsersCollection.fulfilled, (state, action) => {
-            //     console.log(action.payload)
-            //     state.userInUsers = action.payload
-            // })
             .addCase(getUserData.fulfilled, (state, action) => {
                 state.user = action.payload
                 state.currentStorageId = state.user!!.uid
@@ -216,7 +193,6 @@ const usersSlice = createSlice({
 });
 export const {login, logout, setCurrentStorage} = usersSlice.actions;
 export const selectUser = (state: RootState) => state.users.user;
-// export const userInUsers = (state: RootState) => state.users.userInUsers;
 export const selectCurrentStorage = (state: RootState) => state.users.currentStorageId
 export const selectTypeStorage = (state: RootState) => state.users.typeStorage
 export default usersSlice.reducer
