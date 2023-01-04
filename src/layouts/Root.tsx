@@ -45,7 +45,7 @@ const Root = () => {
     const dispatch = useAppDispatch()
     const currentStorageId = useAppSelector(selectCurrentStorage)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
-    console.log(currentStorageId)
+
     useEffect(() => {
         if (!currentStorageId) {
             return
@@ -144,7 +144,6 @@ const Root = () => {
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {
-                        console.log(change.doc.data())
                         dispatch(addImage({...change.doc.data(), id: change.doc.id, uid: currentStorageId} as Image))
                     }
                     if (change.type === "modified") {

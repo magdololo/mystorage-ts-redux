@@ -19,11 +19,10 @@ type CropImagesProps = {
     uid: string
 }
 
-const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => {
+const CropImages = ({image, handleClose, newImageName}: CropImagesProps) => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch();
     const currentStorageId = useAppSelector(selectCurrentStorage)
-    console.log(currentStorageId)
     const [crop, setCrop] = useState<Crop>({
         unit: 'px', x: 0, y: 0, width: 1280, height: 815
     });
@@ -53,19 +52,18 @@ const CropImages =({image,handleClose, newImageName, uid}: CropImagesProps ) => 
                 uid: currentStorageId
             }
             console.log(newImageFromUser)
-            if(file.size > 2048*1024){
+            if (file.size > 2048 * 1024) {
                 console.log("rozmiar za duzy")
                 handleOpen()
-            }else{
+            } else {
                 dispatch(addCategoryImage(newImageFromUser));
                 handleClose()
             }
         } catch (e) {
             console.error(e)
         }
-    }, [croppedAreaPixels, dispatch,handleClose,image, newImageName,uid])
+    }, [croppedAreaPixels, dispatch, handleClose, image, newImageName, currentStorageId])
 
-    console.log(uid)
     return (
         <>
             <div className="crop_content">
