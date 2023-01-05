@@ -160,7 +160,7 @@ const imagesSlice = createSlice({
             })
             .addCase(addCategoryImage.fulfilled, (state, action) => {
                 imagesAdapter.addOne(state, action.payload)
-                notify("Zdjęcie dodane!")
+                notify(i18next.t("images.imagesSlice.addPicture"))
             })
             .addCase(addCategoryImage.rejected, (state, action) => {
                 state.status = 'failed'

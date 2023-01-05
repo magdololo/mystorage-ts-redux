@@ -36,7 +36,7 @@
       "modalAddHeader": "Dodaj nową kategorię",
       "modalEditHeader": "Edytuj kategorię",
       "contentModalDeleteCategory_h3": "Czy napewno chcesz usunąć tę kategorię?",
-      "contentModalDeleteCategory_p": "You will lose all the products in it!."
+      "contentModalDeleteCategory_p": "Stracisz wszystkie zawarte w niej produkty!"
     },
     "CategoryPage": {
       "editProduct": "Edytuj produkt",
@@ -66,7 +66,6 @@
     "ProductsList": {
       "title": "Lista produktów",
       "productCategory": "Kategoria"
-
     },
     "AddProductForm": {
       "formAddProductTitle": "Dodaj produkt",
@@ -101,6 +100,11 @@
       "category": "Kategoria",
       "editProduct": "Edytuj produkt",
       "editMedicine": "Edytuj lek"
+    },
+    "userProductsSlice": {
+      "addProduct": "Produkt został dodany!",
+      "deleteProduct": "Produkt został usunięty!",
+      "editedProduct": "Zmiany zostały dodane!"
     }
   },
   "users": {
@@ -211,6 +215,15 @@
   "medicines": {
     "MedicinesList": {
       "title": "Lista leków"
+    },
+    "userMedicinesSlice": {
+      "deleteMedicine": "Lek usunięty!",
+      "addMedicine": "Lek dodany!"
+    }
+  },
+  "images": {
+    "imagesSlice": {
+      "addPicture": "Zdjęcie dodane!"
     }
   }
 }
