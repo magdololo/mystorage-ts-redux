@@ -5,7 +5,12 @@ import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {Modal} from "../component/Modal/Modal";
 import {useAppDispatch, useAppSelector} from "../app/store";
-import {changeSeeGreetingToTrue, selectUser, setCurrentStorage, User} from "../slices/usersSlice";
+import {
+    changeSeeGreetingToTrue,
+    selectUser,
+    setCurrentStorage,
+    User
+} from "../slices/usersSlice";
 
 const PageWithFirstChoose = () => {
     const mobileLayout = useMediaQuery('(max-width: 800px)')

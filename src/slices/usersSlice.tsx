@@ -35,7 +35,7 @@ const initialState: UserState = {
     currentStorageId: null,
     typeStorage: "product",
     defaultImages: [],
-    defaultPharmacyImages: []
+    defaultPharmacyImages: [],
 }
 
 
