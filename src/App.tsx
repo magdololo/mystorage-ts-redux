@@ -84,6 +84,7 @@ function App() {
                     <Route path="/termsAndConditions" element={<TermsAndConditions/>}/>
 
                     :
+
                     <Route path="/choose" element={<PageWithFirstChoose/>}/>
                     <Route path="/" element={<Root/>}>
                         <Route path="/categories" element={<CategoryList/>}/>

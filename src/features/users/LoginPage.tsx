@@ -18,10 +18,12 @@ import {db} from "../../firebase";
 import {BsArrowLeft} from "react-icons/bs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
+import {Spinner} from "../../component/Spinner";
 
 
 const LoginPage = () => {
     const {t, i18n} = useTranslation();
+    const [loginInProgress, setLoginInProgres] = useState(false)
     let userLanguage = i18n.language
     const dispatch = useDispatch()
     const provider = new GoogleAuthProvider();
@@ -49,8 +51,10 @@ const LoginPage = () => {
     }>();
 
     const onSubmit = handleSubmit((data) => {
+        setLoginInProgres(true)
         signInWithEmailAndPassword(auth, data.email, data.password)
             .then((userCredential) => {
+                setLoginInProgres(false)
                 const userFirebase = userCredential.user;
                 reset();
                 if (!userFirebase.emailVerified) {
@@ -322,7 +326,7 @@ const LoginPage = () => {
             {/*{ !userNotVerified ?*/}
             {/*    <div><h3 className={"w-10/12 mx-auto pt-12 font-medium text-gray-light text-xl md:w-5/12"}>{t("notify.verifiedEmail")}</h3></div> :*/}
             {/*    null }*/}
-
+            {loginInProgress ? <Spinner/> : <></>}
         </>
     )
 }

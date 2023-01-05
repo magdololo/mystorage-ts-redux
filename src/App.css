@@ -144,19 +144,68 @@ div::-webkit-scrollbar {
 }
 
 .button {
-  margin: 20px 0px 0px 0px;
-  border: 1px solid #2185d0;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  background-color: white;
-  width: 140px;
+    margin: 20px 0px 0px 0px;
+    border: 1px solid #2185d0;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: white;
+    width: 140px;
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
+/*.spinner {*/
+/*  z-index: 1000;*/
+/*  background-color: white;*/
+/*  position: absolute;*/
+/*  top: 50%;*/
+/*  left: 0;*/
+/*  right: 0;*/
+/*  margin: 0 auto;*/
+/*  width: 50%;*/
+/*  height: 50%;*/
+/*}*/
+.loader {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 30vh;
+    overflow: hidden;
+}
+
+.spinner {
+    margin: 0 auto;
+    animation: Rotate 2.4s both infinite linear;
+}
+
+.path {
+    animation: DrawLine 1.6s both infinite alternate linear;
+    fill: none;
+    stroke: rebeccapurple;
+    stroke-width: 50;
+}
+
+@keyframes Rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes DrawLine {
+    0% {
+        stroke-dasharray: 0 126;
+    }
+    100% {
+        stroke-dasharray: 126 126;
+    }
+}
