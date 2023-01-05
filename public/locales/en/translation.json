@@ -36,7 +36,7 @@
       "modalAddHeader": "Add new category",
       "modalEditHeader": "Edit category",
       "contentModalDeleteCategory_h3": "Are you sure you want to delete this category?",
-      "contentModalDeleteCategory_p": ""
+      "contentModalDeleteCategory_p": "You will lose all the products in it!."
     },
     "CategoryPage": {
       "editProduct": "Edit product",
@@ -93,7 +93,6 @@
       "labelQuantity": "Quantity",
       "validationCapacity": "Capacity required and must be greater than 0.",
       "validationQuantity": "Quantity required and must be greater than 0."
-
     },
     "SearchUserProductPage": {
       "searchResult": "Search result",
@@ -102,6 +101,11 @@
       "category": "Category",
       "editProduct": "Edit product",
       "editMedicine": "Edit medicine"
+    },
+    "userProductsSlice": {
+      "addProduct": "Product added!",
+      "deleteProduct": "Product removed!",
+      "editedProduct": "Changes have been added!"
     }
   },
   "users": {
@@ -212,6 +216,15 @@
   "medicines": {
     "MedicinesList": {
       "title": "Lista leków"
+    },
+    "userMedicinesSlice": {
+      "deleteMedicine": "Medicine deleted!",
+      "addMedicine": "Medicine added!"
+    }
+  },
+  "images": {
+    "imagesSlice": {
+      "addPicture": "Picture added!"
     }
   }
 }

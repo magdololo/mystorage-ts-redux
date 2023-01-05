@@ -98,10 +98,10 @@ export const deleteCategory = createAsyncThunk('categories/deleteCategory', asyn
     try {
         const docRef = doc(db, "users/" + category.user + "/categories/" , category.id!)
         await updateDoc(docRef, {"isDeleted": true})
-
+return category.id
     }    catch(error){
         console.log(error)
-        return {error: error}
+        return null
 
     }
 }
@@ -146,19 +146,21 @@ const categoriesSlice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message
             })
-            .addCase(addNewCategory.fulfilled, (state, action) =>{
+            .addCase(addNewCategory.fulfilled, (state, action) => {
                 categoriesAdapter.addOne(state, action.payload.category)
-                if(action.payload.notify)
+                if (action.payload.notify)
                     notify(i18next.t("categories.categoriesSlice.notify.addCategory"))
-            } )
-            .addCase(editCategory.fulfilled, (state, action)=>{
+            })
+            .addCase(editCategory.fulfilled, (state, action) => {
                 categoriesAdapter.setOne(state, action.payload)
                 notify(i18next.t("categories.categoriesSlice.notify.changeCategory"))
             })
-            // .addCase(deleteCategory.fulfilled,(state,action)=>{
-            //     categoriesAdapter.removeOne(state, action.payload as string)
-            //     notify(i18next.t("categories.categoriesSlice.notify.removeCategory"))
-            // })
+            .addCase(deleteCategory.fulfilled, (state, action) => {
+                if (action.payload) {
+                    categoriesAdapter.removeOne(state, action.payload as string)
+                    notify(i18next.t("categories.categoriesSlice.notify.removeCategory"))
+                }
+            })
 
     }
 })

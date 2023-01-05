@@ -12,7 +12,7 @@ import {db} from "../firebase";
 import {fetchMedicineFromDictionaryId} from "./allMedicinesSlice";
 import {notify} from "../helpers";
 // import {fetchProductFromDictionaryId} from "./allProductsSlice";
-// import {UserProduct} from "./userProductsSlice";
+import i18n from "../i18n";
 
 export interface UserMedicine {
     id: string,
@@ -170,7 +170,7 @@ const userMedicinesSlice = createSlice({
         builder
             .addCase(addUserMedicine.fulfilled, (state, action) => {
                 userMedicinesAdapter.addOne(state, action.payload)
-                notify('🦄 Lek dodany!')
+                notify(i18n.t("medicines.userMedicinesSlice.addMedicine"))
             })
             .addCase(changeMedicineQuantity.fulfilled, (state, action) => {
                 let userMedicine = action.payload as UserMedicine
@@ -178,7 +178,7 @@ const userMedicinesSlice = createSlice({
             })
             .addCase(deleteUserMedicine.fulfilled, (state, action) => {
                 userMedicinesAdapter.removeOne(state, action.payload as string)
-                notify('🦄 Lek usunięty!')
+                notify(i18n.t("medicines.userMedicinesSlice.deleteMedicine"))
             })
     }
 })
@@ -200,7 +200,6 @@ export const {
     editMedicine,
     searchMedicine,
     searchMedicineByString,
-    // removeMedicines,
     addMedicine,
     modifyMedicine,
     removeMedicine

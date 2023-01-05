@@ -26,7 +26,7 @@ import {db} from "../firebase";
 import {fetchProductFromDictionaryId} from "./allProductsSlice";
 
 import {notify} from "../helpers";
-
+import i18n from "../i18n";
 
 export interface UserProduct{
     productId: Required<string>;
@@ -234,16 +234,16 @@ const userProductsSlice = createSlice({
 
             })
             .addCase(deleteUserProduct.fulfilled,(state,action)=>{
-              userProductsAdapter.removeOne(state, action.payload as string)
-                notify('🦄 Produkt usunięty!')
+                userProductsAdapter.removeOne(state, action.payload as string)
+                notify(i18n.t("products.userProductsSlice.deleteProduct"))
             })
             .addCase(addUserProduct.fulfilled,(state,action)=>{
                 userProductsAdapter.addOne(state, action.payload)
-                notify('🦄 Produkt dodany!')
+                notify(i18n.t("products.userProductsSlice.addProduct"))
             })
             .addCase(editUserProduct.fulfilled, (state, action)=>{
                 userProductsAdapter.setOne(state, action.payload)
-                notify('🦄 Zmiany zostały dodane!')
+                notify(i18n.t("products.userProductsSlice.editedProduct"))
             })
 
     }
