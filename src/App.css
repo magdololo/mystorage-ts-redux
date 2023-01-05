@@ -171,15 +171,28 @@ div::-webkit-scrollbar {
 /*  width: 50%;*/
 /*  height: 50%;*/
 /*}*/
+/*.loader {*/
+/*    align-items: center;*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    justify-content: center;*/
+/*    height: 30vh;*/
+/*    overflow: hidden;*/
+/*}*/
 .loader {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    height: 30vh;
-    overflow: hidden;
-}
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, .6);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    /*//transform: translateY(-50%);*/
+    margin: 0 auto;
 
+}
 .spinner {
     margin: 0 auto;
     animation: Rotate 2.4s both infinite linear;
