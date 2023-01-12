@@ -60,7 +60,7 @@ const Home = () => {
                     console.log("Language changed to polish")
                 })
         }
-  }, [isEnglish]) //@ts-ignore
+  }, [isEnglish]) // eslint-disable-next-line react-hooks/exhaustive-deps
     return (
         <>
             <header>
