@@ -37,9 +37,7 @@ const Home = () => {
     const [isEnglish, setIsEnglish]= useState<boolean>(false);
     const isSmallerThan650 = useMediaQuery('(max-width: 649px)')
     useEffect(()=> {
-        if (i18n.language === "pl" || window.localStorage.i18nextLng === "pl") {
-            setIsEnglish(false)
-        } else {
+        if (i18n.language !== "pl" || window.localStorage.i18nextLng !== "pl") {
             setIsEnglish(true)
         }
     },[i18n.language])
@@ -67,7 +65,7 @@ const Home = () => {
                 <BoxMain>
                     <Nav>
                         <NavCollapse>
-                            <NavLogo><img src={"./images/logoNav.png"} alt={"home"} className={"h-auto"}/></NavLogo>
+                            <NavLogo><img src={"./images/logoNav.png"} alt={"logo"} className={"h-auto"}/></NavLogo>
                             <NavTitle>{t('app_title')}</NavTitle>
                         </NavCollapse>
                         <MainMenu>
@@ -95,9 +93,9 @@ const Home = () => {
 
                     <HeaderSectionBoxPhotos>
                         {i18n.language === "pl" ?
-                            <PhotoBox src="../images/categories_screen.png"
+                            <PhotoBox src="../images/categories_screen-ImResizer.png"
                                       alt={"ekran z kategoriami"}/> :
-                            <PhotoBox src="../images/categories_screen_en.png"
+                            <PhotoBox src="../images/categories_screen_en-ImResizer.png"
                                       alt={"screen with categories"}/>}
                     </HeaderSectionBoxPhotos>
                 </MainSection>
@@ -108,9 +106,9 @@ const Home = () => {
                 <SectionBox size={"5.5rem"}>
                     <SectionBoxPhotos>
                         {i18n.language === "pl" ?
-                            <PhotoBox src="../images/addProduct_screen.png"
+                            <PhotoBox src="../images/addProduct_screen-ImResizer.png"
                                       alt={" strona formularza do dodawania produktu"}/> :
-                            <PhotoBox src="../images/addProduct_screen_en.png"
+                            <PhotoBox src="../images/addProduct_screen_en-ImResizer.png"
                                       alt={"screen with add product form"}/>}
                     </SectionBoxPhotos>
                     <SectionBoxText>
@@ -156,10 +154,10 @@ const Home = () => {
                     </SectionBoxText>
                     <SectionBoxPhotos>
                         {i18n.language === "pl" ?
-                            <PhotoBox src="../images/edit_screen.png"
-                                 alt={"ekran z listą produktów i menu do szybkiej edycji"}/> :
-                            <PhotoBox src="../images/edit_screen_en.png"
-                                 alt={"screen with product list and menu for quick editing"}/>}
+                            <PhotoBox src="../images/edit_screen-ImResizer.png"
+                                      alt={"ekran z listą produktów i menu do szybkiej edycji"}/> :
+                            <PhotoBox src="../images/edit_screen_en-ImResizer.png"
+                                      alt={"screen with product list and menu for quick editing"}/>}
                     </SectionBoxPhotos>
                     <SectionBoxText className={"visibilityOnMobile"}>
                         <MarginOnMobile>
@@ -185,10 +183,10 @@ const Home = () => {
                 <SectionBox size={"5.5rem"}>
                     <SectionBoxPhotos>
                         {i18n.language === "pl" ?
-                            <PhotoBox src="../images/search_screen.png"
-                                 alt={"ekran z wyszukiwarką produktów"}/> :
-                            <PhotoBox src="../images/search_screen_en.png"
-                                 alt={"screen with product finder "}/>}
+                            <PhotoBox src="../images/search_screen-ImResizer.png"
+                                      alt={"ekran z wyszukiwarką produktów"}/> :
+                            <PhotoBox src="../images/search_screen_en-ImResizer.png"
+                                      alt={"screen with product finder "}/>}
                     </SectionBoxPhotos>
                     <SectionBoxText>
                         {isSmallerThan650 ?
@@ -237,9 +235,9 @@ const Home = () => {
 
                     <SectionBoxPhotos>
                         {i18n.language === "pl" ?
-                            <PhotoBox src="../images/mobile_share_page.png"
+                            <PhotoBox src="../images/mobile_share_page-ImResizer.png"
                                       alt={"ekran z zaproszeniami"}/> :
-                            <PhotoBox src="../images/mobile_share_page_en.png"
+                            <PhotoBox src="../images/mobile_share_page_en-ImResizer.png"
                                       alt={"screen with invitings"}/>}
                     </SectionBoxPhotos>
                     <SectionBoxText className={"visibilityOnMobile"}>
