@@ -51,16 +51,16 @@ const Home = () => {
   useEffect(()=>{
         if(isEnglish){
             i18n.changeLanguage("en")
-            .then(()=>{
-                console.log("Language changed to english")
-            })
+                .then(() => {
+                    console.log("Language changed to english")
+                })
         } else {
             i18n.changeLanguage("pl")
-        .then(()=>{
-                console.log("Language changed to polish")
-            })
+                .then(() => {
+                    console.log("Language changed to polish")
+                })
         }
-    },[isEnglish, i18n])
+  }, [isEnglish]) //@ts-ignore
     return (
         <>
             <header>
