@@ -82,8 +82,11 @@ export const CategoryList = () => {
                 (
                    <div className={"h-auto flex flex-col relative" + (toggleSwitch ? " bg-black bg-opacity-90 " : "")} key={category?.id}>
                        <Link to={`/categories/${category?.path}`} className={toggleSwitch ? "pointer-events-none" : ""}>
-                           <img src={category?.url} className={"w-full h-auto object-cover flex-1 flex-grow" + (toggleSwitch ? " brightness-[0.2]" : "")} alt="Louvre"/>
-                                <span className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70  text-sm sm:text-md md:text-lg capitalize text-center text-white font-bold" + (toggleSwitch ? "hidden invisible" : "")}>{category?.title}</span>
+                           <img src={category?.url}
+                                className={"w-full  min-h-full object-cover flex-1 flex-grow" + (toggleSwitch ? " brightness-[0.2]" : "")}
+                                alt="Louvre"/>
+                           <span
+                               className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70  text-sm sm:text-md md:text-lg capitalize text-center text-white font-bold" + (toggleSwitch ? "hidden invisible" : "")}>{category?.title}</span>
                        </Link>
                        <span className={"absolute bottom-3  left-0 right-0 mx-auto capitalize text-center text-white font-bold text-sm sm:text-md md:text-lg md:bottom-1/4" + (!toggleSwitch ? "invisible hidden" : "")}>{category?.title}</span>
                        {toggleSwitch &&

@@ -6,7 +6,7 @@ import {getUserData, LoginData, selectTypeStorage} from "./slices/usersSlice";
 import {
     Routes,
     Route,
-    useNavigate,
+    useNavigate
 
 } from "react-router-dom";
 import Loading from "./component/Loading";
@@ -73,7 +73,6 @@ function App() {
         <>
         <Suspense fallback={<Loading />}>
             <div className="App">
-
                 <Routes>
                     !user ?
                     <Route path="/" element={<Home/>}/>
