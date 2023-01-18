@@ -202,7 +202,8 @@ export const {
     searchMedicineByString,
     addMedicine,
     modifyMedicine,
-    removeMedicine
+    removeMedicine,
+    removeMedicines
 } = userMedicinesSlice.actions //editProduct
 
 export const selectMedicinesOfCategory = (categoryId: string) => createSelector(

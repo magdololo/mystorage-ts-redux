@@ -1,7 +1,7 @@
 import Hamburger from "../component/BottomMenu/Hamburger";
 import {Modal} from "../component/Modal/Modal";
 import React from "react";
-import AddProductForm from "../features/products/AddProductForm";
+import AddProductAndMedicineForm from "../component/AddProductAndMedicineForm";
 import {useModal} from "../component/Modal/UseModal";
 import SearchInput from "../component/BottomMenu/SearchInput";
 import {useTranslation} from "react-i18next";
@@ -21,7 +21,8 @@ const BottomMenu = () => {
                     <Hamburger/>
                     <SearchInput/>
                     <ButtonAddProduct handleOpen={handleShown}/>
-                    <Modal isShown={isShownAddProductModal} hide={handleCloseAddProduct} modalHeaderText={modalHeader}  modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal})}/>
+                    <Modal isShown={isShownAddProductModal} hide={handleCloseAddProduct} modalHeaderText={modalHeader}
+                           modalContent={AddProductAndMedicineForm({handleCloseAddProduct, isShownAddProductModal})}/>
 
                 </div>
             </div>

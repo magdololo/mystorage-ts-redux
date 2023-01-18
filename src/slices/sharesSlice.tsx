@@ -70,7 +70,7 @@ export type AddOutgoingToSharesParams = {
     outgoingEmail: string
 }
  export const addOutgoingToShares = createAsyncThunk<Invite,AddOutgoingToSharesParams>('shares/addOutgoingToShares', async ( addOutgoingToSharesParams: AddOutgoingToSharesParams) => {
-
+         console.log(addOutgoingToSharesParams.userId)//id zapraszajacego
          const newInvite = {
              user_email: addOutgoingToSharesParams.outgoingEmail,
              date: Timestamp.now(),
@@ -81,7 +81,7 @@ export type AddOutgoingToSharesParams = {
          try {
              let result = await addDoc(collection(db, "users/" + addOutgoingToSharesParams.userId + "/shares"), newInvite);
              return {...newInvite, id: result.id} as Invite;
-         } catch (error){
+         } catch (error) {
              console.log(error)
              return {} as Invite
          }
@@ -92,21 +92,38 @@ export type IncomingSharesParams = {
     userId: string
     shareId: string
 }
-export const acceptIncomingShares = createAsyncThunk<string, IncomingSharesParams>('shares/acceptIncomingShares', async (incomingSharesParams: IncomingSharesParams)=>{
-   try{
-       const docRef = doc(db, "users/" + incomingSharesParams.userId + "/shares/" + incomingSharesParams.shareId);
-       await getDoc(docRef);
-       await updateDoc(docRef, "status", "accepted");
+export const acceptIncomingShares = createAsyncThunk<string, IncomingSharesParams>('shares/acceptIncomingShares', async (incomingSharesParams: IncomingSharesParams) => {
+    try {
+        const docRef = doc(db, "users/" + incomingSharesParams.userId + "/shares/" + incomingSharesParams.shareId);
+        let docShare = await getDoc(docRef);
+        await updateDoc(docRef, "status", "accepted");
+        let incomingShare = docShare.data()
+        if (incomingShare) {
+            const incomingShareInPharmacy: Invite = {
+                user_email: incomingShare.user_email,
+                date: incomingShare.date,
+                direction: "incoming",
+                status: "accepted",
+                user_id: "pharmacy" + incomingShare.user_id,
+                id: ""
+            }
+            try {
+                await addDoc(collection(db, "users/" + "pharmacy" + incomingSharesParams.userId + "/shares"), incomingShareInPharmacy);
 
-   }catch (error){
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+    } catch (error) {
         console.log(error)
-   }
+    }
 
 
-   return incomingSharesParams.shareId
+    return incomingSharesParams.shareId
 })
- export const cancelAcceptedShare = createAsyncThunk<string, IncomingSharesParams> ('shares/cancelAcceptedShare', async (incomingSharesParams: IncomingSharesParams)=> {
-     try{
+export const cancelAcceptedShare = createAsyncThunk<string, IncomingSharesParams>('shares/cancelAcceptedShare', async (incomingSharesParams: IncomingSharesParams) => {
+    try {
          const docRef = doc(db, "users/" + incomingSharesParams.userId + "/shares/" + incomingSharesParams.shareId);
          await getDoc(docRef);
          await updateDoc(docRef, "status", "rejected");
@@ -156,6 +173,7 @@ const  sharesSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(fetchShares.fulfilled, (state, action) => {
+                console.log(action.payload)
                 sharesAdapter.upsertMany(state, action.payload as Invite[])
             })
             .addCase(addOutgoingToShares.fulfilled, (state,action) =>{

@@ -45,7 +45,8 @@ const Root = () => {
     const dispatch = useAppDispatch()
     const currentStorageId = useAppSelector(selectCurrentStorage)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
-
+    console.log(currentStorageId)
+    console.log(user?.uid + " userId from root")
     useEffect(() => {
         if (!currentStorageId) {
             return
@@ -86,11 +87,18 @@ const Root = () => {
         const q = query(collection(db, "users/" + user?.uid +"/shares"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
+
+                    const data = change.doc.data();
+                    let shareDate = null;
+                    if (data.date != null) {
+                        shareDate = Timestamp.fromMillis(data.date.seconds * 1000).toDate();
+                    }
                     if (change.type === "added") {
-                        dispatch(addShare({...change.doc.data(), id: change.doc.id} as Invite))
+                        console.log(data + " data add share")
+                        dispatch(addShare({...data, date: shareDate, id: change.doc.id} as Invite))
                     }
                     if (change.type === "modified") {
-                        dispatch(modifyShare({...change.doc.data(), id: change.doc.id} as Invite))
+                        dispatch(modifyShare({...data, date: shareDate, id: change.doc.id} as Invite))
                     }
                     if (change.type === "removed") {
                         console.log("Removed share: ", change.doc.data());
@@ -238,43 +246,6 @@ const Root = () => {
 
     }, [currentStorageId, dispatch])
 
-    // useEffect(()=>{
-    //     if(!currentStorageId){
-    //         return
-    //     }
-    //     const docRef = doc(db, "users", user?.uid+"pharmacy");
-    //     let q = query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
-    //
-    //     const unsubscribe = onSnapshot(q, (snapshot) => {
-    //             snapshot.docChanges().forEach((change) => {
-    //                 let data = change.doc.data()
-    //                 let productExpireDate = null;
-    //                 if( data.expireDate != null){
-    //                     let expireDateTimestamp = Timestamp.fromMillis(data.expireDate.seconds*1000);
-    //                     productExpireDate = expireDateTimestamp.toDate();
-    //                 }
-    //                 if (change.type === "added") {
-    //                     dispatch(addMedicine({...data, expireDate: productExpireDate, id: change.doc.id} as UserMedicine))
-    //                 }
-    //                 if (change.type === "modified") {
-    //                     dispatch(modifyMedicine({...data, expireDate: productExpireDate, id: change.doc.id} as UserMedicine))
-    //                 }
-    //
-    //                 if (change.type === "removed") {
-    //                     dispatch(removeMedicine(change.doc.id))
-    //                 }
-    //             });
-    //         },
-    //         (error) => {
-    //             console.log(error)
-    //         });
-    //
-    //     return () => {
-    //         unsubscribe()
-    //     }
-    //
-    //
-    // }, [currentStorageId, dispatch])
 
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
 

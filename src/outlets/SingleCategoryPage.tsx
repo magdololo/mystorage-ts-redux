@@ -31,7 +31,7 @@ import EditProductForm from "../features/products/EditProductForm";
 
 
 import ReturnToCategoryList from "../component/ReturnToCategoryList";
-import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
+import {selectCurrentStorage, selectTypeStorage, selectUser} from "../slices/usersSlice";
 import {
     ChangeMedicineQuantity,
     changeMedicineQuantity,
@@ -48,6 +48,7 @@ const SingleCategoryPage = () => {
     const dispatch = useAppDispatch();
     const {categoryPath} = useParams();
     const user = useSelector(selectUser)
+    const typeStorage = useAppSelector(selectTypeStorage)
     let currentStorageId = useAppSelector(selectCurrentStorage)
     const categories = useAppSelector(selectCategoriesCurrentStorageByRequired(currentStorageId as string))
     const categoryFromPath = useAppSelector(selectCategoryByPath(categoryPath ?? "")) as Category
@@ -66,6 +67,7 @@ const SingleCategoryPage = () => {
     const modalEditMedicineHeader = t("categories.CategoryPage.editMedicine")
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
     const categoriesWithoutCurrentCategory = categories?.filter(category => category !== currentCategory)
+
 
     const chooseEditProduct = (userProduct: UserProduct) => {
         handleShown()
@@ -121,7 +123,6 @@ const SingleCategoryPage = () => {
         dispatch(deleteUserMedicine(userMedicine))
 
     }
-    console.log(categoryPath)
 
     return (
         <>
@@ -135,7 +136,7 @@ const SingleCategoryPage = () => {
                                     <Link to={`/categories/${categoryId}`}>
                                         <img src={currentCategory?.url}
                                              className={"w-full h-auto object-cover flex-1 flex-grow"}
-                                             alt="Louvre"/>
+                                             alt={currentCategory?.title}/>
                                     </Link>
                                 </SingleCategoryBox>
 
@@ -149,7 +150,7 @@ const SingleCategoryPage = () => {
                                                 <Link to={`/categories/${category?.path}`}>
                                                     <img src={category?.url}
                                                          className={"w-full h-auto object-cover flex-1 flex-grow"}
-                                                         alt="Louvre"/>
+                                                         alt={category?.title}/>
 
                                                 <span
                                                     className={"absolute align-middle bottom-0 left-0 right-0 h-full inline-flex items-center justify-center px-2 bg-black opacity-70  text-sm sm:text-md md:text-lg lg:text-md capitalize text-center text-white font-bold"}>{category?.title}</span>
@@ -165,7 +166,7 @@ const SingleCategoryPage = () => {
                         <ProductsBox>
                             <SinglePageTitle>{categoryFromPath?.title}</SinglePageTitle>
                             <ProductsListBox justifyContent={"space-between"}>
-                                {currentStorageId === user?.uid ?
+                                {typeStorage === "product" ?
                                     productsOfCategory.map((product: UserProduct) =>
                                         <SingleProductBox primary={false} key={product.id}>
                                             <div key={product.id}

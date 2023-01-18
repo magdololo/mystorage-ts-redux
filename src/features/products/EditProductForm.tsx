@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {useForm, Controller, SubmitHandler} from "react-hook-form";
-import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
+import {selectCurrentStorage, selectTypeStorage, selectUser} from "../../slices/usersSlice";
 import {Category, selectAllCategories} from "../../slices/categoriesSlice"
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,6 +36,7 @@ type EditFormValues = {
 }
 const EditProductForm = ({handleClose}: EditProductFormProps) => {
     const {t} = useTranslation()
+    const typeStorage = useAppSelector(selectTypeStorage)
     const user = useAppSelector(selectUser)
     const {
         handleSubmit,
@@ -52,8 +53,6 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
     const categoriesOfMedicines = allCategories.filter(category => category.user === "pharmacy" + user?.uid)
     const editProductCategory = categoriesOfProducts.find(category => category.id === editProduct?.categoryId)
     const editMedicineCategory = categoriesOfMedicines.find(category => category.id === editMedicine?.categoryId)
-    console.log(editProductCategory)
-    console.log(editMedicineCategory)
     const dispatch = useAppDispatch()
 
     // const notify = () => toast.success('🦄 Zmiany zostały dodane!', {
@@ -97,7 +96,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
 
 
     const onSubmit: SubmitHandler<EditFormValues> = data => {
-        if (currentStorageId === user?.uid) {
+        if (typeStorage === "product") {
             console.log(data)
             let updatedProduct: UserProduct = {
                 productId: editProduct?.productId ?? "",
@@ -113,7 +112,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
             }
             dispatch(editUserProduct(updatedProduct))
             closeModal()
-        } else if (currentStorageId === "pharmacy" + user?.uid) {
+        } else {
             console.log(data)
             let updatedMedicine: UserMedicine = {
                 medicineId: editMedicine?.medicineId ?? "",
@@ -134,11 +133,6 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
         }
 
     }
-    console.log(editProduct)
-    console.log(editMedicine)
-    console.log(currentStorageId)
-    console.log(user!!.uid)
-    console.log(allCategories)
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -148,7 +142,7 @@ const EditProductForm = ({handleClose}: EditProductFormProps) => {
                             name="newCategory"
                             control={control}
                             rules={{required: true}}
-                            defaultValue={currentStorageId === user?.uid ? editProductCategory : editMedicineCategory}
+                            defaultValue={typeStorage === "product" ? editProductCategory : editMedicineCategory}
                             render={({field: {onChange, value}}) => (
                                 <AutocompleteWithCategoriesTitle
                                     onChange={onChange}

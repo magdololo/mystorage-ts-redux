@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../app/store";
 import {useForm, SubmitHandler, Controller} from 'react-hook-form';
 
-import {AutocompleteWithUserProducts} from "./AutocompleteWithUserProducts";
-import AutocompleteWithCategoriesTitle from "../categories/AutocompleteWithCategoriesTitle";
+import {AutocompleteWithUserProducts} from "../features/products/AutocompleteWithUserProducts";
+import AutocompleteWithCategoriesTitle from "../features/categories/AutocompleteWithCategoriesTitle";
 
-import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
-import {addUserProduct, UserProduct} from "../../slices/userProductsSlice";
+import {selectCurrentStorage, selectTypeStorage} from "../slices/usersSlice";
+import {addUserProduct, UserProduct} from "../slices/userProductsSlice";
 import {
     Category,
     selectCategoryByPath,
     selectDefaultCategory
-} from "../../slices/categoriesSlice";
+} from "../slices/categoriesSlice";
 
 import {Alert, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
@@ -25,8 +25,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 
-import {addUserMedicine, UserMedicine} from "../../slices/userMedicineSlice";
-import AutocompleteWithUserMedicines from "../medicines/AutocompleteWithUserMedicines";
+import {addUserMedicine, UserMedicine} from "../slices/userMedicineSlice";
+import AutocompleteWithUserMedicines from "../features/medicines/AutocompleteWithUserMedicines";
 
 export type FormValues = {
     expireDate: Date | null
@@ -63,14 +63,13 @@ export type AutocompleteWithUserMedicinesProps = {
     setSelectedMedicineFromAutocomplete: (userMedicine: UserMedicine) => void;
 
 }
-const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProductFormProps,) => {
+const AddProductAndMedicineForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProductFormProps,) => {
     const {t} = useTranslation();
-    const user = useAppSelector((selectUser))
     const dispatch = useAppDispatch();
     const [selectedProductFromAutocomplete, setSelectedProductFromAutocomplete] = useState<UserProduct | null>(null);
     const [selectedMedicineFromAutocomplete, setSelectedMedicineFromAutocomplete] = useState<UserMedicine | null>(null);
     const currentStorageId = useAppSelector(selectCurrentStorage)
-
+    const typeStorage = useAppSelector(selectTypeStorage)
     const currentCategory = useAppSelector<Category | null>((state) => state.categories.currentCategory)
     const {
         handleSubmit,
@@ -104,7 +103,7 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
         handleCloseAddProduct();
     }
     const onSubmit: SubmitHandler<FormValues> = data => {
-        if (currentStorageId === user!!.uid) {
+        if (typeStorage === "product") {
             let userProduct: UserProduct = {
                 productId: "",
                 name: data.productName,
@@ -119,7 +118,7 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
             dispatch(addUserProduct(userProduct))
             closeModal();
 
-        } else if (currentStorageId === "pharmacy" + user!!.uid) {
+        } else {
             let userMedicine: UserMedicine = {
                 medicineId: "",
                 name: data.productName,
@@ -184,19 +183,16 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
                             control={control}
                             rules={{required: true}}
                             render={({field: {onChange, value}}) => (<>
-                                    {currentStorageId === user!!.uid ?
-
-                                        <AutocompleteWithUserProducts
-                                            value={value ?? ""}
-                                            onChange={onChange}
-                                            setSelectedProductFromAutocomplete={setSelectedProductFromAutocomplete}
-                                        />
-                                        :
-
+                                    {typeStorage === "medicine" ?
                                         <AutocompleteWithUserMedicines
                                             onChange={onChange}
                                             value={value ?? ""}
                                             setSelectedMedicineFromAutocomplete={setSelectedMedicineFromAutocomplete}
+                                        /> :
+                                        <AutocompleteWithUserProducts
+                                            value={value ?? ""}
+                                            onChange={onChange}
+                                            setSelectedProductFromAutocomplete={setSelectedProductFromAutocomplete}
                                         />
                                     }
                                 </>
@@ -240,7 +236,7 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
                                            variant="standard"
                                            type="text"
                                 >
-                                    {currentStorageId === user!!.uid ?
+                                    {typeStorage === "product" ?
                                         units.map((option) => (
                                             <MenuItem key={option.value} value={option.value}>
                                                 {option.value}
@@ -280,7 +276,7 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
                             )}
                         />
                     </Box>
-                    {currentStorageId === "pharmacy" + user?.uid ?
+                    {typeStorage === "medicine" ?
                         <>
                             <Box>
                                 <Controller
@@ -348,13 +344,18 @@ const AddProductForm = ({handleCloseAddProduct, isShownAddProductModal}: AddProd
                             )}
                         />
                     </Box>
-                    {errors.quantity && (<p className="text-xs text-red ml-10">{t("products.AddProductForm.validationQuantity")}</p>)}
+                    {errors.quantity && (
+                        <p className="text-xs text-red ml-10">{t("products.AddProductForm.validationQuantity")}</p>)}
 
                     {errorMessage !== '' ? <Alert severity="error">{errorMessage}</Alert> : null}
-                    <Box sx={{marginLeft: "10%"}}><button className="mt-4 text-sm bg-purple  text-white uppercase font-bold py-4 px-4 border-purple rounded shadow-xs leading-6" type={"submit"}>{t("buttons.addProduct")}</button></Box>
+                    <Box sx={{marginLeft: "10%"}}>
+                        <button
+                            className="mt-4 text-sm bg-purple  text-white uppercase font-bold py-4 px-4 border-purple rounded shadow-xs leading-6"
+                            type={"submit"}>{t("buttons.addProduct")}</button>
+                    </Box>
                 </Box>
             </form>
         </>
     )
-}
-export default AddProductForm;
+};
+export default AddProductAndMedicineForm;

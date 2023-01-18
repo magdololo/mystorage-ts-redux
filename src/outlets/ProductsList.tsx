@@ -30,6 +30,7 @@ import {
     SingleProductBox
 } from "../styles/Products.components";
 import {SinglePageTitle} from "../styles/Root.components";
+import {selectCurrentStorage} from "../slices/usersSlice";
 
 
 const ProductsList = () => {
@@ -41,6 +42,7 @@ const ProductsList = () => {
     const {isShown, handleShown, handleClose} = useModal()
     const modalHeader = "Edytuj produkt"
     const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
+    const currentStorageId = useAppSelector(selectCurrentStorage)
     // const notify = () => toast.success('🦄 Produkt usunięty!', {
     //     position: "top-center",
     //     autoClose: 3000,
@@ -51,7 +53,8 @@ const ProductsList = () => {
     //     progress: undefined,
     //
     // });
-
+    console.log(currentStorageId)
+    console.log(userProducts)
     const chooseEditProduct = (userProduct: UserProduct) => {
 
         handleShown()

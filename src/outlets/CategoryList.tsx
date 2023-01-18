@@ -84,7 +84,7 @@ export const CategoryList = () => {
                        <Link to={`/categories/${category?.path}`} className={toggleSwitch ? "pointer-events-none" : ""}>
                            <img src={category?.url}
                                 className={"w-full  min-h-full object-cover flex-1 flex-grow" + (toggleSwitch ? " brightness-[0.2]" : "")}
-                                alt="Louvre"/>
+                                alt={category?.title}/>
                            <span
                                className={"absolute align-middle bottom-0 left-0 right-0 min-h-[40%] inline-flex items-center justify-center px-2 bg-black opacity-70  text-sm sm:text-md md:text-lg capitalize text-center text-white font-bold" + (toggleSwitch ? "hidden invisible" : "")}>{category?.title}</span>
                        </Link>

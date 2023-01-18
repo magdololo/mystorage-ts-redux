@@ -18,6 +18,7 @@ const SelectStorageOrPharmacy = () => {
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
     const currentStorageId = useAppSelector(selectCurrentStorage)
+    console.log(currentStorageId)
     const changeStorage = (currentStorageId: string) => {
 
         dispatch(setCurrentStorage(currentStorageId))
@@ -27,6 +28,7 @@ const SelectStorageOrPharmacy = () => {
         dispatch(fetchCategories(currentStorageId))
         dispatch(fetchUserProducts(currentStorageId))
         dispatch(fetchImages(currentStorageId))
+
 
         //dispatch(fetchUserImages(currentStorageId))
     }

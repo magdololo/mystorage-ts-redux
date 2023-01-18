@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useAppSelector} from "../../app/store";
 import {useTranslation} from "react-i18next";
-import {AutocompleteWithCategoriesTitleProps} from "../products/AddProductForm";
+import {AutocompleteWithCategoriesTitleProps} from "../../component/AddProductAndMedicineForm";
 
 import {Category, selectAllCategoriesSortedByRequired} from "../../slices/categoriesSlice";
 

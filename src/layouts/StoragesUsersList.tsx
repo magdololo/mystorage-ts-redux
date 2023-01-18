@@ -34,6 +34,7 @@ const StoragesUsersList = () => {
         changeStorage(userId!!);
         navigate("/categories")
     }
+
     return (
         <>
 

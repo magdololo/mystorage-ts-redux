@@ -10,6 +10,7 @@ import {removeProducts} from "../slices/userProductsSlice";
 import {removeCategories} from "../slices/categoriesSlice";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
+import {removeMedicines} from "../slices/userMedicineSlice";
 
 
 const PharmaciesUsersList = () => {
@@ -25,6 +26,7 @@ const PharmaciesUsersList = () => {
 
         dispatch(setCurrentStorage("pharmacy" + userId))
         dispatch(removeProducts())
+        dispatch(removeMedicines())
         dispatch(removeCategories())
 
         // dispatch(fetchCategoriesPharmacy(userId+"pharmacy"))
@@ -32,52 +34,8 @@ const PharmaciesUsersList = () => {
         // dispatch(fetchUserPharmacyImages(userId+"pharmacy"))
     }
 
-    const options: { value: string, label: string }[] = []
 
-    allAcceptedIncomingInvites.map((invite) => (
-        options.push({value: invite.user_id, label: invite.user_email})
-    ))
-    options.push({value: userId!!, label: t("my_pharmacy")})
 
-    // const handleChange =(e: any)=>{
-    //     console.log(e.value)
-    //     changeStorage(e.value)
-    // }
-
-    // type Option = {
-    //     value: string
-    //     label: string
-    // }
-    // const customStyles: StylesConfig<Option> = {
-    //     option: (provided, state) => ({
-    //
-    //         borderBottom: '1px dotted pink',
-    //         color: state.isSelected ? '#4C1D95' : '#7C3AED',
-    //         padding: 20,
-    //         "&:hover": {
-    //             color: '#4C1D95'
-    //         }
-    //     }),
-    //     control: (styles) => ({
-    //         ...styles,
-    //         width: 280,
-    //         border: 'none',
-    //         margin: '0 auto',
-    //         "&:active": {
-    //             border: 'none',
-    //             boxShadow: "none"
-    //         },
-    //         "&:hover":{
-    //             border: 'none',
-    //             boxShadow: "none"
-    //         },
-    //         "&:focus":{
-    //             border: 'none',
-    //             boxShadow: "none"
-    //         }
-    //     }),
-    //
-    // }
     const onClickChangeStorage = (userId: string) => {
         changeStorage(userId!!);
         navigate("/categories")
@@ -86,15 +44,14 @@ const PharmaciesUsersList = () => {
         <>
             {isBiggerThan960 ?
                 <StorageList>
-                    <StorageItem key={userId} primary={currentStorageId === "pharmacy" + userId}
+                    <StorageItem key={userId + "pharmacy"} primary={currentStorageId === "pharmacy" + userId}
                                  onClick={() => onClickChangeStorage(userId!!)}>{t("my_pharmacy")}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
 
                     {allAcceptedIncomingInvites.map(invite => {
                         return (
                             <>
-                                <StorageItem key={invite.user_id}
-
-                                             primary={currentStorageId === invite.user_id}
+                                <StorageItem key={invite.user_email}
+                                             primary={currentStorageId === "pharmacy" + invite.user_id}
                                              onClick={() => changeStorage(invite.user_id)}>{invite.user_email}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
 
                             </>

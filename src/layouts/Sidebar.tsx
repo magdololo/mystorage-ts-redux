@@ -12,11 +12,10 @@ import {Modal} from "../component/Modal/Modal";
 import {useModal} from "../component/Modal/UseModal";
 
 import AddCoUserForm from "../component/AddCoUserForm";
-import AddProductForm from "../features/products/AddProductForm";
+import AddProductAndMedicineForm from "../component/AddProductAndMedicineForm";
 import {AddProductButton} from "../styles/Products.components";
 import {useMediaQuery} from "usehooks-ts";
 
-//import AddMedicineForm from "../features/medicines/AddMedicineForm";
 
 interface SidebarProps{
     toggleDrawer: null | (()=> void);
@@ -28,7 +27,6 @@ const Sidebar = ({toggleDrawer}: SidebarProps) => {
     const navigate = useNavigate()
     let user = useAppSelector(selectUser);
     const typeStorage = useAppSelector(selectTypeStorage)
-    //const currentStorageId = useAppSelector(selectCurrentStorage)
     const [isEnglish, setIsEnglish] = useState<boolean>(false);
     const {
         isShown: isShownAddProductModal,
@@ -180,7 +178,7 @@ const Sidebar = ({toggleDrawer}: SidebarProps) => {
                    modalContent={AddCoUserForm({handleCloseAddCoUser, isShownAddCoUserModal, handleClick})}/>
             <Modal isShown={isShownAddProductModal} hide={() => handleCloseAddProduct()}
                    modalHeaderText={addProductModalHeader}
-                   modalContent={AddProductForm({handleCloseAddProduct, isShownAddProductModal})}/>
+                   modalContent={AddProductAndMedicineForm({handleCloseAddProduct, isShownAddProductModal})}/>
             <Modal isShown={isShownDeleteAccountModal} hide={() => handleCloseDeleteAccount()} modalHeaderText={""}
                    modalContent={contentModalDeleteAccount}/>
             <Modal isShown={isShownAfterDeleteAccountModal} hide={() => onCloseAfterDeleteAccount()}

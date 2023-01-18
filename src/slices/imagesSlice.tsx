@@ -66,7 +66,6 @@ export const addNewImage = createAsyncThunk<AddNewImageParams, AddNewImageParams
     async (addNewImageParams: AddNewImageParams) => {
         let result = await addDoc(collection(db, "users/" + addNewImageParams.image.uid + "/images"), addNewImageParams.image);
         const newImage = {...addNewImageParams.image, id: result.id} as Image
-        console.log(newImage)
         return {"image": newImage, "notify": addNewImageParams.notify}
 
     }

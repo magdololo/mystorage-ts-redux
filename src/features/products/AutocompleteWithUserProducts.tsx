@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppSelector} from "../../app/store";
 
-import {AutocompleteWithUserProductsProps} from "./AddProductForm";
+import {AutocompleteWithUserProductsProps} from "../../component/AddProductAndMedicineForm";
 
 import {UserProduct} from "../../slices/userProductsSlice";
 import {ProductFromDictionary, selectAllProducts} from "../../slices/allProductsSlice";
@@ -9,8 +9,7 @@ import {ProductFromDictionary, selectAllProducts} from "../../slices/allProducts
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import {TextField} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import {selectCurrentStorage, selectUser} from "../../slices/usersSlice";
-import {selectAllMedicines} from "../../slices/allMedicinesSlice";
+
 
 const filter = createFilterOptions<ProductFromDictionary>();
 
@@ -21,16 +20,7 @@ export const AutocompleteWithUserProducts = ({
                                                  setSelectedProductFromAutocomplete
                                              }: AutocompleteWithUserProductsProps) => {
     const {t} = useTranslation();
-    const allProducts = useAppSelector(selectAllProducts)
-    const allMedicines = useAppSelector(selectAllMedicines)
-    const user = useAppSelector(selectUser)
-    const currentStorageId = useAppSelector(selectCurrentStorage)
-    let optionsStorage = {} as ProductFromDictionary[];
-    if (currentStorageId === user?.uid) {
-        optionsStorage = allProducts
-    } else if (currentStorageId === "pharmacy" + user?.uid) {
-        optionsStorage = allMedicines
-    }
+    const optionsStorage = useAppSelector(selectAllProducts)
 
     return (
 
@@ -67,3 +57,4 @@ export const AutocompleteWithUserProducts = ({
 
     );
 }
+export default AutocompleteWithUserProducts

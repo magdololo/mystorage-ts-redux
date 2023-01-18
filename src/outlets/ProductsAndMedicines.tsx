@@ -10,11 +10,10 @@ const ProductsAndMedicines = () => {
     console.log(currentStorageId)
     return (
         <>
-            {currentStorageId === user?.uid ?
-                <ProductsList/> :
-                currentStorageId === "pharmacy" + user?.uid ?
-                    <MedicinesList/> :
-                    null}
+            {currentStorageId?.startsWith('pharmacy') ?
+                <MedicinesList/> :
+                <ProductsList/>
+            }
         </>
     )
 }

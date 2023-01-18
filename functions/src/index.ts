@@ -41,21 +41,33 @@ exports.onNewShare = functions.firestore
                     user_id: outgoingUserId,
                     shareIdInOut: outgoingShareId
                 })
+
                 const idInviteShare = res.id
                 const shareOutgoingRef = await db.doc(("users/" + outgoingUserId + "/shares/" + outgoingShareId))
-                await shareOutgoingRef.set({incomingShareId: idInviteShare }, {merge: true});
-                if (share.status === "pending"){
-                const respond = await db.collection("users/" + incomingUserId + "/notifications").add({
-                    isRead: false,
-                    cta: outgoingUserEmail,
-                    type: "invite",
-                    date: share.date,
-                    change: "new pending"
-                })
-                console.log(res, respond)
-            }} else {
+                await shareOutgoingRef.set({incomingShareId: idInviteShare}, {merge: true});
+                if (share.status === "pending") {
+                    const respond = await db.collection("users/" + incomingUserId + "/notifications").add({
+                        isRead: false,
+                        cta: outgoingUserEmail,
+                        type: "invite",
+                        date: share.date,
+                        change: "new pending"
+                    })
+
+                    console.log(res, respond)
+                    // const resPharm = await db.collection("users/" + incomingUserId + "/shares").add({
+                    //     user_email: outgoingUserEmail,
+                    //     date: share.date,
+                    //     direction: "incoming",
+                    //     status: share.status,
+                    //     user_id: "pharmacy"+outgoingUserId,
+                    //     shareIdInOut: outgoingShareId
+                    // })
+                }
+            } else {
                 await db.doc("users/" + shareUserId + "/shares/" + outgoingShareId).set({
-                    status: "noUserExist" }, {merge: true});
+                    status: "noUserExist"
+                }, {merge: true});
             }
         }
         return null;
@@ -67,20 +79,21 @@ exports.onNewShare = functions.firestore
          const newValue = change.after.data();
          const previousValue = change.before.data();
          const incomingUserId = context.params.userId
-         if(previousValue.direction == "incoming" && previousValue.status != newValue.status && previousValue.status != "accepted"){
+         if (previousValue.direction == "incoming" && previousValue.status != newValue.status && previousValue.status != "accepted") {
              const newStatus = newValue.status; //accepted
 
              const outgoingUserId = previousValue.user_id;//john id
              const shareId = previousValue.shareIdInOut
              const shareDoc = await db.doc("users/" + outgoingUserId + "/shares/" + shareId).set({
-                 status: newStatus }, {merge: true});
-             await db.doc("users/" + outgoingUserId + "/acceptedShares/" + incomingUserId ).set({});
-
+                 status: newStatus
+             }, {merge: true});
+             await db.doc("users/" + outgoingUserId + "/acceptedShares/" + incomingUserId).set({});
+             await db.doc("users/" + "pharmacy" + outgoingUserId + "/acceptedShares/" + incomingUserId).set({});
              console.log(shareDoc)
              const incomingShareUserId = context.params.userId
              const usersRef = db.collection("users")
              const queryRef = await usersRef.where("uid", "==", incomingShareUserId).get();//merry
-             if(!queryRef.empty) {
+             if (!queryRef.empty) {
                  let incomingUserEmail = "";
                  queryRef.forEach(doc => {
                      incomingUserEmail = doc.data()!!.email;//email marry
