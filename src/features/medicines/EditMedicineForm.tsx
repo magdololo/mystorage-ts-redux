@@ -44,12 +44,8 @@ const EditMedicineForm = ({handleClose}: EditProductFormProps) => {
     const editProduct = useAppSelector(state => state.userProducts.editProduct)
     const editMedicine = useAppSelector(state => state.userMedicines.editMedicine)
     const allCategories = useAppSelector(selectAllCategories)
-    const categoriesOfProducts = allCategories.filter(category => category.user === user?.uid)
     const categoriesOfMedicines = allCategories.filter(category => category.user === "pharmacy" + user?.uid)
-    const editProductCategory = categoriesOfProducts.find(category => category.id === editProduct?.categoryId)
     const editMedicineCategory = categoriesOfMedicines.find(category => category.id === editMedicine?.categoryId)
-    console.log(editProductCategory)
-    console.log(editMedicineCategory)
     const dispatch = useAppDispatch()
 
     const unitsMedicines = [
@@ -72,8 +68,6 @@ const EditMedicineForm = ({handleClose}: EditProductFormProps) => {
     }
 
     const onSubmit: SubmitHandler<EditFormValues> = data => {
-        console.log(data)
-        console.log("on submit")
         let updatedMedicine: UserMedicine = {
             medicineId: editMedicine?.medicineId ?? "",
             name: data.newProductName,

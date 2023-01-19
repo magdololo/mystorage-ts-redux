@@ -35,8 +35,6 @@ const AddCategoryForm = ({closeAddCategoryModal}: AddCategoryFormProps) => {
     const images = useAppSelector(selectImagesCurrentStorage(currentStorageId as string))
 
 
-    //let imagesOptions: Array<ReactElement> = []
-
     let imagesOptions = images?.map(image => (
         <div key={image.id} onClick={() => {
             setPickedImage(image.url)

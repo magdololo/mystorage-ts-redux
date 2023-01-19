@@ -1,15 +1,11 @@
 import React from 'react';
 import {useAppSelector} from "../../app/store";
-
 import {AutocompleteWithUserProductsProps} from "../../component/AddProductAndMedicineForm";
-
 import {UserProduct} from "../../slices/userProductsSlice";
 import {ProductFromDictionary, selectAllProducts} from "../../slices/allProductsSlice";
-
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import {TextField} from "@mui/material";
 import {useTranslation} from "react-i18next";
-
 
 const filter = createFilterOptions<ProductFromDictionary>();
 

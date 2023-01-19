@@ -6,7 +6,6 @@ import {
     UserMedicine
 } from "../slices/userMedicineSlice";
 import {useAppSelector, useAppDispatch} from "../app/store";
-import {selectAllCategories} from "../slices/categoriesSlice";
 import React, {useState} from "react";
 import {useModal} from "../component/Modal/UseModal";
 import {useMediaQuery} from "@mui/material";
@@ -23,7 +22,6 @@ import {useTranslation} from "react-i18next";
 const MedicinesList = () => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
-    const categories = useAppSelector(selectAllCategories)
     const userMedicines = useAppSelector(selectUserMedicines)
     let [todayDate] = useState(new Date());
     const {
@@ -59,8 +57,7 @@ const MedicinesList = () => {
         dispatch(deleteUserMedicine(userMedicine))
 
     }
-    console.log(userMedicines)
-    console.log(categories)
+
     return (
         <>
             {isSmallerThan1280 ? <ReturnToCategoryList/> : null}
@@ -90,11 +87,6 @@ const MedicinesList = () => {
                                             {product.openDate ?
                                                 <span>Data otwarcia&#58; {product.openDate.toISOString().substring(0, 10)} </span> : ""} &nbsp;
                                         </div> : <span></span>}
-                                    {/*<div className="text-gray-light text-md capitalize">{t("products.ProductsList.productCategory")}:*/}
-                                    {/*    <Link to={"/categories/" + product.categoryPath}>*/}
-                                    {/*        <span className="capitalize text-md align-baseline text-gray font-bold ml-1">{product.categoryTitle}</span>*/}
-                                    {/*    </Link>*/}
-                                    {/*</div>*/}
                                 </div>
                                 <div className={"h-1/3 md:flex md:justify-end md:items-end"}>
                                     <div className={"md:flex md:justify-end"}>

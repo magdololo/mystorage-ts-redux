@@ -276,20 +276,23 @@ const SectionBox = styled.div<SectionBoxProps>`
   margin: 0 auto;
   padding-top: ${props=>props.size};
   font-family: "Noto Sans", sans-serif;
-  .noVisibilityOnMobile{
+
+  .noVisibilityOnMobile {
     display: none;
   }
+
   @media (min-width: 650px) {
     flex-direction: row;
-    .noVisibilityOnMobile{
+    .noVisibilityOnMobile {
       display: block;
     }
+
     .visibilityOnMobile {
       display: none;
     }
   }
   @media (min-width: 960px) {
-    max-width: 66rem;
+    max-width: 73rem;
     margin: 0 auto;
   }
 `

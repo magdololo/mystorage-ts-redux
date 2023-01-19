@@ -74,11 +74,7 @@ const SearchUserMedicinePage = () => {
     }
 
     let content;
-    console.log(userMedicines)
-    console.log(searchMedicineId)
-    console.log(searchUserMedicineFromSelect)
-    console.log(searchInputMedicineValue)
-    console.log(categories)
+
     type SearchMedicine = UserMedicine & { categoryPath: string, categoryTitle: string }
     const searchMedicinesWithCategory: SearchMedicine[] = searchMedicines.map(searchMedicine => {
         const searchMedicineCategory = categories.find(category => category.id === searchMedicine.categoryId)!

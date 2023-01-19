@@ -1,18 +1,16 @@
 import {useAppSelector} from "../app/store";
-import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
+import {selectTypeStorage} from "../slices/usersSlice";
 import ProductsList from "./ProductsList";
 import MedicinesList from "./MedicinesList";
 
 const ProductsAndMedicines = () => {
-    const user = useAppSelector(selectUser)
-    const currentStorageId = useAppSelector(selectCurrentStorage)
-    console.log(user?.uid)
-    console.log(currentStorageId)
+
+    const typeStorage = useAppSelector(selectTypeStorage)
     return (
         <>
-            {currentStorageId?.startsWith('pharmacy') ?
-                <MedicinesList/> :
-                <ProductsList/>
+            {typeStorage === "product" ?
+                <ProductsList/> :
+                <MedicinesList/>
             }
         </>
     )

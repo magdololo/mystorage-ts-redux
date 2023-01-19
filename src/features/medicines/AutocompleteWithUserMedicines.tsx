@@ -18,8 +18,6 @@ const AutocompleteWithUserMedicines = ({
     const optionsStorage = useAppSelector(selectAllMedicines)
 
 
-    //let optionsStorage = allMedicines
-
     return (
 
         <Autocomplete

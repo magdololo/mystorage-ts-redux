@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../app/store";
 import {useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
-
 import {selectUser} from "../slices/usersSlice";
 import {
     changeUnreadNotificationsToRead,
