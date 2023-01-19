@@ -24,8 +24,7 @@ import {initializeApp} from "firebase/app";
 import {firebaseConfig} from './firebase';
 import SharesPage from "./outlets/SharesPage";
 import SingleCategoryPage from "./outlets/SingleCategoryPage";
-import {library} from '@fortawesome/fontawesome-svg-core'
-import {fas} from '@fortawesome/free-solid-svg-icons'
+
 import SearchUserProductPage from "./outlets/SearchUserProductPage";
 import {doc, getDoc} from "firebase/firestore";
 import {useTranslation} from "react-i18next";
@@ -36,7 +35,7 @@ import SearchUserMedicinePage from "./outlets/SearchUserMedicinePage";
 //import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 
 
-library.add(fas)
+// library.add(fas)
 
 function App() {
     initializeApp(firebaseConfig);
