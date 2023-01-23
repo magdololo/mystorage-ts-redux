@@ -3,9 +3,9 @@ import Select from "react-select";
 import {useAppDispatch, useAppSelector} from "../app/store";
 import {selectAcceptedIncomingInvites} from "../slices/sharesSlice";
 import {selectCurrentStorage, selectUser, setCurrentStorage} from "../slices/usersSlice";
-import {fetchUserProducts, removeProducts} from "../slices/userProductsSlice";
-import {fetchCategories, removeCategories} from "../slices/categoriesSlice";
-import {fetchImages, removeImages} from "../slices/imagesSlice";
+import {removeProducts} from "../slices/userProductsSlice";
+import {removeCategories} from "../slices/categoriesSlice";
+import {removeImages} from "../slices/imagesSlice";
 import {useTranslation} from "react-i18next";
 import {singleSelectStyle} from "../searchStyle";
 import {useLocalStorage} from "usehooks-ts";
@@ -27,9 +27,6 @@ const SelectStorageOrPharmacy = () => {
         dispatch(removeProducts())
         dispatch(removeCategories())
         dispatch(removeImages())
-        dispatch(fetchCategories(currentStorageId))
-        dispatch(fetchUserProducts(currentStorageId))
-        dispatch(fetchImages(currentStorageId))
         setLastUser(currentStorageId)
 
     }
