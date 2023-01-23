@@ -1,4 +1,4 @@
-import { StylesConfig } from "react-select";
+import {StylesConfig} from "react-select";
 
 export type Variants = "primary" | "secondary";
 
@@ -52,7 +52,7 @@ const VARIANTS: { [key in Variants]: VariantStyle } = {
         },
 
         placeholder: {
-            color: "pink"
+            color: "#6b21a8"
 
         },
 
@@ -136,9 +136,11 @@ type Option = {
     padding: string
     class: string
 }
+
+type IsMulti = false;
 export const singleSelectStyle = (
     variant: Variants = "primary"
-): StylesConfig<Option> => {
+): StylesConfig<Option, IsMulti> => {
     const style = VARIANTS[variant];
 
     return {
@@ -147,17 +149,20 @@ export const singleSelectStyle = (
             border: state.isFocused
                 ? `1px solid ${style.control.border}`
                 : "1px solid #6b21a8",
-            "&:hover":{
+            "&:hover": {
                 border: `1px solid ${style.control.border}`,
                 boxShadow: "none"
+            },
+            "&:active": {
+                backgroundColor: "yellow"
             },
             borderRadius: "0.225rem",
             backgroundColor: style.control.backgroundColor,
             boxShadow: state.isFocused
                 ? `0 0 0 1.5px ${style.control.boxShadow},0 0 #0000`
                 : "",
-            transition: "box-shadow 0.1s ease-in-out",
-            padding: "4px 2px"
+            // transition: "box-shadow 0.1s ease-in-out",
+            // padding: "4px 2px"
         }),
 
         placeholder: (provided) => ({
@@ -202,19 +207,27 @@ export const singleSelectStyle = (
             lineHeight: "1.75rem",
             color: "#111827"
 
+
         }),
 
         option: (provided, state) => ({
             ...provided,
             fontFamily: "Inter",
             fontWeight: 400,
-            fontSize: state.data.class === "optionBase" ? "1.2rem": "1rem",
+            fontSize: state.data.class === "optionBase" ? "1.2rem" : "1rem",
             lineHeight: "1.25rem",
             backgroundColor: state.isFocused
                 ? style.option.backgroundColorFocused
                 : style.option.backgroundColor,
             color: style.option.color,
-            paddingLeft: state.data.class === "optionBase" ? "20px": "40px"
+            paddingLeft: state.data.class === "optionBase" ? "20px" : "40px",
+            "&:hover": {
+                border: `1px solid red`,
+                boxShadow: "none"
+            },
+            "&:active": {
+                backgroundColor: "yellow"
+            },
         }),
 
         menu: (provided) => ({

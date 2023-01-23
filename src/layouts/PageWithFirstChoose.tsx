@@ -62,13 +62,22 @@ const PageWithFirstChoose = () => {
     </>;
     return (
         <>
+            {didSee === false && greeting}
             {mobileLayout ?
                 <div className={"mt-64"}>
                     <div className={"flex flex-col w-10/12 mx-auto justify-center align-middle"}>
                         <button
-                            className={"w-10/12 mx-auto border border-1 border-purple-800 rounded-sm cursor-pointer px-16 py-10 font-bold text-gray-light uppercase text-md mb-4 tracking-wider"}>{t('my_storage')}</button>
+                            className={"w-10/12 mx-auto border border-1 border-purple-800 rounded-sm cursor-pointer px-16 py-10 font-bold text-gray-light uppercase text-md mb-4 tracking-wider"}
+                            onClick={() => {
+                                dispatch(setCurrentStorage(user!!.uid))
+                                navigate("/categories")
+                            }}>{t('my_storage')}</button>
                         <button
-                            className={"w-10/12 mx-auto border border-1 border-purple-800 rounded-sm cursor-pointer px-16 py-10 font-bold text-gray-light uppercase text-md mt-4 tracking-wider"}>{t('my_pharmacy')}</button>
+                            className={"w-10/12 mx-auto border border-1 border-purple-800 rounded-sm cursor-pointer px-16 py-10 font-bold text-gray-light uppercase text-md mt-4 tracking-wider"}
+                            onClick={() => {
+                                dispatch(setCurrentStorage("pharmacy" + user!!.uid))
+                                navigate("/categories")
+                            }}>{t('my_pharmacy')}</button>
                     </div>
                 </div>
                 :
@@ -97,7 +106,7 @@ const PageWithFirstChoose = () => {
                     </div>
                 </div>
             }
-            {didSee === false && greeting}
+
 
         </>
     )

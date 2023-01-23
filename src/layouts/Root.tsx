@@ -6,7 +6,7 @@ import AppHeader from "./AppHeader";
 import Sidebar from "./Sidebar";
 import FooterBox from "./FooterBox";
 import BottomMenu from "./BottomMenu";
-import {useMediaQuery} from "usehooks-ts";
+import {useLocalStorage, useMediaQuery} from "usehooks-ts";
 
 import {MainPageLayout, Header, Main, SideBar, FooterBar, Section} from "../styles/Root.components";
 import {
@@ -21,16 +21,23 @@ import {
     startAt, Timestamp
 } from "firebase/firestore";
 import {db} from "../firebase";
-import {selectCurrentStorage, selectUser} from "../slices/usersSlice";
+import {selectCurrentStorage, selectUser, setCurrentStorage} from "../slices/usersSlice";
 import {addNotification, modifyNotification, Notification} from "../slices/notificationsSlice";
 import {addShare, modifyShare, Invite} from "../slices/sharesSlice";
-import {addCategory, modifyCategory, Category, removeCategory} from "../slices/categoriesSlice";
-import {addImage, modifyImage, removeImage} from "../slices/imagesSlice";
+import {
+    addCategory,
+    modifyCategory,
+    Category,
+    removeCategory,
+    removeCategories,
+    fetchCategories
+} from "../slices/categoriesSlice";
+import {addImage, fetchImages, modifyImage, removeImage, removeImages} from "../slices/imagesSlice";
 import {
     UserProduct,
     addProduct,
     modifyProduct,
-    removeProduct,
+    removeProduct, removeProducts, fetchUserProducts,
 
 } from "../slices/userProductsSlice";
 import {ToastContainer} from "react-toastify";
@@ -40,13 +47,33 @@ import {addMedicine, modifyMedicine, removeMedicine, UserMedicine} from "../slic
 import {Image} from "../slices/imagesSlice";
 
 
+
 const Root = () => {
     let user = useAppSelector(selectUser);
+
+
     const dispatch = useAppDispatch()
-    const currentStorageId = useAppSelector(selectCurrentStorage)
+    let currentStorageId = useAppSelector(selectCurrentStorage)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
     console.log(currentStorageId)
     console.log(user?.uid + " userId from root")
+    const [lastStorageId] = useLocalStorage('lastStorage', user?.uid)
+    console.log(lastStorageId)
+    const changeStorage = (currentStorageId: string) => {
+        dispatch(setCurrentStorage(currentStorageId))
+        dispatch(removeProducts())
+        dispatch(removeCategories())
+        dispatch(removeImages())
+        dispatch(fetchCategories(currentStorageId))
+        dispatch(fetchUserProducts(currentStorageId))
+        dispatch(fetchImages(currentStorageId))
+
+    }
+    useEffect(() => {
+        if (lastStorageId) {
+            changeStorage(lastStorageId)
+        }
+    }, [])
     useEffect(() => {
         if (!currentStorageId) {
             return
@@ -94,7 +121,7 @@ const Root = () => {
                         shareDate = Timestamp.fromMillis(data.date.seconds * 1000).toDate();
                     }
                     if (change.type === "added") {
-                        console.log(data + " data add share")
+                        console.log(data)
                         dispatch(addShare({...data, date: shareDate, id: change.doc.id} as Invite))
                     }
                     if (change.type === "modified") {
@@ -255,7 +282,10 @@ const Root = () => {
             <MainPageLayout>
                 <Header><AppHeader/></Header>
                 <Section>
-                    {isBiggerThan960 ? <ToggleSections/> : <SelectStorageOrPharmacy/>}
+                    {isBiggerThan960 ? <ToggleSections/> :
+                        // <SelectStorages/>
+                        <SelectStorageOrPharmacy/>
+                    }
                 </Section>
                 <Main>
                     <Outlet/>
