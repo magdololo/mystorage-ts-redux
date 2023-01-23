@@ -31,11 +31,8 @@ import {useTranslation} from "react-i18next";
 import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 import {useAppSelector} from "./app/store";
 import SearchUserMedicinePage from "./outlets/SearchUserMedicinePage";
-//import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
-//import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 
 
-// library.add(fas)
 
 function App() {
     initializeApp(firebaseConfig);
@@ -44,6 +41,8 @@ function App() {
     const {i18n} = useTranslation();
     const typeStorage = useAppSelector(selectTypeStorage)
     let userLanguage = i18n.language
+
+
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
 

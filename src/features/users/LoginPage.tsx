@@ -108,7 +108,7 @@ const LoginPage = () => {
                     userLanguage: userLanguage
                 }
                 dispatch(getUserData(loginData))
-                navigate("/categories")
+                navigate("/choose")
             }
 
         } catch (error: any) {

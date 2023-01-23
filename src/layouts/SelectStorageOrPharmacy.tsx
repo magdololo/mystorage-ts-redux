@@ -8,7 +8,7 @@ import {fetchCategories, removeCategories} from "../slices/categoriesSlice";
 import {fetchImages, removeImages} from "../slices/imagesSlice";
 import {useTranslation} from "react-i18next";
 import {singleSelectStyle} from "../searchStyle";
-
+import {useLocalStorage} from "usehooks-ts";
 
 
 const SelectStorageOrPharmacy = () => {
@@ -18,9 +18,11 @@ const SelectStorageOrPharmacy = () => {
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
     const currentStorageId = useAppSelector(selectCurrentStorage)
-    console.log(currentStorageId)
-    const changeStorage = (currentStorageId: string) => {
 
+    const [, setLastUser] = useLocalStorage('lastStorage', userId)
+
+
+    const changeStorage = (currentStorageId: string) => {
         dispatch(setCurrentStorage(currentStorageId))
         dispatch(removeProducts())
         dispatch(removeCategories())
@@ -28,25 +30,52 @@ const SelectStorageOrPharmacy = () => {
         dispatch(fetchCategories(currentStorageId))
         dispatch(fetchUserProducts(currentStorageId))
         dispatch(fetchImages(currentStorageId))
+        setLastUser(currentStorageId)
 
-
-        //dispatch(fetchUserImages(currentStorageId))
     }
-    const invitesNoChoose = allAcceptedIncomingInvites.filter((invite) => invite.user_id !== currentStorageId)
+    const invitesNoChoose = allAcceptedIncomingInvites
+    console.log(invitesNoChoose)
     const options: { value: string, label: string, padding: string, class: string }[] = []
 
+    options.push({value: userId!!, label: t("my_storage"), padding: "20px", class: "optionBase"})
+
     invitesNoChoose.map((invite) => (
-        options.push({value: invite.user_id, label: invite.user_email, padding: "40px", class: "optionInvites"})
+        options.push({value: invite.user_id, label: invite.user_email, padding: "40px", class: "optionInvites",})
     ))
 
-    options.unshift({value: userId!!, label: t("my_storage"), padding: "20px", class: "optionBase"})
 
-    options.push({value: userId!!, label: t("my_pharmacy"), padding: "20px", class: "optionBase"})
+    options.push({value: "pharmacy" + userId!!, label: t("my_pharmacy"), padding: "20px", class: "optionBase"})
 
+    invitesNoChoose.map((invite) => (
+        options.push({
+            value: "pharmacy" + invite.user_id,
+            label: invite.user_email,
+            padding: "40px",
+            class: "optionInvites",
+        })
+    ))
+
+    console.log(options)
     const handleChange = (e: any) => {
-        console.log(e.value)//id wybranego currentStorage
-        changeStorage(e.value)
+        if (e) {
+            console.log(e.value)//id wybranego currentStorage
+            changeStorage(e.value)
+        }
+
     }
+    // const changeStorage = (userId: string) => {
+    //
+    //     dispatch(setCurrentStorage("pharmacy" + userId))
+    //     dispatch(removeProducts())
+    //     dispatch(removeMedicines())
+    //     dispatch(removeCategories())
+    //     setLastUser("pharmacy" + userId)
+    // }
+
+    // useEffect(()=>{
+    //     if(currentStorageId && selectEl.current)
+    //     selectEl.current.setValue(options.find(option => option.value === currentStorageId),"select-option")
+    // },[currentStorageId])
 
     // type Option = {
     //     value: string
@@ -87,15 +116,18 @@ const SelectStorageOrPharmacy = () => {
     //
     // }
     console.log(currentStorageId)
-    return(
+
+    console.log(options.find(option => option.value === currentStorageId))
+    // const indexOfCurrentStorageInOptions= options.indexOf(currentStorage!)
+    return (
         <>
             <Select
-
                 options={options}
-                defaultValue={options[options.length - 1]}
+                defaultValue={options[0]}
                 onChange={handleChange}
                 //styles={customStyles}
                 styles={singleSelectStyle("primary")}
+
             />
 
 

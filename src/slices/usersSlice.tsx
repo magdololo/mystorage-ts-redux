@@ -186,13 +186,16 @@ const usersSlice = createSlice({
                 console.log('Delete user account')
             })
             .addCase(getUserData.fulfilled, (state, action) => {
+
                 state.user = action.payload
+                console.log(state.user)
                 state.currentStorageId = state.user!!.uid
             })
     }
 });
 export const {login, logout, setCurrentStorage} = usersSlice.actions;
 export const selectUser = (state: RootState) => state.users.user;
+
 export const selectCurrentStorage = (state: RootState) => state.users.currentStorageId
 export const selectTypeStorage = (state: RootState) => state.users.typeStorage
 export default usersSlice.reducer

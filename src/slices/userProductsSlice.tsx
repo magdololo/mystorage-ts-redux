@@ -67,32 +67,24 @@ const userProductsAdapter = createEntityAdapter<UserProduct>({
 });
 
 export const fetchUserProducts = createAsyncThunk('userProducts/fetchUserProducts', async (userId:string) => {
-       console.log(userId)
+
         try {
             const userProducts: Array<UserProduct> = [];
             if (userId === "")
                 return userProducts
-            console.log(userId + "hejjjjjj")
             const docRef = doc(db, "users", userId);
-            let q = query(collectionGroup(db, "products"), orderBy(documentId()) ,startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
+            let q = query(collectionGroup(db, "products"), orderBy(documentId()), startAt(docRef.path), endAt(docRef.path + "\uf8ff"));
             const querySnapshot = await getDocs(q);
-            console.log(querySnapshot)
             querySnapshot.forEach((doc) => {
-
                 let productDoc = doc.data() as FirebaseUserProduct;
                 productDoc.id = doc.id;
-
                 let expireDate: Date | null = null;
                 if (productDoc.hasOwnProperty("expireDate") && productDoc.expireDate !== null) {
                     let expireTimestamp = Timestamp.fromMillis(productDoc.expireDate.seconds * 1000);
-                    //
                     expireDate = expireTimestamp.toDate();
                 }
-
                 let product = {...productDoc, expireDate: expireDate} as UserProduct
-
                 userProducts.push(product);
-
             })
             return userProducts
         } catch (error) {
