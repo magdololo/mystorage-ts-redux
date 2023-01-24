@@ -1,6 +1,6 @@
 
 .App {
-
+    position: relative;
 }
 .MuiAutocomplete-root {
   width: 100% !important;
@@ -179,23 +179,34 @@ div::-webkit-scrollbar {
 /*    height: 30vh;*/
 /*    overflow: hidden;*/
 /*}*/
+.boxSpinner {
+    position: arelative;
+    width: 100vw;
+    /*height: 40px;*/
+    padding-top: 4rem;
+    z-index: 900;
+    background-color: rgba(255, 255, 255, .95);
+}
+
 .loader {
     position: absolute;
-    width: 300px;
-    height: 300px;
-    z-index: 1000;
-    background-color: rgba(255, 255, 255, .6);
-    border-radius: 50%;
-    top: 50%;
+    width: 100vw;
+    height: 450px;
+
+    top: 20%;
     left: 50%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, .9);
+    /*transform: translateX(50%);*/
+    /*//transform: translateY(50%);*/
     transform: translate(-50%, 0);
-    /*//transform: translateY(-50%);*/
     margin: 0 auto;
 
 }
 .spinner {
-    margin: 0 auto;
     animation: Rotate 2.4s both infinite linear;
+    margin: 15rem auto 0;
+
 }
 
 .path {

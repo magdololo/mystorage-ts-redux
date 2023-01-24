@@ -51,7 +51,9 @@ const LoginPage = () => {
     }>();
 
     const onSubmit = handleSubmit((data) => {
+
         setLoginInProgres(true)
+
         signInWithEmailAndPassword(auth, data.email, data.password)
             .then((userCredential) => {
                 setLoginInProgres(false)
@@ -72,6 +74,7 @@ const LoginPage = () => {
 
             })
             .catch((error) => {
+                setLoginInProgres(false)
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log("An error occured: ", errorMessage);
@@ -115,29 +118,10 @@ const LoginPage = () => {
             console.log(error.code)
         }
     }
-    // const signUserIfCheckboxStateIsTrue=(user: User)=> {
-    //     if(checkboxState) {
-    //         dispatch(addNewUserToUsersCollection({
-    //             uid: user.uid,
-    //             email: user.email ?? "",
-    //             provider: user.providerId,
-    //             didSeeGreeting: false
-    //         }))
-    //         const addDefaultCategoriesToNewUserParams: AddDefaultCategoriesToNewUserProps = {
-    //             userId: user.uid,
-    //             userLanguage: userLanguage
-    //         }
-    //         dispatch(addDefaultCategoriesToNewUser(addDefaultCategoriesToNewUserParams))
-    //
-    //         dispatch(
-    //             login({
-    //                 uid: user.uid,
-    //                 email: user.email ?? "",
-    //                 provider: user.providerId,
-    //                 didSeeGreeting: true
-    //             }))
-    //         navigate("/choose")
-    //     }
+    // const handleFocus = ()=>{
+    //     console.log("onFocus")
+    //     console.log(errorMessage)
+    //     setErrorMessage("")
     //
     // }
 
@@ -173,7 +157,9 @@ const LoginPage = () => {
                                             m-0
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                    id="exampleInputEmail2"
-                                   aria-describedby="emailHelp"/>
+                                   aria-describedby="emailHelp"
+                                //onFocus={handleFocus}
+                            />
 
                             {errorMessage === t("errors.emailTypePattern") ?
                                 <span className="text-sm text-red">{t("users.errorMessage.email")}</span> : null}
@@ -202,6 +188,7 @@ const LoginPage = () => {
                                             m-0
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                    id="exampleInputPassword2"
+                                //onFocus={handleFocus}
                             />
                             <i onClick={togglePasswordVisibility}>{eye}</i>{" "}
                             {errorMessage === t("users.RegisterPage.message.wrongPassword") &&
@@ -309,12 +296,6 @@ const LoginPage = () => {
                                 {t("acceptRegulations")}
                             </label>
                         </div>
-                        {/*<div className="mx-auto text-lg text-purple text-center max-w-sm  ">*/}
-                        {/*    <button type="button"*/}
-                        {/*            className="mt-4 inline-block px-6 py-2 border-2 border-purple-600 text-purple-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"*/}
-                        {/*            onClick={() => signUserIfCheckboxStateIsTrue(user)}>{t("buttons.register")}*/}
-                        {/*    </button>*/}
-                        {/*</div>*/}
                         <div className="text-lg">
                             <button onClick={() => {
                                 setContent(false)
@@ -323,9 +304,6 @@ const LoginPage = () => {
                     </>
                 }
             </div>
-            {/*{ !userNotVerified ?*/}
-            {/*    <div><h3 className={"w-10/12 mx-auto pt-12 font-medium text-gray-light text-xl md:w-5/12"}>{t("notify.verifiedEmail")}</h3></div> :*/}
-            {/*    null }*/}
             {loginInProgress ? <Spinner/> : <></>}
         </>
     )
