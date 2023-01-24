@@ -30,20 +30,18 @@ const SelectStorageOrPharmacy = () => {
         setLastUser(currentStorageId)
 
     }
-    const invitesNoChoose = allAcceptedIncomingInvites
-    console.log(invitesNoChoose)
+
     const options: { value: string, label: string, padding: string, class: string }[] = []
 
     options.push({value: userId!!, label: t("my_storage"), padding: "20px", class: "optionBase"})
 
-    invitesNoChoose.map((invite) => (
+    allAcceptedIncomingInvites.map((invite) => (
         options.push({value: invite.user_id, label: invite.user_email, padding: "40px", class: "optionInvites",})
     ))
 
-
     options.push({value: "pharmacy" + userId!!, label: t("my_pharmacy"), padding: "20px", class: "optionBase"})
 
-    invitesNoChoose.map((invite) => (
+    allAcceptedIncomingInvites.map((invite) => (
         options.push({
             value: "pharmacy" + invite.user_id,
             label: invite.user_email,
@@ -51,8 +49,6 @@ const SelectStorageOrPharmacy = () => {
             class: "optionInvites",
         })
     ))
-
-    console.log(options)
     const handleChange = (e: any) => {
         if (e) {
             console.log(e.value)//id wybranego currentStorage
@@ -60,20 +56,6 @@ const SelectStorageOrPharmacy = () => {
         }
 
     }
-    // const changeStorage = (userId: string) => {
-    //
-    //     dispatch(setCurrentStorage("pharmacy" + userId))
-    //     dispatch(removeProducts())
-    //     dispatch(removeMedicines())
-    //     dispatch(removeCategories())
-    //     setLastUser("pharmacy" + userId)
-    // }
-
-    // useEffect(()=>{
-    //     if(currentStorageId && selectEl.current)
-    //     selectEl.current.setValue(options.find(option => option.value === currentStorageId),"select-option")
-    // },[currentStorageId])
-
     // type Option = {
     //     value: string
     //     label: string
@@ -112,22 +94,19 @@ const SelectStorageOrPharmacy = () => {
     //     }),
     //
     // }
-    console.log(currentStorageId)
 
-    console.log(options.find(option => option.value === currentStorageId))
-    // const indexOfCurrentStorageInOptions= options.indexOf(currentStorage!)
     return (
         <>
             <Select
                 options={options}
-                defaultValue={options[0]}
+                //defaultValue={options[0]}
+                value={options.find(option => option.value === currentStorageId)}
+                aria-label={"Wybierz"}
                 onChange={handleChange}
                 //styles={customStyles}
                 styles={singleSelectStyle("primary")}
 
             />
-
-
         </>
     )
 }
