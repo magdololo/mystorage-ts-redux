@@ -1,8 +1,8 @@
-import React, {useEffect, Suspense} from "react";
+import React, {useEffect, Suspense, useState} from "react";
 import {useDispatch} from 'react-redux';
 import {auth, onAuthStateChanged, db} from './firebase';
 
-import {getUserData, LoginData, selectTypeStorage} from "./slices/usersSlice";
+import {getUserData, LoginData, selectTypeStorage, selectUser} from "./slices/usersSlice";
 import {
     Routes,
     Route,
@@ -31,6 +31,7 @@ import {useTranslation} from "react-i18next";
 import ProductsAndMedicines from "./outlets/ProductsAndMedicines";
 import {useAppSelector} from "./app/store";
 import SearchUserMedicinePage from "./outlets/SearchUserMedicinePage";
+import {useLocalStorage} from "usehooks-ts";
 
 
 
@@ -41,28 +42,35 @@ function App() {
     const {i18n} = useTranslation();
     const typeStorage = useAppSelector(selectTypeStorage)
     let userLanguage = i18n.language
-
-
+    const [authChanged, setAuthChanged] = useState(false)
+    const user = useAppSelector(selectUser)
+    console.log(user)
+    const [lastStorageId] = useLocalStorage('lastStorage', user?.uid)
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
-
+            console.log(auth.currentUser)
             if (user === null) {
                 return
             }
+            if (authChanged) return
+            setAuthChanged(true)
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
             let doExist = docSnap.exists()
             if (!doExist) {
                 console.log("info")
-            }
-            else {
+            } else {
                 const loginData: LoginData = {
                     userId: user?.uid as string,
                     userLanguage: userLanguage
                 }
                 dispatch(getUserData(loginData)
                 );
-                navigate("/categories")
+                if (!lastStorageId) {
+                    navigate("/choose")
+                } else {
+                    navigate("/categories")
+                }
             }
         })
         }, [])// eslint-disable-line react-hooks/exhaustive-deps

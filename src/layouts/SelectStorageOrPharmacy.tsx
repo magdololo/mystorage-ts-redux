@@ -18,7 +18,7 @@ const SelectStorageOrPharmacy = () => {
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
     const currentStorageId = useAppSelector(selectCurrentStorage)
-
+    console.log(userId)
     const [, setLastUser] = useLocalStorage('lastStorage', userId)
 
 
