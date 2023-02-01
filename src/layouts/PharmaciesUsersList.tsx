@@ -35,7 +35,7 @@ const PharmaciesUsersList = () => {
             {isBiggerThan960 ?
                 <StorageList>
                     <StorageItem key={userId + "pharmacy"} primary={currentStorageId === "pharmacy" + userId}
-                                 onClick={() => changeStorage(userId!!)}>{t("my_pharmacy")}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
+                                 onClick={() => changeStorage('pharmacy' + userId!!)}>{t("my_pharmacy")}<ArrowRight><ChevronRightIcon/></ArrowRight></StorageItem>
 
                     {allAcceptedIncomingInvites.map(invite => {
                         return (

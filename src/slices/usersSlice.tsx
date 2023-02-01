@@ -7,7 +7,7 @@ import {
     getDoc,
     collection,
     updateDoc,
-    where,
+    where, setDoc,
 } from "firebase/firestore";
 import {db} from "../firebase";
 import {addNewCategory, Category} from "./categoriesSlice";
@@ -38,6 +38,30 @@ const initialState: UserState = {
     defaultPharmacyImages: [],
 }
 
+
+export const addNewUserToUsers = createAsyncThunk('users/addNewUserToUsers', async (user: User) => {
+    let newUser: User = {
+        uid: user.uid,
+        email: user.email,
+        provider: "",
+        didSeeGreeting: false,
+        defaultCategoriesAdded: false
+    }
+    let newPharmacyUser = {
+        uid: "pharmacy" + user.uid,
+        defaultCategoriesAdded: false
+    }
+    try {
+        console.log(user.email)
+        console.log(user.uid)
+        console.log(newUser)
+        console.log(newPharmacyUser)
+        await setDoc(doc(db, "users", user.uid), newUser)
+        await setDoc(doc(db, "users", 'pharmacy' + user.uid), newPharmacyUser)
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 export interface LoginData {
     userId: string,
@@ -89,6 +113,8 @@ export const addDefaultCategoriesAndImagesToNewUser = createAsyncThunk<boolean, 
                 thunkApi.dispatch(addNewPharmacyImage({image, notify: false}))
             })
             await updateDoc(userRef, {"defaultCategoriesAdded": true})
+            let userPharmRef = doc(db, "users/" + "pharmacy" + addDefaultCategoriesToNewUserProps.userId);
+            await updateDoc(userPharmRef, {"defaultCategoriesAdded": true})
         }
     } catch (error) {
         console.log(error)
@@ -130,11 +156,16 @@ export const getUserData = createAsyncThunk<User | null, LoginData, {
     try {
         const userRef = doc(db, "users/" + loginData.userId)
         const userDoc = await getDoc(userRef)
-
         if (userDoc.exists()) {
+
             const user = userDoc.data() as User
+            console.log("user")
+            console.log(user)
             if (!user.defaultCategoriesAdded) {
                 await thunkApi.dispatch(addDefaultCategoriesAndImagesToNewUser(loginData))
+                await updateDoc(userRef, {"defaultCategoriesAdded": true})
+                let userPharmRef = doc(db, "users/" + "pharmacy" + loginData.userId);
+                await updateDoc(userPharmRef, {"defaultCategoriesAdded": true})
             }
 
             return user
@@ -160,6 +191,7 @@ const usersSlice = createSlice({
             state.user = action.payload;
         },
         setCurrentStorage: (state, action: PayloadAction<string>) => {
+            console.log(action.payload)
             state.currentStorageId = action.payload
             state.currentStorageId.startsWith("pharmacy") ?
                 state.typeStorage = "medicine" :

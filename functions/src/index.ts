@@ -1,7 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-
-
+import {provider} from "firebase-functions/lib/providers/auth";
 
 
 admin.initializeApp();
@@ -202,8 +201,10 @@ exports.deleteSubcollectionsOnDeleteUser = functions.firestore
         const newValue = change.after.data();
         if(newValue.isDeleted === true){
             const userRef = await db.doc("users/" + context.params.userId).get()
+            const userPharmRef = await db.doc("users/" + "pharmacy" + context.params.userId).get()
             await db.recursiveDelete(userRef.ref)
             await auth.deleteUser(context.params.userId)
+            await db.recursiveDelete(userPharmRef.ref)
         }
     })
 
@@ -219,6 +220,14 @@ exports.deleteSubcollectionsOnDeleteCategory = functions.firestore
 
 exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user) => {
     console.log("before signIn " + user.uid)
+    console.log(`auth before signin ${auth}`)
+    // console.log(`provider ${provider}`)
+    console.log(provider)
+    console.log(user.providerData)
+    console.log(JSON.stringify(user))
+    // console.log(provider.hasOwnProperty('privatePolicy'))
+    const providerId = user.providerData[0].providerId
+    if (providerId === "google.com") return
     if (user.emailVerified) {
         console.log("email verified")
         const uid = user.uid
@@ -231,12 +240,13 @@ exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user) => {
         }
         let userDocPharm = null;
         try {
-            userDocPharm = await db.doc("users/" + uid + "pharmacy").get()
+            userDocPharm = await db.doc("users/" + "pharmacy" + uid).get()
         } catch (error) {
             console.log(error)
         }
         if (!userDoc?.exists) {
             console.log("user not found")
+
             try {
                 await db.doc("users/" + uid).set({
                     uid: user.uid,
@@ -244,6 +254,7 @@ exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user) => {
                     provider: "",
                     didSeeGreeting: false,
                     defaultCategoriesAdded: false
+
                 })
                 await db.doc("users/" + "pharmacy" + uid).set({
                     uid: "pharmacy" + user.uid,

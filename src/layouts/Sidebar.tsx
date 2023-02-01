@@ -14,7 +14,7 @@ import {useModal} from "../component/Modal/UseModal";
 import AddCoUserForm from "../component/AddCoUserForm";
 import AddProductAndMedicineForm from "../component/AddProductAndMedicineForm";
 import {AddProductButton} from "../styles/Products.components";
-import {useMediaQuery} from "usehooks-ts";
+import {useLocalStorage, useMediaQuery} from "usehooks-ts";
 
 
 interface SidebarProps{
@@ -27,6 +27,7 @@ const Sidebar = ({toggleDrawer}: SidebarProps) => {
     const navigate = useNavigate()
     let user = useAppSelector(selectUser);
     const typeStorage = useAppSelector(selectTypeStorage)
+    const [, setLastUser] = useLocalStorage('lastStorage', user?.uid)
     const [isEnglish, setIsEnglish] = useState<boolean>(false);
     const {
         isShown: isShownAddProductModal,
@@ -86,6 +87,7 @@ const Sidebar = ({toggleDrawer}: SidebarProps) => {
     const onCloseAfterDeleteAccount =()=>{
         handleCloseAfterDeleteAccount();
         logoutOfApp()
+        setLastUser('')
     }
     const myAccordion = [
         {title: <span><FontAwesomeIcon className="text-xl text-purple px-4" icon={faUser} />{t("BottomHamburgerMenu.myAccount")}</span>,
@@ -120,7 +122,7 @@ const Sidebar = ({toggleDrawer}: SidebarProps) => {
     let contentModalAfterDeleteAccount =
         <>
             <h3 className="text-center">{t("sidebar.contentModalAfterDeleteAccount_h3")}</h3>
-            <p className={"text-center mb-2 mt-2"}>{t("sidebar.contentModalAfterDeleteAccount_h3")}</p>
+            <p className={"text-center mb-2 mt-2"}>{t("sidebar.contentModalAfterDeleteAccount_p")}</p>
         </>
     // let modalContent;
     // if(currentStorageId === user?.uid){

@@ -2,10 +2,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{userId}/{document=**} {
-      allow read, update, delete, create: if request.auth != null && (request.auth.uid == userId || exists(/databases/$(database)/documents/users/$(userId)/acceptedShares/$(request.auth.uid)));
+      allow read, update, delete, create: if request.auth != null && ('pharmacy' + request.auth.uid == userId || request.auth.uid == userId || exists(/databases/$(database)/documents/users/$(userId)/acceptedShares/$(request.auth.uid)));
     }
     match /users/{userId}/categories/{categoryId}/products/{document=**} {
-      allow read, update, delete, create: if request.auth != null && (request.auth.uid == userId || exists(/databases/$(database)/documents/users/$(userId)/acceptedShares/$(request.auth.uid)));
+      allow read, update, delete, create: if request.auth != null && ('pharmacy' + request.auth.uid == userId || request.auth.uid == userId || exists(/databases/$(database)/documents/users/$(userId)/acceptedShares/$(request.auth.uid)));
     }
     match /{path=**}/products/{productId} {
       allow read, write, create, delete: if request.auth != null;
@@ -15,13 +15,23 @@ service cloud.firestore {
     }
     match /allProducts/{productId} {
       allow read, create: if request.auth != null;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    match /allMedicines/{productId} {
+      allow read, create: if request.auth != null;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.userId;
     }
     match /images/{imageId} {
       allow read,create: if request.auth != null;
     }
-    match /categories/{categoryId} {
+    match /imagesPharmacy/{imageId} {
+      allow read,create: if request.auth != null;
+    }
+    match /categoriesPharmacy/{categoryId} {
       allow read: if request.auth != null;
     }
-
+    match /user/{userId}/notifications/{document=**}{
+    allow read, delete: if request.auth != null && request.auth.uid;
+    }
   }
 }

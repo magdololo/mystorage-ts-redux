@@ -7,7 +7,7 @@ import {auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} f
 
 import {
     LoginData,
-    getUserData,
+    getUserData, addNewUserToUsers, User
 } from "../../slices/usersSlice";
 import {
     doc,
@@ -15,10 +15,10 @@ import {
 
 } from "firebase/firestore";
 import {db} from "../../firebase";
-import {BsArrowLeft} from "react-icons/bs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
 import {Spinner} from "../../component/Spinner";
+import {useLocalStorage} from "usehooks-ts";
 
 
 const LoginPage = () => {
@@ -32,6 +32,7 @@ const LoginPage = () => {
     const [message, setMessage] = useState<boolean>(false);
     let navigate = useNavigate()
     const [checkboxState, setCheckboxState] = useState(false);
+    const [lastStorageId] = useLocalStorage('lastStorage', auth.currentUser?.uid)
     const handleInputChange = () => {
         setCheckboxState(!checkboxState)
     }
@@ -90,12 +91,10 @@ const LoginPage = () => {
 
     });
 
-
     const socialSignIn = async () => {
+
         try {
             let result = await signInWithPopup(auth, provider)
-            // This gives you a Google Access Token. You can use it to access the Google API.
-
             let user = result.user
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
@@ -110,21 +109,41 @@ const LoginPage = () => {
                     userId: user?.uid as string,
                     userLanguage: userLanguage
                 }
+                console.log(loginData)
                 dispatch(getUserData(loginData))
-                navigate("/choose")
+                if (!lastStorageId) {
+                    navigate("/choose")
+                } else {
+                    navigate("/categories")
+                }
             }
 
         } catch (error: any) {
             console.log(error.code)
         }
     }
-    // const handleFocus = ()=>{
-    //     console.log("onFocus")
-    //     console.log(errorMessage)
-    //     setErrorMessage("")
-    //
-    // }
+    const firstRegisterWithGoogle = () => {
 
+        if (checkboxState) {
+            let userProp: User = {
+                uid: auth.currentUser?.uid as string,
+                email: auth.currentUser?.email as string,
+                provider: "",
+                didSeeGreeting: false,
+                defaultCategoriesAdded: false
+            }
+            dispatch(addNewUserToUsers(userProp))
+            const loginData: LoginData = {
+                userId: userProp?.uid as string,
+                userLanguage: userLanguage
+            }
+            dispatch(getUserData(loginData))
+            setContent(false);
+            setMessage(false);
+            setCheckboxState(false)
+        }
+        navigate('/choose')
+    }
     return (
         <>
 
@@ -296,10 +315,27 @@ const LoginPage = () => {
                                 {t("acceptRegulations")}
                             </label>
                         </div>
-                        <div className="text-lg">
-                            <button onClick={() => {
-                                setContent(false)
-                            }}><BsArrowLeft className="inline-flex text-gray-light"/></button>
+                        <div className="flex justify-center space-x-6 mt-3">
+                            <button type="button"
+                                    className=" w-1/2
+                                          px-6
+                                          py-2.5
+                                          text-purple
+                                          font-bold
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-md
+                                           hover:shadow-lg
+                                          focus:shadow-lg focus:outline-none focus:ring-0
+                                          active:shadow-lg
+                                          transition
+                                          duration-150
+                                          ease-in-out"
+                                    onClick={() => firstRegisterWithGoogle()}>
+                                {t("buttons.register")}
+                            </button>
                         </div>
                     </>
                 }
