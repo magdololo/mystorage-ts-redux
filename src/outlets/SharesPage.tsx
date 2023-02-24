@@ -38,7 +38,6 @@ const SharesPage = ()=>{
     const {t} = useTranslation();
 
     const outgoingInvites = useAppSelector(selectOutgoingInvites)
-
     const incomingInvites = useAppSelector(selectIncomingInvites)
 
     const isSmallerThan1280 = useMediaQuery('(max-width: 1279px)')
@@ -54,7 +53,7 @@ const SharesPage = ()=>{
         dispatch(deleteShareWithStatusNoUserExist({userId: userId!!, shareId: invite.id}))
     }
 
-    const [date, setDate] = useState( new Date())
+    const [date, setDate] = useState(new Date())
     useEffect(()=>{
 
         all.forEach((invite)=> {
@@ -80,12 +79,17 @@ const SharesPage = ()=>{
                                         <div className={"h-2/3 "}>
                                             <h2 className="text-md xmd:text-lg text-gray-light pb-3 md:text-lg">From <span className="font-bold">{invite.user_email}</span></h2>
                                             <h3 className="text-md xmd:text-md text-gray-light pb-3 xl:pb-2.5">
-                                                <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && t("shares.statusAccepted")}</span>
-                                                <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && t("shares.statusRejected")}</span>
-                                                <span className="font-bold font-varela ml-1">{(invite.status === "pending") && t("shares.statusPending")}</span>
+                                                <span
+                                                    className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && t("shares.statusAccepted")}</span>
+                                                <span
+                                                    className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && t("shares.statusRejected")}</span>
+                                                <span
+                                                    className="font-bold font-varela ml-1">{(invite.status === "pending") && t("shares.statusPending")}</span>
                                             </h3>
-                                            <div className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
-                                                <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{date.toLocaleString()}</span>
+                                            <div
+                                                className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
+                                                <span
+                                                    className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{invite.date && invite.date.toLocaleString()}</span>
                                             </div>
                                         </div>
 
@@ -124,22 +128,31 @@ const SharesPage = ()=>{
                                 {outgoingInvites.map((invite: Invite) =>
                                     <SingleInvite key={invite.id} >
                                         <div className={"h-2/3 "}>
-                                            <h2 className="text-md text-gray-light pb-3 md:text-lg">To <span className="font-bold">{invite.user_email}</span></h2>
+                                            <h2 className="text-md text-gray-light pb-3 md:text-lg">To <span
+                                                className="font-bold">
+                                                {invite.user_email}</span></h2>
                                             <h3 className="text-md xmd:text-md text-gray-light pb-3 xl:pb-2.5">
-                                                <span className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && t("shares.statusAccepted")}</span>
-                                                <span className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && t("shares.statusRejected")}</span>
-                                                <span className="font-bold font-varela ml-1">{(invite.status === "pending") && t("shares.statusPending")}</span>
-                                                <span className="font-bold font-varela ml-1">{(invite.status === "noUserExist") && t("shares.statusNoUser")}</span>
+                                                <span
+                                                    className="font-bold font-varela ml-1 text-green">{(invite.status === "accepted") && t("shares.statusAccepted")}</span>
+                                                <span
+                                                    className="font-bold font-varela ml-1 text-red">{(invite.status === "rejected") && t("shares.statusRejected")}</span>
+                                                <span
+                                                    className="font-bold font-varela ml-1">{(invite.status === "pending") && t("shares.statusPending")}</span>
+                                                <span
+                                                    className="font-bold font-varela ml-1">{(invite.status === "noUserExist") && t("shares.statusNoUser")}</span>
                                             </h3>
-                                            <div className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
-                                                <span className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{date.toLocaleString()}</span>
+                                            <div
+                                                className="flex flex-col  xmd:flex-row xmd:justify-between  xmd:h-10  xl:h-12">
+                                                <span
+                                                    className="text-xs pb-3.5 xmd:text-md md:text-xs text-gray-mediumLight xmd:pt-3 xmd:pb-0">{invite.date?.toLocaleString()}</span>
                                             </div>
 
                                             <div className={"h-1/3"}>
                                                 {(invite.status === "accepted") ?
                                                     <div className={"max-w-screen-sm mx-auto"}>
                                                         <div className=" pb-5 flex flex-row justify-start xmd:mb-0">
-                                                            <Button className={"marginLeft"} onClick={()=>handleCancelShare(invite)}>{t("buttons.cancel")}</Button>
+                                                            <Button className={"marginLeft"}
+                                                                    onClick={() => handleCancelShare(invite)}>{t("buttons.cancel")}</Button>
                                                         </div>
                                                     </div>
                                                     : null
