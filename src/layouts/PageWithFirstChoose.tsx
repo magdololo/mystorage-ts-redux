@@ -1,4 +1,4 @@
-import {useMediaQuery} from "usehooks-ts";
+import {useLocalStorage, useMediaQuery} from "usehooks-ts";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 //import {ToastContainer} from "react-toastify";
@@ -17,8 +17,10 @@ const PageWithFirstChoose = () => {
     const {t} = useTranslation();
     let navigate = useNavigate()
     const dispatch = useAppDispatch()
+
     let user = useAppSelector(selectUser);
     let didSee = user?.didSeeGreeting;
+    const [, setLastUser] = useLocalStorage('lastStorage', user?.uid)
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const handleCloseGreeting = () => setIsOpen(false);
 
@@ -28,7 +30,6 @@ const PageWithFirstChoose = () => {
         }
     }, [user, didSee])
 
-   console.log(didSee)
     const closeModalWithGreeting = () => {
         handleCloseGreeting();
         dispatch(changeSeeGreetingToTrue(user as User))
@@ -69,14 +70,16 @@ const PageWithFirstChoose = () => {
                     <div className={"flex flex-col w-10/12 mx-auto justify-center align-middle"}>
                         <button
                             className={"w-10/12 mx-auto border border-1 border-purple-800 rounded-sm cursor-pointer px-16 py-10 font-bold text-gray-light uppercase text-md mb-4 tracking-wider"}
-                            onClick={() => {
-                                dispatch(setCurrentStorage(user!!.uid))
+                            onClick={async () => {
+                                setLastUser(user!!.uid)
+                                await dispatch(setCurrentStorage(user!!.uid))
                                 navigate("/categories")
                             }}>{t('my_storage')}</button>
                         <button
                             className={"w-10/12 mx-auto border border-1 border-purple-800 rounded-sm cursor-pointer px-16 py-10 font-bold text-gray-light uppercase text-md mt-4 tracking-wider"}
-                            onClick={() => {
-                                dispatch(setCurrentStorage("pharmacy" + user!!.uid))
+                            onClick={async () => {
+                                setLastUser("pharmacy" + user!!.uid)
+                                await dispatch(setCurrentStorage("pharmacy" + user!!.uid))
                                 navigate("/categories")
                             }}>{t('my_pharmacy')}</button>
                     </div>
@@ -92,8 +95,10 @@ const PageWithFirstChoose = () => {
                             <button
                                 className={"border border-2 border-purple-400 rounded-sm cursor-pointer px-20 py-12 font-bold text-gray-light uppercase text-2xl" +
                                     "transition ease-in-out duration-300 hover:scale-110 hover:border-purple-800"}
-                                onClick={() => {
-                                    dispatch(setCurrentStorage(user!!.uid))
+                                onClick={async () => {
+                                    console.log(user!!.uid)
+                                    setLastUser(user!!.uid)
+                                    await dispatch(setCurrentStorage(user!!.uid))
                                     navigate("/categories")
                                 }}>{t('my_storage')}
                             </button>
@@ -102,8 +107,9 @@ const PageWithFirstChoose = () => {
                             <button
                                 className={"border border-2 border-purple-400 rounded-sm cursor-pointer px-20 py-12 font-bold text-gray-light uppercase text-2xl" +
                                     "transition ease-in-out duration-300 hover:scale-110 hover:border-purple-800"}
-                                onClick={() => {
-                                    dispatch(setCurrentStorage("pharmacy" + user!!.uid))
+                                onClick={async () => {
+                                    setLastUser("pharmacy" + user!!.uid)
+                                    await dispatch(setCurrentStorage("pharmacy" + user!!.uid))
                                     navigate("/categories")
                                 }}>{t('my_pharmacy')}
                             </button>

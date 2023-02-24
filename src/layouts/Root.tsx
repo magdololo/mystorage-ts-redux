@@ -50,10 +50,9 @@ import {Image} from "../slices/imagesSlice";
 
 const Root = () => {
     let user = useAppSelector(selectUser);
-
-
     const dispatch = useAppDispatch()
     let currentStorageId = useAppSelector(selectCurrentStorage)
+    console.log(currentStorageId)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
     const [lastStorageId] = useLocalStorage('lastStorage', user?.uid)
     console.log(lastStorageId)
@@ -281,10 +280,7 @@ const Root = () => {
             <MainPageLayout>
                 <Header><AppHeader/></Header>
                 <Section>
-                    {isBiggerThan960 ? <ToggleSections/> :
-                        // <SelectStorages/>
-                        <SelectStorageOrPharmacy/>
-                    }
+                    {isBiggerThan960 ? <ToggleSections/> : <SelectStorageOrPharmacy/>}
                 </Section>
                 <Main>
                     <Outlet/>
@@ -294,9 +290,9 @@ const Root = () => {
                         <SideBar><Sidebar toggleDrawer={null}/></SideBar>
                         <FooterBar><FooterBox/></FooterBar>
                     </>
-                    : <BottomMenu/>}
+                    : <BottomMenu/>
+                }
                 <ToastContainer/>
-
             </MainPageLayout>
         </>
     )
