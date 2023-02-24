@@ -55,10 +55,13 @@ const Root = () => {
     const dispatch = useAppDispatch()
     let currentStorageId = useAppSelector(selectCurrentStorage)
     const isBiggerThan960 = useMediaQuery('(min-width: 960px)')
-    console.log(currentStorageId)
-    console.log(user?.uid + " userId from root")
     const [lastStorageId] = useLocalStorage('lastStorage', user?.uid)
     console.log(lastStorageId)
+    useEffect(() => {
+        if (lastStorageId) {
+            changeStorage(lastStorageId)
+        }
+    }, [user?.uid])
     const changeStorage = (currentStorageId: string) => {
         dispatch(setCurrentStorage(currentStorageId))
         dispatch(removeProducts())
@@ -69,11 +72,7 @@ const Root = () => {
         dispatch(fetchImages(currentStorageId))
 
     }
-    useEffect(() => {
-        if (lastStorageId) {
-            changeStorage(lastStorageId)
-        }
-    }, [])
+
     useEffect(() => {
         if (!currentStorageId) {
             return

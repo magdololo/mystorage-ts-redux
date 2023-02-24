@@ -18,17 +18,17 @@ const PageWithFirstChoose = () => {
     let navigate = useNavigate()
     const dispatch = useAppDispatch()
     let user = useAppSelector(selectUser);
-
     let didSee = user?.didSeeGreeting;
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const handleCloseGreeting = () => setIsOpen(false);
+
     useEffect(() => {
         if (didSee === false) {
             setIsOpen(true)
         }
     }, [user, didSee])
 
-
+   console.log(didSee)
     const closeModalWithGreeting = () => {
         handleCloseGreeting();
         dispatch(changeSeeGreetingToTrue(user as User))
@@ -63,7 +63,8 @@ const PageWithFirstChoose = () => {
     return (
         <>
             {didSee === false && greeting}
-            {mobileLayout ?
+            {didSee === true &&
+            mobileLayout ?
                 <div className={"mt-64"}>
                     <div className={"flex flex-col w-10/12 mx-auto justify-center align-middle"}>
                         <button
@@ -81,6 +82,10 @@ const PageWithFirstChoose = () => {
                     </div>
                 </div>
                 :
+                <></>
+            }
+            {didSee === true &&
+            !mobileLayout ?
                 <div className={"mt-80"}>
                     <div className={"flex flex-row justify-between w-6/12 mx-auto items-center"}>
                         <div className={"justify-center"}>
@@ -104,7 +109,7 @@ const PageWithFirstChoose = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> : <></>
             }
 
 

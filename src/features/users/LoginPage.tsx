@@ -56,7 +56,7 @@ const LoginPage = () => {
         setLoginInProgres(true)
 
         signInWithEmailAndPassword(auth, data.email, data.password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 setLoginInProgres(false)
                 const userFirebase = userCredential.user;
                 reset();
@@ -68,7 +68,7 @@ const LoginPage = () => {
                         userId: userFirebase?.uid,
                         userLanguage: userLanguage
                     }
-                    dispatch(getUserData(loginData))
+                    await dispatch(getUserData(loginData))
                     navigate("/choose")
 
                 }

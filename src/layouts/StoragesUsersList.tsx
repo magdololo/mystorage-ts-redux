@@ -16,7 +16,6 @@ const StoragesUsersList = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const allAcceptedIncomingInvites = useAppSelector(selectAcceptedIncomingInvites)
-    console.log(allAcceptedIncomingInvites)
     let user = useAppSelector(selectUser);
     const userId = user?.uid;
     const currentStorageId = useAppSelector(selectCurrentStorage)
@@ -31,7 +30,6 @@ const StoragesUsersList = () => {
     const onClickChangeStorage = (userId: string) => {
         changeStorage(userId!!);
         navigate("/categories")
-        console.log(userId)
     }
 
     return (

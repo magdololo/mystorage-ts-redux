@@ -96,7 +96,7 @@ const Home = () => {
                             <PhotoBox src="../images/categories_screen-ImResizer.webp"
                                       alt={"ekran z kategoriami"} width={"255px"} height={"525px"}/>
                             :
-                            <PhotoBox src="../images/categories_screen_en-ImResizer.webp"
+                            <PhotoBox src="../images/categories_en.png"
                                       alt={"screen with categories"} width={"255px"} height={"525px"}/>}
                     </HeaderSectionBoxPhotos>
                 </MainSection>
@@ -241,7 +241,7 @@ const Home = () => {
                         {i18n.language === "pl" ?
                             <PhotoBox src="../images/mobile_share_page-ImResizer.webp"
                                       alt={"ekran z zaproszeniami"} width={"234px"} height={"484px"}/> :
-                            <PhotoBox src="../images/mobile_share_page_en-ImResizer.webp"
+                            <PhotoBox src="../images/mobile_share_page_en.png"
                                       alt={"screen with invitings"} width={"234px"} height={"484px"}/>}
                     </SectionBoxPhotos>
                     <SectionBoxText className={"visibilityOnMobile"}>

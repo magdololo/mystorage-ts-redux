@@ -52,10 +52,6 @@ export const addNewUserToUsers = createAsyncThunk('users/addNewUserToUsers', asy
         defaultCategoriesAdded: false
     }
     try {
-        console.log(user.email)
-        console.log(user.uid)
-        console.log(newUser)
-        console.log(newPharmacyUser)
         await setDoc(doc(db, "users", user.uid), newUser)
         await setDoc(doc(db, "users", 'pharmacy' + user.uid), newPharmacyUser)
     } catch (error) {
@@ -97,7 +93,6 @@ export const addDefaultCategoriesAndImagesToNewUser = createAsyncThunk<boolean, 
             let qImage = await query(collection(db, "images"))
             const queryImageSnapshot = await getDocs(qImage);
             queryImageSnapshot.forEach((doc) => {
-                console.log(doc.data())
                 let image = doc.data() as Image
                 image.id = doc.id
                 image.uid = addDefaultCategoriesToNewUserProps.userId
@@ -106,7 +101,6 @@ export const addDefaultCategoriesAndImagesToNewUser = createAsyncThunk<boolean, 
             let qPharmImage = await query(collection(db, "imagesPharmacy"))
             const queryImagePharmSnapshot = await getDocs(qPharmImage);
             queryImagePharmSnapshot.forEach((doc) => {
-                console.log(doc.data())
                 let image = doc.data() as Image
                 image.id = doc.id
                 image.uid = "pharmacy" + addDefaultCategoriesToNewUserProps.userId
@@ -159,15 +153,12 @@ export const getUserData = createAsyncThunk<User | null, LoginData, {
         if (userDoc.exists()) {
 
             const user = userDoc.data() as User
-            console.log("user")
-            console.log(user)
             if (!user.defaultCategoriesAdded) {
                 await thunkApi.dispatch(addDefaultCategoriesAndImagesToNewUser(loginData))
                 await updateDoc(userRef, {"defaultCategoriesAdded": true})
                 let userPharmRef = doc(db, "users/" + "pharmacy" + loginData.userId);
                 await updateDoc(userPharmRef, {"defaultCategoriesAdded": true})
             }
-
             return user
         }
     } catch (error) {
