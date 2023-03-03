@@ -37,11 +37,12 @@ className
 
 
             }}/>
-            <Wrapper tabIndex={-1} className={className??""}>
+            <Wrapper data-testid={'modal'} tabIndex={-1} className={className ?? ""}>
                 <StyledModal>
                     <Header>
                         <HeaderText>{modalHeaderText}</HeaderText>
-                        <FontAwesomeIcon className=" text-md text-purple self-center pb-2 cursor-pointer  sm:text-lg" icon={faClose}  onClick={()=>hide()}/>
+                        <FontAwesomeIcon className=" text-md text-purple self-center pb-2 cursor-pointer  sm:text-lg"
+                                         icon={faClose} onClick={() => hide()}/>
                     </Header>
                     <Content>{modalContent}</Content>
                 </StyledModal>

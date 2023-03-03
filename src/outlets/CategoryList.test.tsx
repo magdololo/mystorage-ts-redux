@@ -8,6 +8,7 @@ import {renderWithProviders} from "../utils/utils-for-tests";
 import {setCurrentStorage} from "../slices/usersSlice";
 
 
+
 jest.mock('react-i18next', () => ({
     // this mock makes sure any components using the translate hook can use it without a warning being shown
     useTranslation: () => {
@@ -107,8 +108,53 @@ test(' display only not required categories after click edit categories button',
     const categoriesPaths = screen.getAllByRole('link');
     backToCategoryListButton = await screen.findByRole('button', {name: /buttons.categoryListButton/i})
     expect(categoriesPaths).toHaveLength(3);
-
     expect(backToCategoryListButton).toBeInTheDocument()
     expect(addNewCategoryButton).not.toBeInTheDocument()
+
+})
+test(' display modal with add category form after clicking add category ', async () => {
+    renderedComponentWithData()
+    const addNewCategoryButton = screen.getByRole('button', {name: /buttons.addCategory/i})
+    user.click(addNewCategoryButton)
+    const modalWithAddCategoryForm = await screen.findByTestId('modal')
+    expect(modalWithAddCategoryForm).toBeInTheDocument()
+    const addCategoryForm = screen.getByText('categories.CategoryList.modalAddHeader')
+    expect(addCategoryForm).toBeInTheDocument()
+
+})
+
+test('display modal with edit category form after clicking pen icon', async () => {
+    renderedComponentWithData()
+    const editCategoriesButton = screen.getByRole('button', {name: /buttons.editCategoriesButton/i})
+    user.click(editCategoriesButton)
+
+    const penIcons = await screen.findAllByTestId('faPen')
+    const singlePenIcon = penIcons[0]
+
+    user.click(singlePenIcon)
+
+    const modalWithEditCategoryForm = await screen.findByTestId('modal')
+    expect(modalWithEditCategoryForm).toBeInTheDocument()
+
+    const editCategoryForm = screen.getByText("categories.CategoryList.modalEditHeader")
+    expect(editCategoryForm).toBeInTheDocument()
+
+})
+
+test('display modal  after clicking xmark icon', async () => {
+    renderedComponentWithData()
+    const editCategoriesButton = screen.getByRole('button', {name: /buttons.editCategoriesButton/i})
+    user.click(editCategoriesButton)
+
+    const xmarkIcons = await screen.findAllByTestId('faXmark')
+    const singleXmarkIcon = xmarkIcons[0]
+
+    user.click(singleXmarkIcon)
+
+    const modalWithConfirmingTheDeletionOfTheCategory = await screen.findByTestId('modal')
+    expect(modalWithConfirmingTheDeletionOfTheCategory).toBeInTheDocument()
+    //screen.debug(undefined, 10000)
+    const confirmButton = screen.getByRole("button", {name: /buttons.confirm/i})
+    expect(confirmButton).toBeInTheDocument()
 
 })

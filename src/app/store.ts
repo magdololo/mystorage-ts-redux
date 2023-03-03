@@ -1,4 +1,4 @@
-import {configureStore} from '@reduxjs/toolkit'
+import {configureStore, combineReducers, PreloadedState} from '@reduxjs/toolkit'
 import allProductsReducer from '../slices/allProductsSlice'
 import categoriesReducer from '../slices/categoriesSlice'
 import usersReducer from '../slices/usersSlice'
@@ -10,35 +10,56 @@ import allMedicinesReducer from "../slices/allMedicinesSlice";
 import userMedicinesReducer from "../slices/userMedicineSlice";
 import {useDispatch, TypedUseSelectorHook, useSelector} from "react-redux";
 
-const store = configureStore({
+const rootReducer = combineReducers({
+    categories: categoriesReducer,
+    users: usersReducer,
+    allProducts: allProductsReducer,
+    userProducts: userProductsReducer,
+    images: imagesReducer,
+    notifications: notificationsReducer,
+    shares: sharesReducer,
+    allMedicines: allMedicinesReducer,
+    userMedicines: userMedicinesReducer
+})
 
-    reducer: {
-
-        categories: categoriesReducer,
-        users: usersReducer,
-        allProducts: allProductsReducer,
-        userProducts: userProductsReducer,
-        images: imagesReducer,
-        notifications: notificationsReducer,
-        shares: sharesReducer,
-        allMedicines: allMedicinesReducer,
-        userMedicines: userMedicinesReducer
-    },
-
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: false,
-
-        //     {
-        //     ignoredActions: [actionTypes.LOGIN, actionTypes.AUTH_LINK_ERROR]
-        // }
+export function setupStore(preloadedState?: PreloadedState<RootState>) {
+    return configureStore({
+        reducer: rootReducer,
+        preloadedState
     })
-    })
+}
 
+// const store = configureStore({
+//
+//     reducer: {
+//
+//         categories: categoriesReducer,
+//         users: usersReducer,
+//         allProducts: allProductsReducer,
+//         userProducts: userProductsReducer,
+//         images: imagesReducer,
+//         notifications: notificationsReducer,
+//         shares: sharesReducer,
+//         allMedicines: allMedicinesReducer,
+//         userMedicines: userMedicinesReducer
+//     },
+//
+//     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+//         serializableCheck: false,
+//
+//         //     {
+//         //     ignoredActions: [actionTypes.LOGIN, actionTypes.AUTH_LINK_ERROR]
+//         // }
+//     })
+//     })
 
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof rootReducer>
+export type AppStore = ReturnType<typeof setupStore>
+export type AppDispatch = AppStore['dispatch']
+// export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppDispatch>()
-
-export type RootState = ReturnType<typeof store.getState>
+//
+// export type RootState = ReturnType<typeof store.getState>
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 // create a generic type called AppSelector
@@ -47,4 +68,4 @@ export type AppSelector<Return> = (state: RootState) => Return
 export const createAppSelector = <R>(selector: AppSelector<R>): AppSelector<R> => selector
 
 
-export default store
+export default setupStore

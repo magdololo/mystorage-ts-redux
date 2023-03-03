@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 
 import "firebase/auth";
 import "firebase/firestore";
-import store from './app/store'
+import {setupStore} from './app/store'
 import {Provider} from "react-redux";
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
@@ -17,8 +17,8 @@ if(container!) {
     root.render(
         <React.StrictMode>
             <BrowserRouter>
-                <Provider store={store}>
-                    <App />
+                <Provider store={setupStore()}>
+                    <App/>
                 </Provider>
             </BrowserRouter>
         </React.StrictMode>

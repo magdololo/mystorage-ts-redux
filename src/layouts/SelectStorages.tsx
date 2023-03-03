@@ -44,7 +44,6 @@ const SelectStorages = () => {
                     <Select native defaultValue="" id="grouped-native-select" label={currentStorageId}>
                         <option aria-label={t("my_storage")} value={userId}
                                 onClick={() => onClickChangeStorage(userId!!)}/>
-                        {/*<optgroup label={t("my_pharmacy")}>*/}
                         {allAcceptedIncomingInvites.map(invite => {
                             return (
                                 <>
@@ -52,14 +51,8 @@ const SelectStorages = () => {
                                             onClick={() => changeStorage(invite.user_id)}>{invite.user_email}</option>
                                 </>
                             )
-
-                            // options.push({value: invite.user_id, label: invite.user_email, padding: "40px", class: "optionInvites"})
-                            // <option value={userId!!}>Option 1</option>
-                            // <option value={2}>Option 2</option>
-                            /*</optgroup>*/
                         })}
                         <option aria-label={t("my_pharmacy")} value="" onClick={() => onClickChangePharmacy(userId!!)}/>
-                        {/*<optgroup label="Category 2">*/}
                         {allAcceptedIncomingInvites.map(invite => {
                             return (
                                 <>
@@ -68,9 +61,6 @@ const SelectStorages = () => {
                                 </>
                             )
                         })}
-                        {/*// <option value={3}>Option 3</option>*/}
-                        {/*// <option value={4}>Option 4</option>*/}
-                        {/*</optgroup>*/}
                     </Select>
                 </FormControl>
             </div>

@@ -184,9 +184,10 @@ export const selectAllCategoriesSortedByRequired = createSelector(
 export const selectCategoriesCurrentStorageByRequired = (currentStorageId: string) => createSelector(
     selectAllCategories, categories => {
         const categoriesOfStorage = categories.filter(category => category.user === currentStorageId)
-        const requiredCategory = categoriesOfStorage.find(category => category.required === "true")
+
+        const requiredCategory = categoriesOfStorage.filter(category => category.required === "true")
         const filteredCategories = categoriesOfStorage.filter(category => category.required !== "true")
-        return [requiredCategory, ...filteredCategories]
+        return [...requiredCategory, ...filteredCategories]
     }
 )
 export const selectDefaultCategory = createSelector(
