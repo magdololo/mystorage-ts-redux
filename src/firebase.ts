@@ -1,5 +1,5 @@
 
-import { initializeApp } from 'firebase/app';
+import {initializeApp} from 'firebase/app';
 import {getAnalytics} from "firebase/analytics"
 import {
     getAuth,
@@ -14,7 +14,7 @@ import {
     sendSignInLinkToEmail,
     sendEmailVerification
 } from 'firebase/auth';
-import { getFirestore } from "firebase/firestore";
+import {getFirestore} from "firebase/firestore";
 
 
 
@@ -43,7 +43,12 @@ getAnalytics(app);
 const auth = getAuth();
 const db = getFirestore(app)
 
-
+// ADD THESE LINES
+// if (location.hostname === "localhost") {
+//     console.log("localhost detected!");
+//     connectFirestoreEmulator(db, 'localhost', 8080);
+//     connectAuthEmulator(auth,'localhost')
+// }
 
 
 export {

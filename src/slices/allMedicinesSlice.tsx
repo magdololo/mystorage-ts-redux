@@ -1,8 +1,9 @@
-import {createAsyncThunk, createEntityAdapter, createSlice, EntityState} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice, EntityState, PayloadAction} from "@reduxjs/toolkit";
 import {AppDispatch, RootState} from "../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../firebase";
 import {UserMedicine} from "./userMedicineSlice";
+
 
 
 export interface MedicineFromDictionary {
@@ -75,7 +76,11 @@ export const fetchAllMedicines = createAsyncThunk('allMedicines/fetchAllMedicine
 const allMedicinesSlice = createSlice({
     name: 'allMedicines',
     initialState,
-    reducers: {},
+    reducers: {
+        addDictionaryMedicine: (state, action: PayloadAction<MedicineFromDictionary>) => {
+            allMedicinesAdapter.addOne(state, action.payload)
+        }
+    },
     extraReducers(builder) {
         builder
             .addCase(fetchAllMedicines.fulfilled, (state, action) => {
@@ -101,5 +106,5 @@ export const {
 
     // Pass in a selector that returns the posts slice of state
 } = allMedicinesAdapter.getSelectors<RootState>((state) => state.allMedicines);
-
+export const {addDictionaryMedicine} = allMedicinesSlice.actions
 export default allMedicinesSlice.reducer

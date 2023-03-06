@@ -6,8 +6,7 @@ import {Modal} from "../component/Modal/Modal";
 import {useModal} from "../component/Modal/UseModal";
 import AddCategoryForm from "../features/categories/AddCategoryForm";
 import EditCategoryForm from "../features/categories/EditCategoryForm";
-import {fetchAllProducts} from "../slices/allProductsSlice";
-import {selectCurrentStorage, selectTypeStorage} from "../slices/usersSlice";
+import {selectCurrentStorage} from "../slices/usersSlice";
 import {
     currentCategoryChange,
     deleteCategory,
@@ -21,7 +20,6 @@ import {useTranslation} from "react-i18next";
 
 import {EditCategoriesButtonComponent} from "../styles/Categories.components";
 import {MainBox} from "../styles/Categories.components";
-import {fetchAllMedicines} from "../slices/allMedicinesSlice";
 
 
 
@@ -29,7 +27,7 @@ export const CategoryList = () => {
 
     const {t} = useTranslation();
     let currentStorageId = useAppSelector(selectCurrentStorage)
-    let typeStorage = useAppSelector(selectTypeStorage)
+
 
     const {
         isShown: isShownAddCategoryModal,
@@ -48,14 +46,6 @@ export const CategoryList = () => {
     const categoryBeingDeleted = useAppSelector((state => state.categories.deletingCategory)) as Category
     const [toggleSwitch, setToggleSwitch] = useState(false);
 
-    useEffect(() => {
-        if (typeStorage === "product") {
-            dispatch(fetchAllProducts())
-        } else if (typeStorage === "medicine") {
-            dispatch(fetchAllMedicines())
-
-        }
-    }, [typeStorage, dispatch])
 
 
     const toggleEdit = () => {

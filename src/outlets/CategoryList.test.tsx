@@ -9,6 +9,7 @@ import {setCurrentStorage} from "../slices/usersSlice";
 
 
 
+
 jest.mock('react-i18next', () => ({
     // this mock makes sure any components using the translate hook can use it without a warning being shown
     useTranslation: () => {
@@ -26,6 +27,8 @@ jest.mock('react-i18next', () => ({
         },
     }
 }));
+
+
 const renderedComponentWithData = () => {
     const store = setupStore()
     store.dispatch(addCategory({
@@ -156,5 +159,4 @@ test('display modal  after clicking xmark icon', async () => {
     //screen.debug(undefined, 10000)
     const confirmButton = screen.getByRole("button", {name: /buttons.confirm/i})
     expect(confirmButton).toBeInTheDocument()
-
 })

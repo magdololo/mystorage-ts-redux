@@ -45,7 +45,8 @@ import ToggleSections from "./ToggleSections";
 import SelectStorageOrPharmacy from "./SelectStorageOrPharmacy";
 import {addMedicine, modifyMedicine, removeMedicine, UserMedicine} from "../slices/userMedicineSlice";
 import {Image} from "../slices/imagesSlice";
-
+import {addDictionaryProduct, ProductFromDictionary} from "../slices/allProductsSlice"
+import {addDictionaryMedicine, MedicineFromDictionary} from "../slices/allMedicinesSlice";
 
 
 const Root = () => {
@@ -271,7 +272,46 @@ const Root = () => {
 
     }, [currentStorageId, dispatch])
 
+    useEffect(() => {
+        if (!currentStorageId) {
+            return
+        }
+        const q = query(collection(db, "allProducts"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        dispatch(addDictionaryProduct({...change.doc.data(), id: change.doc.id} as ProductFromDictionary))
+                    }
+                });
+            },
+            (error) => {
+                console.log(error)
+            });
 
+        return () => {
+            unsubscribe()
+        }
+    })
+    useEffect(() => {
+        if (!currentStorageId) {
+            return
+        }
+        const q = query(collection(db, "allMedicines"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        dispatch(addDictionaryMedicine({...change.doc.data(), id: change.doc.id} as MedicineFromDictionary))
+                    }
+                });
+            },
+            (error) => {
+                console.log(error)
+            });
+
+        return () => {
+            unsubscribe()
+        }
+    })
     const isLargerThan1280 = useMediaQuery('(min-width: 1280px)')
 
 

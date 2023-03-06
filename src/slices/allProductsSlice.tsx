@@ -1,8 +1,9 @@
-import {createSlice, createAsyncThunk, createEntityAdapter, EntityState} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk, createEntityAdapter, EntityState, PayloadAction} from '@reduxjs/toolkit'
 import {AppDispatch, RootState} from "../app/store";
 import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "../firebase";
 import {UserProduct} from "./userProductsSlice";
+
 
 
 export interface ProductFromDictionary{
@@ -77,6 +78,10 @@ const allProductsSlice = createSlice({
     name: 'allProducts',
     initialState,
     reducers: {
+        addDictionaryProduct: (state, action: PayloadAction<ProductFromDictionary>) => {
+            console.log("addMedicine")
+            allProductsAdapter.addOne(state, action.payload);
+        },
     },
     extraReducers(builder) {
         builder
@@ -102,5 +107,5 @@ export const {
 
     // Pass in a selector that returns the posts slice of state
 } = allProductsAdapter.getSelectors<RootState>((state) => state.allProducts);
-
+export const {addDictionaryProduct} = allProductsSlice.actions
 export default allProductsSlice.reducer
